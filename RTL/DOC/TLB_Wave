@@ -1,0 +1,19 @@
+{signal: [
+  {name: 'clk', wave: 'p............|...'},
+  {name: 'vpn_to_ppn_req', wave: '0.10.......|1.0'},
+  {name: 'tlb_miss', wave: '0..10.......|1.0'},
+  {name: 'state', wave: '3...4.5.673....4', data: ['0', '1', '2', '3','4','0','1']},
+  {name: 'REQ', wave: '0...1...0...|..1'},
+  {name: 'ADDR', wave: '3...4.5.3......4', data: ['00', 'satp+VPN1', 'PTE+VPN0', '00','satp+VPN1']},  
+  {name: 'ACK', wave: '0....1010...|...'},
+  {name: 'RDATA', wave: '3....4.53.......', data: ['00', 'PTE1', 'PTE2', '00']},  
+  {name: 'RE', wave: '0.10.....10.|...'},
+  {name: 'WE', wave: '0......10...|...'},
+  {name: 'tag_out', wave: '3.........43....', data: ['00', 'PPN']},
+  {name: 'tag_hit', wave: '0.........10....'},  
+  //{name: 'dat', wave: 'x.345x|=.x', data: ['head', 'body', 'tail', 'data']},
+  
+  {},
+  //{name: 'ack', wave: '1.....|01.'}
+]}
+
