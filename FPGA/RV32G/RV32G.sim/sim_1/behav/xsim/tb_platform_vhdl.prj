@@ -1,0 +1,17 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../../../RTL/FPU/fpu/IEEE_to_flopoco_DP.vhdl" \
+"../../../../../../RTL/FPU/fpu/IEEE_to_flopoco_SP.vhdl" \
+"../../../../../../RTL/FPU/fpu/add_DP.vhdl" \
+"../../../../../../RTL/FPU/fpu/add_SP.vhd" \
+"../../../../../../RTL/FPU/fpu/div_DP.vhdl" \
+"../../../../../../RTL/FPU/fpu/div_SP.vhdl" \
+"../../../../../../RTL/FPU/fpu/flopoco_to_IEEE_DP.vhdl" \
+"../../../../../../RTL/FPU/fpu/flopoco_to_IEEE_SP.vhdl" \
+"../../../../../../RTL/FPU/fpu/mul_DP.vhdl" \
+"../../../../../../RTL/FPU/fpu/mul_SP.vhdl" \
+"../../../../../../RTL/FPU/fpu/sqrt_DP.vhdl" \
+"../../../../../../RTL/FPU/fpu/sqrt_SP.vhdl" \
+
+# Do not sort compile order
+nosort
