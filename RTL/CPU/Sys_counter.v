@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-`include "defines.v"
+`include "/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DEFINES/defines.v"
 
 module Sys_counter
 (

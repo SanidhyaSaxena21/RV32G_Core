@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-`include "/home/rclab/FINAL_PROJECT/MtechESE_RISCV_2024-25/Working_Project/processor/rtl/defines.v"
+`include "/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DEFINES/defines.v"
 
 module dcache_biu /*(
 //wishbone and controller interfacee I/Os

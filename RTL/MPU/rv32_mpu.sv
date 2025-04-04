@@ -1,6 +1,6 @@
 `timescale 1 ns / 1 ps
 
-`include "/home/rclab/FINAL_PROJECT/MtechESE_RISCV_2024-25/Working_Project_New/processor_1.3/processor.srcs/sources_1/imports/processor/rtl/defines.v"
+`include "/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DEFINES/defines.v"
 module rv32_mpu
 
     #(

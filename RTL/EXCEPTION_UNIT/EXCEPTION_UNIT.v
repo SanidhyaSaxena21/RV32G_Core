@@ -19,8 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`include "/home/rclab/FINAL_PROJECT/MtechESE_RISCV_2024-25/Working_Project_New/processor_1.2/processor.srcs/sources_1/imports/processor/rtl/defines.v"
-//`include "defines.v"
+`include "/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DEFINES/defines.v"
 module EXCEPTION_UNIT #(parameter XLEN = 32,
                         parameter SB_LENGTH = 4*(XLEN+1)+1)
    (

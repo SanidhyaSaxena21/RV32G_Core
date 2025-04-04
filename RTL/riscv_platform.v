@@ -18,7 +18,7 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-`include "/home/rclab/FINAL_PROJECT/MtechESE_RISCV_2024-25/Working_Project_New/processor_1.3/processor.srcs/sources_1/imports/processor/rtl/defines.v"
+`include "/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DEFINES/defines.v"
 
 module riscv_platform (
   input clk_int,
@@ -209,7 +209,7 @@ module riscv_platform (
         .timer_irq(timer_irq)
       );
 
-     DATA_MEMORY #(.ADDR_WIDTH(14),.DATA_WIDTH(32),.INSTR_INPUT_FILE("auipc.mem"),.DATA_INPUT_FILE("data.mem"), 
+     DATA_MEMORY #(.ADDR_WIDTH(14),.DATA_WIDTH(32),.INSTR_INPUT_FILE("instruction_csr_test.mem"),.DATA_INPUT_FILE("data.mem"), 
                    .PT_INPUT_FILE("Page_Table.mem"),.HANDLER_INPUT_FILE("handler.mem")) Instruction_Memory (
         .clk(clk_int),
         .rst(rst),

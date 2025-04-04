@@ -52,9 +52,9 @@ module dual_port_RAM #(
             douta <= {DATA_WIDTH{1'b0}};  // Reset data output
         else if (ena) begin
             if (|wea) begin  // Write operation if write enable is active
-                for (i=0;i<7;i=i+1) begin
+                for (i=0;i<BYTE_EN;i=i+1) begin
                   //if(wea[i]) ram[addra][(8*(i+1)-1):8*i] <= dina[(8*(i+1)-1):8*i];
-                  if(wea[i]) ram[addra][8*i+:8] <= dina[8*i+:8];
+                  if(wea[i]) ram[addra][(8*i+7) -: 8] <= dina[(8*i+7) -: 8];
                 end
             end
             else begin

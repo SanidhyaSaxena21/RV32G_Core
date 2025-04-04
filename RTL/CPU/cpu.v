@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-`include "defines.v"
+`include "/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DEFINES/defines.v"
 
 module cpu(clk,clk_x2,rst,led,ext_irq,sw_irq,timer_irq,csr_pmp_sb,
            /*wb_ack_i,wb_err_i, wb_rty_i, wb_dat_i,wb_cyc_o, wb_adr_o, wb_stb_o, 

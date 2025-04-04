@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-`include "defines.v"
+`include "/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DEFINES/defines.v"
 
 module PP_LOW ( ONEPOS, ONENEG, TWONEG, INA, INB, PPBIT );
 input  ONEPOS;
