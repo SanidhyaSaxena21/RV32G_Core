@@ -1,0 +1,794 @@
+/*
+
+AMD Vivado v2024.1 (64-bit) [Major: 2024, Minor: 1]
+SW Build: 5076996 on Wed May 22 18:36:09 MDT 2024
+IP Build: 5075265 on Wed May 22 21:45:21 MDT 2024
+IP Build: 5075265 on Wed May 22 21:45:21 MDT 2024
+
+Process ID (PID): 1211615
+License: Customer
+Mode: GUI Mode
+
+Current time: 	Fri Apr 04 18:48:47 IST 2025
+Time zone: 	India Standard Time (Asia/Kolkata)
+
+OS: Ubuntu
+OS Version: 6.8.0-52-generic
+OS Architecture: amd64
+Available processors (cores): 16
+LSB Release Description: Ubuntu 22.04.2 LTS
+
+Display: 1
+Screen size: 1920x1080
+Local screen bounds: x = 74, y = 27, width = 1846, height = 1053
+Screen resolution (DPI): 100
+Available screens: 1
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+Scale size: 12
+OS font scaling: 100%
+Anti-Alias Enabled: false
+
+Java version: 	21.0.1 64-bit
+JavaFX version: 21.0.1
+Java home: 	/tools/Xilinx/Vivado/2024.1/tps/lnx64/jre21.0.1_12
+Java executable: 	/tools/Xilinx/Vivado/2024.1/tps/lnx64/jre21.0.1_12/bin/java
+Java arguments: 	[-Dsun.java2d.pmoffscreen=false, -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2, -Dsun.java2d.xrender=false, -Dsun.java2d.uiScale.enabled=false, -Dswing.aatext=true, -XX:-UsePerfData, -Djdk.map.althashing.threshold=512, -XX:StringTableSize=4072, -XX:+UseStringDeduplication, -XX:MaxGCPauseMillis=200, -XX:+ParallelRefProcEnabled, --add-opens=java.desktop/javax.swing.plaf.synth=ALL-UNNAMED, --add-opens=java.base/java.nio=ALL-UNNAMED, --add-opens=java.desktop/sun.swing=ALL-UNNAMED, --add-opens=java.desktop/javax.swing=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.tree=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.plaf.basic=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.plaf.synth=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.plaf.basic=ALL-UNNAMED, --add-opens=java.desktop/javax.swing=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.tree=ALL-UNNAMED, --add-opens=java.desktop/java.awt.event=ALL-UNNAMED, --add-exports=java.desktop/javax.swing.plaf.synth=ALL-UNNAMED, --add-exports=java.base/java.nio=ALL-UNNAMED, --add-exports=java.desktop/sun.swing=ALL-UNNAMED, --add-exports=java.desktop/javax.swing=ALL-UNNAMED, --add-exports=java.desktop/javax.swing.tree=ALL-UNNAMED, --add-exports=java.desktop/javax.swing.plaf.basic=ALL-UNNAMED, --add-exports=java.desktop/sun.swing=ALL-UNNAMED, --add-exports=java.desktop/sun.swing.table=ALL-UNNAMED, --add-exports=java.desktop/sun.swing.plaf.synth=ALL-UNNAMED, --add-exports=java.desktop/sun.awt.shell=ALL-UNNAMED, --add-exports=java.base/sun.security.action=ALL-UNNAMED, --add-exports=java.desktop/sun.font=ALL-UNNAMED, --add-opens=java.desktop/sun.awt.X11=ALL-UNNAMED, -XX:NewSize=80m, -XX:MaxNewSize=80m, -Xms512m, -Xmx4072m, -Xss10m, -Xrs]
+Java initial memory (-Xms): 	512 MB
+Java maximum memory (-Xmx):	 3 GB
+
+User name: 	root
+User home directory: /root
+User working directory: /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/FPGA
+User country: 	US
+User language: 	en
+User locale: 	en_US
+
+RDI_BASEROOT: /tools/Xilinx/Vivado
+HDI_APPROOT: /tools/Xilinx/Vivado/2024.1
+RDI_DATADIR: /tools/Xilinx/SharedData/2024.1/data:/tools/Xilinx/Vivado/2024.1/data
+RDI_BINDIR: /tools/Xilinx/Vivado/2024.1/bin
+
+Vivado preferences file: /root/.Xilinx/Vivado/2024.1/vivado.xml
+Vivado preferences directory: /root/.Xilinx/Vivado/2024.1/
+Vivado layouts directory: /root/.Xilinx/Vivado/2024.1/data/layouts
+PlanAhead jar file: 	/tools/Xilinx/Vivado/2024.1/lib/classes/planAhead.jar
+Vivado log file: 	/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/FPGA/vivado.log
+Vivado journal file: 	/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/FPGA/vivado.jou
+Engine tmp dir: 	./.Xil/Vivado-1211615-rc
+Non-Default Parameters:	[]
+
+Xilinx & AMD Environment Variables
+--------------------------------------------------------------------------------------------
+RDI_APPROOT: /tools/Xilinx/Vivado/2024.1
+RDI_BASEROOT: /tools/Xilinx/Vivado
+RDI_BINROOT: /tools/Xilinx/Vivado/2024.1/bin
+RDI_BUILD: yes
+RDI_DATADIR: /tools/Xilinx/SharedData/2024.1/data:/tools/Xilinx/Vivado/2024.1/data
+RDI_INSTALLROOT: /tools/Xilinx
+RDI_INSTALLVER: 2024.1
+RDI_JAVA_PLATFORM: 
+RDI_JAVA_VERSION: 21.0.1_12
+RDI_LIBDIR: /tools/Xilinx/Vivado/2024.1/lib/lnx64.o/Ubuntu/22:/tools/Xilinx/Vivado/2024.1/lib/lnx64.o/Ubuntu:/tools/Xilinx/Vivado/2024.1/lib/lnx64.o
+RDI_OPT_EXT: .o
+RDI_PATCHROOT: 
+RDI_PLATFORM: lnx64
+RDI_PREPEND_PATH: /tools/Xilinx/Vivado/2024.1/ids_lite/ISE/bin/lin64
+RDI_PROG: /tools/Xilinx/Vivado/2024.1/bin/unwrapped/lnx64.o/vivado
+RDI_SESSION_INFO: /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/FPGA:rc_1743772715_1211575
+RDI_SHARED_DATA: /tools/Xilinx/SharedData/2024.1/data
+RDI_TPS_ROOT: /tools/Xilinx/Vivado/2024.1/tps/lnx64
+RDI_USE_JDK21: True
+SHELL: /bin/bash
+XILINX: /tools/Xilinx/Vivado/2024.1/ids_lite/ISE
+XILINX_DSP: /tools/Xilinx/Vivado/2024.1/ids_lite/ISE
+XILINX_HLS: /tools/Xilinx/Vitis_HLS/2024.1
+XILINX_PLANAHEAD: /tools/Xilinx/Vivado/2024.1
+XILINX_VIVADO: /tools/Xilinx/Vivado/2024.1
+XILINX_VIVADO_HLS: /tools/Xilinx/Vivado/2024.1
+
+
+GUI allocated memory:	512 MB
+GUI max memory:		4,072 MB
+Engine allocated memory: 1,581 MB
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// Tcl Message: start_gui 
+// HMemoryUtils.trashcanNow. Engine heap size: 1,634 MB. GUI used memory: 69 MB. Current time: 4/4/25, 6:48:48 PM IST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+selectMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ah (PAResourceItoN.MainMenuMgr_FILE, File)
+selectMenu(PAResourceItoN.MainMenuMgr_PROJECT, "Project"); // am (PAResourceItoN.MainMenuMgr_PROJECT, Project)
+selectMenu(PAResourceItoN.MainMenuMgr_CHECKPOINT, "Checkpoint"); // am (PAResourceItoN.MainMenuMgr_CHECKPOINT, Checkpoint)
+selectMenu(PAResourceItoN.MainMenuMgr_IP, "IP"); // am (PAResourceItoN.MainMenuMgr_IP, IP)
+selectMenu(PAResourceItoN.MainMenuMgr_CHECKPOINT, "Checkpoint"); // am (PAResourceItoN.MainMenuMgr_CHECKPOINT, Checkpoint)
+selectMenu(PAResourceItoN.MainMenuMgr_PROJECT, "Project"); // am (PAResourceItoN.MainMenuMgr_PROJECT, Project)
+selectMenu(PAResourceItoN.MainMenuMgr_CHECKPOINT, "Checkpoint"); // am (PAResourceItoN.MainMenuMgr_CHECKPOINT, Checkpoint)
+selectMenu(PAResourceItoN.MainMenuMgr_IP, "IP"); // am (PAResourceItoN.MainMenuMgr_IP, IP)
+selectMenu(PAResourceItoN.MainMenuMgr_CHECKPOINT, "Checkpoint"); // am (PAResourceItoN.MainMenuMgr_CHECKPOINT, Checkpoint)
+selectMenu(PAResourceItoN.MainMenuMgr_PROJECT, "Project"); // am (PAResourceItoN.MainMenuMgr_PROJECT, Project)
+selectMenuItem(PAResourceCommand.PACommandNames_NEW_PROJECT, "New..."); // ap (PAResourceCommand.PACommandNames_NEW_PROJECT, new_project_menu)
+dismissMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ah (PAResourceItoN.MainMenuMgr_FILE, File)
+// Run Command: PAResourceCommand.PACommandNames_NEW_PROJECT
+selectButton("NEXT", "Next >", "New Project"); // JButton (NEXT)
+setText(PAResourceOtoP.ProjectNameChooser_PROJECT_NAME, "RV32G_Core"); // R (PAResourceOtoP.ProjectNameChooser_PROJECT_NAME)
+selectButton("NEXT", "Next >", "New Project"); // JButton (NEXT)
+// [GUI Memory]: 152 MB (+156585kb) [00:00:39]
+// [Engine Memory]: 1,626 MB (+1553873kb) [00:00:39]
+selectButton("NEXT", "Next >", "New Project"); // JButton (NEXT)
+// Elapsed time: 27 seconds
+selectTable(PAResourceEtoH.FPGAChooser_FPGA_TABLE, "xc7vx485tffg1761-2L ; 1761 ; 700 ; 303600 ; 607200 ; 1030 ; 0 ; 2800 ; 32 ; 28 ; 0 ; 28 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 4 ; 14 ;  ;  ;  ;  ; 0 ;  ;  ; 0 ; 100 ; 100 ; E ; 0.97 ; 0.97 ; 1.03", 793, "xc7vx485tffg1761-2L", 0); // c (PAResourceEtoH.FPGAChooser_FPGA_TABLE)
+selectTable(PAResourceEtoH.FPGAChooser_FPGA_TABLE, "xc7vx485tffg1761-2 ; 1761 ; 700 ; 303600 ; 607200 ; 1030 ; 0 ; 2800 ; 32 ; 28 ; 0 ; 28 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 4 ; 14 ;  ;  ;  ;  ; 0 ;  ;  ;  ;  ;  ;  ; 0.97 ; 0.97 ; 1.03", 792, "xc7vx485tffg1761-2", 0); // c (PAResourceEtoH.FPGAChooser_FPGA_TABLE)
+selectButton("NEXT", "Next >", "New Project"); // JButton (NEXT)
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// TclEventType: FLOW_ADDED
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_ADD
+// TclEventType: RUN_CURRENT
+// TclEventType: PROJECT_DASHBOARD_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_NEW
+// [Engine Memory]: 1,756 MB (+50492kb) [00:01:23]
+// WARNING: HEventQueue.dispatchEvent() is taking  1331 ms.
+// TclEventType: FILE_SET_OPTIONS_CHANGE
+// Tcl Message: create_project RV32G_Core /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/FPGA/RV32G_Core -part xc7vx485tffg1761-2 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1704] No user IP repositories specified INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/tools/Xilinx/Vivado/2024.1/data/ip'. 
+// TclEventType: FILE_SET_OPTIONS_CHANGE
+// HMemoryUtils.trashcanNow. Engine heap size: 1,821 MB. GUI used memory: 76 MB. Current time: 4/4/25, 6:50:03 PM IST
+// TclEventType: FILE_SET_OPTIONS_CHANGE
+selectButton("FINISH", "Finish", "New Project"); // JButton (FINISH)
+// 'g' command handler elapsed time: 56 seconds
+dismissDialog("Create Project"); // bj (Create Project Progress)
+dismissDialog("New Project"); // f (dialog0)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources]", 0, false, false, false, false, true, false); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE) - Popup Trigger
+selectMenu(PAResourceCommand.PACommandNames_AUTO_UPDATE_HIER, "Hierarchy Update"); // am (PAResourceCommand.PACommandNames_AUTO_UPDATE_HIER, Hierarchy Update)
+selectMenu(PAResourceQtoS.SrcMenu_IP_HIERARCHY, "IP Hierarchy"); // am (PAResourceQtoS.SrcMenu_IP_HIERARCHY, IP Hierarchy)
+selectMenuItem(PAResourceCommand.PACommandNames_ADD_SOURCES, "Add Sources..."); // ap (PAResourceCommand.PACommandNames_ADD_SOURCES, add_sources_menu)
+// Run Command: PAResourceCommand.PACommandNames_ADD_SOURCES
+selectButton("NEXT", "Next >", "Add Sources"); // JButton (NEXT)
+selectButton(PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT, "Add Files", "Add Sources"); // a (PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT)
+setFileChooser("/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/riscv_platform.v");
+selectButton("FINISH", "Finish", "Add Sources"); // JButton (FINISH)
+// 'f' command handler elapsed time: 9 seconds
+dismissDialog("Add Sources"); // c (dialog1)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: add_files -norecurse /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/riscv_platform.v 
+// Elapsed Time for: 'L.f': 20s
+// Elapsed Time for: 'L.f': 22s
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// Tcl Message: update_compile_order -fileset sources_1 
+// Elapsed Time for: 'L.f': 24s
+// HMemoryUtils.trashcanNow. Engine heap size: 1,862 MB. GUI used memory: 76 MB. Current time: 4/4/25, 6:50:28 PM IST
+// [Engine Memory]: 1,862 MB (+19438kb) [00:01:49]
+// Elapsed Time for: 'L.f': 26s
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources]", 0); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, riscv_platform (riscv_platform.v)]", 2, true); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE) - Node
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, riscv_platform (riscv_platform.v)]", 2); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+collapseTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, riscv_platform (riscv_platform.v)]", 2); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources]", 0, true, false, false, false, true, false); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE) - Popup Trigger - Node
+selectMenu(PAResourceCommand.PACommandNames_AUTO_UPDATE_HIER, "Hierarchy Update"); // am (PAResourceCommand.PACommandNames_AUTO_UPDATE_HIER, Hierarchy Update)
+selectMenu(PAResourceQtoS.SrcMenu_IP_HIERARCHY, "IP Hierarchy"); // am (PAResourceQtoS.SrcMenu_IP_HIERARCHY, IP Hierarchy)
+selectMenuItem(PAResourceCommand.PACommandNames_ADD_SOURCES, "Add Sources..."); // ap (PAResourceCommand.PACommandNames_ADD_SOURCES, add_sources_menu)
+// Run Command: PAResourceCommand.PACommandNames_ADD_SOURCES
+selectButton("NEXT", "Next >", "Add Sources"); // JButton (NEXT)
+selectButton(PAResourceQtoS.SrcChooserPanel_ADD_DIRECTORIES, "Add Directories", "Add Sources"); // a (PAResourceQtoS.SrcChooserPanel_ADD_DIRECTORIES)
+// Elapsed time: 17 seconds
+setFolderChooser("/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL");
+selectButton("FINISH", "Finish", "Add Sources"); // JButton (FINISH)
+// 'f' command handler elapsed time: 22 seconds
+dismissDialog("Add Sources"); // c (dialog3)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 56s
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 58s
+// Tcl Message: update_compile_order -fileset sources_1 
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, riscv_platform (riscv_platform.v)]", 3); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+// Elapsed Time for: 'L.f': 01m:00s
+collapseTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, riscv_platform (riscv_platform.v)]", 3); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,898 MB. GUI used memory: 80 MB. Current time: 4/4/25, 6:51:03 PM IST
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, riscv_platform (riscv_platform.v)]", 3); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+// Elapsed Time for: 'L.f': 01m:02s
+collapseTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, riscv_platform (riscv_platform.v)]", 3); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, RTL Analysis, Run Linter]", 12, false); // g (PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, Flow Navigator Tree)
+// Tcl Message: synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint  
+// Tcl Message: Command: synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint Starting synth_design Attempting to get a license for feature 'Synthesis' and/or device 'xc7vx485t' 
+// HMemoryUtils.trashcanNow. Engine heap size: 1,905 MB. GUI used memory: 80 MB. Current time: 4/4/25, 6:51:36 PM IST
+// TclEventType: MSGMGR_REFRESH_MSG
+// Tcl Message: INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7vx485t' INFO: [Common 17-1540] The version limit for your license is '2024.11' and has expired for new software. A version limit expiration means that, although you may be able to continue to use the current version of tools or IP with this license, you will not be eligible for new releases. INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes. INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes INFO: [Synth 8-7075] Helper process launched with PID 1212444 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Starting Synthesize : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 8357.934 ; gain = 381.773 ; free physical = 5907 ; free virtual = 16895 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Clean up Linter database... 
+// TclEventType: ELABORATE_FAIL
+// TclEventType: LINTER_RUN
+// Tcl Message: ERROR: [Synth 8-9263] cannot open include file 'defines.v' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/EXECUTE.v:2] 
+// Tcl Message: INFO: [Synth 8-10285] module 'EXECUTE' is ignored due to previous errors [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/EXECUTE.v:616] INFO: [Synth 8-9084] Verilog file '/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/EXECUTE.v' ignored due to errors 
+// Tcl Message: ERROR: [Synth 8-439] module 'riscv_platform' not found 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Finished Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 8434.871 ; gain = 458.711 ; free physical = 5810 ; free virtual = 16813 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: synthesize failed 
+// Tcl Message: INFO: [Common 17-83] Releasing license: Synthesis 
+// Tcl Message: 13 Infos, 9 Warnings, 0 Critical Warnings and 9 Errors encountered. synth_design completed successfully 
+// Tcl Message: synth_design: Time (s): cpu = 00:00:05 ; elapsed = 00:00:44 . Memory (MB): peak = 8434.879 ; gain = 464.566 ; free physical = 5811 ; free virtual = 16814 
+// Tcl Message: INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 2062.611; main = 1638.043; forked = 424.568 INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 9530.484; main = 8434.875; forked = 1095.609 
+// Tcl Message: ERROR: [Common 17-39] 'synth_design' failed due to earlier errors. 
+// CommandFailedException: ERROR: [Common 17-69] Command failed: ERROR: [Common 17-39] 'synth_design' failed due to earlier errors.  
+// [Engine Memory]: 2,363 MB (+427808kb) [00:03:12]
+// Elapsed Time for: 'b': 44s
+// HOptionPane Error: 'Run Linter Failed. Check Messages for details. (Run Linter Failed)'
+// 'a' command handler elapsed time: 46 seconds
+// Elapsed time: 46 seconds
+selectButton("OptionPane.button", "OK", "Run Linter Failed"); // JButton (OptionPane.button)
+// HMemoryUtils.trashcanNow. Engine heap size: 2,395 MB. GUI used memory: 80 MB. Current time: 4/4/25, 6:51:53 PM IST
+selectTab((HResource) null, (HResource) null, "Messages", 1); // aa
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [Synth 8-9263] cannot open include file 'defines.v' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/EXECUTE.v:2]. ]", 11, true); // u.d (PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE) - Node
+messagesViewCrossProbe(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "src;-;/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/EXECUTE.v;-;;-;16;-;line;-;2;-;;-;16;-;"); // u.d (PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 04m:12s
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 04m:14s
+// Tcl Message: update_compile_order -fileset sources_1 
+// HMemoryUtils.trashcanNow. Engine heap size: 2,483 MB. GUI used memory: 82 MB. Current time: 4/4/25, 6:54:18 PM IST
+// [Engine Memory]: 2,483 MB (+1872kb) [00:05:39]
+// Elapsed Time for: 'L.f': 04m:16s
+// Elapsed Time for: 'L.f': 04m:18s
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 05m:40s
+// Elapsed Time for: 'L.f': 05m:42s
+// [GUI Memory]: 160 MB (+529kb) [00:07:06]
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 06m:26s
+// Elapsed Time for: 'L.f': 06m:28s
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 06m:40s
+// HMemoryUtils.trashcanNow. Engine heap size: 2,545 MB. GUI used memory: 82 MB. Current time: 4/4/25, 6:56:43 PM IST
+// Elapsed Time for: 'L.f': 06m:44s
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 08m:04s
+// HMemoryUtils.trashcanNow. Engine heap size: 2,560 MB. GUI used memory: 82 MB. Current time: 4/4/25, 6:58:08 PM IST
+// Elapsed Time for: 'L.f': 08m:06s
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 08m:28s
+// Elapsed Time for: 'L.f': 08m:32s
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 09m:06s
+// Elapsed Time for: 'L.f': 09m:08s
+// HMemoryUtils.trashcanNow. Engine heap size: 2,588 MB. GUI used memory: 82 MB. Current time: 4/4/25, 6:59:13 PM IST
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 09m:36s
+// Elapsed Time for: 'L.f': 09m:38s
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 09m:50s
+// HMemoryUtils.trashcanNow. Engine heap size: 2,632 MB. GUI used memory: 82 MB. Current time: 4/4/25, 6:59:53 PM IST
+// [Engine Memory]: 2,632 MB (+25654kb) [00:11:14]
+// Elapsed Time for: 'L.f': 09m:52s
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 10m:16s
+// Elapsed Time for: 'L.f': 10m:18s
+// Elapsed time: 537 seconds
+selectButton(PAResourceAtoD.AbstractFileView_RELOAD, "Reload"); // g (PAResourceAtoD.AbstractFileView_RELOAD)
+// Elapsed time: 14 seconds
+selectButton(PAResourceItoN.MsgView_CLEAR_MESSAGES_RESULTING_FROM_USER_EXECUTED, "Messages_cleanUpMessages"); // B (PAResourceItoN.MsgView_CLEAR_MESSAGES_RESULTING_FROM_USER_EXECUTED, Messages_cleanUpMessages)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, RTL Analysis, Run Linter]", 12, false); // g (PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, Flow Navigator Tree)
+// Tcl Message: synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint  
+// Tcl Message: Command: synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint Starting synth_design Attempting to get a license for feature 'Synthesis' and/or device 'xc7vx485t' 
+// Tcl Message: INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7vx485t' INFO: [Common 17-1540] The version limit for your license is '2024.11' and has expired for new software. A version limit expiration means that, although you may be able to continue to use the current version of tools or IP with this license, you will not be eligible for new releases. INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes. 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Starting Synthesize : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 8720.992 ; gain = 0.000 ; free physical = 6135 ; free virtual = 17127 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Clean up Linter database... 
+// Tcl Message: INFO: [Synth 8-11241] undeclared symbol 'rd_counter_tick', assumed default net type 'wire' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/Sys_counter.v:38] 
+// TclEventType: ELABORATE_FAIL
+// TclEventType: LINTER_RUN
+// Tcl Message: 	Parameter DATA_WIDTH bound to: 2 - type: integer  	Parameter ADDR_WIDTH bound to: 11 - type: integer  
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Finished Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 8779.434 ; gain = 58.441 ; free physical = 6034 ; free virtual = 17024 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: synthesize failed 
+// Tcl Message: INFO: [Common 17-83] Releasing license: Synthesis 
+// Tcl Message: 45 Infos, 51 Warnings, 0 Critical Warnings and 8 Errors encountered. synth_design completed successfully 
+// Tcl Message: synth_design: Time (s): cpu = 00:00:05 ; elapsed = 00:00:25 . Memory (MB): peak = 8779.434 ; gain = 58.441 ; free physical = 6034 ; free virtual = 17024 
+// Tcl Message: INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 1755.938; main = 1755.938; forked = 0.000 INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 8779.438; main = 8779.438; forked = 0.000 
+// Tcl Message: ERROR: [Common 17-39] 'synth_design' failed due to earlier errors. 
+// CommandFailedException: ERROR: [Common 17-69] Command failed: ERROR: [Common 17-39] 'synth_design' failed due to earlier errors.  
+// Elapsed Time for: 'b': 24s
+// HOptionPane Error: 'Run Linter Failed. Check Messages for details. (Run Linter Failed)'
+// HMemoryUtils.trashcanNow. Engine heap size: 2,724 MB. GUI used memory: 83 MB. Current time: 4/4/25, 7:01:43 PM IST
+// 'a' command handler elapsed time: 29 seconds
+// Elapsed time: 29 seconds
+selectButton("OptionPane.button", "OK", "Run Linter Failed"); // JButton (OptionPane.button)
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [Synth 8-524] part-select [7:0] out of range of prefix 'dina' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v:57]. ]", 9, false); // u.d (PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE)
+messagesViewCrossProbe(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "src;-;/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v;-;;-;16;-;line;-;57;-;;-;16;-;"); // u.d (PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE)
+// Elapsed time: 22 seconds
+selectCodeEditor("dual_port_RAM.v", 219, 451); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 219, 451, false, false, false, false, true); // ac (dual_port_RAM.v) - Double Click
+selectCodeEditor("dual_port_RAM.v", 229, 393); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 216, 460); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 216, 460, false, false, false, false, true); // ac (dual_port_RAM.v) - Double Click
+typeControlKey((HResource) null, "dual_port_RAM.v", 'c'); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 197, 181); // ac (dual_port_RAM.v)
+typeControlKey((HResource) null, "dual_port_RAM.v", 'v'); // ac (dual_port_RAM.v)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// [Engine Memory]: 2,775 MB (+12433kb) [00:13:56]
+// Elapsed Time for: 'L.f': 12m:34s
+// Elapsed time: 19 seconds
+selectCodeEditor("dual_port_RAM.v", 469, 218); // ac (dual_port_RAM.v)
+// HMemoryUtils.trashcanNow. Engine heap size: 2,792 MB. GUI used memory: 84 MB. Current time: 4/4/25, 7:02:38 PM IST
+// Elapsed Time for: 'L.f': 12m:38s
+// Elapsed time: 78 seconds
+selectCodeEditor("dual_port_RAM.v", 347, 231); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 305, 240); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 126, 219); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 490, 224); // ac (dual_port_RAM.v)
+typeControlKey((HResource) null, "dual_port_RAM.v", 'v'); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 567, 212); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 549, 217); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 528, 285); // ac (dual_port_RAM.v)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 14m:28s
+// Elapsed Time for: 'L.f': 14m:32s
+// Elapsed time: 10 seconds
+selectButton(PAResourceItoN.MsgView_CLEAR_MESSAGES_RESULTING_FROM_USER_EXECUTED, "Messages_cleanUpMessages"); // B (PAResourceItoN.MsgView_CLEAR_MESSAGES_RESULTING_FROM_USER_EXECUTED, Messages_cleanUpMessages)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, RTL Analysis, Run Linter]", 12, false); // g (PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, Flow Navigator Tree)
+// Tcl Message: synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint  
+// Tcl Message: Command: synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint Starting synth_design Attempting to get a license for feature 'Synthesis' and/or device 'xc7vx485t' 
+// Tcl Message: INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7vx485t' INFO: [Common 17-1540] The version limit for your license is '2024.11' and has expired for new software. A version limit expiration means that, although you may be able to continue to use the current version of tools or IP with this license, you will not be eligible for new releases. INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes. 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Starting Synthesize : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 8867.637 ; gain = 0.000 ; free physical = 6039 ; free virtual = 17022 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Clean up Linter database... 
+// Tcl Message: INFO: [Synth 8-11241] undeclared symbol 'rd_counter_tick', assumed default net type 'wire' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/Sys_counter.v:38] 
+// Tcl Message: 	Parameter DATA_WIDTH bound to: 2 - type: integer  	Parameter ADDR_WIDTH bound to: 11 - type: integer  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'dual_port_RAM' (1#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v:23] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'Direction_Predictor' (2#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/Direction_Predictor.v:5] INFO: [Synth 8-6157] synthesizing module 'Branch_Target_Buff' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/Branch_Target_Buff.v:5] INFO: [Synth 8-226] default block is never used [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/Branch_Target_Buff.v:95] INFO: [Synth 8-6157] synthesizing module 'dual_port_RAM__parameterized0' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v:23] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'dual_port_RAM__parameterized0' (2#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v:23] INFO: [Synth 8-6157] synthesizing module 'BTB_PLRU' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/BTB_PLRU.v:3] INFO: [Synth 8-155] case statement is not full and has no default [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/BTB_PLRU.v:41] 
+// HMemoryUtils.trashcanNow. Engine heap size: 3,170 MB. GUI used memory: 86 MB. Current time: 4/4/25, 7:05:08 PM IST
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'BTB_PLRU' (3#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/BTB_PLRU.v:3] INFO: [Synth 8-6155] done synthesizing module 'Branch_Target_Buff' (4#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/Branch_Target_Buff.v:5] INFO: [Synth 8-6157] synthesizing module 'Return_Addr_Stack' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/Return_Addr_Stack.v:5] 
+// Tcl Message: INFO: [Synth 8-256] done synthesizing module 'FPDiv_8_23_comb_uid2' (75#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/div_SP.vhdl:79] INFO: [Synth 8-638] synthesizing module 'FPDiv_11_52_comb_uid2' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/div_DP.vhdl:79] 
+// Tcl Message: INFO: [Synth 8-256] done synthesizing module 'FPDiv_11_52_comb_uid2' (76#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/div_DP.vhdl:79] INFO: [Synth 8-6155] done synthesizing module 'DIV' (77#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/DIV.v:3] INFO: [Synth 8-6157] synthesizing module 'SQRT' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/SQRT.v:3] INFO: [Synth 8-638] synthesizing module 'FPSqrt_8_23' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/sqrt_SP.vhdl:24] 
+// Tcl Message: INFO: [Synth 8-256] done synthesizing module 'FPSqrt_8_23' (78#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/sqrt_SP.vhdl:24] INFO: [Synth 8-638] synthesizing module 'FPSqrt_11_52' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/sqrt_DP.vhdl:24] 
+// Tcl Message: 	Parameter DEPTH bound to: 2 - type: integer  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'irq_bit_sync' (104#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/irq_bit_sync.v:23] INFO: [Synth 8-6157] synthesizing module 'irq_pulser' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/irq_pulser.v:23] INFO: [Synth 8-6155] done synthesizing module 'irq_pulser' (105#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/irq_pulser.v:23] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'csr' (106#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/csr.v:8] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'dcache_ram_fsm' (109#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_ram_fsm.v:7] 
+// Tcl Message: INFO: [Synth 8-6157] synthesizing module 'dcache_dpram' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_dpram.v:7] INFO: [Synth 8-226] default block is never used [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_dpram.v:270] INFO: [Synth 8-226] default block is never used [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_dpram.v:284] 
+// TclEventType: ELABORATE_FAIL
+// HMemoryUtils.trashcanNow. Engine heap size: 3,170 MB. GUI used memory: 86 MB. Current time: 4/4/25, 7:05:08 PM IST
+// TclEventType: ELABORATE_FAIL
+// TclEventType: LINTER_RUN
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Finished Synthesize : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 9238.328 ; gain = 370.691 ; free physical = 5680 ; free virtual = 16665 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: synthesize failed 
+// Tcl Message: INFO: [Common 17-83] Releasing license: Synthesis 
+// Tcl Message: 401 Infos, 282 Warnings, 0 Critical Warnings and 7 Errors encountered. synth_design completed successfully 
+// Tcl Message: synth_design: Time (s): cpu = 00:00:10 ; elapsed = 00:00:30 . Memory (MB): peak = 9238.328 ; gain = 370.691 ; free physical = 5680 ; free virtual = 16665 
+// Tcl Message: INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 2109.681; main = 2109.681; forked = 0.000 INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 9238.332; main = 9238.332; forked = 0.000 
+// Tcl Message: ERROR: [Common 17-39] 'synth_design' failed due to earlier errors. 
+// CommandFailedException: ERROR: [Common 17-69] Command failed: ERROR: [Common 17-39] 'synth_design' failed due to earlier errors.  
+// Elapsed Time for: 'b': 30s
+// HOptionPane Error: 'Run Linter Failed. Check Messages for details. (Run Linter Failed)'
+// 'a' command handler elapsed time: 31 seconds
+// Elapsed time: 32 seconds
+selectButton("OptionPane.button", "OK", "Run Linter Failed"); // JButton (OptionPane.button)
+// [Engine Memory]: 3,170 MB (+268627kb) [00:16:33]
+// Elapsed time: 18 seconds
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [Synth 8-439] module 'dcache' not found [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_dpram.v:354]. ]", 22, false); // u.d (PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE)
+messagesViewCrossProbe(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "src;-;/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_dpram.v;-;;-;16;-;line;-;354;-;;-;16;-;"); // u.d (PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE)
+// HMemoryUtils.trashcanNow. Engine heap size: 3,200 MB. GUI used memory: 86 MB. Current time: 4/4/25, 7:05:33 PM IST
+// Elapsed time: 199 seconds
+selectCodeEditor("dcache_dpram.v", 24, 199); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 24, 199, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+typeControlKey(null, null, 'z');
+selectCodeEditor("dcache_dpram.v", 233, 132); // ac (dcache_dpram.v)
+// Elapsed time: 60 seconds
+selectCodeEditor("dcache_dpram.v", 104, 98); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 104, 98, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+typeControlKey((HResource) null, "dcache_dpram.v", 'c'); // ac (dcache_dpram.v)
+// Elapsed time: 48 seconds
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "dual_port_RAM.v", 2); // o (PlanAheadTabBaseWorkspace_JideTabbedPane)
+selectCodeEditor("dual_port_RAM.v", 112, 338); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 108, 339); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 119, 338); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 119, 338, false, false, false, false, true); // ac (dual_port_RAM.v) - Double Click
+typeControlKey((HResource) null, "dual_port_RAM.v", 'c'); // ac (dual_port_RAM.v)
+// Elapsed time: 43 seconds
+collapseTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources]", 38); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+// Elapsed time: 78 seconds
+selectCodeEditor("dual_port_RAM.v", 102, 334); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 102, 334, false, false, false, false, true); // ac (dual_port_RAM.v) - Double Click
+selectCodeEditor("dual_port_RAM.v", 102, 334); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 102, 334); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 119, 288); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 113, 341); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 113, 341, false, false, false, false, true); // ac (dual_port_RAM.v) - Double Click
+typeControlKey((HResource) null, "dual_port_RAM.v", 'c'); // ac (dual_port_RAM.v)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "dcache_dpram.v", 3); // o (PlanAheadTabBaseWorkspace_JideTabbedPane)
+selectCodeEditor("dcache_dpram.v", 22, 123); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 22, 123, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 20, 201); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 20, 201, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 21, 308); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 21, 308, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 24, 384); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 24, 384, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 97, 123); // ac (dcache_dpram.v)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "dual_port_RAM.v", 2); // o (PlanAheadTabBaseWorkspace_JideTabbedPane)
+selectCodeEditor("dual_port_RAM.v", 143, 323); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 148, 348); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 148, 348, false, false, false, false, true); // ac (dual_port_RAM.v) - Double Click
+typeControlKey((HResource) null, "dual_port_RAM.v", 'c'); // ac (dual_port_RAM.v)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "dcache_dpram.v", 3); // o (PlanAheadTabBaseWorkspace_JideTabbedPane)
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "dual_port_RAM.v", 2); // o (PlanAheadTabBaseWorkspace_JideTabbedPane)
+selectCodeEditor("dual_port_RAM.v", 134, 372); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 134, 372, false, false, false, false, true); // ac (dual_port_RAM.v) - Double Click
+typeControlKey((HResource) null, "dual_port_RAM.v", 'c'); // ac (dual_port_RAM.v)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "dcache_dpram.v", 3); // o (PlanAheadTabBaseWorkspace_JideTabbedPane)
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 311, 128); // ac (dcache_dpram.v)
+typeControlKey((HResource) null, "dcache_dpram.v", 'c'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 39, 201); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 39, 201, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 44, 307); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 44, 307, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 47, 389); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 47, 389, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 403, 141); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 403, 141, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+selectCodeEditor("dcache_dpram.v", 294, 231); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 295, 308); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 294, 321); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 293, 400); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 196, 136); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 200, 217); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 197, 318); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 199, 400); // ac (dcache_dpram.v)
+// Elapsed time: 10 seconds
+selectCodeEditor("dcache_dpram.v", 803, 66); // ac (dcache_dpram.v)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "dual_port_RAM.v", 2); // o (PlanAheadTabBaseWorkspace_JideTabbedPane)
+selectCodeEditor("dual_port_RAM.v", 115, 374); // ac (dual_port_RAM.v)
+selectCodeEditor("dual_port_RAM.v", 115, 374, false, false, false, false, true); // ac (dual_port_RAM.v) - Double Click
+typeControlKey((HResource) null, "dual_port_RAM.v", 'c'); // ac (dual_port_RAM.v)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "dcache_dpram.v", 3); // o (PlanAheadTabBaseWorkspace_JideTabbedPane)
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+// Elapsed time: 10 seconds
+selectCodeEditor("dcache_dpram.v", 895, 67); // ac (dcache_dpram.v)
+typeControlKey((HResource) null, "dcache_dpram.v", 'c'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 847, 139); // ac (dcache_dpram.v)
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 836, 248); // ac (dcache_dpram.v)
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 824, 326); // ac (dcache_dpram.v)
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+// Elapsed time: 12 seconds
+selectCodeEditor("dcache_dpram.v", 361, 316); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 393, 298); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 391, 310); // ac (dcache_dpram.v)
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 359, 404); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 406, 408); // ac (dcache_dpram.v)
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 21, 83); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 21, 83, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+selectCodeEditor("dcache_dpram.v", 98, 229); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 98, 229, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+// Elapsed time: 12 seconds
+selectCodeEditor("dcache_dpram.v", 337, 51); // ac (dcache_dpram.v)
+typeControlKey((HResource) null, "dcache_dpram.v", 'c'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 26, 139); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 26, 139, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 31, 381); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 31, 381, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+typeControlKey((HResource) null, "dcache_dpram.v", 'v'); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 98, 335); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 98, 335, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+selectCodeEditor("dcache_dpram.v", 202, 134); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 202, 134, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+selectCodeEditor("dcache_dpram.v", 205, 136); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 205, 136, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+selectCodeEditor("dcache_dpram.v", 212, 384); // ac (dcache_dpram.v)
+selectCodeEditor("dcache_dpram.v", 212, 384, false, false, false, false, true); // ac (dcache_dpram.v) - Double Click
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 25m:44s
+// HMemoryUtils.trashcanNow. Engine heap size: 3,238 MB. GUI used memory: 86 MB. Current time: 4/4/25, 7:15:48 PM IST
+// Elapsed Time for: 'L.f': 25m:46s
+// Elapsed time: 11 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, RTL Analysis, Run Linter]", 12, false); // g (PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, Flow Navigator Tree)
+// Tcl Message: synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint  
+// Tcl Message: Command: synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint Starting synth_design Attempting to get a license for feature 'Synthesis' and/or device 'xc7vx485t' 
+// Tcl Message: INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7vx485t' INFO: [Common 17-1540] The version limit for your license is '2024.11' and has expired for new software. A version limit expiration means that, although you may be able to continue to use the current version of tools or IP with this license, you will not be eligible for new releases. INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes. 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Starting Synthesize : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 9304.512 ; gain = 0.000 ; free physical = 448 ; free virtual = 16722 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Clean up Linter database... 
+// Tcl Message: INFO: [Synth 8-11241] undeclared symbol 'rd_counter_tick', assumed default net type 'wire' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/Sys_counter.v:38] 
+// Tcl Message: 	Parameter DATA_WIDTH bound to: 2 - type: integer  	Parameter ADDR_WIDTH bound to: 11 - type: integer  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'dual_port_RAM' (1#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v:23] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'BTB_PLRU' (3#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/BTB_PLRU.v:3] INFO: [Synth 8-6155] done synthesizing module 'Branch_Target_Buff' (4#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/Branch_Target_Buff.v:5] INFO: [Synth 8-6157] synthesizing module 'Return_Addr_Stack' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/Return_Addr_Stack.v:5] 
+// Tcl Message: INFO: [Synth 8-256] done synthesizing module 'FPDiv_8_23_comb_uid2' (75#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/div_SP.vhdl:79] INFO: [Synth 8-638] synthesizing module 'FPDiv_11_52_comb_uid2' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/div_DP.vhdl:79] 
+// Tcl Message: INFO: [Synth 8-256] done synthesizing module 'FPDiv_11_52_comb_uid2' (76#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/div_DP.vhdl:79] INFO: [Synth 8-6155] done synthesizing module 'DIV' (77#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/DIV.v:3] INFO: [Synth 8-6157] synthesizing module 'SQRT' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/SQRT.v:3] INFO: [Synth 8-638] synthesizing module 'FPSqrt_8_23' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/sqrt_SP.vhdl:24] 
+// Tcl Message: INFO: [Synth 8-256] done synthesizing module 'FPSqrt_8_23' (78#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/sqrt_SP.vhdl:24] INFO: [Synth 8-638] synthesizing module 'FPSqrt_11_52' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/sqrt_DP.vhdl:24] 
+// Tcl Message: 	Parameter DEPTH bound to: 2 - type: integer  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'irq_bit_sync' (104#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/irq_bit_sync.v:23] INFO: [Synth 8-6157] synthesizing module 'irq_pulser' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/irq_pulser.v:23] INFO: [Synth 8-6155] done synthesizing module 'irq_pulser' (105#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/irq_pulser.v:23] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'csr' (106#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/csr.v:8] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'dcache_ram_fsm' (109#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_ram_fsm.v:7] 
+// Tcl Message: INFO: [Synth 8-6157] synthesizing module 'dcache_dpram' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_dpram.v:7] INFO: [Synth 8-226] default block is never used [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_dpram.v:270] INFO: [Synth 8-226] default block is never used [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_dpram.v:284] INFO: [Synth 8-6157] synthesizing module 'dual_port_RAM__parameterized1' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v:23] 
+// Tcl Message: 	Parameter DATA_WIDTH bound to: 128 - type: integer  	Parameter ADDR_WIDTH bound to: 7 - type: integer  
+// HMemoryUtils.trashcanNow. Engine heap size: 3,522 MB. GUI used memory: 89 MB. Current time: 4/4/25, 7:16:22 PM IST
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'dual_port_RAM__parameterized1' (109#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v:23] 
+// Tcl Message: INFO: [Synth 8-6157] synthesizing module 'dual_port_RAM__parameterized2' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v:23] 
+// Tcl Message: 	Parameter DATA_WIDTH bound to: 32 - type: integer  	Parameter ADDR_WIDTH bound to: 7 - type: integer  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'dual_port_RAM__parameterized2' (109#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v:23] 
+// Tcl Message: INFO: [Synth 8-6157] synthesizing module 'DTLB' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/DTLB.v:25] INFO: [Synth 8-6157] synthesizing module 'Registers' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/cam.v:28] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'dcache_top' (114#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_top.v:5] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'ITLB' (118#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/ITLB/ITLB.v:25] INFO: [Synth 8-6157] synthesizing module 'MEMORY_MACRO_CACHE' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO_CACHE.v:23] 
+// Tcl Message: 	Parameter ADDR_WIDTH bound to: 7 - type: integer  	Parameter DATA_WIDTH bound to: 256 - type: integer  	Parameter INIT_FILE bound to: 0 - type: integer  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'MEMORY_MACRO_CACHE' (119#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO_CACHE.v:23] INFO: [Synth 8-6157] synthesizing module 'MEMORY_MACRO_CACHE__parameterized0' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO_CACHE.v:23] 
+// Tcl Message: 	Parameter ADDR_WIDTH bound to: 7 - type: integer  	Parameter DATA_WIDTH bound to: 21 - type: integer  	Parameter INIT_FILE bound to: 0 - type: integer  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'MEMORY_MACRO_CACHE__parameterized0' (119#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO_CACHE.v:23] INFO: [Synth 8-6155] done synthesizing module 'icache' (120#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/icache.v:21] INFO: [Synth 8-6157] synthesizing module 'cachefsm' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/cachefsm.v:22] INFO: [Synth 8-226] default block is never used [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/cachefsm.v:90] INFO: [Synth 8-6155] done synthesizing module 'cachefsm' (121#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/cachefsm.v:22] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'mem_hier' (122#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/mem_hier.v:22] INFO: [Synth 8-6155] done synthesizing module 'fet_dec_ex_mem' (123#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/fet_dec_ex_mem.v:4] INFO: [Synth 8-6155] done synthesizing module 'cpu' (124#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/cpu.v:4] 
+// Tcl Message: INFO: [Synth 8-6157] synthesizing module 'rv32_mpu' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MPU/rv32_mpu.sv:4] 
+// Tcl Message: 	Parameter MMU_SUPPORT bound to: 0 - type: integer  
+// Tcl Message: INFO: [Synth 8-6157] synthesizing module 'rv32_pmp_region' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MPU/rv32_pmp_region.sv:5] 
+// Tcl Message: 	Parameter RLEN bound to: 32 - type: integer  	Parameter XLEN bound to: 32 - type: integer  	Parameter AXI_ADDR_W bound to: 32 - type: integer  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'rv32_pmp_region' (125#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MPU/rv32_pmp_region.sv:5] INFO: [Synth 8-6155] done synthesizing module 'rv32_mpu' (126#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MPU/rv32_mpu.sv:4] INFO: [Synth 8-6157] synthesizing module 'interconnect' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/Crossbar/Interconnect.v:9] INFO: [Synth 8-6155] done synthesizing module 'interconnect' (127#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/Crossbar/Interconnect.v:9] INFO: [Synth 8-6157] synthesizing module 'rv32_clint' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CLINT_Controller/rv32_clint.sv:37] 
+// Tcl Message: 	Parameter ADDRW bound to: 32 - type: integer  	Parameter XLEN bound to: 32 - type: integer  
+// Tcl Message: ERROR: [Synth 8-439] module 'rv32_2dffsync' not found [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CLINT_Controller/rv32_clint.sv:72] ERROR: [Synth 8-6156] failed synthesizing module 'rv32_clint' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CLINT_Controller/rv32_clint.sv:37] ERROR: [Synth 8-6156] failed synthesizing module 'riscv_platform' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/riscv_platform.v:23] 
+// TclEventType: ELABORATE_FAIL
+// TclEventType: LINTER_RUN
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Finished Synthesize : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 9923.961 ; gain = 619.449 ; free physical = 425 ; free virtual = 16135 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: synthesize failed 
+// Tcl Message: INFO: [Common 17-83] Releasing license: Synthesis 
+// Tcl Message: 444 Infos, 303 Warnings, 0 Critical Warnings and 3 Errors encountered. synth_design completed successfully 
+// Tcl Message: synth_design: Time (s): cpu = 00:00:13 ; elapsed = 00:00:34 . Memory (MB): peak = 9923.961 ; gain = 619.449 ; free physical = 425 ; free virtual = 16135 
+// Tcl Message: INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 2769.670; main = 2769.670; forked = 0.000 INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 9923.965; main = 9923.965; forked = 0.000 
+// Tcl Message: ERROR: [Common 17-39] 'synth_design' failed due to earlier errors. 
+// CommandFailedException: ERROR: [Common 17-69] Command failed: ERROR: [Common 17-39] 'synth_design' failed due to earlier errors.  
+// [Engine Memory]: 3,857 MB (+553980kb) [00:27:48]
+// Elapsed Time for: 'b': 33s
+// HOptionPane Error: 'Run Linter Failed. Check Messages for details. (Run Linter Failed)'
+// 'a' command handler elapsed time: 37 seconds
+// Elapsed time: 37 seconds
+selectButton("OptionPane.button", "OK", "Run Linter Failed"); // JButton (OptionPane.button)
+selectTree(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "[, Vivado Commands, General Messages, [Synth 8-439] module 'rv32_2dffsync' not found [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CLINT_Controller/rv32_clint.sv:72]. ]", 33, false); // u.d (PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE)
+messagesViewCrossProbe(PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE, "src;-;/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CLINT_Controller/rv32_clint.sv;-;;-;16;-;line;-;72;-;;-;16;-;"); // u.d (PAResourceItoN.MsgTreePanel_MESSAGE_VIEW_TREE)
+selectCodeEditor("rv32_clint.sv", 66, 19); // ac (rv32_clint.sv)
+selectCodeEditor("rv32_clint.sv", 66, 19, false, false, false, false, true); // ac (rv32_clint.sv) - Double Click
+// HMemoryUtils.trashcanNow. Engine heap size: 3,879 MB. GUI used memory: 88 MB. Current time: 4/4/25, 7:16:43 PM IST
+// Elapsed time: 76 seconds
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, riscv_platform (riscv_platform.v)]", 2, true, false, false, false, true, false); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE) - Popup Trigger - Node
+selectMenu(PAResourceCommand.PACommandNames_AUTO_UPDATE_HIER, "Hierarchy Update"); // am (PAResourceCommand.PACommandNames_AUTO_UPDATE_HIER, Hierarchy Update)
+selectMenu(PAResourceQtoS.SrcMenu_IP_HIERARCHY, "IP Hierarchy"); // am (PAResourceQtoS.SrcMenu_IP_HIERARCHY, IP Hierarchy)
+selectMenuItem(PAResourceCommand.PACommandNames_ADD_SOURCES, "Add Sources..."); // ap (PAResourceCommand.PACommandNames_ADD_SOURCES, add_sources_menu)
+// Run Command: PAResourceCommand.PACommandNames_ADD_SOURCES
+selectButton("NEXT", "Next >", "Add Sources"); // JButton (NEXT)
+selectButton(PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT, "Add Files", "Add Sources"); // a (PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT)
+setFileChooser("/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CLINT_Controller/rv32_2dffsync.v");
+selectButton("FINISH", "Finish", "Add Sources"); // JButton (FINISH)
+// 'f' command handler elapsed time: 9 seconds
+dismissDialog("Add Sources"); // c (dialog5)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: add_files -norecurse /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CLINT_Controller/rv32_2dffsync.v 
+// Elapsed Time for: 'L.f': 28m:08s
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 28m:10s
+// Tcl Message: update_compile_order -fileset sources_1 
+// HMemoryUtils.trashcanNow. Engine heap size: 3,916 MB. GUI used memory: 88 MB. Current time: 4/4/25, 7:18:13 PM IST
+// Elapsed time: 13 seconds
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, riscv_platform (riscv_platform.v), CLINT : rv32_clint (rv32_clint.sv)]", 30); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, RTL Analysis, Run Linter]", 12, false); // g (PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, Flow Navigator Tree)
+// Tcl Message: synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint  
+// Tcl Message: Command: synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint Starting synth_design Attempting to get a license for feature 'Synthesis' and/or device 'xc7vx485t' 
+// Tcl Message: INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7vx485t' INFO: [Common 17-1540] The version limit for your license is '2024.11' and has expired for new software. A version limit expiration means that, although you may be able to continue to use the current version of tools or IP with this license, you will not be eligible for new releases. INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes. 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Starting Synthesize : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 9983.160 ; gain = 0.000 ; free physical = 381 ; free virtual = 16088 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Clean up Linter database... 
+// Tcl Message: INFO: [Synth 8-11241] undeclared symbol 'rd_counter_tick', assumed default net type 'wire' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/Sys_counter.v:38] 
+// Tcl Message: 	Parameter DATA_WIDTH bound to: 2 - type: integer  	Parameter ADDR_WIDTH bound to: 11 - type: integer  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'dual_port_RAM' (1#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v:23] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'BTB_PLRU' (3#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/BTB_PLRU.v:3] INFO: [Synth 8-6155] done synthesizing module 'Branch_Target_Buff' (4#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/Branch_Target_Buff.v:5] INFO: [Synth 8-6157] synthesizing module 'Return_Addr_Stack' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/Return_Addr_Stack.v:5] 
+// Tcl Message: INFO: [Synth 8-256] done synthesizing module 'FPDiv_8_23_comb_uid2' (75#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/div_SP.vhdl:79] INFO: [Synth 8-638] synthesizing module 'FPDiv_11_52_comb_uid2' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/div_DP.vhdl:79] 
+// Tcl Message: INFO: [Synth 8-256] done synthesizing module 'FPDiv_11_52_comb_uid2' (76#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/div_DP.vhdl:79] INFO: [Synth 8-6155] done synthesizing module 'DIV' (77#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/DIV.v:3] INFO: [Synth 8-6157] synthesizing module 'SQRT' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/SQRT.v:3] INFO: [Synth 8-638] synthesizing module 'FPSqrt_8_23' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/sqrt_SP.vhdl:24] 
+// Tcl Message: INFO: [Synth 8-256] done synthesizing module 'FPSqrt_8_23' (78#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/sqrt_SP.vhdl:24] INFO: [Synth 8-638] synthesizing module 'FPSqrt_11_52' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/sqrt_DP.vhdl:24] 
+// Tcl Message: 	Parameter DEPTH bound to: 2 - type: integer  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'irq_bit_sync' (104#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/irq_bit_sync.v:23] INFO: [Synth 8-6157] synthesizing module 'irq_pulser' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/irq_pulser.v:23] INFO: [Synth 8-6155] done synthesizing module 'irq_pulser' (105#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/irq_pulser.v:23] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'csr' (106#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/csr.v:8] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'dcache_ram_fsm' (109#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_ram_fsm.v:7] 
+// Tcl Message: INFO: [Synth 8-6157] synthesizing module 'dcache_dpram' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_dpram.v:7] INFO: [Synth 8-226] default block is never used [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_dpram.v:270] INFO: [Synth 8-226] default block is never used [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_dpram.v:284] INFO: [Synth 8-6157] synthesizing module 'dual_port_RAM__parameterized1' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v:23] 
+// Tcl Message: 	Parameter DATA_WIDTH bound to: 128 - type: integer  	Parameter ADDR_WIDTH bound to: 7 - type: integer  
+// HMemoryUtils.trashcanNow. Engine heap size: 3,912 MB. GUI used memory: 91 MB. Current time: 4/4/25, 7:18:54 PM IST
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'dual_port_RAM__parameterized1' (109#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v:23] 
+// Tcl Message: INFO: [Synth 8-6157] synthesizing module 'dual_port_RAM__parameterized2' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v:23] 
+// Tcl Message: 	Parameter DATA_WIDTH bound to: 32 - type: integer  	Parameter ADDR_WIDTH bound to: 7 - type: integer  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'dual_port_RAM__parameterized2' (109#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v:23] 
+// Tcl Message: INFO: [Synth 8-6157] synthesizing module 'DTLB' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/DTLB.v:25] INFO: [Synth 8-6157] synthesizing module 'Registers' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/cam.v:28] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'dcache_top' (114#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_top.v:5] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'ITLB' (118#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/ITLB/ITLB.v:25] INFO: [Synth 8-6157] synthesizing module 'MEMORY_MACRO_CACHE' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO_CACHE.v:23] 
+// Tcl Message: 	Parameter ADDR_WIDTH bound to: 7 - type: integer  	Parameter DATA_WIDTH bound to: 256 - type: integer  	Parameter INIT_FILE bound to: 0 - type: integer  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'MEMORY_MACRO_CACHE' (119#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO_CACHE.v:23] INFO: [Synth 8-6157] synthesizing module 'MEMORY_MACRO_CACHE__parameterized0' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO_CACHE.v:23] 
+// Tcl Message: 	Parameter ADDR_WIDTH bound to: 7 - type: integer  	Parameter DATA_WIDTH bound to: 21 - type: integer  	Parameter INIT_FILE bound to: 0 - type: integer  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'MEMORY_MACRO_CACHE__parameterized0' (119#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO_CACHE.v:23] INFO: [Synth 8-6155] done synthesizing module 'icache' (120#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/icache.v:21] INFO: [Synth 8-6157] synthesizing module 'cachefsm' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/cachefsm.v:22] INFO: [Synth 8-226] default block is never used [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/cachefsm.v:90] INFO: [Synth 8-6155] done synthesizing module 'cachefsm' (121#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/cachefsm.v:22] 
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'mem_hier' (122#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/mem_hier.v:22] INFO: [Synth 8-6155] done synthesizing module 'fet_dec_ex_mem' (123#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/fet_dec_ex_mem.v:4] INFO: [Synth 8-6155] done synthesizing module 'cpu' (124#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/cpu.v:4] 
+// Tcl Message: INFO: [Synth 8-6157] synthesizing module 'rv32_mpu' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MPU/rv32_mpu.sv:4] 
+// Tcl Message: 	Parameter MMU_SUPPORT bound to: 0 - type: integer  
+// Tcl Message: INFO: [Synth 8-6157] synthesizing module 'rv32_pmp_region' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MPU/rv32_pmp_region.sv:5] 
+// Tcl Message: 	Parameter RLEN bound to: 32 - type: integer  	Parameter XLEN bound to: 32 - type: integer  	Parameter AXI_ADDR_W bound to: 32 - type: integer  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'rv32_pmp_region' (125#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MPU/rv32_pmp_region.sv:5] INFO: [Synth 8-6155] done synthesizing module 'rv32_mpu' (126#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MPU/rv32_mpu.sv:4] INFO: [Synth 8-6157] synthesizing module 'interconnect' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/Crossbar/Interconnect.v:9] INFO: [Synth 8-6155] done synthesizing module 'interconnect' (127#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/Crossbar/Interconnect.v:9] INFO: [Synth 8-6157] synthesizing module 'rv32_clint' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CLINT_Controller/rv32_clint.sv:37] 
+// Tcl Message: 	Parameter ADDRW bound to: 32 - type: integer  	Parameter XLEN bound to: 32 - type: integer  
+// Tcl Message: INFO: [Synth 8-6157] synthesizing module 'rv32_2dffsync' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CLINT_Controller/rv32_2dffsync.v:23] INFO: [Synth 8-6155] done synthesizing module 'rv32_2dffsync' (128#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CLINT_Controller/rv32_2dffsync.v:23] INFO: [Synth 8-6155] done synthesizing module 'rv32_clint' (129#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CLINT_Controller/rv32_clint.sv:37] INFO: [Synth 8-6157] synthesizing module 'DATA_MEMORY' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/DATA_MEMORY_1.2.v:5] 
+// Tcl Message: 	Parameter ADDR_WIDTH bound to: 14 - type: integer  	Parameter DATA_WIDTH bound to: 32 - type: integer  	Parameter INSTR_INPUT_FILE bound to: auipc.mem - type: string  	Parameter DATA_INPUT_FILE bound to: data.mem - type: string  	Parameter PT_INPUT_FILE bound to: Page_Table.mem - type: string  	Parameter HANDLER_INPUT_FILE bound to: handler.mem - type: string  
+// Tcl Message: INFO: [Synth 8-6157] synthesizing module 'MEMORY_MACRO' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO.v:23] 
+// Tcl Message: 	Parameter ADDR_WIDTH bound to: 14 - type: integer  	Parameter DATA_WIDTH bound to: 32 - type: integer  	Parameter INPUT_FILE bound to: data.mem - type: string  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'MEMORY_MACRO' (130#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO.v:23] 
+// Tcl Message: INFO: [Synth 8-6157] synthesizing module 'MEMORY_MACRO__parameterized0' [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO.v:23] INFO: [Common 17-14] Message 'Synth 8-6157' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. 
+// Tcl Message: 	Parameter ADDR_WIDTH bound to: 14 - type: integer  	Parameter DATA_WIDTH bound to: 32 - type: integer  	Parameter INPUT_FILE bound to: auipc.mem - type: string  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'MEMORY_MACRO__parameterized0' (130#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO.v:23] 
+// Tcl Message: 	Parameter ADDR_WIDTH bound to: 14 - type: integer  	Parameter DATA_WIDTH bound to: 32 - type: integer  	Parameter INPUT_FILE bound to: Page_Table.mem - type: string  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'MEMORY_MACRO__parameterized1' (130#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO.v:23] 
+// Tcl Message: 	Parameter ADDR_WIDTH bound to: 14 - type: integer  	Parameter DATA_WIDTH bound to: 32 - type: integer  	Parameter INPUT_FILE bound to: handler.mem - type: string  
+// Tcl Message: INFO: [Synth 8-6155] done synthesizing module 'MEMORY_MACRO__parameterized2' (130#1) [/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO.v:23] INFO: [Common 17-14] Message 'Synth 8-6155' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. 
+// TclEventType: LINTER_RUN
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Finished Synthesize : Time (s): cpu = 00:00:37 ; elapsed = 00:00:39 . Memory (MB): peak = 12102.805 ; gain = 2119.645 ; free physical = 1000 ; free virtual = 13956 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: INFO: [Common 17-14] Message 'Synth 37-123' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. 
+// Tcl Message: INFO: [Synth 37-85] Total of 451 linter message(s) generated. INFO: [Synth 37-45] Linter Run Finished! 
+// Tcl Message: Synthesis Optimization Runtime : Time (s): cpu = 00:00:37 ; elapsed = 00:00:39 . Memory (MB): peak = 12102.805 ; gain = 2119.645 ; free physical = 969 ; free virtual = 13929 
+// Tcl Message: INFO: [Common 17-83] Releasing license: Synthesis 
+// Tcl Message: 459 Infos, 669 Warnings, 4 Critical Warnings and 0 Errors encountered. synth_design completed successfully 
+// Tcl Message: synth_design: Time (s): cpu = 00:00:38 ; elapsed = 00:00:59 . Memory (MB): peak = 12106.805 ; gain = 2123.645 ; free physical = 977 ; free virtual = 13937 
+// Tcl Message: INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 4907.418; main = 4907.418; forked = 0.000 INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 12106.809; main = 12106.809; forked = 0.000 
+// [Engine Memory]: 6,137 MB (+2188215kb) [00:30:45]
+// Elapsed Time for: 'b': 59s
+// 'a' command handler elapsed time: 59 seconds
+// Elapsed time: 60 seconds
+dismissDialog("Run Linter"); // bj (Run Linter Progress)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources]", 0, true, false, false, false, true, false); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE) - Popup Trigger - Node
+selectMenu(PAResourceCommand.PACommandNames_AUTO_UPDATE_HIER, "Hierarchy Update"); // am (PAResourceCommand.PACommandNames_AUTO_UPDATE_HIER, Hierarchy Update)
+selectMenu(PAResourceQtoS.SrcMenu_IP_HIERARCHY, "IP Hierarchy"); // am (PAResourceQtoS.SrcMenu_IP_HIERARCHY, IP Hierarchy)
+selectMenuItem(PAResourceCommand.PACommandNames_ADD_SOURCES, "Add Sources..."); // ap (PAResourceCommand.PACommandNames_ADD_SOURCES, add_sources_menu)
+// Run Command: PAResourceCommand.PACommandNames_ADD_SOURCES
+selectRadioButton(PAResourceAtoD.AddSrcWizard_SPECIFY_SIMULATION_SPECIFIC_HDL_FILES, "Add or create simulation sources"); // a (PAResourceAtoD.AddSrcWizard_SPECIFY_SIMULATION_SPECIFIC_HDL_FILES)
+selectButton("NEXT", "Next >", "Add Sources"); // JButton (NEXT)
+selectButton(PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT, "Add Files", "Add Sources"); // a (PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT)
+dismissFileChooser();
+// 'f' command handler elapsed time: 10 seconds
+dismissDialog("Add Sources"); // c (dialog7)
+// Elapsed time: 113 seconds
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources]", 0, true, false, false, false, true, false); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE) - Popup Trigger - Node
+selectMenu(PAResourceCommand.PACommandNames_AUTO_UPDATE_HIER, "Hierarchy Update"); // am (PAResourceCommand.PACommandNames_AUTO_UPDATE_HIER, Hierarchy Update)
+selectMenu(PAResourceQtoS.SrcMenu_IP_HIERARCHY, "IP Hierarchy"); // am (PAResourceQtoS.SrcMenu_IP_HIERARCHY, IP Hierarchy)
+selectMenuItem(PAResourceCommand.PACommandNames_ADD_SOURCES, "Add Sources..."); // ap (PAResourceCommand.PACommandNames_ADD_SOURCES, add_sources_menu)
+// Run Command: PAResourceCommand.PACommandNames_ADD_SOURCES
+selectButton("NEXT", "Next >", "Add Sources"); // JButton (NEXT)
+selectButton(PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT, "Add Files", "Add Sources"); // a (PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT)
+setFileChooser("/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/Testbench/tb_platform.v");
+selectButton("FINISH", "Finish", "Add Sources"); // JButton (FINISH)
+// 'f' command handler elapsed time: 9 seconds
+dismissDialog("Add Sources"); // c (dialog9)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: FILE_SET_OPTIONS_CHANGE
+// Tcl Message: set_property SOURCE_SET sources_1 [get_filesets sim_1] 
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: add_files -fileset sim_1 -norecurse /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/Testbench/tb_platform.v 
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources]", 0, true, false, false, false, true, false); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE) - Popup Trigger - Node
+selectMenu(PAResourceCommand.PACommandNames_AUTO_UPDATE_HIER, "Hierarchy Update"); // am (PAResourceCommand.PACommandNames_AUTO_UPDATE_HIER, Hierarchy Update)
+selectMenu(PAResourceQtoS.SrcMenu_IP_HIERARCHY, "IP Hierarchy"); // am (PAResourceQtoS.SrcMenu_IP_HIERARCHY, IP Hierarchy)
+selectMenuItem(PAResourceCommand.PACommandNames_ADD_SOURCES, "Add Sources..."); // ap (PAResourceCommand.PACommandNames_ADD_SOURCES, add_sources_menu)
+// Run Command: PAResourceCommand.PACommandNames_ADD_SOURCES
+// Elapsed Time for: 'L.f': 31m:50s
+selectButton("NEXT", "Next >", "Add Sources"); // JButton (NEXT)
+selectButton(PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT, "Add Files", "Add Sources"); // a (PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// [GUI Memory]: 168 MB (+76kb) [00:33:18]
+// Elapsed Time for: 'L.f': 31m:54s
+// Tcl Message: update_compile_order -fileset sim_1 
+// Elapsed Time for: 'L.f': 31m:56s
+// Elapsed Time for: 'L.f': 32m:00s
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// HMemoryUtils.trashcanNow. Engine heap size: 6,177 MB. GUI used memory: 98 MB. Current time: 4/4/25, 7:22:03 PM IST
+// Elapsed Time for: 'L.f': 32m:02s
+// Elapsed Time for: 'L.f': 32m:04s
+// Elapsed time: 16 seconds
+String[] filenames31467 = {"/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/TestCases/data.mem", "/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/TestCases/handler.mem", "/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/TestCases/instruction_csr_test.mem"};
+setFileChooser(filenames31467);
+selectButton("FINISH", "Finish", "Add Sources"); // JButton (FINISH)
+// 'f' command handler elapsed time: 20 seconds
+dismissDialog("Add Sources"); // c (dialog11)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: FILE_SET_OPTIONS_CHANGE
+// Tcl Message: set_property SOURCE_SET sources_1 [get_filesets sim_1] 
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: add_files -fileset sim_1 -norecurse {/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/TestCases/instruction_csr_test.mem /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/TestCases/data.mem /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/TestCases/handler.mem} 
+// Elapsed Time for: 'L.f': 32m:10s
+// Elapsed Time for: 'L.f': 32m:12s
+// Elapsed time: 259 seconds
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources]", 39); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1]", 40); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, tb_platform (tb_platform.v)]", 43, true, false, false, false, true, false); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE) - Popup Trigger - Node
+selectMenu(PAResourceCommand.PACommandNames_OPEN_FILE_WITH, "Open With"); // am (PAResourceCommand.PACommandNames_OPEN_FILE_WITH, Open With)
+selectMenu(PAResourceCommand.PACommandNames_AUTO_UPDATE_HIER, "Hierarchy Update"); // am (PAResourceCommand.PACommandNames_AUTO_UPDATE_HIER, Hierarchy Update)
+selectMenu(PAResourceQtoS.SrcMenu_IP_HIERARCHY, "IP Hierarchy"); // am (PAResourceQtoS.SrcMenu_IP_HIERARCHY, IP Hierarchy)
+selectMenuItem(PAResourceCommand.PACommandNames_SET_AS_TOP, "Set as Top"); // ap (PAResourceCommand.PACommandNames_SET_AS_TOP, set_as_top_menu)
+// Run Command: PAResourceCommand.PACommandNames_SET_AS_TOP
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: FILE_SET_OPTIONS_CHANGE
+// Tcl Message: set_property top tb_platform [get_filesets sim_1] 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: FILE_SET_OPTIONS_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// Tcl Message: set_property top_lib xil_defaultlib [get_filesets sim_1] 
+// TclEventType: DG_GRAPH_STALE
+// Elapsed Time for: 'L.f': 36m:36s
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 36m:38s
+// Tcl Message: update_compile_order -fileset sim_1 
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, tb_platform (tb_platform.v)]", 42); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+// Elapsed Time for: 'L.f': 36m:40s
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, tb_platform (tb_platform.v), riscv_platform : riscv_platform (riscv_platform.v)]", 43); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, tb_platform (tb_platform.v), riscv_platform : riscv_platform (riscv_platform.v)]", 43, true); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, tb_platform (tb_platform.v), riscv_platform : riscv_platform (riscv_platform.v)]", 43, true, false, false, false, false, true); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE) - Double Click - Node
+// Elapsed Time for: 'L.f': 36m:44s
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Simulation Sources, sim_1, Memory File]", 49); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+selectCodeEditor("riscv_platform.v", 508, 276); // ac (riscv_platform.v)
+selectCodeEditor("riscv_platform.v", 508, 276, false, false, false, false, true); // ac (riscv_platform.v) - Double Click
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed Time for: 'L.f': 37m:00s
+// Elapsed time: 10 seconds
+selectCodeEditor("riscv_platform.v", 564, 147); // ac (riscv_platform.v)
+// Elapsed Time for: 'L.f': 37m:04s

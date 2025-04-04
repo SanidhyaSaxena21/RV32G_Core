@@ -1,0 +1,49 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Fri Apr  4 18:48:36 2025
+# Process ID: 1211615
+# Current directory: /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/FPGA
+# Command line: vivado
+# Log file: /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/FPGA/vivado.log
+# Journal file: /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/FPGA/vivado.jou
+# Running On        :rc
+# Platform          :Ubuntu
+# Operating System  :Ubuntu 22.04.2 LTS
+# Processor Detail  :Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz
+# CPU Frequency     :4695.996 MHz
+# CPU Physical cores:8
+# CPU Logical cores :16
+# Host memory       :33507 MB
+# Swap memory       :2147 MB
+# Total Virtual     :35655 MB
+# Available Virtual :19297 MB
+#-----------------------------------------------------------
+start_gui
+create_project RV32G_Core /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/FPGA/RV32G_Core -part xc7vx485tffg1761-2
+add_files -norecurse /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/riscv_platform.v
+update_compile_order -fileset sources_1
+add_files {/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DEFINES/defines.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_dpram.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/ADD.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/flopoco_to_IEEE_DP.vhdl /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MPU/rv32_mpu.sv /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/dual_port_RAM.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/FPU.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/EXCEPTION_UNIT/EXCEPTION_UNIT.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/Sys_counter.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IP/or1200_amultp2_32x32.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/cachefsm.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/fet_dec_ex_mem.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CLINT_Controller/rv32_clint.sv /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/age_set_ctr.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/icache.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/div_18.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/seq.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/mul_SP.vhdl /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MPU/rv32_pmp_region.sv /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/Branch_Prediction_Unit.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/mem_hier.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/sqrt_DP.vhdl /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/Rounding_Mode.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/INST_FETCH.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/REG_FILE.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/div_5_15.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/Return_Addr_Stack.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/cam.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/IF_ID_EX.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/IEEE_to_flopoco_DP.vhdl /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/Crossbar/Interconnect.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/ITLB/icam.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/irq_pulser.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_top.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_biu.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/FP_DECODE.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/EVA_ArgSort.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/div_SP.vhdl /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/riscv_platform.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/div_4_14.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/CONVERT.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/Branch_Target_Buff.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/BTB_PLRU.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IP/or1200_fpu_div.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/DIV.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_FILE/Instruction_Memory.mif /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/block.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/irq_bit_sync.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/ITLB/ilru.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/LZC.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/DECODE.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/lru.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/DTLB.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/class_bit.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/FP_REG_FILE.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/EXECUTE.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/eviction_ctr.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/sqrt_SP.vhdl /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/int_to_FP.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/TRANSFER.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/SIGN_INJECTION.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/EVA_update.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/CSR/csr.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/MEMORY_MACRO.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/hit_ctr.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/replacement_algo.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/COMPARE_1.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/add_DP.vhdl /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/access_ctr.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/IEEE_to_flopoco_SP.vhdl /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/DATA_MEMORY_1.2.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/BPU/Direction_Predictor.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/interface_router.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/Compare.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/FP_to_int.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/div_DP.vhdl /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/MEMORY_MACROS/MEMORY_MACRO_CACHE.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/SQRT.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/ITLB/ITLB.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CPU/cpu.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/flopoco_to_IEEE_SP.vhdl /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/FP_to_FP.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/add_SP.vhd /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DMEM_HIER/dcache_ram_fsm.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/mul_DP.vhdl /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/fpu/MULT.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/addr_cal.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/FPU/FP_EXECUTE.v /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/DTLB/ctr_update.v}
+update_compile_order -fileset sources_1
+synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint 
+update_compile_order -fileset sources_1
+synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint 
+synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint 
+synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint 
+add_files -norecurse /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/CLINT_Controller/rv32_2dffsync.v
+update_compile_order -fileset sources_1
+synth_design -top riscv_platform -part xc7vx485tffg1761-2 -lint 
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+add_files -fileset sim_1 -norecurse /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/Testbench/tb_platform.v
+update_compile_order -fileset sim_1
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+add_files -fileset sim_1 -norecurse {/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/TestCases/instruction_csr_test.mem /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/TestCases/data.mem /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/TestCases/handler.mem}
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_platform [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
