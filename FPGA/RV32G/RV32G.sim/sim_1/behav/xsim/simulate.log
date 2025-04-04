@@ -1,3 +1,0 @@
-Time resolution is 1 ps
-WARNING: File Page_Table.mem referenced on /home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL/IMEM_HIER/mem_hier.v at line 221 cannot be opened for reading. Please ensure that this file is available in the current working directory or parent directory of xsim.dir location specified via -xsimdir switch.
-INFO: xsimkernel Simulation Memory Usage: 122084 KB (Peak: 168108 KB), Simulation CPU Usage: 1195430 ms
