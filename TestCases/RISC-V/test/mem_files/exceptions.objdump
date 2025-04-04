@@ -1,0 +1,215 @@
+
+./mem_files/exceptions.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00000013          	nop
+   4:	00000093          	li	ra,0
+   8:	00000113          	li	sp,0
+   c:	00000193          	li	gp,0
+  10:	00000213          	li	tp,0
+  14:	00000293          	li	t0,0
+  18:	00000313          	li	t1,0
+  1c:	00000393          	li	t2,0
+  20:	00000413          	li	s0,0
+  24:	00000493          	li	s1,0
+  28:	00000513          	li	a0,0
+  2c:	00000593          	li	a1,0
+  30:	00000613          	li	a2,0
+  34:	00000693          	li	a3,0
+  38:	00000713          	li	a4,0
+  3c:	00000793          	li	a5,0
+  40:	00000813          	li	a6,0
+  44:	00000893          	li	a7,0
+  48:	00000913          	li	s2,0
+  4c:	00000993          	li	s3,0
+  50:	00000a13          	li	s4,0
+  54:	00000a93          	li	s5,0
+  58:	00000b13          	li	s6,0
+  5c:	00000b93          	li	s7,0
+  60:	00000c13          	li	s8,0
+  64:	00000c93          	li	s9,0
+  68:	00000d13          	li	s10,0
+  6c:	00000d93          	li	s11,0
+  70:	00000e13          	li	t3,0
+  74:	00000e93          	li	t4,0
+  78:	00000f13          	li	t5,0
+  7c:	00000f93          	li	t6,0
+  80:	00008117          	auipc	sp,0x8
+  84:	f7c10113          	addi	sp,sp,-132 # 7ffc <__stack_pointer>
+  88:	00018193          	mv	gp,gp
+  8c:	30501073          	csrw	mtvec,zero
+  90:	30401073          	csrw	mie,zero
+  94:	30001073          	csrw	mstatus,zero
+  98:	34401073          	csrw	mip,zero
+  9c:	00004717          	auipc	a4,0x4
+  a0:	f6470713          	addi	a4,a4,-156 # 4000 <__DATA_BEGIN__>
+  a4:	00004797          	auipc	a5,0x4
+  a8:	f5c78793          	addi	a5,a5,-164 # 4000 <__DATA_BEGIN__>
+
+000000ac <clear_bss_loop>:
+  ac:	00f75863          	bge	a4,a5,bc <clear_bss_end>
+  b0:	00072023          	sw	zero,0(a4)
+  b4:	00470713          	addi	a4,a4,4
+  b8:	ff5ff06f          	j	ac <clear_bss_loop>
+
+000000bc <clear_bss_end>:
+  bc:	010000ef          	jal	ra,cc <main>
+  c0:	00000513          	li	a0,0
+  c4:	05d00893          	li	a7,93
+  c8:	00100073          	ebreak
+
+000000cc <main>:
+  cc:	00000013          	nop
+  d0:	00000013          	nop
+  d4:	00000013          	nop
+  d8:	00000013          	nop
+  dc:	00000013          	nop
+  e0:	00000013          	nop
+  e4:	00000097          	auipc	ra,0x0
+  e8:	01c08093          	addi	ra,ra,28 # 100 <trap_address_1>
+  ec:	30509073          	csrw	mtvec,ra
+  f0:	00004117          	auipc	sp,0x4
+  f4:	f1010113          	addi	sp,sp,-240 # 4000 <__DATA_BEGIN__>
+  f8:	00212183          	lw	gp,2(sp)
+  fc:	0fc0006f          	j	1f8 <fail1>
+
+00000100 <trap_address_1>:
+ 100:	00000013          	nop
+ 104:	34202273          	csrr	tp,mcause
+ 108:	343023f3          	csrr	t2,mtval
+ 10c:	00400293          	li	t0,4
+ 110:	00004417          	auipc	s0,0x4
+ 114:	ef040413          	addi	s0,s0,-272 # 4000 <__DATA_BEGIN__>
+ 118:	00240413          	addi	s0,s0,2
+ 11c:	0c028863          	beqz	t0,1ec <fail0>
+ 120:	0c040663          	beqz	s0,1ec <fail0>
+ 124:	0e521063          	bne	tp,t0,204 <fail2>
+ 128:	12839863          	bne	t2,s0,258 <fail9>
+ 12c:	00000313          	li	t1,0
+ 130:	00000097          	auipc	ra,0x0
+ 134:	01408093          	addi	ra,ra,20 # 144 <trap_address_2>
+ 138:	30509073          	csrw	mtvec,ra
+ 13c:	001110a3          	sh	ra,1(sp)
+ 140:	0d00006f          	j	210 <fail3>
+
+00000144 <trap_address_2>:
+ 144:	00000013          	nop
+ 148:	34202273          	csrr	tp,mcause
+ 14c:	343023f3          	csrr	t2,mtval
+ 150:	00600293          	li	t0,6
+ 154:	00200433          	add	s0,zero,sp
+ 158:	00140413          	addi	s0,s0,1
+ 15c:	08028863          	beqz	t0,1ec <fail0>
+ 160:	08040663          	beqz	s0,1ec <fail0>
+ 164:	0a521c63          	bne	tp,t0,21c <fail4>
+ 168:	0e839863          	bne	t2,s0,258 <fail9>
+ 16c:	00630313          	addi	t1,t1,6
+ 170:	00530463          	beq	t1,t0,178 <escape_loop>
+ 174:	30200073          	mret
+
+00000178 <escape_loop>:
+ 178:	00000097          	auipc	ra,0x0
+ 17c:	01c08093          	addi	ra,ra,28 # 194 <trap_address_3>
+ 180:	30509073          	csrw	mtvec,ra
+ 184:	00000013          	nop
+ 188:	00000013          	nop
+ 18c:	00000073          	ecall
+ 190:	0980006f          	j	228 <fail5>
+
+00000194 <trap_address_3>:
+ 194:	00000013          	nop
+ 198:	34202273          	csrr	tp,mcause
+ 19c:	00b00293          	li	t0,11
+ 1a0:	04028663          	beqz	t0,1ec <fail0>
+ 1a4:	08521863          	bne	tp,t0,234 <fail6>
+ 1a8:	00000097          	auipc	ra,0x0
+ 1ac:	01c08093          	addi	ra,ra,28 # 1c4 <trap_address_4>
+ 1b0:	30509073          	csrw	mtvec,ra
+ 1b4:	00000013          	nop
+ 1b8:	00000013          	nop
+ 1bc:	00000073          	ecall
+ 1c0:	0800006f          	j	240 <fail7>
+
+000001c4 <trap_address_4>:
+ 1c4:	00000013          	nop
+ 1c8:	34202273          	csrr	tp,mcause
+ 1cc:	00b00293          	li	t0,11
+ 1d0:	00028e63          	beqz	t0,1ec <fail0>
+ 1d4:	06521c63          	bne	tp,t0,24c <fail8>
+ 1d8:	000010b7          	lui	ra,0x1
+ 1dc:	30509073          	csrw	mtvec,ra
+
+000001e0 <pass>:
+ 1e0:	00000513          	li	a0,0
+ 1e4:	05d00893          	li	a7,93
+ 1e8:	00100073          	ebreak
+
+000001ec <fail0>:
+ 1ec:	00100513          	li	a0,1
+ 1f0:	05d00893          	li	a7,93
+ 1f4:	00100073          	ebreak
+
+000001f8 <fail1>:
+ 1f8:	00200513          	li	a0,2
+ 1fc:	05d00893          	li	a7,93
+ 200:	00100073          	ebreak
+
+00000204 <fail2>:
+ 204:	00400513          	li	a0,4
+ 208:	05d00893          	li	a7,93
+ 20c:	00100073          	ebreak
+
+00000210 <fail3>:
+ 210:	00600513          	li	a0,6
+ 214:	05d00893          	li	a7,93
+ 218:	00100073          	ebreak
+
+0000021c <fail4>:
+ 21c:	00800513          	li	a0,8
+ 220:	05d00893          	li	a7,93
+ 224:	00100073          	ebreak
+
+00000228 <fail5>:
+ 228:	00a00513          	li	a0,10
+ 22c:	05d00893          	li	a7,93
+ 230:	00100073          	ebreak
+
+00000234 <fail6>:
+ 234:	00c00513          	li	a0,12
+ 238:	05d00893          	li	a7,93
+ 23c:	00100073          	ebreak
+
+00000240 <fail7>:
+ 240:	00e00513          	li	a0,14
+ 244:	05d00893          	li	a7,93
+ 248:	00100073          	ebreak
+
+0000024c <fail8>:
+ 24c:	01000513          	li	a0,16
+ 250:	05d00893          	li	a7,93
+ 254:	00100073          	ebreak
+
+00000258 <fail9>:
+ 258:	01200513          	li	a0,18
+ 25c:	05d00893          	li	a7,93
+ 260:	00100073          	ebreak
+
+Disassembly of section .riscv.attributes:
+
+00000000 <.riscv.attributes>:
+   0:	1d41                	addi	s10,s10,-16
+   2:	0000                	unimp
+   4:	7200                	flw	fs0,32(a2)
+   6:	7369                	lui	t1,0xffffa
+   8:	01007663          	bgeu	zero,a6,14 <__rom_start+0x14>
+   c:	00000013          	nop
+  10:	7205                	lui	tp,0xfffe1
+  12:	3376                	fld	ft6,376(sp)
+  14:	6932                	flw	fs2,12(sp)
+  16:	7032                	flw	ft0,44(sp)
+  18:	0030                	addi	a2,sp,8
+  1a:	0108                	addi	a0,sp,128
+  1c:	0b0a                	slli	s6,s6,0x2

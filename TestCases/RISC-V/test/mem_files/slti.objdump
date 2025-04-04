@@ -1,0 +1,116 @@
+
+./mem_files/slti.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00000013          	nop
+   4:	00000093          	li	ra,0
+   8:	00000113          	li	sp,0
+   c:	00000193          	li	gp,0
+  10:	00000213          	li	tp,0
+  14:	00000293          	li	t0,0
+  18:	00000313          	li	t1,0
+  1c:	00000393          	li	t2,0
+  20:	00000413          	li	s0,0
+  24:	00000493          	li	s1,0
+  28:	00000513          	li	a0,0
+  2c:	00000593          	li	a1,0
+  30:	00000613          	li	a2,0
+  34:	00000693          	li	a3,0
+  38:	00000713          	li	a4,0
+  3c:	00000793          	li	a5,0
+  40:	00000813          	li	a6,0
+  44:	00000893          	li	a7,0
+  48:	00000913          	li	s2,0
+  4c:	00000993          	li	s3,0
+  50:	00000a13          	li	s4,0
+  54:	00000a93          	li	s5,0
+  58:	00000b13          	li	s6,0
+  5c:	00000b93          	li	s7,0
+  60:	00000c13          	li	s8,0
+  64:	00000c93          	li	s9,0
+  68:	00000d13          	li	s10,0
+  6c:	00000d93          	li	s11,0
+  70:	00000e13          	li	t3,0
+  74:	00000e93          	li	t4,0
+  78:	00000f13          	li	t5,0
+  7c:	00000f93          	li	t6,0
+  80:	00008117          	auipc	sp,0x8
+  84:	f7c10113          	addi	sp,sp,-132 # 7ffc <__stack_pointer>
+  88:	00018193          	mv	gp,gp
+  8c:	30501073          	csrw	mtvec,zero
+  90:	30401073          	csrw	mie,zero
+  94:	30001073          	csrw	mstatus,zero
+  98:	34401073          	csrw	mip,zero
+  9c:	00004717          	auipc	a4,0x4
+  a0:	f6470713          	addi	a4,a4,-156 # 4000 <__DATA_BEGIN__>
+  a4:	00004797          	auipc	a5,0x4
+  a8:	f5c78793          	addi	a5,a5,-164 # 4000 <__DATA_BEGIN__>
+
+000000ac <clear_bss_loop>:
+  ac:	00f75863          	bge	a4,a5,bc <clear_bss_end>
+  b0:	00072023          	sw	zero,0(a4)
+  b4:	00470713          	addi	a4,a4,4
+  b8:	ff5ff06f          	j	ac <clear_bss_loop>
+
+000000bc <clear_bss_end>:
+  bc:	010000ef          	jal	ra,cc <main>
+  c0:	00000513          	li	a0,0
+  c4:	05d00893          	li	a7,93
+  c8:	00100073          	ebreak
+
+000000cc <main>:
+  cc:	06400093          	li	ra,100
+  d0:	0960a113          	slti	sp,ra,150
+  d4:	0320a193          	slti	gp,ra,50
+  d8:	f6a00213          	li	tp,-150
+  dc:	f9c22293          	slti	t0,tp,-100
+  e0:	f3822313          	slti	t1,tp,-200
+  e4:	00010e63          	beqz	sp,100 <fail1>
+  e8:	02019263          	bnez	gp,10c <fail2>
+  ec:	02028663          	beqz	t0,118 <fail3>
+  f0:	02031a63          	bnez	t1,124 <fail4>
+
+000000f4 <pass>:
+  f4:	00000513          	li	a0,0
+  f8:	05d00893          	li	a7,93
+  fc:	00100073          	ebreak
+
+00000100 <fail1>:
+ 100:	00200513          	li	a0,2
+ 104:	05d00893          	li	a7,93
+ 108:	00100073          	ebreak
+
+0000010c <fail2>:
+ 10c:	00400513          	li	a0,4
+ 110:	05d00893          	li	a7,93
+ 114:	00100073          	ebreak
+
+00000118 <fail3>:
+ 118:	00600513          	li	a0,6
+ 11c:	05d00893          	li	a7,93
+ 120:	00100073          	ebreak
+
+00000124 <fail4>:
+ 124:	00800513          	li	a0,8
+ 128:	05d00893          	li	a7,93
+ 12c:	00100073          	ebreak
+
+Disassembly of section .riscv.attributes:
+
+00000000 <.riscv.attributes>:
+   0:	1d41                	addi	s10,s10,-16
+   2:	0000                	unimp
+   4:	7200                	flw	fs0,32(a2)
+   6:	7369                	lui	t1,0xffffa
+   8:	01007663          	bgeu	zero,a6,14 <__rom_start+0x14>
+   c:	00000013          	nop
+  10:	7205                	lui	tp,0xfffe1
+  12:	3376                	fld	ft6,376(sp)
+  14:	6932                	flw	fs2,12(sp)
+  16:	7032                	flw	ft0,44(sp)
+  18:	0030                	addi	a2,sp,8
+  1a:	0108                	addi	a0,sp,128
+  1c:	0b0a                	slli	s6,s6,0x2

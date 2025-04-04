@@ -1,0 +1,191 @@
+
+program.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00000013          	nop
+   4:	00000093          	li	ra,0
+   8:	00000113          	li	sp,0
+   c:	00000193          	li	gp,0
+  10:	00000213          	li	tp,0
+  14:	00000293          	li	t0,0
+  18:	00000313          	li	t1,0
+  1c:	00000393          	li	t2,0
+  20:	00000413          	li	s0,0
+  24:	00000493          	li	s1,0
+  28:	00000513          	li	a0,0
+  2c:	00000593          	li	a1,0
+  30:	00000613          	li	a2,0
+  34:	00000693          	li	a3,0
+  38:	00000713          	li	a4,0
+  3c:	00000793          	li	a5,0
+  40:	00000813          	li	a6,0
+  44:	00000893          	li	a7,0
+  48:	00000913          	li	s2,0
+  4c:	00000993          	li	s3,0
+  50:	00000a13          	li	s4,0
+  54:	00000a93          	li	s5,0
+  58:	00000b13          	li	s6,0
+  5c:	00000b93          	li	s7,0
+  60:	00000c13          	li	s8,0
+  64:	00000c93          	li	s9,0
+  68:	00000d13          	li	s10,0
+  6c:	00000d93          	li	s11,0
+  70:	00000e13          	li	t3,0
+  74:	00000e93          	li	t4,0
+  78:	00000f13          	li	t5,0
+  7c:	00000f93          	li	t6,0
+  80:	00008117          	auipc	sp,0x8
+  84:	f7c10113          	addi	sp,sp,-132 # 7ffc <__stack_pointer>
+  88:	00018193          	mv	gp,gp
+  8c:	30501073          	csrw	mtvec,zero
+  90:	30401073          	csrw	mie,zero
+  94:	30001073          	csrw	mstatus,zero
+  98:	34401073          	csrw	mip,zero
+  9c:	00004717          	auipc	a4,0x4
+  a0:	f6470713          	addi	a4,a4,-156 # 4000 <__DATA_BEGIN__>
+  a4:	00004797          	auipc	a5,0x4
+  a8:	f5c78793          	addi	a5,a5,-164 # 4000 <__DATA_BEGIN__>
+
+000000ac <clear_bss_loop>:
+  ac:	00f75863          	bge	a4,a5,bc <clear_bss_end>
+  b0:	00072023          	sw	zero,0(a4)
+  b4:	00470713          	addi	a4,a4,4
+  b8:	ff5ff06f          	j	ac <clear_bss_loop>
+
+000000bc <clear_bss_end>:
+  bc:	010000ef          	jal	ra,cc <main>
+  c0:	00000513          	li	a0,0
+  c4:	05d00893          	li	a7,93
+  c8:	00100073          	ebreak
+
+000000cc <main>:
+  cc:	06400093          	li	ra,100
+  d0:	0c800113          	li	sp,200
+  d4:	100001b7          	lui	gp,0x10000
+  d8:	30511273          	csrrw	tp,mtvec,sp
+  dc:	3051a2f3          	csrrs	t0,mtvec,gp
+  e0:	30513373          	csrrc	t1,mtvec,sp
+  e4:	305ad3f3          	csrrwi	t2,mtvec,21
+  e8:	30556473          	csrrsi	s0,mtvec,10
+  ec:	305874f3          	csrrci	s1,mtvec,16
+  f0:	305025f3          	csrr	a1,mtvec
+  f4:	04010a63          	beqz	sp,148 <fail0>
+  f8:	04229e63          	bne	t0,sp,154 <fail1>
+  fc:	10000637          	lui	a2,0x10000
+ 100:	0c860613          	addi	a2,a2,200 # 100000c8 <isr_external+0xfff406c>
+ 104:	04060263          	beqz	a2,148 <fail0>
+ 108:	04c31c63          	bne	t1,a2,160 <fail2>
+ 10c:	10000637          	lui	a2,0x10000
+ 110:	02060c63          	beqz	a2,148 <fail0>
+ 114:	04761c63          	bne	a2,t2,16c <fail3>
+ 118:	01500613          	li	a2,21
+ 11c:	02060663          	beqz	a2,148 <fail0>
+ 120:	04861c63          	bne	a2,s0,178 <fail4>
+ 124:	01f00613          	li	a2,31
+ 128:	02060063          	beqz	a2,148 <fail0>
+ 12c:	04961c63          	bne	a2,s1,184 <fail5>
+ 130:	00f00613          	li	a2,15
+ 134:	00060a63          	beqz	a2,148 <fail0>
+ 138:	04b61c63          	bne	a2,a1,190 <fail6>
+
+0000013c <pass>:
+ 13c:	00000513          	li	a0,0
+ 140:	05d00893          	li	a7,93
+ 144:	00100073          	ebreak
+
+00000148 <fail0>:
+ 148:	00100513          	li	a0,1
+ 14c:	05d00893          	li	a7,93
+ 150:	00100073          	ebreak
+
+00000154 <fail1>:
+ 154:	00200513          	li	a0,2
+ 158:	05d00893          	li	a7,93
+ 15c:	00100073          	ebreak
+
+00000160 <fail2>:
+ 160:	00400513          	li	a0,4
+ 164:	05d00893          	li	a7,93
+ 168:	00100073          	ebreak
+
+0000016c <fail3>:
+ 16c:	00600513          	li	a0,6
+ 170:	05d00893          	li	a7,93
+ 174:	00100073          	ebreak
+
+00000178 <fail4>:
+ 178:	00800513          	li	a0,8
+ 17c:	05d00893          	li	a7,93
+ 180:	00100073          	ebreak
+
+00000184 <fail5>:
+ 184:	00a00513          	li	a0,10
+ 188:	05d00893          	li	a7,93
+ 18c:	00100073          	ebreak
+
+00000190 <fail6>:
+ 190:	00c00513          	li	a0,12
+ 194:	05d00893          	li	a7,93
+ 198:	00100073          	ebreak
+
+Disassembly of section .handler:
+
+0000c000 <trap_base-0x30>:
+    c000:	0300006f          	j	c030 <trap_base>
+    c004:	00000013          	nop
+    c008:	00000013          	nop
+    c00c:	0480006f          	j	c054 <isr_software>
+    c010:	00000013          	nop
+    c014:	00000013          	nop
+    c018:	00000013          	nop
+    c01c:	0180006f          	j	c034 <isr_timer>
+    c020:	00000013          	nop
+    c024:	00000013          	nop
+    c028:	00000013          	nop
+    c02c:	0300006f          	j	c05c <isr_external>
+
+0000c030 <trap_base>:
+    c030:	0000006f          	j	c030 <trap_base>
+
+0000c034 <isr_timer>:
+    c034:	00178793          	addi	a5,a5,1
+    c038:	5f000537          	lui	a0,0x5f000
+    c03c:	00450513          	addi	a0,a0,4 # 5f000004 <CLINT_MTIME_ADDRESS>
+    c040:	00052023          	sw	zero,0(a0)
+    c044:	00052223          	sw	zero,4(a0)
+    c048:	08000293          	li	t0,128
+    c04c:	3442b073          	csrc	mip,t0
+    c050:	30200073          	mret
+
+0000c054 <isr_software>:
+    c054:	1f400513          	li	a0,500
+    c058:	30200073          	mret
+
+0000c05c <isr_external>:
+    c05c:	25800513          	li	a0,600
+    c060:	30200073          	mret
+
+Disassembly of section .riscv.attributes:
+
+00000000 <.riscv.attributes>:
+   0:	2241                	jal	180 <fail4+0x8>
+   2:	0000                	unimp
+   4:	7200                	flw	fs0,32(a2)
+   6:	7369                	lui	t1,0xffffa
+   8:	01007663          	bgeu	zero,a6,14 <MIE_MSIE+0xc>
+   c:	0018                	0x18
+   e:	0000                	unimp
+  10:	7205                	lui	tp,0xfffe1
+  12:	3376                	fld	ft6,376(sp)
+  14:	6932                	flw	fs2,12(sp)
+  16:	7032                	flw	ft0,44(sp)
+  18:	5f30                	lw	a2,120(a4)
+  1a:	326d                	jal	fffff9c4 <CLINT_MTIMECMP_ADDRESS+0xa0fff9b8>
+  1c:	3070                	fld	fa2,224(s0)
+  1e:	0800                	addi	s0,sp,16
+  20:	0a01                	addi	s4,s4,0
+  22:	0b              	Address 0x0000000000000022 is out of bounds.
+

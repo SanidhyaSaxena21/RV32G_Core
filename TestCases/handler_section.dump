@@ -1,0 +1,40 @@
+
+handler_section.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .handler:
+
+0000c000 <trap_base-0x30>:
+    c000:	0300006f          	j	c030 <trap_base>
+    c004:	00000013          	nop
+    c008:	00000013          	nop
+    c00c:	0480006f          	j	c054 <isr_software>
+    c010:	00000013          	nop
+    c014:	00000013          	nop
+    c018:	00000013          	nop
+    c01c:	0180006f          	j	c034 <isr_timer>
+    c020:	00000013          	nop
+    c024:	00000013          	nop
+    c028:	00000013          	nop
+    c02c:	0300006f          	j	c05c <isr_external>
+
+0000c030 <trap_base>:
+    c030:	0000006f          	j	c030 <trap_base>
+
+0000c034 <isr_timer>:
+    c034:	00178793          	addi	a5,a5,1
+    c038:	5f000537          	lui	a0,0x5f000
+    c03c:	00450513          	addi	a0,a0,4 # 5f000004 <isr_external+0x5eff3fa8>
+    c040:	00052023          	sw	zero,0(a0)
+    c044:	00052223          	sw	zero,4(a0)
+    c048:	08000293          	li	t0,128
+    c04c:	3442b073          	csrc	mip,t0
+    c050:	30200073          	mret
+
+0000c054 <isr_software>:
+    c054:	1f400513          	li	a0,500
+    c058:	30200073          	mret
+
+0000c05c <isr_external>:
+    c05c:	25800513          	li	a0,600
+    c060:	30200073          	mret
