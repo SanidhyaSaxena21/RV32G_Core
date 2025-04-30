@@ -209,7 +209,7 @@ module riscv_platform (
         .timer_irq(timer_irq)
       );
 
-     DATA_MEMORY #(.ADDR_WIDTH(14),.DATA_WIDTH(32),.INSTR_INPUT_FILE("instruction_csr_test.mem"),.DATA_INPUT_FILE("data.mem"), 
+     DATA_MEMORY #(.ADDR_WIDTH(14),.DATA_WIDTH(32),.INSTR_INPUT_FILE("interrupts.mem"),.DATA_INPUT_FILE("lw_data.mem"), 
                    .PT_INPUT_FILE("Page_Table.mem"),.HANDLER_INPUT_FILE("handler.mem")) Instruction_Memory (
         .clk(clk_int),
         .rst(rst),

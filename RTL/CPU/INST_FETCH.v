@@ -64,7 +64,7 @@ assign ISR_ADDRESS = CSR_mtvec;
 assign  pc4 = pc + 32'd4;
 
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         PC__IF_ID <= 32'b00;
     end
@@ -125,7 +125,7 @@ end
 `endif
 
 
-always @(posedge RST or posedge CLK)
+always @(posedge CLK)
 begin
     if(RST) begin
         PC_4__IF_ID <= 32'h4;
