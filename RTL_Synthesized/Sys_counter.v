@@ -1,7 +1,8 @@
 `timescale 1ns / 1ps
 
-`include "../Include/defines.v"
+`include "defines.v"
 
+(* keep_hierarchy = "yes" *)
 module Sys_counter
 (
     input rst,
@@ -39,7 +40,7 @@ assign rd_cycle = ~count_sel[3] && ~count_sel[2] && (~count_sel[1]);
 assign rd_counter_tick = count_sel[3] && count_sel[2] && (~count_sel[1]);
 
 
-always @(posedge proc_clk or posedge rst) begin
+always @(posedge proc_clk) begin
     if(rst) begin
         count <= 32'b0;
     end
@@ -133,7 +134,7 @@ reset      // reset Input
     reg [15:0] tick_count;
     reg [15:0] Num_tick_reg;         //maximum for 43sec
 
-always @(posedge clk or posedge reset) begin
+always @(posedge clk) begin
     if (reset) begin
       tick_en <= 1'b0;
     end
@@ -143,7 +144,7 @@ always @(posedge clk or posedge reset) begin
       tick_en <= 1'b0;    
 end
 
-always @(posedge clk or posedge reset) begin
+always @(posedge clk) begin
     if(reset) begin
             Num_tick_reg <= 16'hFFFF; 
     end
@@ -153,7 +154,7 @@ always @(posedge clk or posedge reset) begin
             end
 end
 
-always @(posedge clk or posedge reset) begin
+always @(posedge clk) begin
     if (reset) begin
       tick_count <= 16'b0;
     end
@@ -171,7 +172,7 @@ always @(posedge clk or posedge reset) begin
       end
 end    
 
-always @(posedge clk or posedge reset) begin
+always @(posedge clk) begin
     if(reset) begin
         out <= 17'b0;
     end
@@ -216,7 +217,7 @@ reset      // reset Input
   //------------Internal Variables--------
     reg [63:0] out;
 //-------------Code Starts Here-------
-always @(posedge clk or posedge reset)
+always @(posedge clk)
     if (reset) begin
       out <= 64'b0 ;
     end 
@@ -260,7 +261,7 @@ reset      // reset Input
 //`endif
 //-------------Code Starts Here-------
 //`ifndef EXT_WALL_CLOCK
-always @(posedge clk or posedge reset) begin
+always @(posedge clk) begin
     if (reset) begin
       real_tick_en <= 1'b0;
     end
@@ -274,7 +275,7 @@ end
 //`endif
 
 //`ifdef EXT_WALL_CLOCK
-//always @(posedge clk or posedge reset) begin
+//always @(posedge clk) begin
 //    if(reset) begin
 //        out <= 64'b0;
 //    end
@@ -283,7 +284,7 @@ end
 //    end
 //end
 //`else
-always @(posedge clk or posedge reset) begin
+always @(posedge clk) begin
     if(reset) begin
         out <= 64'b1;
     end
@@ -306,7 +307,7 @@ end
 //	.probe2(tick_en) // input wire [0:0]  probe2
 //);
 
-always @(posedge clk or posedge reset) begin
+always @(posedge clk) begin
     if(reset) begin
         timecmp <= 64'hffffffffFFFFFFFF;
     end
@@ -343,7 +344,7 @@ reset      // reset Input
 //------------Internal Variables--------
     reg [63:0] out;
 //-------------Code Starts Here-------
-always @(posedge clk or posedge reset)
+always @(posedge clk)
     if (reset) begin
       out <= 64'b0 ;
     end 

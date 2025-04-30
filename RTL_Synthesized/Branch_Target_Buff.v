@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-
+(* keep_hierarchy = "yes" *)
 module Branch_Target_Buff
 (
     input CLK,
@@ -49,7 +49,7 @@ assign BTB_Hit_Set3 = ((BTB_Read_Data_Set3[55] == 1'b1) && (BTB_Read_Data_Set3[5
 
 assign BTB_Write_Data_temp = {1'b1,BTB_Write_Addr__reg[31:9],BTB_Write_Data__reg};
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if (RST) begin 
         BTB_Read_Addr__reg <= 32'h00000000;
         
@@ -115,7 +115,7 @@ always @(*) begin
     end
 end
 
-/*
+
 BTB_mem BTB_Set0( .clka(CLK),.rsta(RST),.wea(7'h00),.addra(BTB_Read_Addr[8:2]),.dina(56'h0),.douta(BTB_Read_Data_Set0),.ena(~BPU__Stall),
                   .clkb(CLK),.rstb(RST),.web({7{BTB_Write_En_Set0}}),.addrb(BTB_Write_Addr__reg[8:2]),.dinb(BTB_Write_Data_temp),.doutb());
 
@@ -126,9 +126,9 @@ BTB_mem BTB_Set2( .clka(CLK),.rsta(RST),.wea(7'h00),.addra(BTB_Read_Addr[8:2]),.
                   .clkb(CLK),.rstb(RST),.web({7{BTB_Write_En_Set2}}),.addrb(BTB_Write_Addr__reg[8:2]),.dinb(BTB_Write_Data_temp),.doutb());                        
 
 BTB_mem BTB_Set3( .clka(CLK),.rsta(RST),.wea(7'h00),.addra(BTB_Read_Addr[8:2]),.dina(56'h0),.douta(BTB_Read_Data_Set3),.ena(~BPU__Stall),
-                  .clkb(CLK),.rstb(RST),.web({7{BTB_Write_En_Set3}}),.addrb(BTB_Write_Addr__reg[8:2]),.dinb(BTB_Write_Data_temp),.doutb()); */
+                  .clkb(CLK),.rstb(RST),.web({7{BTB_Write_En_Set3}}),.addrb(BTB_Write_Addr__reg[8:2]),.dinb(BTB_Write_Data_temp),.doutb()); 
              
-
+/*
 TSDN65LPLLA128X56M8F BTB_Set0 (
   .AA(BTB_Read_Addr[8:2]), 			// Address of A: Addra[6:0]
   .DA(56'd0),			// Data in of A: douta[127:0]	
@@ -211,7 +211,7 @@ TSDN65LPLLA128X56M8F BTB_Set3 (
   .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
   .QA(BTB_Read_Data_Set3),
   .QB()
-	);
+	);*/
 
 	/*
 dual_port_RAM BTB_Set0( .clka(CLK),.rsta(RST),.wea(7'h00),.addra(BTB_Read_Addr[8:2]),.dina(56'h0),.douta(BTB_Read_Data_Set0),.ena(~BPU__Stall),

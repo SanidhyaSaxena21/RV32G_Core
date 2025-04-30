@@ -18,11 +18,10 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-`include "./DEFINES/defines.v"
+`include "defines.v"
 
 module riscv_platform (
   input clk_int,
-  input clk_x2,
   input rst,
 
   input RTC_CLOCK,
@@ -93,9 +92,76 @@ module riscv_platform (
    wire [63:0] lcd_reg;
    wire [3:0] imem_allow,dmem_allow; // L/X/W/R
 
-       cpu cpu1(.clk(clk_int),/*.clk_x2(clk_x2),*/.rst(rst), .ext_irq(ext_irq), .timer_irq(timer_irq), .sw_irq(sw_irq),
+   //Debug Module Interface 
+   wire   haltreq_i;
+   wire   resumereq_i;
+   wire   resethaltreq_i;
+
+   wire  core_havereset_o;
+   wire   ackhavereset;
+
+   //TODO: How to use them
+   wire  core_unavail_o;
+   wire   ackunavail;
+
+   wire  core_halted_o;
+   wire  core_running_o;
+   wire  core_resumeack_o;
+
+   //Address for Debugger
+   wire [31:0] dm_exception_addr;
+   wire [31:0] dm_halt_addr;
+
+   wire ndmreset;
+
+   wire new_cmd_flag_i;
+   wire cmd_not_supported_i;
+   
+
+   //Command Success signals to Debug Module
+   wire command_complete_o;
+   wire reg_access_complete_o;
+   wire mem_access_complete_o;
+   
+   //Command Failure Signals to Debug Module
+   wire abstract_cmd_fail_o;
+   wire abstract_cmd_wrong_hart_state_o;
+   wire abstract_cmd_exception_o;
+   wire abstract_cmd_bus_error;
+
+
+   wire [31:0] PC_DEBUG;
+   wire [31:0] instruction_DM;
+
+   wire freeze_int_dcache;
+
+   wire pbuffer_execution;
+
+       cpu cpu1(.clk(clk_int),/*.clk_x2(clk_x2),*/.RESET_BUTTON(rst), .ext_irq(ext_irq), .timer_irq(timer_irq), .sw_irq(sw_irq),
            .cache_en(cache_en_int),.tick_en(tick_en),.csr_pmp_sb(csr_pmp_sb),
            .addr_exception(addr_exception),.interrupt(interrupt),
+
+           //Debug Interface
+           .instruction_DM(instruction_DM),
+           .PC_DEBUG(PC_DEBUG),
+           .freeze_int_dcache(freeze_int_dcache),
+           .haltreq_i(haltreq_i),
+           .resumereq_i(resumereq_i),
+           .resethaltreq_i(resethaltreq_i),
+           .core_havereset_o(core_havereset_o),
+           .ackhavereset(ackhavereset),
+           .ackunavail(ackunavail),
+           .pbuffer_execution(pbuffer_execution),
+           .core_halted_o(core_halted_o),.core_running_o(core_running_o),.core_resumeack_o(core_resumeack_o),
+           .ndmreset(ndmreset),.cmd_not_supported_i(cmd_not_supported_i),.new_cmd_flag_i(new_cmd_flag_i),
+           .command_complete_o(command_complete_o),.reg_access_complete_o(reg_access_complete_o),.mem_access_complete_o(mem_access_complete_o),
+           .dm_halt_addr(dm_halt_addr),
+           .dm_exception_addr(dm_exception_addr),
+           .abstract_cmd_fail_o(abstract_cmd_fail_o),
+           .abstract_cmd_wrong_hart_state_o(abstract_cmd_wrong_hart_state_o),
+           .abstract_cmd_exception_o(abstract_cmd_exception_o),
+           .abstract_cmd_bus_error(abstract_cmd_bus_error),
+           
 
           .IADDR(IADDR),
           .IBURST(IBURST), //00-Normal(), 01-INCR(), 10-WRAP(), 11-Reserved
@@ -122,6 +188,32 @@ module riscv_platform (
        `ifdef itlb_def
        ,.vpn_to_ppn_req(vpn_to_ppn_req)
        `endif  
+       );
+
+  
+       Debug_Module DEBUG_MODULE (
+           .clk(clk_int),
+           .reset(rst),
+           //Debug Interface
+           .INSTRUCTION_DEBUG(instruction_DM),
+           .PC_DEBUG(PC_DEBUG),
+           .freeze_int_dcache(freeze_int_dcache),
+           .haltreq_i(haltreq_i),
+           .resumereq_i(resumereq_i),
+           .resethaltreq_i(resethaltreq_i),
+           .core_havereset_o(core_havereset_o),
+           .ackhavereset(ackhavereset),
+           .ackunavail(ackunavail),
+           .core_halted_o(core_halted_o),.core_running_o(core_running_o),.core_resumeack_o(core_resumeack_o),
+           .ndmreset(ndmreset),.cmd_not_supported_i(cmd_not_supported_i),.new_cmd_flag_i(new_cmd_flag_i),
+           .command_complete_o(command_complete_o),.reg_access_complete_o(reg_access_complete_o),.mem_access_complete_o(mem_access_complete_o),
+           .pbuffer_execution(pbuffer_execution),
+           .dm_halt_addr(dm_halt_addr),
+           .dm_exception_addr(dm_exception_addr),
+           .abstract_cmd_fail_o(abstract_cmd_fail_o),
+           .abstract_cmd_wrong_hart_state_o(abstract_cmd_wrong_hart_state_o),
+           .abstract_cmd_exception_o(abstract_cmd_exception_o),
+           .abstract_cmd_bus_error(abstract_cmd_bus_error)
        );
 
        rv32_mpu #(.ILEN(),.XLEN(), .MPU_SUPPORT(), .NB_PMP_REGION(),.MAX_PMP_REGION(),.MMU_SUPPORT(0)) IMEM_MPU (
@@ -210,8 +302,7 @@ module riscv_platform (
         .timer_irq(timer_irq)
       );
 
-     DATA_MEMORY #(.ADDR_WIDTH(14),.DATA_WIDTH(32),.INSTR_INPUT_FILE("/home/rclabs1/RISCV32_Core/RV32I_ASIC/Processor/2_Processor_tb/instruction.mem"),.DATA_INPUT_FILE("/home/rclabs1/RISCV32_Core/RV32I_ASIC/Processor/2_Processor_tb/data.mem"), 
-                   .PT_INPUT_FILE("Page_Table.mem"),.HANDLER_INPUT_FILE("handler.mem")) Instruction_Memory (
+     DATA_MEMORY #(.ADDR_WIDTH(14),.DATA_WIDTH(32)) Instruction_Memory (
         .clk(clk_int),
         .rst(rst),
         .ADDR(ADDR),

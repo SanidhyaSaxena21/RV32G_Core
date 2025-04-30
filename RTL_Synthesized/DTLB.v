@@ -151,7 +151,7 @@ assign write_addr = lru_reg;
 assign vpn = vpn_in;
 
 
-always @(posedge clk or posedge rst)
+always @(posedge clk)
 begin
         if(rst) begin
 //            re <= 1'b0;
@@ -167,7 +167,7 @@ begin
 //        else re <= 1'b0;
 end
 
-always @(posedge clk or posedge rst)
+always @(posedge clk)
 begin
         if(rst)  access <= 1'b0;
         else if(~miss) access <= 1'b1;
@@ -189,12 +189,12 @@ end
 // Virtual Address:     [-----PPN[31:22]-----][------PPN[21:12-----][-------Page offset[11:0]]
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
   if(rst) state_PTW <= IDLE;
   else if(~freeze_tlb)  state_PTW <= next_state_PTW;
 end 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
   if(rst) addr_pte <= {csr_satp[19:0],12'd0};
   else if(~freeze_tlb)  addr_pte <= next_addr;
 end 
@@ -205,7 +205,7 @@ end
 end*/
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
   if(rst) lru_reg <= 5'd0;
   else if(~freeze_tlb) lru_reg <= lru_reg_int;
 end
@@ -411,7 +411,7 @@ reg [25:0] tlb_data_off;
 assign TLB_VALID = (dtlb_trans_off) ? tlb_valid_off : valid_data;
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) tlb_valid_off <= 1'b0;
     else if(dtlb_trans_off & vpn_to_ppn_req) begin
         tlb_valid_off <= 1'b1;
@@ -419,7 +419,7 @@ always @(posedge clk or posedge rst) begin
     else tlb_valid_off <= 1'b0;
 end
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) tlb_data_off <= 26'd0;
     else if(dtlb_trans_off & vpn_to_ppn_req) begin
         tlb_data_off <= {2'b00,vpn,4'b0111};

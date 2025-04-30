@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-
+(* keep_hierarchy = "yes" *)
 module REG_FILE
 (
     input CLK,
@@ -24,13 +24,13 @@ module REG_FILE
     output [63:0] led
 );
 
-reg [31:0] MEM[0:31];
-reg [31:0] MEM_Shadow[4:3];
+(* keep = "true" *) reg [31:0] MEM[0:31];
+(* keep = "true" *) reg [31:0] MEM_Shadow[4:3];
 
 assign led = {MEM[14],MEM[15]};
 
 
-always @ (posedge CLK or posedge RST) begin
+always @(posedge CLK ) begin
     if(RST) begin
         MEM[0] <= 32'b0;
         MEM[1] <= 32'h103C;

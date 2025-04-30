@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-`include "../Include/defines.v"
+`include "defines.v"
 
 module PP_LOW ( ONEPOS, ONENEG, TWONEG, INA, INB, PPBIT );
 input  ONEPOS;
@@ -729,7 +729,7 @@ input  CLK;
 input EN;
 output DOUT;
    reg DOUT_reg;
-   always @ ( posedge RST or posedge CLK ) begin
+   always @ (posedge CLK ) begin
       if (RST)
         DOUT_reg <= 1'b0;
       else
@@ -2311,7 +2311,7 @@ output [0:63] RESULT;
    WALLACE_33_32 W (.SUMMAND(PPBIT[0:575]) , .RST(RST), .CLK (CLK) , .CARRY(INT_CARRY[1:63]) , .SUM(INT_SUM[0:63]) , .EN(EN) );
    assign INT_CARRY[0] = LOGIC_ZERO;
    DBLCADDER_64_64 D (.OPA(INT_SUM[0:63]) , .OPB(INT_CARRY[0:63]) , .CIN (LOGIC_ZERO) , .PHI (PHI) , .SUM(ARESULT[0:63]), .COUT() );
-   always @(posedge CLK or posedge RST)
+   always @(posedge CLK)
      if (RST)
 	RESULT <=  64'h0000_0000_0000_0000;
      else
@@ -2354,7 +2354,7 @@ assign ss = ~(mul_op[0]);
 assign us = ~(mul_op[1]) & (mul_op[0]);
 assign uu = (mul_op[1]) & (mul_op[0]);
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
         if(RST) begin
             mul_op_int1 <= mul_op;
             mul_op_fsm <= mul_op_int1;
@@ -2365,7 +2365,7 @@ always @(posedge CLK or posedge RST) begin
         end
 end
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
 	if(RST) begin
 	    uu_int <= 0;
 	    uu_int2 <= 0;

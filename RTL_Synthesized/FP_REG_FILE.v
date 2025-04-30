@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-
+(* keep_hierarchy = "yes" *)
 module FP_REG_FILE
 (
     input RST,
@@ -28,7 +28,7 @@ reg [63:0] MEMORY[0:31];
 
 assign led = MEMORY[15];
 
-always @ (posedge CLK or posedge RST) begin
+always @(posedge CLK ) begin
     if(RST) begin
         MEMORY[0] <= 64'd00;
         MEMORY[1] <= 64'b1111111011011011011111110100011100111101011000111000100011011111; 

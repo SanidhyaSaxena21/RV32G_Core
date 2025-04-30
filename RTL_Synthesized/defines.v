@@ -11,6 +11,8 @@
 
 `define XLEN 32
 
+`define TSMC_RAM_EN 0
+
 `define OR1200_ASIC_MULTP2_32X32
 `define op32_branch 7'b1100011
 `define op32_loadop 7'b0000011
@@ -316,7 +318,7 @@
 `define CSR_SB_PMPADDR14    `CSR_SB_PMPADDR13 + `XLEN
 `define CSR_SB_PMPADDR15    `CSR_SB_PMPADDR14 + `XLEN
 
-`define CSR_SB_W `CSR_SB_PMPADDR15 + `XLEN
+`define CSR_SB_W `CSR_SB_PMPADDR15 + 1 + `XLEN
 
 `define IS_ECALL  0
 `define IS_EBREAK 1
@@ -359,6 +361,15 @@
 `define medeleg      12'hf14
 `define mideleg      12'hf14
 `define mbadaddr      12'h343
+
+//Debug CSR
+`define debug_dcsr      12'h7b0
+`define debug_dpc       12'h7b1
+`define debug_dscratch0 12'h7b2
+`define debug_dscratch1 12'h7b3
+
+`define EBREAKM 15
+`define STEP 2
 
 // satp CSR
 `define satp_default 32'd0

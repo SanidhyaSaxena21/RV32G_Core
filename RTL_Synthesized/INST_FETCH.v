@@ -1,6 +1,7 @@
 `timescale 1ns / 1ps
-`include "../Include/defines.v"
+`include "defines.v"
 
+(* keep_hierarchy = "yes" *)
 module INST_FETCH
 (
     input CLK,
@@ -35,6 +36,16 @@ module INST_FETCH
     input pc_ctrl_ebreak,
     input [31:0] mepc,
 
+    //Debug Interface
+    input pc_valid_dbg,
+    input [31:0] pc_dbg,
+    input dbg_instr_req,
+    input kill_if,
+    input halt_if,
+
+    input return_pc_valid,
+    input [31:0] return_pc,
+
     input interrupt_pending,
 
     input IF_ID_nop,
@@ -56,7 +67,7 @@ reg [31:0] pc_reg;
 wire [31:0] ISR_ADDRESS;
 
 
-assign  pc = ((~PC_Control__IRQ) & (~Branch_Taken__MEM_WB) & BPU__Branch_Taken__IF_ID) ? BPU__Branch_Target_Addr__IF_ID : pc_reg;    //Load__Stall and IRQ functioning
+assign  pc = return_pc_valid ? return_pc : (pc_valid_dbg ? pc_dbg : (((~PC_Control__IRQ) & (~Branch_Taken__MEM_WB) & BPU__Branch_Taken__IF_ID) ? BPU__Branch_Target_Addr__IF_ID : pc_reg));    //Load__Stall and IRQ functioning
 
 //assign ISR_ADDRESS = CSR_mtvec + ( Device_id << isr_inst_count );
 assign ISR_ADDRESS = CSR_mtvec;
@@ -64,7 +75,7 @@ assign ISR_ADDRESS = CSR_mtvec;
 assign  pc4 = pc + 32'd4;
 
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         PC__IF_ID <= 32'b00;
     end
@@ -85,21 +96,21 @@ end
 
 
 `ifdef itlb_def
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         pc_reg <= 32'b00;
         vpn_to_ppn_req1 <= 1'b1;
         tlb_trans_off <= 1'b1;
     end
-    else if(~IF_ID_Freeze) begin
-        pc_reg <= (Branch_Taken__EX_MEM ? Branch_Target_Addr__EX_MEM : pc4);
-        vpn_to_ppn_req1 <= 1'b1;
+    else if(~IF_ID_Freeze && ~halt_if) begin
+        pc_reg <= (Branch_Taken__EX_MEM ? Branch_Target_Addr__EX_MEM :((pc_valid_dbg) ? pc_dbg : pc4));
+        vpn_to_ppn_req1 <= dbg_instr_req ? 1'b1 : 1'b0;
         tlb_trans_off <= interrupt_pending ? 1'b1 : ~csr_satp[31];  // Mode=0 (Translation Off), 1 (Sv32 Translation)
     end
     else if(PC_Control__IRQ) begin
       if(pc_ctrl_ecall) pc_reg <= ISR_ADDRESS;
       else if(pc_ctrl_mret) pc_reg <= mepc;
-      else if(pc_ctrl_ebreak) pc_reg <= ISR_ADDRESS;
+      //else if(pc_ctrl_ebreak) pc_reg <= ISR_ADDRESS;
       else pc_reg <= ISR_ADDRESS;
 
         //pc_reg <=  ISR_ADDRESS;
@@ -112,12 +123,12 @@ always @(posedge CLK or posedge RST) begin
     end
 end
 `else
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         pc_reg <= 32'b00;
     end
     else begin
-        if(~IF_ID_Freeze) begin
+        if(~IF_ID_Freeze && ~halt_if) begin
             pc_reg <= (Branch_Taken__EX_MEM ? Branch_Target_Addr__EX_MEM : (Load__Stall ? (pc_reg - 32'd4) : pc4));
         end
     end
@@ -125,14 +136,13 @@ end
 `endif
 
 
-always @(posedge RST or posedge CLK)
+always @(posedge CLK)
 begin
     if(RST) begin
         PC_4__IF_ID <= 32'h4;
         NOP__IF_ID <= 1'b0;
     end
-    else if(IF_ID_nop) NOP__IF_ID <= 1'b1;
-    else if(PC_Control__IRQ)
+    else if(PC_Control__IRQ || IF_ID_nop || kill_if || halt_if)
         NOP__IF_ID <= 1'b1;    
     else if(~IF_ID_Freeze) begin
         PC_4__IF_ID <= Load__Stall ? pc : pc4;

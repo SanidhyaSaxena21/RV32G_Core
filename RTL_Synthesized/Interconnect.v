@@ -5,7 +5,7 @@
 
 `timescale 1ns / 1ps
 
-
+(* keep_hierarchy = "yes" *)
 module interconnect (
     input  wire         clk,              // Clock signal
     input  wire         reset,            // Reset signal

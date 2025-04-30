@@ -1,12 +1,18 @@
 `timescale 1ns / 1ps
-`include "../Include/defines.v"
+`include "defines.v"
 
- 
+(* keep_hierarchy = "yes" *) 
 module DECODE
 (
     input CLK,
     input RST,
     input IF_ID_Freeze,
+    input debug_mode,
+
+    input kill_id,
+    output [31:0] PC_ID,
+
+    output illegal_instruction,
     
     input [31:0] Instruction__IF_ID,                //Instruction from IF_ID stage
     
@@ -158,7 +164,7 @@ assign eret = mret;
 //assign inst = irq_ctrl ? inst_inj : Instruction__IF_ID;
 assign inst = Instruction__IF_ID;
 assign inst_out = inst;
-
+assign PC_ID = pc_forw; 
 assign rs1_read_op = ((inst[6:0] == `jalr) | (inst[6:0] == `op32_branch) | (inst[6:0] == `op32_loadop) | (inst[6:0] == `op32_storeop) | (inst[6:0] == `op32_fp_loadop) | (inst[6:0] == `op32_fp_storeop) | (inst[6:0] == `op32_imm_alu) |    
                      (inst[6:0] == `op32_alu) | (inst[6:0] == `op64_imm_alu) | (inst[6:0] == `op64_alu) | (inst[6:0] == `amo)  | ((inst[6:0] == `sys) && (inst[14] == 1'b0))) ? 1'b1 :   
                      (((inst[6:0] == `op_lui) | (inst[6:0] == `op_auipc) | (inst[6:0] == `jal)) ? 1'b0 : 1'b0); // whether rs1 has to be read or not
@@ -199,7 +205,7 @@ assign rs2 = ((inst[6:0] == `op32_branch) | (inst[6:0] == `op32_storeop) | (inst
 
 
 always @(*) begin
-    if((RST | Branch_Taken__EX_MEM | NOP__IF_ID | Mult_Div_unit__Stall)) begin
+    if((Branch_Taken__EX_MEM | NOP__IF_ID | Mult_Div_unit__Stall | kill_id)) begin
         Load__Stall_id_ex = 1'b0;
     end
     else begin
@@ -217,7 +223,7 @@ assign csr_wr_en = ((inst[6:0] == `sys) && ((Funct3__id_ex == 3'b001 || Funct3__
 
 // sys bus used for ECALL/EBREAK/MRET Instructions
 always @(*) begin
-  if(RST | Branch_Taken__EX_MEM | NOP__IF_ID | Mult_Div_unit__Stall | IF_ID_Freeze) begin
+  if(Branch_Taken__EX_MEM | NOP__IF_ID | Mult_Div_unit__Stall | IF_ID_Freeze | kill_id) begin
     sys_id_ex = 6'b000000;
   end
   //sys_id_ex = 6'b000000;
@@ -251,9 +257,9 @@ always @(*) begin
   end 
 end
 
-
+//Instruction Decode Error (EXCEPTION)
 always @(*) begin
-    if(RST | Branch_Taken__EX_MEM | NOP__IF_ID | Mult_Div_unit__Stall | IF_ID_Freeze) begin
+    if(Branch_Taken__EX_MEM | NOP__IF_ID | Mult_Div_unit__Stall | IF_ID_Freeze | kill_id) begin
         inst_dec_error = 6'b000000;
     end
 else begin
@@ -277,9 +283,54 @@ else begin
   end
 end
 
+//Illegal Instructions logic (EXCEPTION)
+//All Instruction related to PC like AUIPC, and all control instructions like
+//Branch and Jumps are illegal in debug mode
+reg illegal_instruction_decode,illegal_instruction_csr;
+
+assign illegal_instruction = illegal_instruction_decode | illegal_instruction_csr;
+
 
 always @(*) begin
-    if((RST | Branch_Taken__EX_MEM | NOP__IF_ID |  Mult_Div_unit__Stall | Load__Stall)) begin    
+  if(Branch_Taken__EX_MEM | NOP__IF_ID | Mult_Div_unit__Stall | IF_ID_Freeze | kill_id) begin
+      illegal_instruction_csr = 1'b0;
+  end
+  else begin
+    case(csr_adr[11:10])
+      2'b00: illegal_instruction_csr = 1'b0;
+      2'b01: illegal_instruction_csr = 1'b0;
+      2'b10: illegal_instruction_csr = 1'b0;
+      2'b11: illegal_instruction_csr = csr_wr_en ? 1'b1 : 1'b0; //Attempt to write on a Read Only CSR
+    endcase
+  end
+end
+always @(*) begin
+    if(Branch_Taken__EX_MEM | NOP__IF_ID | Mult_Div_unit__Stall | IF_ID_Freeze | kill_id) begin
+        illegal_instruction_decode = 1'b0;
+    end
+else begin
+  case({debug_mode,inst[6:0]}) 
+    {1'b1,`op_lui}:            illegal_instruction_decode = 1'b0 ;
+    {1'b1,`op_auipc}:          illegal_instruction_decode = 1'b1 ;
+    {1'b1,`jal}:               illegal_instruction_decode = 1'b1 ;
+    {1'b1,`jalr}:              illegal_instruction_decode = 1'b1;
+    {1'b1,`op32_branch}:       illegal_instruction_decode = 1'b1 ;
+    {1'b1,`op32_loadop}:       illegal_instruction_decode = 1'b0 ;
+    {1'b1,`op32_storeop}:      illegal_instruction_decode = 1'b0 ;
+    {1'b1,`op32_imm_alu}:      illegal_instruction_decode = 1'b0 ;
+    {1'b1,`op32_alu}:          illegal_instruction_decode = 1'b0 ;
+    {1'b1,`op64_imm_alu}:      illegal_instruction_decode = 1'b0 ;
+    {1'b1,`op64_alu}:          illegal_instruction_decode = 1'b0 ;
+    {1'b1,`amo}:               illegal_instruction_decode = 1'b0 ;
+    {1'b1,`sys}:               illegal_instruction_decode = 1'b0 ;
+    8'd0:               illegal_instruction_decode = 1'b0 ;
+    default:            illegal_instruction_decode = 1'b0;
+  endcase
+  end
+end
+
+always @(*) begin
+    if((Branch_Taken__EX_MEM | NOP__IF_ID |  Mult_Div_unit__Stall | Load__Stall | kill_id)) begin    
         
         pc_forw = 32'b0;
         

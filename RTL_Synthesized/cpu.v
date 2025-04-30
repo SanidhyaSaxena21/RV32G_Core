@@ -1,9 +1,7 @@
 `timescale 1ns / 1ps
-`include "../Include/defines.v"
+`include "defines.v"
 
-module cpu(clk,rst,ext_irq,sw_irq,timer_irq,csr_pmp_sb,
-           /*wb_ack_i,wb_err_i, wb_rty_i, wb_dat_i,wb_cyc_o, wb_adr_o, wb_stb_o, 
-           wb_we_o, wb_sel_o, wb_dat_o,wb_cti_o, wb_bte_o,*/ 
+module cpu /*(clk,rst,ext_irq,sw_irq,timer_irq,csr_pmp_sb,
           DADDR,DBURST,DREQ,DWRB,DWDATA,DRDATA,DACK,DSTALL,DBSTROBE,
           IADDR,IBURST,IREQ,IWRB,IWDATA,IRDATA,IACK,ISTALL,IBSTROBE
 
@@ -16,68 +14,72 @@ module cpu(clk,rst,ext_irq,sw_irq,timer_irq,csr_pmp_sb,
 ,cache_en,tick_en,addr_exception
 ,interrupt
 //,out_t0,out_t1,out_t2,sp
-);
+);*/
+(
+input clk,
+input RESET_BUTTON,
 
-input clk;
-input rst;
+output  [31:0]  IADDR,
+output  [1:0]   IBURST, //00-Normal, 01-INCR, 10-WRAP, 11-Reserved
+output          IREQ,
+output          IWRB,
+output  [31:0]  IWDATA,
+input      [31:0]  IRDATA,
+input              IACK,
+input              ISTALL,
+output  [3:0]   IBSTROBE,
 
-//output [63:0] led;
+output  [31:0]  DADDR,
+output  [1:0]   DBURST, //00-Normal, 01-INCR, 10-WRAP, 11-Reserved
+output          DREQ,
+output          DWRB,
+output  [31:0]  DWDATA,
+input      [31:0]  DRDATA,
+input              DACK,
+input              DSTALL,
+output  [3:0]   DBSTROBE,
 
-/*input [1:0] wb_ack_i;
-input [1:0] wb_err_i;
-input [1:0] wb_rty_i;
-input [63:0] wb_dat_i;
-output [1:0] wb_cyc_o;
-output [63:0] wb_adr_o;
-output [1:0] wb_stb_o;
-output [1:0] wb_we_o;
-output [7:0] wb_sel_o;
-output [63:0] wb_dat_o;
-output [5:0] wb_cti_o;
-output [3:0] wb_bte_o;*/
+input  wire                    ext_irq,
+input  wire                    sw_irq,
+input  wire                    timer_irq,
+//output [31:0] out_t0,
+//output [31:0] out_t1,
+//output [31:0] out_t2,
 
-output  [31:0]  IADDR;
-output  [1:0]   IBURST; //00-Normal; 01-INCR; 10-WRAP; 11-Reserved
-output          IREQ;
-output          IWRB;
-output  [31:0]  IWDATA;
-input      [31:0]  IRDATA;
-input              IACK;
-input              ISTALL;
-output  [3:0]   IBSTROBE;
-
-output  [31:0]  DADDR;
-output  [1:0]   DBURST; //00-Normal; 01-INCR; 10-WRAP; 11-Reserved
-output          DREQ;
-output          DWRB;
-output  [31:0]  DWDATA;
-input      [31:0]  DRDATA;
-input              DACK;
-input              DSTALL;
-output  [3:0]   DBSTROBE;
-
-input  wire                    ext_irq;
-input  wire                    sw_irq;
-input  wire                    timer_irq;
-//output [31:0] out_t0;
-//output [31:0] out_t1;
-//output [31:0] out_t2;
-
-input cache_en;
-output [`CSR_SB_W-1:0] csr_pmp_sb;
+input cache_en,
+output [`CSR_SB_W-1:0] csr_pmp_sb,
 
 `ifdef itlb_def
-output vpn_to_ppn_req;
+output vpn_to_ppn_req,
 `endif 
 
 `ifdef TEST
-output [31:0] block_instr_int;
+output [31:0] block_instr_int,
 `endif
 
-output tick_en;
-output addr_exception;
+output tick_en,
+output addr_exception,
 
-input [31:0] interrupt;
+input [31:0] interrupt,
+
+input [31:0] instruction_DM,
+output [31:0] PC_DEBUG,
+output freeze_int_dcache,
+input haltreq_i,
+input resumereq_i,
+input resethaltreq_i,
+output core_havereset_o,
+input pbuffer_execution,
+input ackhavereset,ackunavail,
+output core_halted_o,core_running_o,core_resumeack_o,
+input ndmreset,cmd_not_supported_i,new_cmd_flag_i,
+output command_complete_o,reg_access_complete_o,mem_access_complete_o,
+input [31:0] dm_halt_addr,dm_exception_addr,
+
+output abstract_cmd_fail_o,
+output abstract_cmd_wrong_hart_state_o,
+output abstract_cmd_exception_o,
+output abstract_cmd_bus_error );
 
 
 wire [31:0] instruction_int;
@@ -90,43 +92,32 @@ wire instr_clk;
 assign block_instr_int = instruction_int;
 `endif
 
-//`ifdef rom
-//blk_mem_gen_v7_3_1 block_mem(
-// .clka(clk), // input clka
-// .ena(~icache_freeze & ~stall_mul_int & ~freeze_int), // input ena   ; active low for simulating freeze signal
-// .addra(pc_cache_int), // input [31 : 0] addra
-// .douta(instruction_int) // output [31 : 0] douta
-//);
-//`endif
 
-//irq_interface ii(
-//.clk(clk),
-//.rst(rst),
-//.stall_mul(stall_mul_int),
-//.freeze(freeze_int),
-//.icache_freeze(icache_freeze),          // added on 22/11/2016    because count1 and 2 were enable and interface inst were getting executed becuase of i cache miss
-//.irq(irq),
-//.eret(eret),
-//.irq_ack(irq_ack),
-//.eret_ack(eret_ack),
-//.inst_inj(inst_inj),
-//.irq_ctrl(irq_ctrl),
-//.irq_ctrl_wb(irq_ctrl_wb_i),
-//.irq_if_ctrl(irq_if_ctrl),
-//.irq_ctrl_dec_src1(irq_ctrl_dec_src1),
-//.irq_ctrl_dec_src2(irq_ctrl_dec_src2),
-//.if_id_freeze(if_id_freeze_irq),
-//.irq_icache_freeze(irq_icache_freeze)
-//);
-
-fet_dec_ex_mem fdem( .rst(rst),.clk(clk),/*.led(led),*/.tick_en(tick_en),.addr_exception(addr_exception)
+fet_dec_ex_mem fdem( .RESET_BUTTON(RESET_BUTTON),.clk(clk),/*.led(led),*/.tick_en(tick_en),.addr_exception(addr_exception)
                       ,.ext_irq(ext_irq),.sw_irq(sw_irq),.timer_irq(timer_irq)
                      ,.interrupt(interrupt),.clmode(2'b00),.cache_en(cache_en),.csr_pmp_sb(csr_pmp_sb)
-                     //,.wb_ack_i(wb_ack_i),.wb_err_i(wb_err_i),.wb_rty_i(wb_rty_i),.wb_dat_i(wb_dat_i)
-                     //,.wb_cyc_o(wb_cyc_o),.wb_adr_o(wb_adr_o),.wb_stb_o(wb_stb_o),.wb_we_o(wb_we_o)
-                     //,.wb_sel_o(wb_sel_o),.wb_dat_o(wb_dat_o),.wb_cti_o(wb_cti_o),.wb_bte_o(wb_bte_o)
                      ,.DADDR(DADDR),.DBURST(DBURST),.DREQ(DREQ),.DWRB(DWRB),.DWDATA(DWDATA),.DRDATA(DRDATA),.DACK(DACK),.DSTALL(DSTALL),.DBSTROBE(DBSTROBE)
-                     ,.IADDR(IADDR),.IBURST(IBURST),.IREQ(IREQ),.IWRB(IWRB),.IWDATA(IWDATA),.IRDATA(IRDATA),.IACK(IACK),.ISTALL(ISTALL),.IBSTROBE(IBSTROBE)
+                     ,.IADDR(IADDR),.IBURST(IBURST),.IREQ(IREQ),.IWRB(IWRB),.IWDATA(IWDATA),.IRDATA(IRDATA),.IACK(IACK),.ISTALL(ISTALL),.IBSTROBE(IBSTROBE),
+                      .instruction_DM(instruction_DM),
+                      .PC_DEBUG(PC_DEBUG),
+                      .freeze_int_dcache(freeze_int_dcache),
+                      .haltreq_i(haltreq_i),
+                      .resumereq_i(resumereq_i),
+                      .resethaltreq_i(resethaltreq_i),
+                      .core_havereset_o(core_havereset_o),
+                      .ackhavereset(ackhavereset),
+                      .ackunavail(ackunavail),
+                      .pbuffer_execution(pbuffer_execution),
+                      .core_halted_o(core_halted_o),.core_running_o(core_running_o),.core_resumeack_o(core_resumeack_o),
+                      .ndmreset(ndmreset),.cmd_not_supported_i(cmd_not_supported_i),.new_cmd_flag_i(new_cmd_flag_i),
+                      .command_complete_o(command_complete_o),.reg_access_complete_o(reg_access_complete_o),.mem_access_complete_o(mem_access_complete_o),
+                      .dm_halt_addr(dm_halt_addr),
+                      .dm_exception_addr(dm_exception_addr),
+                      .abstract_cmd_fail_o(abstract_cmd_fail_o),
+                      .abstract_cmd_wrong_hart_state_o(abstract_cmd_wrong_hart_state_o),
+                      .abstract_cmd_exception_o(abstract_cmd_exception_o),
+                      .abstract_cmd_bus_error(abstract_cmd_bus_error)
+                       
                     `ifdef itlb_def
                     ,.vpn_to_ppn_req(vpn_to_ppn_req)
                     `endif  

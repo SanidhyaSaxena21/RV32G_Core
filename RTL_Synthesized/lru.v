@@ -40,7 +40,7 @@ module lru( clk,rst,access,addr_access,compare,lru_addr
     
     reg [4:0]lru_addr_int;
     
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
         if(rst) begin
             level_4 <=  2'b0;
             level_3 <=  4'b0;
@@ -295,7 +295,7 @@ always @(posedge clk or posedge rst) begin
     end
     
     
-always@(posedge clk or posedge rst)
+always @(posedge clk)
     begin
         if(rst)
            lru_addr <= 5'b0;

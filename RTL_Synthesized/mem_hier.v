@@ -19,6 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+(* keep_hierarchy = "yes" *)
 module mem_hier(
 
       input clk/*,clk_x2*/, reset,
@@ -254,7 +255,7 @@ assign biu_we_i = 1'b0;
 
 reg dat;
 
-always @(posedge clk or posedge reset) begin
+always @(posedge clk) begin
     if(reset) begin
         dat <= 1'b0;
     end
@@ -265,14 +266,14 @@ always @(posedge clk or posedge reset) begin
         dat <= 1'b0;
 end
 
-always@( posedge clk or posedge reset)
+always @( posedge clk)
     begin
     if(reset)
         virtual_addr <= 32'd0;
     else if(~(stall || freeze_in))
         virtual_addr <= stall_load ? (i_addr -32'd4) : i_addr;
     end
-always@(posedge clk or posedge reset)
+always @(posedge clk)
     begin
     if(reset)
         freeze_hit_status <= 1'b0;
@@ -280,7 +281,7 @@ always@(posedge clk or posedge reset)
         freeze_hit_status<= i_hit;
     end
 
-always@(posedge clk or posedge reset)
+always @(posedge clk)
     begin
     if(reset)
         instr_reg <= 32'b0;
@@ -293,7 +294,7 @@ always@(posedge clk or posedge reset)
         
     end
 
-always@(posedge clk or posedge reset )
+always@(posedge clk)
     begin
         if(reset) begin
             freeze_int <=0;

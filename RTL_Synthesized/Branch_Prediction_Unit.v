@@ -3,7 +3,7 @@
 //`define BPU_ENABLE
 `undef BPU_ENABLE
 
-
+(* keep_hierarchy = "yes" *)
 module Branch_Prediction_Unit
 (
     input CLK,
@@ -93,7 +93,7 @@ always @(*) begin
 end
 `endif
 
-
+(* keep_hierarchy = "yes" *)
 Direction_Predictor DP( .CLK(CLK),                           
                         .RST(RST),                           
                         .PC(PC), 
@@ -108,7 +108,7 @@ Direction_Predictor DP( .CLK(CLK),
                         .GHR_Write_En(GHR_Write_En));   
                         
                         
-                        
+(* keep_hierarchy = "yes" *)                        
 Branch_Target_Buff BTB( .CLK(CLK),                        
                         .RST(RST),    
                         .BPU__Stall(BPU__Stall),                       
@@ -117,8 +117,9 @@ Branch_Target_Buff BTB( .CLK(CLK),
                         .BTB_Hit(BTB_Hit),             
                         .BTB_Write_Addr(BTB_Write_Addr),    
                         .BTB_Write_Data(BTB_Write_Data),    
-                        .BTB_Write_En(BTB_Write_En));              
-
+                        .BTB_Write_En(BTB_Write_En)); 
+                                     
+(* keep_hierarchy = "yes" *)
 Return_Addr_Stack RAS( .CLK(CLK),
                        .RST(RST), 
                        .BPU__Stall(BPU__Stall),

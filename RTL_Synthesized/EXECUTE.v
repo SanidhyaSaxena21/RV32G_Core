@@ -1,13 +1,18 @@
 `timescale 1ns / 1ps
-`include "../Include/defines.v"
+`include "defines.v"
 
+(* keep_hierarchy = "yes" *)
 module EXECUTE
 (
     input CLK,
     input RST,
+    input kill_ie,
     
-    input [31:0] pc_id_ex,                              //                                                                  *********
-    
+    input [31:0] pc_id_ex,    //                                                                  *********
+   
+    input [31:0] PC_ID_EX, 
+    output [31:0] pc_ex_mem,
+
     input Forward_RS1_MEM__ID_EX,                       //MEM stage forwarding for RS1 control signal from ID_EX stage
     input Forward_RS2_MEM__ID_EX,                       //MEM stage forwarding for RS2 control signal from ID_EX stage
     input Forward_RS1_WB__ID_EX,                        //WB stage forwarding for rs1 control signal from ID_EX stage 
@@ -106,7 +111,6 @@ module EXECUTE
     input PC_Control__IRQ
 );
 
-
 // fsm for multiplier activation
 parameter idle = 2'b00;
 parameter act  = 2'b01;
@@ -179,7 +183,8 @@ reg mul_res_sel;
 
 
 
-
+//TODO: Check whether we need to have some gating of kill or not
+assign pc_ex_mem = PC_ID_EX;
 assign src0_int = RS1_Data__ID_EX;
 assign src1_int = RS2_Data__ID_EX;
 
@@ -267,7 +272,7 @@ assign srlout = srl;              //whether srlw or normal srl operation has to 
 assign sraout = sra;              //whether sraw or normal sra operation has to be performed
 
 always @(*) begin
-    if(( Load__Stall_ID_EX | RST | Branch_Taken__EX_MEM)) begin
+    if(( Load__Stall_ID_EX | Branch_Taken__EX_MEM | kill_ie)) begin
         ALU_Result__ex_mem = 32'b0;
         eret_o = 1'b0;
     end
@@ -330,7 +335,7 @@ always @(*) begin
 end 
 
 always @(*) begin
-    if((Load__Stall_ID_EX | RST | Branch_Taken__EX_MEM)) begin                                 // Stall implementation
+    if((Load__Stall_ID_EX | Branch_Taken__EX_MEM | kill_ie)) begin                                 // Stall implementation
         shamt_int = 5'b0;
         Load_Store_Op__ex_mem = 5'b0;
         Store_Data__ex_mem = 32'b0;
@@ -354,7 +359,7 @@ end
 
 
 always @(*) begin
-    if((Load__Stall_ID_EX | RST | Branch_Taken__EX_MEM)) begin
+    if((Load__Stall_ID_EX | Branch_Taken__EX_MEM | kill_ie)) begin
         RD_Data__ex_mem = 32'b0;    
     end
     else begin
@@ -371,7 +376,7 @@ always @(*) begin
 end
 
 reg Branch_Taken__irq;
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         Branch_Taken__irq <= 1'b0;
     end
@@ -384,7 +389,7 @@ always @(posedge CLK or posedge RST) begin
 end
 
 always @(*) begin
-    if(RST | Branch_Taken__EX_MEM | Branch_Taken__irq) begin
+    if(Branch_Taken__EX_MEM | Branch_Taken__irq | kill_ie) begin
         PHT_Write_Index__ex_mem = 11'b0;
         PHT_Write_Data__ex_mem = 2'b0;
         PHT_Write_En__ex_mem = 1'b0;
@@ -489,7 +494,7 @@ assign muldiv_rs2 = (Forward_RS2_MEM_FP__ID_EX) ? FP__RD_Data_Int__EX_MEM :
                     (Forward_RS2_MEM__ID_EX) ? RD_Data__EX_MEM : 
                     (Forward_RS2_WB__ID_EX) ? RD_Data__MEM_WB : RS2_Data__ID_EX;       //select usual data or forwarded data(data from ex/mem reg is given priority)              
 
-always @( posedge CLK or posedge RST) begin
+always @( posedge CLK) begin
     if(RST) begin
         state <= idle;
     end
@@ -499,7 +504,7 @@ always @( posedge CLK or posedge RST) begin
 end
 
 //edge detector logic for Div_En__ID_EX signal. We want to use only the 0-to-1 transition of Div_En__ID_EX for starting the fsm.
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         signal_div_kill <= 1'b0;
     end
@@ -511,7 +516,7 @@ end
 
 reg Mult_Div_unit_State_Freeze__reg;
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         Mult_Div_unit_State_Freeze__reg <= 1'b0;
     end
@@ -583,7 +588,7 @@ end
 assign div_res = (Inst_Cache__Stall__reg == 1'b1) ? div_res__reg : div_res__temp;
 assign mul_res = (Inst_Cache__Stall__reg == 1'b1) ? mul_res__reg : mul_res__temp;
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         div_res__reg <= 32'b0;
         mul_res__reg <= 32'b0;
@@ -595,7 +600,7 @@ always @(posedge CLK or posedge RST) begin
 end
 
 
-
+(* keep_hierarchy = "yes" *)
 or1200_amultp2_32x32 or1( .X(muldiv_rs1), 
                           .Y(muldiv_rs2), 
                           .RST(mul_rst), 
@@ -603,7 +608,7 @@ or1200_amultp2_32x32 or1( .X(muldiv_rs1),
                           .mul_op(Mult_Op__ID_EX),
                           .result_mul(mul_res__temp),
                           .FREEZE(Mult_Div_unit_Freeze));
-
+(* keep_hierarchy = "yes" *)
 divider div1(.dividend(muldiv_rs1),
              .divisor(muldiv_rs2),
              .clk(CLK),

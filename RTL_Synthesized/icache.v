@@ -206,7 +206,7 @@ assign hit_out = hit || ((vpn_to_ppn_req7  ) && freeze_hit_status) ;
 assign wdirty = 1;
 assign i_addr_min4 = i_addr - 32'd4;
 
-always @(posedge clk or posedge reset )
+always @(posedge clk)
     begin
     if(reset) 
         begin
@@ -218,14 +218,14 @@ always @(posedge clk or posedge reset )
         end
     end
 
-always @(posedge clk or posedge reset)
+always @(posedge clk)
     begin
     if(reset) 
             sel_inst <=3'b0;
     else
             sel_inst <= (vpn_to_ppn_req3 || vpn_to_ppn_req5|| ( vpn_to_ppn_req7 && ~freeze_hit_status )) ? virtual_addr[4:2] : ( stall_load ? i_addr_min4[4:2] :i_addr[4:2]) ;
     end
-always @(posedge clk or posedge reset)
+always @(posedge clk)
     begin
     if(reset) begin
             vpn_to_ppn_req6 <= 1'b0;
@@ -235,14 +235,14 @@ always @(posedge clk or posedge reset)
         end
     end
 
-always @(posedge clk or posedge reset) begin
+always @(posedge clk) begin
 	if(reset) hit_q <= 1'b0;
 	else hit_q <= hit;
 end
 integer i,k;
 
 //Tag Valid memory Write and Read Logic 
-always @(posedge clk or posedge reset) begin
+always @(posedge clk) begin
     if(reset) begin
 	    for(i=0;i<127;i=i+1) begin
 		tag_valid_w0[i] <= 1'b0;
@@ -269,7 +269,7 @@ always @(posedge clk or posedge reset) begin
 
 end
 
-/*always @(posedge clk or posedge reset) begin
+/*always @(posedge clk) begin
     if(reset) begin
 	    tag_valid_w0_read <= 1'b0;
 	    tag_valid_w1_read <= 1'b0;
@@ -279,7 +279,7 @@ end
 	    tag_valid_w1_read <= tag_valid_w1[temp];
     end
 end*/
-always @(posedge clk or posedge reset)
+always @(posedge clk)
     begin
     if(reset) begin
             physical_tag <=20'b0;
@@ -417,7 +417,7 @@ always @(*)
         //end
     end
 
-always@( posedge clk or posedge reset)
+always @( posedge clk)
     begin
     if(reset)
         begin
@@ -444,7 +444,7 @@ always@( posedge clk or posedge reset)
     assign tag = tag_out_tlb[tag_tlb_last_bit : tag_tlb_start_bit];
     assign tag_w = tag_out_tlb[tag_tlb_last_bit : tag_tlb_start_bit];
 `else
-always @(posedge clk or posedge reset)
+always @(posedge clk)
     begin
     if(reset) 
             tag <=20'b0;
@@ -559,62 +559,93 @@ ITLB ITLB(
 wire [127:0] x_low,x_high;
 reg [127:0] x_low_q,x_high_q;
 assign x = {x_high_q,x_low_q};
-always @(posedge clk or posedge reset) begin
-      if(reset) begin
-	 x_low_q <= 128'd0;
-	 x_high_q <= 128'd0; 
-      end
-      else begin
-	 x_low_q <= x_low;
-	 x_high_q <= x_high;
-      end
-end
 
 
 assign icache_set0_addr = (vpn_to_ppn_req3 || vpn_to_ppn_req5 || we0 || ( vpn_to_ppn_req7 && ~freeze_hit_status )) ? virtual_addr[index_last_bit:index_start_bit]: ( stall_load ? i_addr_min4[index_last_bit:index_start_bit] : i_addr[index_last_bit:index_start_bit] );
 
-TSDN65LPLLA128X128M4F set0_0 (
-  .AA(icache_set0_addr), 			// Address of A: Addra[6:0]
-  .DA(wr_data[127:0]),			// Data in of A: douta[127:0]	
-  .BWEBA({128{~we0}}),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(~we0),.CEBA(~enable_set0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
-  .AB(7'd0),			// Address of B: Addra[6:0]
-  .DB(128'd0),			// Data in of B: douta[127:0]
-  .BWEBB({128{1'b1}}),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(1'b1),.CEBB(1'b1),.CLKB(1'b0),	// Write-~en, Chip-~en, CLKB
-  .AMA(7'd0),
-  .DMA(128'd0),
-  .BWEBMA(128'hffff_ffff_ffff_ffff),
-  .WEBMA(1'b1),.CEBMA(1'b1),
-  .AMB(7'd0),
-  .DMB(128'd0),
-  .BWEBMB(128'hffff_ffff_ffff_ffff),
-  .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
-  .QA(x_low),
-  .QB()
-	);
+generate
+  if(`TSMC_RAM_EN) begin
 
-
-TSDN65LPLLA128X128M4F set0_1 (
-  .AA(icache_set0_addr), 			// Address of A: Addra[6:0]
-  .DA(wr_data[255:128]),			// Data in of A: douta[127:0]	
-  .BWEBA({128{~we0}}),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(~we0),.CEBA(~enable_set0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
-  .AB(7'd0),			// Address of B: Addra[6:0]
-  .DB(128'd0),			// Data in of B: douta[127:0]
-  .BWEBB({128{1'b1}}),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(1'b1),.CEBB(1'b1),.CLKB(1'b0),	// Write-~en, Chip-~en, CLKB
-  .AMA(7'd0),
-  .DMA(128'd0),
-  .BWEBMA(128'hffff_ffff_ffff_ffff),
-  .WEBMA(1'b1),.CEBMA(1'b1),
-  .AMB(7'd0),
-  .DMB(128'd0),
-  .BWEBMB(128'hffff_ffff_ffff_ffff),
-  .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
-  .QA(x_high),
-  .QB()
-	);
+    always @(posedge clk) begin
+          if(reset) begin
+    	 x_low_q <= 128'd0;
+    	 x_high_q <= 128'd0; 
+          end
+          else begin
+    	 x_low_q <= x_low;
+    	 x_high_q <= x_high;
+          end
+    end
+    
+    TSDN65LPLLA128X128M4F set0_0 (
+      .AA(icache_set0_addr), 			// Address of A: Addra[6:0]
+      .DA(wr_data[127:0]),			// Data in of A: douta[127:0]	
+      .BWEBA({128{~we0}}),			// Bit-Write ~en of A: {128{~en}}	
+      .WEBA(~we0),.CEBA(~enable_set0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
+      .AB(7'd0),			// Address of B: Addra[6:0]
+      .DB(128'd0),			// Data in of B: douta[127:0]
+      .BWEBB({128{1'b1}}),			// Bit-Write ~en of B: {128{~en}}
+      .WEBB(1'b1),.CEBB(1'b1),.CLKB(1'b0),	// Write-~en, Chip-~en, CLKB
+      .AMA(7'd0),
+      .DMA(128'd0),
+      .BWEBMA(128'hffff_ffff_ffff_ffff),
+      .WEBMA(1'b1),.CEBMA(1'b1),
+      .AMB(7'd0),
+      .DMB(128'd0),
+      .BWEBMB(128'hffff_ffff_ffff_ffff),
+      .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
+      .QA(x_low),
+      .QB()
+    	);
+    
+    
+    TSDN65LPLLA128X128M4F set0_1 (
+      .AA(icache_set0_addr), 			// Address of A: Addra[6:0]
+      .DA(wr_data[255:128]),			// Data in of A: douta[127:0]	
+      .BWEBA({128{~we0}}),			// Bit-Write ~en of A: {128{~en}}	
+      .WEBA(~we0),.CEBA(~enable_set0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
+      .AB(7'd0),			// Address of B: Addra[6:0]
+      .DB(128'd0),			// Data in of B: douta[127:0]
+      .BWEBB({128{1'b1}}),			// Bit-Write ~en of B: {128{~en}}
+      .WEBB(1'b1),.CEBB(1'b1),.CLKB(1'b0),	// Write-~en, Chip-~en, CLKB
+      .AMA(7'd0),
+      .DMA(128'd0),
+      .BWEBMA(128'hffff_ffff_ffff_ffff),
+      .WEBMA(1'b1),.CEBMA(1'b1),
+      .AMB(7'd0),
+      .DMB(128'd0),
+      .BWEBMB(128'hffff_ffff_ffff_ffff),
+      .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
+      .QA(x_high),
+      .QB()
+    	);
+    end
+    else begin
+      always @(*) begin
+      	 x_low_q = x_low;
+      	 x_high_q = x_high;
+      end
+      ICACHE_DPRAM set0_0 (
+        .clka(clk), // input clka
+        .rsta(reset), // input rsta
+        .ena(enable_set0 ), // input ena
+        .wea(we0), // input [0 : 0] wea
+        .addra(icache_set0_addr), // input [4 : 0] addra
+        .dina( wr_data[127:0]), // input [127 : 0] dina
+        .douta(x_low) // output [127 : 0] douta
+      );
+      
+      ICACHE_DPRAM set0_1 (
+        .clka(clk), // input clka
+        .rsta(reset), // input rsta
+        .ena(enable_set0 ), // input ena
+        .wea(we0), // input [0 : 0] wea
+        .addra(icache_set0_addr), // input [4 : 0] addra
+        .dina( wr_data[255:128]), // input [127 : 0] dina
+        .douta(x_high) // output [127 : 0] douta
+      );
+    end
+  endgenerate
 
 /*	
 MEMORY_MACRO_CACHE #(.ADDR_WIDTH(7),.DATA_WIDTH(256),.INIT_FILE(0)) set0 (
@@ -634,63 +665,93 @@ MEMORY_MACRO_CACHE #(.ADDR_WIDTH(7),.DATA_WIDTH(256),.INIT_FILE(0)) set0 (
 wire [127:0] y_low,y_high;
 reg [127:0] y_low_q,y_high_q;
 assign y = {y_high_q,y_low_q};
-always @(posedge clk or posedge reset) begin
-      if(reset) begin
-	 y_low_q <= 128'd0;
-	 y_high_q <= 128'd0; 
-      end
-      else begin
-	 y_low_q <= y_low;
-	 y_high_q <= y_high;
-      end
-end
 
 
 assign icache_set1_addr = (vpn_to_ppn_req3 || vpn_to_ppn_req5 || we1 || ( vpn_to_ppn_req7 && ~freeze_hit_status )) ? virtual_addr[index_last_bit:index_start_bit]: ( stall_load ? i_addr_min4[index_last_bit:index_start_bit] : i_addr[index_last_bit:index_start_bit] ) ;
 
+generate
+  if(`TSMC_RAM_EN) begin
+    always @(posedge clk) begin
+          if(reset) begin
+    	 y_low_q <= 128'd0;
+    	 y_high_q <= 128'd0; 
+          end
+          else begin
+    	 y_low_q <= y_low;
+    	 y_high_q <= y_high;
+          end
+    end
 
-TSDN65LPLLA128X128M4F set1_0 (
-  .AA(icache_set1_addr), 			// Address of A: Addra[6:0]
-  .DA(wr_data[127:0]),			// Data in of A: douta[127:0]	
-  .BWEBA({128{~we1}}),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(~we1),.CEBA(~enable_set1),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
-  .AB(7'd0),			// Address of B: Addra[6:0]
-  .DB(128'd0),			// Data in of B: douta[127:0]
-  .BWEBB({128{1'b1}}),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(1'b1),.CEBB(1'b1),.CLKB(1'b0),	// Write-~en, Chip-~en, CLKB
-  .AMA(7'd0),
-  .DMA(128'd0),
-  .BWEBMA(128'hffff_ffff_ffff_ffff),
-  .WEBMA(1'b1),.CEBMA(1'b1),
-  .AMB(7'd0),
-  .DMB(128'd0),
-  .BWEBMB(128'hffff_ffff_ffff_ffff),
-  .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
-  .QA(y_low),
-  .QB()
-	);
+      TSDN65LPLLA128X128M4F set1_0 (
+        .AA(icache_set1_addr), 			// Address of A: Addra[6:0]
+        .DA(wr_data[127:0]),			// Data in of A: douta[127:0]	
+        .BWEBA({128{~we1}}),			// Bit-Write ~en of A: {128{~en}}	
+        .WEBA(~we1),.CEBA(~enable_set1),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
+        .AB(7'd0),			// Address of B: Addra[6:0]
+        .DB(128'd0),			// Data in of B: douta[127:0]
+        .BWEBB({128{1'b1}}),			// Bit-Write ~en of B: {128{~en}}
+        .WEBB(1'b1),.CEBB(1'b1),.CLKB(1'b0),	// Write-~en, Chip-~en, CLKB
+        .AMA(7'd0),
+        .DMA(128'd0),
+        .BWEBMA(128'hffff_ffff_ffff_ffff),
+        .WEBMA(1'b1),.CEBMA(1'b1),
+        .AMB(7'd0),
+        .DMB(128'd0),
+        .BWEBMB(128'hffff_ffff_ffff_ffff),
+        .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
+        .QA(y_low),
+        .QB()
+      	);
+      
+      
+      TSDN65LPLLA128X128M4F set1_1 (
+        .AA(icache_set0_addr), 			// Address of A: Addra[6:0]
+        .DA(wr_data[255:128]),			// Data in of A: douta[127:0]	
+        .BWEBA({128{~we0}}),			// Bit-Write ~en of A: {128{~en}}	
+        .WEBA(~we0),.CEBA(~enable_set1),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
+        .AB(7'd0),			// Address of B: Addra[6:0]
+        .DB(128'd0),			// Data in of B: douta[127:0]
+        .BWEBB({128{1'b1}}),			// Bit-Write ~en of B: {128{~en}}
+        .WEBB(1'b1),.CEBB(1'b1),.CLKB(1'b0),	// Write-~en, Chip-~en, CLKB
+        .AMA(7'd0),
+        .DMA(128'd0),
+        .BWEBMA(128'hffff_ffff_ffff_ffff),
+        .WEBMA(1'b1),.CEBMA(1'b1),
+        .AMB(7'd0),
+        .DMB(128'd0),
+        .BWEBMB(128'hffff_ffff_ffff_ffff),
+        .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
+        .QA(y_high),
+        .QB()
+      	);
+      end
+      else begin
 
-
-TSDN65LPLLA128X128M4F set1_1 (
-  .AA(icache_set0_addr), 			// Address of A: Addra[6:0]
-  .DA(wr_data[255:128]),			// Data in of A: douta[127:0]	
-  .BWEBA({128{~we0}}),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(~we0),.CEBA(~enable_set1),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
-  .AB(7'd0),			// Address of B: Addra[6:0]
-  .DB(128'd0),			// Data in of B: douta[127:0]
-  .BWEBB({128{1'b1}}),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(1'b1),.CEBB(1'b1),.CLKB(1'b0),	// Write-~en, Chip-~en, CLKB
-  .AMA(7'd0),
-  .DMA(128'd0),
-  .BWEBMA(128'hffff_ffff_ffff_ffff),
-  .WEBMA(1'b1),.CEBMA(1'b1),
-  .AMB(7'd0),
-  .DMB(128'd0),
-  .BWEBMB(128'hffff_ffff_ffff_ffff),
-  .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
-  .QA(y_high),
-  .QB()
-	);
+        always @(*) begin
+        	 y_low_q = y_low;
+        	 y_high_q = y_high;
+        end
+        ICACHE_DPRAM set1_0 (
+          .clka(clk), // input clka
+          .rsta(reset), // input rsta
+          .ena(enable_set1 ), // input ena
+          .wea(we1), // input [0 : 0] wea
+          .addra(icache_set1_addr), // input [4 : 0] addra
+          .dina( wr_data[127:0]), // input [127 : 0] dina
+          .douta(y_low) // output [127 : 0] douta
+        );
+        
+        ICACHE_DPRAM set1_1 (
+          .clka(clk), // input clka
+          .rsta(reset), // input rsta
+          .ena(enable_set1 ), // input ena
+          .wea(we1), // input [0 : 0] wea
+          .addra(icache_set1_addr), // input [4 : 0] addra
+          .dina( wr_data[255:128]), // input [127 : 0] dina
+          .douta(y_high) // output [127 : 0] douta
+        );
+      end
+    endgenerate
 /*
 MEMORY_MACRO_CACHE #(.ADDR_WIDTH(7),.DATA_WIDTH(256),.INIT_FILE(0)) set1 (
   .clka(clk), // input clka
@@ -703,44 +764,95 @@ MEMORY_MACRO_CACHE #(.ADDR_WIDTH(7),.DATA_WIDTH(256),.INIT_FILE(0)) set1 (
 );*/
 
 //--------------Tag Array Set0------------------------------------------------
-
-always @(posedge clk or posedge reset) begin
-      if(reset) begin
-	 dout1 <= 21'd0;
-	 dout2 <= 21'd0; 
-      end
-      else begin
-	 dout1 <= dout1_mem;
-	 dout2 <= dout2_mem;
-      end
-end
-
-
-
 assign icache_tag_w0_addr = (vpn_to_ppn_req3 || vpn_to_ppn_req5 || we_tag0 || ( vpn_to_ppn_req7 && ~freeze_hit_status )) ? virtual_addr[index_last_bit:index_start_bit]: ( stall_load ? i_addr_min4[index_last_bit:index_start_bit] : i_addr[index_last_bit:index_start_bit] );
 
+assign icache_tag_w1_addr = (vpn_to_ppn_req3 || vpn_to_ppn_req5 || we_tag1 || ( vpn_to_ppn_req7 && ~freeze_hit_status )) ? virtual_addr[index_last_bit:index_start_bit]: ( stall_load ? i_addr_min4[index_last_bit:index_start_bit] : i_addr[index_last_bit:index_start_bit] );
 
-TSDN65LPLLA128X21M8F tag0_v_dirty (
-  .AA(icache_tag_w0_addr), 			// Address of A: Addra[6:0]
-  .DA({tag_valid_w0[icache_set0_addr], physical_tag}),			// Data in of A: douta[127:0]	
-  .BWEBA({21{~we_tag0}}),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(~we_tag0),.CEBA(~enable_tag0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
-  .AB(7'd0),			// Address of B: Addra[6:0]
-  .DB(128'd0),			// Data in of B: douta[127:0]
-  .BWEBB({128{1'b1}}),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(1'b1),.CEBB(1'b1),.CLKB(1'b0),	// Write-~en, Chip-~en, CLKB
-  .AMA(7'd0),
-  .DMA(128'd0),
-  .BWEBMA(128'hffff_ffff_ffff_ffff),
-  .WEBMA(1'b1),.CEBMA(1'b1),
-  .AMB(7'd0),
-  .DMB(128'd0),
-  .BWEBMB({21{1'b1}}),
-  .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
-  .QA(dout1_mem),
-  .QB()
-	);
+generate
+  if(`TSMC_RAM_EN) begin
+    always @(posedge clk) begin
+          if(reset) begin
+    	 dout1 <= 21'd0;
+    	 dout2 <= 21'd0; 
+          end
+          else begin
+    	 dout1 <= dout1_mem;
+    	 dout2 <= dout2_mem;
+          end
+    end
+    
+    
+    TSDN65LPLLA128X21M8F tag0_v_dirty (
+      .AA(icache_tag_w0_addr), 			// Address of A: Addra[6:0]
+      .DA({tag_valid_w0[icache_set0_addr], physical_tag}),			// Data in of A: douta[127:0]	
+      .BWEBA({21{~we_tag0}}),			// Bit-Write ~en of A: {128{~en}}	
+      .WEBA(~we_tag0),.CEBA(~enable_tag0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
+      .AB(7'd0),			// Address of B: Addra[6:0]
+      .DB(128'd0),			// Data in of B: douta[127:0]
+      .BWEBB({128{1'b1}}),			// Bit-Write ~en of B: {128{~en}}
+      .WEBB(1'b1),.CEBB(1'b1),.CLKB(1'b0),	// Write-~en, Chip-~en, CLKB
+      .AMA(7'd0),
+      .DMA(128'd0),
+      .BWEBMA(128'hffff_ffff_ffff_ffff),
+      .WEBMA(1'b1),.CEBMA(1'b1),
+      .AMB(7'd0),
+      .DMB(128'd0),
+      .BWEBMB({21{1'b1}}),
+      .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
+      .QA(dout1_mem),
+      .QB()
+    	);
 
+    TSDN65LPLLA128X21M8F tag1_v_dirty (
+      .AA(icache_tag_w1_addr), 			// Address of A: Addra[6:0]
+      .DA({tag_valid_w1[icache_tag_w1_addr], physical_tag}),			// Data in of A: douta[127:0]	
+      .BWEBA({21{~we_tag1}}),			// Bit-Write ~en of A: {128{~en}}	
+      .WEBA(~we_tag1),.CEBA(~enable_tag1),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
+      .AB(7'd0),			// Address of B: Addra[6:0]
+      .DB(128'd0),			// Data in of B: douta[127:0]
+      .BWEBB({128{1'b1}}),			// Bit-Write ~en of B: {128{~en}}
+      .WEBB(1'b1),.CEBB(1'b1),.CLKB(1'b0),	// Write-~en, Chip-~en, CLKB
+      .AMA(7'd0),
+      .DMA(128'd0),
+      .BWEBMA(128'hffff_ffff_ffff_ffff),
+      .WEBMA(1'b1),.CEBMA(1'b1),
+      .AMB(7'd0),
+      .DMB(128'd0),
+      .BWEBMB({21{1'b1}}),
+      .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
+      .QA(dout2_mem),
+      .QB()
+    	);
+      
+    end
+    else begin
+    always @(*) begin
+    	 dout1 = dout1_mem;
+    	 dout2 = dout2_mem;
+     end
+
+     TAG_ICACHE_RAM tag0_v_dirty (
+       .clka(clk), // input clka
+       .rsta(reset), // input rsta
+       .ena(enable_tag0 ), // input ena
+       .wea(we_tag0), // input [0 : 0] wea
+       .addra(icache_tag_w0_addr), // input [4 : 0] addra
+       .dina({tag_valid_w0[icache_set0_addr], physical_tag}), // input [18 : 0] dina
+       .douta(dout1_mem) // output [18 : 0] douta
+     );
+
+     TAG_ICACHE_RAM tag1_v_dirty (
+       .clka(clk), // input clka
+       .rsta(reset), // input rsta
+       .ena(enable_tag1), // input ena
+       .wea(we_tag1), // input [0 : 0] wea
+       .addra(icache_tag_w1_addr), // input [4 : 0] addra
+       .dina({tag_valid_w1[icache_tag_w1_addr], physical_tag}), // input [18 : 0] dina
+       .douta(dout2_mem) // output [18 : 0] douta
+     );
+        
+    end
+  endgenerate
 /*
 MEMORY_MACRO_CACHE #(.ADDR_WIDTH(7),.DATA_WIDTH(21),.INIT_FILE(0)) tag0_v_dirty (
   .clka(clk), // input clka
@@ -766,28 +878,7 @@ MEMORY_MACRO_CACHE #(.ADDR_WIDTH(7),.DATA_WIDTH(21),.INIT_FILE(0)) tag0_v_dirty 
 
 //wire [6:0] icache_tag_w1_addr;
 
-assign icache_tag_w1_addr = (vpn_to_ppn_req3 || vpn_to_ppn_req5 || we_tag1 || ( vpn_to_ppn_req7 && ~freeze_hit_status )) ? virtual_addr[index_last_bit:index_start_bit]: ( stall_load ? i_addr_min4[index_last_bit:index_start_bit] : i_addr[index_last_bit:index_start_bit] );
 
-TSDN65LPLLA128X21M8F tag1_v_dirty (
-  .AA(icache_tag_w1_addr), 			// Address of A: Addra[6:0]
-  .DA({tag_valid_w1[icache_tag_w1_addr], physical_tag}),			// Data in of A: douta[127:0]	
-  .BWEBA({21{~we_tag1}}),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(~we_tag1),.CEBA(~enable_tag1),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
-  .AB(7'd0),			// Address of B: Addra[6:0]
-  .DB(128'd0),			// Data in of B: douta[127:0]
-  .BWEBB({128{1'b1}}),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(1'b1),.CEBB(1'b1),.CLKB(1'b0),	// Write-~en, Chip-~en, CLKB
-  .AMA(7'd0),
-  .DMA(128'd0),
-  .BWEBMA(128'hffff_ffff_ffff_ffff),
-  .WEBMA(1'b1),.CEBMA(1'b1),
-  .AMB(7'd0),
-  .DMB(128'd0),
-  .BWEBMB({21{1'b1}}),
-  .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
-  .QA(dout2_mem),
-  .QB()
-	);
 
 /*
 MEMORY_MACRO_CACHE #(.ADDR_WIDTH(7),.DATA_WIDTH(21),.INIT_FILE(0)) tag1_v_dirty (

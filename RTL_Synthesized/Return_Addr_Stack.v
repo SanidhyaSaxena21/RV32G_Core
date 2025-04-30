@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-
+(* keep_hierarchy = "yes" *)
 module Return_Addr_Stack
 (
     input CLK,
@@ -40,7 +40,7 @@ wire Condition_CHK__2 = ((TOS == 5'b11111)) ? 1'b1 : 1'b0;
 wire Condition_CHK__3 = ((Branch_Taken__EX_MEM == 1'b1) && ((RET_Inst == 1'b1) || (RET_Inst__reg == 1'b1))) ? 1'b1 : 1'b0;
 
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if (RST) begin
         RET_Inst__reg <= 1'b0;
     end
@@ -51,7 +51,7 @@ end
 
 
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if (RST) begin
         TOS <= 5'b00000;
     end
@@ -76,7 +76,7 @@ always @(posedge CLK or posedge RST) begin
     end
 end
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if (RST) begin
         BOS <= 5'b00000;
     end
@@ -87,7 +87,7 @@ always @(posedge CLK or posedge RST) begin
     end
 end
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if (RST) begin
         RAS_Empty <= 1'b1;
     end
@@ -98,7 +98,7 @@ end
 
 
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if (RST) begin
         RET_Target_Addr <= 32'h00000000;  
         RET_Addr_Valid <= 1'b0;
@@ -119,7 +119,7 @@ always @(*) begin
     end
 end
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if (RST) begin
         for(j=0; j<32; j=j+1)
             RAS[j] <= 32'h00000000;

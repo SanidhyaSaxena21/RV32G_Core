@@ -61,7 +61,7 @@ assign mem_rdy = (count==8)?1:0;
 assign vpn_to_ppn_req_out = (vpn_to_ppn_req3 || vpn_to_ppn_req4);
  
 /* Clock state changes and handle reset */
-always @(posedge clk or posedge reset)
+always @(posedge clk)
     begin
     if(reset) 
         begin
@@ -177,7 +177,7 @@ always @(*) begin
     //end
 end
     
-always@(posedge clk or posedge reset)
+always @(posedge clk)
     begin
     if(reset)
         count<=0;
@@ -194,7 +194,7 @@ always@(posedge clk or posedge reset)
     end
 
 
-always@(posedge clk or posedge reset)
+always @(posedge clk)
     begin
     if(reset)
     vpn_to_ppn_req4 <=0;

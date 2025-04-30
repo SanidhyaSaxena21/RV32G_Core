@@ -189,7 +189,7 @@ end
 
 /////////  ***** Memory Write ***** ///////////////
                           
-always @ (posedge clk or posedge rst) begin
+always @(posedge clk ) begin
         if(rst) begin
             mem[0] <= 50'b0;
             mem[1] <= 50'b0;           
@@ -233,7 +233,7 @@ always @ (posedge clk or posedge rst) begin
 
 ////////  ****** Output Assignment *******  ///////////////////
     
-always @ (posedge clk or posedge rst) begin
+always @(posedge clk ) begin
         if(rst) begin
             output_data <= 22'b0;
             miss <= 1'b0;
@@ -281,13 +281,13 @@ always @ (posedge clk or posedge rst) begin
     
     reg [15:0] clk_counter;
     
-    always @(posedge clk or posedge rst)
+    always @(posedge clk)
     begin
 	if(rst) clk_counter <= 0;
 	else clk_counter <= clk_counter + 1;
     end
     
-    always @(posedge clk or posedge rst)
+    always @(posedge clk)
     begin
         if(rst) begin
             miss_counter <= 0;
@@ -297,7 +297,7 @@ always @ (posedge clk or posedge rst) begin
             end        
         end
         
-    always @(posedge clk or posedge rst)
+    always @(posedge clk)
     begin
         if(rst) begin
             hit_counter <= 0;

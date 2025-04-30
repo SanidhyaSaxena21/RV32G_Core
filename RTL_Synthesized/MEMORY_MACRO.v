@@ -45,9 +45,9 @@ module MEMORY_MACRO #(parameter ADDR_WIDTH=32, DATA_WIDTH=32, INPUT_FILE = "Inst
       $readmemh(INPUT_FILE,MEM_MACRO );
     end
 
-    always @(posedge clka or posedge rsta) begin
+    always @(posedge clka ) begin
       if(rsta) begin
-        #5 rdata <= {DATA_WIDTH{1'b0}};
+         rdata <= {DATA_WIDTH{1'b0}};
       end
       else if(ena) begin
         if(wea) begin
@@ -57,10 +57,10 @@ module MEMORY_MACRO #(parameter ADDR_WIDTH=32, DATA_WIDTH=32, INPUT_FILE = "Inst
           if(byte_en[3]) MEM_MACRO[aligned_addr][31:24] <= dina[31:24] ;
         end
         else
-          #5 rdata <= MEM_MACRO[aligned_addr];
+           rdata <= MEM_MACRO[aligned_addr];
       end
       else begin
-        #5 rdata <= {DATA_WIDTH{1'b0}};
+         rdata <= {DATA_WIDTH{1'b0}};
       end
     end
 

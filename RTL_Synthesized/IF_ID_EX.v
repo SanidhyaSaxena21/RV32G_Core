@@ -1,9 +1,10 @@
 `timescale 1ns / 1ps
-
+(* keep_hierarchy = "yes" *)
 module IF_ID_EX
 (
     input CLK,
-    input RST,
+    input RESET_BUTTON,
+    //input RST,
     
     input ext_irq,
     input sw_irq,
@@ -38,7 +39,28 @@ module IF_ID_EX
     
     output Mult_Div_unit__Stall,
     output FPU__Stall,
+   
+    //Debug Module 
+    input   haltreq_i,
+    input   resumereq_i,
+    input   resethaltreq_i,
+    output  core_havereset_o,
+    input   ackhavereset,ackunavail,
+    input   pbuffer_execution,
+    output  core_halted_o,core_running_o,core_resumeack_o,
+    input   ndmreset,cmd_not_supported_i,new_cmd_flag_i,
+    output  command_complete_o,reg_access_complete_o,mem_access_complete_o,
+    input [31:0] dm_halt_addr,dm_exception_addr,
     
+    output  abstract_cmd_fail_o,
+    output  abstract_cmd_wrong_hart_state_o,
+    output  abstract_cmd_exception_o,
+    output  abstract_cmd_bus_error,
+
+    output  debug_stall,
+    output  debug_mode,
+
+    output core_dbg_reset,
     
     //output eret_ack,
     
@@ -83,6 +105,10 @@ wire BPU__BTB_Hit__IF_ID;
 
 
 // ID_EX Register
+wire [31:0] PC_ID;
+reg [31:0] PC_IE;
+wire illegal_instruction_ID;
+reg illegal_instruction_IE;
 wire [31:0] RS1_Data__id_ex;
 reg  [31:0] RS1_Data__ID_EX;
 wire [31:0] RS2_Data__id_ex;
@@ -210,6 +236,8 @@ reg  FP__Load_Inst__ID_EX;
 reg  FP__Store_Inst__ID_EX;
     
 // EX_MEM Register
+reg [31:0] PC_MEM;
+wire [31:0] pc_ex_mem;
 wire Branch_Taken__ex_mem;
 reg  Branch_Taken__EX_MEM;
 wire [31:0] Branch_Target_Addr__ex_mem;
@@ -377,15 +405,42 @@ wire interrupt_pending;
 
 wire PC_HALT_BREAK;
 
-assign Inst_Cache_Freeze = (Mult_Div_unit__Stall | FPU__Stall | Data_Cache__Stall | /*irq_icache_freeze |*/ Double_Load_Store__Stall) ;
 
-assign Mult_Div_unit_Freeze = (Mult_Div_unit__Stall) ? (Data_Cache__Stall | Double_Load_Store__Stall) : (Inst_Cache__Stall | Data_Cache__Stall | Double_Load_Store__Stall);
+// Debug Signals
+wire pc_valid_dbg;
+wire [31:0] pc_dbg;
+wire dbg_instr_req;
+wire csr_dbg_wr;
+wire [2:0] csr_dbg_cause;
+wire [31:0] csr_dbg_dpc;
+wire [31:0] dcsr;
+wire return_pc_valid;
+wire [31:0] return_pc;
+wire [31:0] dpc;
 
-assign FPU_Freeze = (FPU__Stall) ? (Data_Cache__Stall | Double_Load_Store__Stall) : (Inst_Cache__Stall | Data_Cache__Stall | Double_Load_Store__Stall);
+//----------------WARM RESET GENERATION----------------
+//
+//
 
-assign Mult_Div_unit__Stall_disable = (Data_Cache__Stall | Double_Load_Store__Stall);
+assign RST = RESET_BUTTON | core_dbg_reset;
 
-assign FPU__Stall_disable = (Data_Cache__Stall | Double_Load_Store__Stall);
+
+reg halt_ie_mem_reg;
+wire halt_if_id,halt_id_ie,halt_ie_mem,halt_mem_wb;
+wire kill_if,kill_id,kill_ie,kill_mem;
+
+
+assign debug_stall = (halt_if_id | halt_id_ie | halt_ie_mem | halt_mem_wb);
+assign Inst_Cache_Freeze = (Mult_Div_unit__Stall | FPU__Stall | Data_Cache__Stall | /*irq_icache_freeze |*/ Double_Load_Store__Stall | debug_mode) ;
+//assign Inst_Cache_Freeze = (Mult_Div_unit__Stall | FPU__Stall | Data_Cache__Stall | /*irq_icache_freeze |*/ Double_Load_Store__Stall | halt_if_id | halt_id_ie | halt_ie_mem | halt_mem_wb) ;
+
+assign Mult_Div_unit_Freeze = (Mult_Div_unit__Stall) ? (Data_Cache__Stall | Double_Load_Store__Stall) : (Inst_Cache__Stall | Data_Cache__Stall | Double_Load_Store__Stall | halt_if_id | halt_id_ie | halt_ie_mem | halt_mem_wb);
+
+assign FPU_Freeze = (FPU__Stall) ? (Data_Cache__Stall | Double_Load_Store__Stall) : (Inst_Cache__Stall | Data_Cache__Stall | Double_Load_Store__Stall | halt_if_id | halt_id_ie | halt_ie_mem | halt_mem_wb);
+
+assign Mult_Div_unit__Stall_disable = (Data_Cache__Stall | Double_Load_Store__Stall | halt_if_id | halt_id_ie | halt_ie_mem | halt_mem_wb);
+
+assign FPU__Stall_disable = (Data_Cache__Stall | Double_Load_Store__Stall | halt_if_id | halt_id_ie | halt_ie_mem | halt_mem_wb);
 
 
 
@@ -431,9 +486,9 @@ always @(*) begin
   endcase
 end
 
-assign RD_Data__mem_wb = (((~Load_Store_Op__EX_MEM[1]) & (Load_Store_Op__EX_MEM[0])) | SC_Inst__EX_MEM) ? (((Inst_Cache__Stall__reg == 1'b1) || (FPU__Stall__reg == 1'b1) || (Mult_Div_unit__Stall__reg == 1'b1)) ? proc_data_port1_int__reg : proc_data_port1_int) : RD_Data__EX_MEM;         //For conventional loads
+assign RD_Data__mem_wb = (((~Load_Store_Op__EX_MEM[1]) & (Load_Store_Op__EX_MEM[0])) | SC_Inst__EX_MEM) ? (((Inst_Cache__Stall__reg == 1'b1) || (FPU__Stall__reg == 1'b1) || (Mult_Div_unit__Stall__reg == 1'b1) || (halt_ie_mem_reg == 1'b1)) ? proc_data_port1_int__reg : proc_data_port1_int) : RD_Data__EX_MEM;         //For conventional loads
 
-assign FP__RD_Data__mem_wb = ((~Load_Store_Op__EX_MEM[1]) & (Load_Store_Op__EX_MEM[0])) ? (((Inst_Cache__Stall__reg == 1'b1) || (FPU__Stall__reg == 1'b1) || (Mult_Div_unit__Stall__reg == 1'b1)) ? ((FP__SP_DP__EX_MEM) ? Double_Load_Data : proc_data_port1_int__reg) : ((FP__SP_DP__EX_MEM) ? {proc_data_port1_int,Double_Load_Buffer} : proc_data_port1_int)) : FP__RD_Data__EX_MEM;    
+assign FP__RD_Data__mem_wb = ((~Load_Store_Op__EX_MEM[1]) & (Load_Store_Op__EX_MEM[0])) ? (((Inst_Cache__Stall__reg == 1'b1) || (FPU__Stall__reg == 1'b1) || (Mult_Div_unit__Stall__reg == 1'b1) || (halt_ie_mem_reg == 1'b1)) ? ((FP__SP_DP__EX_MEM) ? Double_Load_Data : proc_data_port1_int__reg) : ((FP__SP_DP__EX_MEM) ? {proc_data_port1_int,Double_Load_Buffer} : proc_data_port1_int)) : FP__RD_Data__EX_MEM;    
 
 assign FP__RD_Data_Int__mem_wb = FP__RD_Data_Int__EX_MEM;
 
@@ -458,20 +513,20 @@ end
 
 
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         Double_Load_Store__Stall_reg <= 1'b0;
     end
-    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall)) begin
+    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || debug_stall)) begin
         Double_Load_Store__Stall_reg <= Double_Load_Store__Stall;
     end 
 end
 
 always @(*) begin
-    if (RST) begin
+    /*if (RST) begin
         Double_Load_Store__Stall = 1'b0;
-    end
-    else if (Double_Load_Store__Stall_reg == 1'b1) begin
+    end*/
+    if (Double_Load_Store__Stall_reg == 1'b1) begin
         Double_Load_Store__Stall = 1'b0;
     end
     else if (Load_Store_Op__ex_mem[4:2] == 3'b011) begin
@@ -482,7 +537,7 @@ always @(*) begin
     end
 end
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         Double_Load_Buffer <= 32'h00000000;
         Double_Store_Buffer <= 32'h00000000;
@@ -495,30 +550,33 @@ always @(posedge CLK or posedge RST) begin
     end 
 end
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         ALU_Result__ex_mem__reg <= 32'h00000000;
     end
-    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall)) begin
+    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || debug_stall)) begin
         ALU_Result__ex_mem__reg <= ALU_Result__ex_mem;
     end 
 end
 
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         Inst_Cache__Stall__reg <= 1'b0;
         FPU__Stall__reg <= 1'b0;
         Mult_Div_unit__Stall__reg <= 1'b0;
+        halt_ie_mem_reg <= 1'b0;
+
     end
     else begin
         Inst_Cache__Stall__reg <= Inst_Cache__Stall;
         FPU__Stall__reg <= FPU__Stall;
         Mult_Div_unit__Stall__reg <= Mult_Div_unit__Stall;
+        halt_ie_mem_reg <= halt_ie_mem;
     end 
 end
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         Double_Load_Store__Stall_pre <= 1'b0;
     end
@@ -532,18 +590,18 @@ end
 
 
 // Register IF_ID stage
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin   
         BPU__PHT_Read_Index__IF_ID <= 11'b0;            
     end
-    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || Double_Load_Store__Stall)) begin
+    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || Double_Load_Store__Stall || halt_if_id)) begin
         BPU__PHT_Read_Index__IF_ID <= BPU__PHT_Read_Index__if_id;                      
     end
 end
 
 
 // Register ID_EX stage
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         RS1_Data__ID_EX <= 32'b0;
         RS2_Data__ID_EX <= 32'b0;
@@ -607,10 +665,14 @@ always @(posedge CLK or posedge RST) begin
         FP__Store_Data__ID_EX <= 64'b0; 
         FP__Load_Inst__ID_EX <= 1'b0; 
         FP__Store_Inst__ID_EX <= 1'b0;
-     	sys_ID_EX <= 6'd0;	
+     	  sys_ID_EX <= 6'd0;
+        PC_IE <= 32'd0;
+        illegal_instruction_IE <= 1'b0;  
     end
-    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || Double_Load_Store__Stall || ID_IE_FLUSH || PC_HALT_BREAK)) begin
+    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || Double_Load_Store__Stall || ID_IE_FLUSH || PC_HALT_BREAK || halt_id_ie)) begin
         sys_ID_EX <= sys_id_ex;
+        PC_IE <= PC_ID;
+        illegal_instruction_IE <= illegal_instruction_ID;
         RS1_Data__ID_EX <= RS1_Data__id_ex;
         RS2_Data__ID_EX <= RS2_Data__id_ex;
         Shamt__ID_EX <= Shamt__id_ex;
@@ -679,7 +741,7 @@ end
 
 
 // Register EX_MEM stage
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin             
         Branch_Taken__EX_MEM  <= 1'b0;
         Branch_Target_Addr__EX_MEM  <= 32'b0;
@@ -700,9 +762,11 @@ always @(posedge CLK or posedge RST) begin
         FP__Reg_Write_En_Int__EX_MEM <= 1'b0;
         FP__SP_DP__EX_MEM <= 1'b0;
         FP__Store_Data__EX_MEM <= 64'b0;   
-        Double_Load_Data <= 64'b0;         
+        Double_Load_Data <= 64'b0;
+        PC_MEM   <= 32'd0;        
     end
-    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || Double_Load_Store__Stall || /*PC_Freeze_IRQ* ||*/ PC_HALT_BREAK)) begin            
+    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || Double_Load_Store__Stall || /*PC_Freeze_IRQ* ||*/ PC_HALT_BREAK || halt_ie_mem)) begin            
+        PC_MEM <= pc_ex_mem;
         Branch_Taken__EX_MEM  <= Branch_Taken__ex_mem;
         Branch_Target_Addr__EX_MEM  <= Branch_Target_Addr__ex_mem;
         RD_Data__EX_MEM <= RD_Data__ex_mem;
@@ -726,7 +790,7 @@ always @(posedge CLK or posedge RST) begin
       Branch_Taken__EX_MEM <= 1'b0;
       Branch_Target_Addr__EX_MEM <= 32'd0;
     end 
-    else if(((Inst_Cache__Stall__reg == 1'b0) && (Inst_Cache__Stall == 1'b1)) || ((FPU__Stall__reg == 1'b0) && (FPU__Stall == 1'b1)) || ((Mult_Div_unit__Stall__reg == 1'b0) && (Mult_Div_unit__Stall == 1'b1))) begin
+    else if(((Inst_Cache__Stall__reg == 1'b0) && (Inst_Cache__Stall == 1'b1)) || ((FPU__Stall__reg == 1'b0) && (FPU__Stall == 1'b1)) || ((Mult_Div_unit__Stall__reg == 1'b0) && (Mult_Div_unit__Stall == 1'b1)) || (halt_ie_mem_reg == 1'b0 && (halt_ie_mem))) begin
         Reg_Write_Enable__EX_MEM  <= 1'b0;
         proc_data_port1_int__reg <= proc_data_port1_int;
         FP__Reg_Write_En__EX_MEM <= 1'b0;
@@ -737,7 +801,7 @@ end
 
 
 // Register MEM_WB stage
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         RD_Data__MEM_WB <= 32'b0;
         Branch_Taken__MEM_WB <= 1'b0;
@@ -746,7 +810,7 @@ always @(posedge CLK or posedge RST) begin
         FP__RD_Data_Int__MEM_WB <= 32'b0;
         FP__Reg_Write_En_Int__MEM_WB <= 1'b0;
     end
-    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || Double_Load_Store__Stall_reg || PC_HALT_BREAK)) begin
+    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || Double_Load_Store__Stall_reg || PC_HALT_BREAK || halt_mem_wb)) begin
         RD_Data__MEM_WB <= RD_Data__mem_wb;
         Branch_Taken__MEM_WB <= Branch_Taken__mem_wb;
         
@@ -758,7 +822,7 @@ end
 
 
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         pc_id_ex <= 32'b0;
         //irq_ctrl_int2 <= 1'b0;
@@ -787,7 +851,7 @@ always @(posedge CLK or posedge RST) begin
 end
 
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) 
         lsustall_i <= 1'b0;
     else
@@ -808,7 +872,7 @@ always @(posedge CLK ) begin
 end */
 
 
-
+(* keep_hierarchy = "yes" *)
 Branch_Prediction_Unit BPU( .CLK(CLK),
                             .RST(RST),
                             .PC(pc_cache),
@@ -831,7 +895,8 @@ Branch_Prediction_Unit BPU( .CLK(CLK),
                             .RAS_CALL_Inst_nextPC(RAS_CALL_Inst_nextPC__ex_mem),
                             .Branch_Taken__EX_MEM(Branch_Taken__EX_MEM),
                             .PC_Control__IRQ(PC_Control__IRQ));
-
+                            
+(* keep_hierarchy = "yes" *)
 INST_FETCH IF( .CLK(CLK),
                .RST(RST), 
                .Branch_Taken__EX_MEM(Branch_Taken__EX_MEM),
@@ -855,12 +920,119 @@ INST_FETCH IF( .CLK(CLK),
                .NOP__IF_ID(NOP__IF_ID),
                .interrupt_pending(interrupt_pending),
                .pc(pc_cache),
+               //Debug Controller --> IF Stage
+               .pc_valid_dbg(pc_valid_dbg),
+               .pc_dbg(pc_dbg),
+               .return_pc_valid(return_pc_valid),
+               .return_pc(return_pc),
+               .dbg_instr_req(dbg_instr_req),
+               .kill_if(kill_if),
+               .halt_if(halt_if_id),
                `ifdef itlb_def
                  .tlb_trans_off(tlb_trans_off),
                .vpn_to_ppn_req1(vpn_to_ppn_req)
                `endif 
                );
-              
+
+//------------------------------------------------------------------------
+//  
+//   DEBUG CONTROLLER INSTANTIATION 
+//
+//
+//-------------------------------------------------------------------------
+
+
+
+
+DEBUG_CONTROLLER #(.PC_BOOT()) debug_Controller (
+    .clk(CLK),
+    .proc_rst(RESET_BUTTON),
+    .freeze(Data_Cache__Stall || Inst_Cache__Stall || Mult_Div_unit__Stall || FPU__Stall || Double_Load_Store__Stall),
+
+    .debug_mode(debug_mode),
+
+    // Input PC bus
+    .PC_BUS({PC_MEM,PC__IF_ID,pc_cache}),
+
+    // Sys bus from ID
+    .sys(sys_id_ex),
+  //Debug Module Interface 
+    .haltreq_i(haltreq_i),
+    .resumereq_i(resumereq_i),
+    .resethaltreq_i(resethaltreq_i),
+
+    .core_havereset_o(core_havereset_o),
+    .ackhavereset(ackhavereset),
+
+  //TODO: How to use them
+    .core_unavail_o(core_unavail_o),
+    .ackunavail(ackunavail),
+
+    .core_halted_o(core_halted_o),
+    .core_running_o(core_running_o),
+    .core_resumeack_o(core_resumeack_o),
+  //core_exist(),
+
+  //Signals to IF stage for changing PC
+    .pc_valid_o(pc_valid_dbg),
+    .pc_o(pc_dbg),
+    .instr_req(dbg_instr_req),
+
+  //Output to CSR Block
+    .csr_dbg_wr(csr_dbg_wr),
+    .csr_dbg_cause(csr_dbg_cause),
+    .csr_dbg_dpc(csr_dbg_dpc),
+    .dcsr(dcsr),
+    .dpc(dpc),
+
+  //Input from the DM module 
+    .dm_exception_addr(dm_exception_addr),
+    .dm_halt_addr(dm_halt_addr),
+
+  //Core Warm reset 
+    .core_dbg_reset(core_dbg_reset),
+
+  //HART Reset signals from Debug Module
+    .ndmreset(ndmreset),
+  // hartreset(),
+
+    .new_cmd_flag_i(new_cmd_flag_i),
+    .cmd_not_supported_i(cmd_not_supported_i),
+    .pbuffer_execution(pbuffer_execution),
+
+  //Command Success signals to Debug Module
+    .command_complete_o(command_complete_o),
+    .reg_access_complete_o(reg_access_complete_o),
+    .mem_access_complete_o(mem_access_complete_o),
+  
+  //Command Failure Signals to Debug Module
+    .abstract_cmd_fail_o(abstract_cmd_fail_o),
+    .abstract_cmd_wrong_hart_state_o(abstract_cmd_wrong_hart_state_o),
+    .abstract_cmd_exception_o(abstract_cmd_exception_o),
+    .abstract_cmd_bus_error(abstract_cmd_bus_error),
+
+    .return_pc_valid(return_pc_valid),
+    .return_pc(return_pc),  
+  //Interrupt Signals,
+    .interrupt_dbg_global_disable(interrupt_dbg_global_disable),
+
+  //Pipeline control signals
+    .halt_if(halt_if_id),
+    .halt_id(halt_id_ie),
+    .halt_ie(halt_ie_mem),
+    .halt_mem(halt_mem_wb),
+  
+    .kill_if(kill_if),
+    .kill_id(kill_id),
+    .kill_ie(kill_ie),
+    .kill_mem(kill_mem)
+  
+);
+
+
+
+
+
 //TODO: Add PC and Instruction to memory stage for detection
 //Also, try to push the Addr alignment thing to the EXECUTE Stage
 //Verification Steps:
@@ -873,7 +1045,7 @@ INST_FETCH IF( .CLK(CLK),
 
 wire inst_addr_misaligned, inst_access_fault, illegal_instruction, load_misaligned, load_access_fault, store_misaligned, store_access_fault,inst_dec_error;
 assign inst_addr_misaligned   = (pc_cache[1:0] != 2'b00);
-assign illegal_instruction    = 1'b0;
+assign illegal_instruction    = illegal_instruction_ID;
 
 assign inst_access_fault      = 1'b0; // Is fetching Instruction on forbidden Memory region
 assign load_access_fault      = 1'b0;
@@ -881,6 +1053,7 @@ assign store_access_fault     = 1'b0;
 assign load_misaligned        = badaddr_data_load;
 assign store_misaligned       = badaddr_data_store;
 
+(* keep_hierarchy = "yes" *)
 EXCEPTION_UNIT EXECPTION_UNIT( 
                  .CLK(CLK),
                  .RST(RST),
@@ -937,16 +1110,18 @@ EXCEPTION_UNIT EXECPTION_UNIT(
                 .csr_ro_wr(1'b0),
                 .mtvec_addr(mtvec_addr),
                 .interrupt_pending(interrupt_pending),
+                .interrupt_dbg_global_disable(interrupt_dbg_global_disable),
                 .sb_csr(sb_csr)
               );
 
-
+(* keep_hierarchy = "yes" *)
 DECODE ID( .CLK(CLK),                                                              
            .RST(RST),
            .IF_ID_Freeze(Inst_Cache__Stall || Mult_Div_unit__Stall || FPU__Stall || Double_Load_Store__Stall || Data_Cache__Stall || PC_HALT_BREAK),
            .Instruction__IF_ID(Instruction__IF_ID),                                               
            .PC__IF_ID(PC__IF_ID),
-           .PC_4__IF_ID(PC_4__IF_ID),                                                      
+           .PC_4__IF_ID(PC_4__IF_ID),
+           .PC_ID(PC_ID),           
            .pc_forw(pc_forw),
            .RS1_Addr__rf(RS1_Addr__rf),                                                     
            .RS2_Addr__rf(RS2_Addr__rf),
@@ -1018,10 +1193,11 @@ DECODE ID( .CLK(CLK),
            //.irq_ctrl_o(irq_ctrl_int),                                                       
            .count_sel(count_sel_int),
            .inst_dec_error(inst_dec_error),
+           .illegal_instruction(illegal_instruction_ID),
            .eret(eret_int),
            .inst_out(inst_out));
 
- 
+(* keep_hierarchy = "yes" *) 
 FP_DECODE FP__ID( .CLK(CLK),
                   .RST(RST),
                   .Instruction__IF_ID(inst_out),
@@ -1077,10 +1253,13 @@ FP_DECODE FP__ID( .CLK(CLK),
                   //.irq_ctrl(irq_ctrl)
                   );
 
-           
+(* keep_hierarchy = "yes" *)           
 EXECUTE EX( .CLK(CLK),                                                              
             .RST(RST),
+            .kill_ie(kill_ie || illegal_instruction_IE),
             .pc_id_ex(pc_id_ex),
+            .PC_ID_EX(PC_IE),
+            .pc_ex_mem(pc_ex_mem),
             .Forward_RS1_MEM__ID_EX(Forward_RS1_MEM__ID_EX),
             .Forward_RS2_MEM__ID_EX(Forward_RS2_MEM__ID_EX),
             .Forward_RS1_WB__ID_EX(Forward_RS1_WB__ID_EX),
@@ -1225,7 +1404,7 @@ EXECUTE EX( .CLK(CLK),
                   .frm(frm),
                   .FPU_flags(FPU_flags));*/
 
-
+(* keep_hierarchy = "yes" *)
 REG_FILE RF( .CLK(CLK),
              .RST(RST),
              .RS1_Read_Addr(FP__RS1_read_Int__rf ? FP__RS1_Addr_Int__rf : RS1_Addr__rf), 
@@ -1242,7 +1421,7 @@ REG_FILE RF( .CLK(CLK),
              .RS2_Read_Data(RS2_Data__rf),
              .led());
              
-             
+(* keep_hierarchy = "yes" *)             
 FP_REG_FILE FP_RF( .RST(RST),
                    .CLK(CLK),
                    .FP__RS1_Read_Addr(FP__RS1_Addr__rf),
@@ -1259,7 +1438,7 @@ FP_REG_FILE FP_RF( .RST(RST),
                    .led(led));
 
 
-            
+(* keep_hierarchy = "yes" *)            
 Sys_counter sc1( .rst(RST),
                  .proc_clk(CLK),
                  .freeze(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || Double_Load_Store__Stall),
@@ -1269,7 +1448,9 @@ Sys_counter sc1( .rst(RST),
                  .csr_wrdata(csr_wrdata),
                  .csr_wr_en(csr_wr_en),
                  .tick_en(tick_en_int));
- 
+                 
+                 
+ (* keep_hierarchy = "yes" *)
  csr c1( .clk(CLK),
          .rst(RST),
          .csr_adr_wr(csr_adr),
@@ -1298,6 +1479,15 @@ Sys_counter sc1( .rst(RST),
          .FPU_Inst(FP__Fpu_Inst__ID_EX & ~FPU__Stall),
          .FPU_flags(FPU_flags),
          .frm(frm),
+         //Debug Interface
+         .csr_dbg_wr(csr_dbg_wr),
+         .csr_dbg_cause(csr_dbg_cause),
+         .csr_dbg_dpc(csr_dbg_dpc),
+         .dcsr(dcsr),
+         .dpc(dpc),
+         .debug_mode(debug_mode),
+         .csr_dbg_dscratch0(),
+         .csr_dbg_dscratch1(),
          .cache_flush_csr(cache_flush_csr),
          .flush_csr_clr(flush_csr_clr),
          .csr_satp(csr_satp),

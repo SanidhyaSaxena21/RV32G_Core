@@ -1,6 +1,7 @@
 `timescale 1ns / 1ps
-`include "../Include/defines.v"
+`include "defines.v"
 
+(* keep_hierarchy = "yes" *)
 module fet_dec_ex_mem(
 // master inputs
 //rst,clk,clk_x2,led,
@@ -9,7 +10,7 @@ module fet_dec_ex_mem(
 //interrupt
 //,out_t0,out_t1,out_t2,sp
 
-input rst,
+input RESET_BUTTON,
 input clk,
 //output [63:0] led,
 input [1:0] clmode,
@@ -50,6 +51,27 @@ input ext_irq,
 input sw_irq,
 input timer_irq,
 input cache_en,
+
+//Debug Interface
+output [31:0] PC_DEBUG,
+input [31:0] instruction_DM,
+output freeze_int_dcache,
+input haltreq_i,
+input resumereq_i,
+input resethaltreq_i,
+output core_havereset_o,
+input pbuffer_execution,
+input ackhavereset,ackunavail,
+output core_halted_o,core_running_o,core_resumeack_o,
+input ndmreset,cmd_not_supported_i,new_cmd_flag_i,
+output command_complete_o,reg_access_complete_o,mem_access_complete_o,
+input [31:0] dm_halt_addr,dm_exception_addr,
+
+output abstract_cmd_fail_o,
+output abstract_cmd_wrong_hart_state_o,
+output abstract_cmd_exception_o,
+output abstract_cmd_bus_error,
+
 
 output [`CSR_SB_W-1:0] csr_pmp_sb,
 `ifdef itlb_def
@@ -125,8 +147,8 @@ wire [31:0] wb_data_int;
 wire ll_int;
 wire sc_int;
 wire icache_en_o;
-wire [31:0] pc_cache;
 wire [31:0] instruction;
+wire [31:0] instruction_ICACHE;
 
 
 ///dcache signal
@@ -154,11 +176,21 @@ wire badaddr_data;
 wire icache_freeze;
 wire flush_csr_clr;
 wire stall_mul;
-wire freeze_int;
+//wire freeze_int_dcache;
 wire stall;
+wire debug_stall;
+wire debug_mode;
+wire [31:0] pc_cache;
+wire core_dbg_reset;
+wire RESET;
+//Mux to select instruction should come from the Debug Module or From Instruction memory
+
+assign PC_DEBUG = pc_cache;
+assign instruction = (debug_mode) ? instruction_DM : instruction_ICACHE; 
+assign RESET = RESET_BUTTON | core_dbg_reset;
 
 IF_ID_EX Pipeline( .CLK(clk),
-                   .RST(rst),
+                   .RESET_BUTTON(RESET_BUTTON),
                    .ext_irq(ext_irq),
                    .sw_irq(sw_irq),
                    .timer_irq(timer_irq),
@@ -168,11 +200,36 @@ IF_ID_EX Pipeline( .CLK(clk),
                    .Store_Data(store_data_int),
                    .lsustall_o(lsustall_int),
                    .Load__Stall(stall),
-                   .Data_Cache__Stall(freeze_int), 
+                   //Debug Interface
+                
+                   .core_dbg_reset(core_dbg_reset), 
+                   .haltreq_i(haltreq_i),
+                   .resumereq_i(resumereq_i),
+                   .resethaltreq_i(resethaltreq_i),
+                   .core_havereset_o(core_havereset_o),
+                   .ackhavereset(ackhavereset),
+                   .ackunavail(ackunavail),
+                   .pbuffer_execution(pbuffer_execution),
+                   .core_halted_o(core_halted_o),.core_running_o(core_running_o),.core_resumeack_o(core_resumeack_o),
+                   .ndmreset(ndmreset),.cmd_not_supported_i(cmd_not_supported_i),.new_cmd_flag_i(new_cmd_flag_i),
+                   .command_complete_o(command_complete_o),.reg_access_complete_o(reg_access_complete_o),.mem_access_complete_o(mem_access_complete_o),
+                   .dm_halt_addr(dm_halt_addr),
+                   .dm_exception_addr(dm_exception_addr),
+                   .abstract_cmd_fail_o(abstract_cmd_fail_o),
+                   .abstract_cmd_wrong_hart_state_o(abstract_cmd_wrong_hart_state_o),
+                   .abstract_cmd_exception_o(abstract_cmd_exception_o),
+                   .abstract_cmd_bus_error(abstract_cmd_bus_error),
+                   .debug_stall(debug_stall),
+                   .debug_mode(debug_mode),
+
+                   //Dcache Interface
+                   .Data_Cache__Stall(freeze_int_dcache), 
                    .proc_data_port1_int(proc_data_port1_int),
                    .lsu_op_port2(lsu_op_port2_int),
                    .proc_addr_port2(proc_addr_port2_int),
                    .amo_load_val_i(amo_load_val_i),
+
+                   //Instruction Cache interafce
                    .Inst_Cache_Freeze(icache_en_o),
                    .pc_cache(pc_cache),
                    .Inst_Cache__Stall(icache_freeze),
@@ -204,27 +261,11 @@ IF_ID_EX Pipeline( .CLK(clk),
 dcache_biu db1( //wishbone and controller interfacee I/Os
                 .proc_clk(clk),
                 //.clk_x2(clk_x2),
-                .proc_rst(rst),
+                .proc_rst(RESET),
                 .lsustall(lsustall_int),
                 .cache_en(cache_en),
                 .clmode(clmode),
                 .badaddr_data(badaddr_data),
-                /*
-                .wb_clk_i(clk),
-                .wb_rst_i(rst),
-                .wb_ack_i(wb_ack_i[0]),
-                .wb_err_i(wb_err_i[0]),
-                .wb_rty_i(wb_rty_i[0]),
-                .wb_dat_i(wb_dat_i[31:0]),
-                .wb_cyc_o(wb_cyc_o[0]),
-                .wb_adr_o(wb_adr_o[31:0]),
-                .wb_stb_o(wb_stb_o[0]),
-                .wb_we_o(wb_we_o[0]),
-                .wb_sel_o(wb_sel_o[3:0]),
-                .wb_dat_o(wb_dat_o[31:0]),
-                .wb_cti_o(wb_cti_o[2:0]),
-                .wb_bte_o(wb_bte_o[1:0]),
-                */
                 .ADDR(DADDR),
                 .BURST(DBURST), //00-Normal(), 01-INCR(), 10-WRAP(), 11-Reserved
                 .REQ(DREQ),
@@ -238,12 +279,12 @@ dcache_biu db1( //wishbone and controller interfacee I/Os
                 .dtlb_trans_off(dtlb_trans_off),
                 .lsu_op_port1(lsuop_int),
                 .lsu_op_port2(lsu_op_port2_int),
-                .dcache_freeze(icache_freeze | stall_mul | FPU__Stall),
+                .dcache_freeze(icache_freeze | stall_mul | FPU__Stall | debug_stall),
                 .proc_data_in_port1(store_data_int),
                 .proc_data_in_port2(32'b0),
                 .proc_addr_in_port1(proc_addr_port1_int),
                 .proc_addr_in_port2(proc_addr_port2_int),
-                .freeze(freeze_int),
+                .freeze(freeze_int_dcache),
                 .proc_data_port1(proc_data_port1_int),
                 .proc_data_port2(amo_load_val_i),
                 .ll_i(ll_int),
@@ -266,10 +307,10 @@ dcache_biu db1( //wishbone and controller interfacee I/Os
 mem_hier mh(
             .clk(clk),
             //.clk_x2(clk_x2),
-            .reset(rst),
+            .reset(RESET),
             .freeze_in(icache_en_o),
             .i_addr({pc_cache[31:2],2'b00}),
-            .instr_out(instruction),
+            .instr_out(instruction_ICACHE),
             .stall_out(icache_freeze),
             //.eret_ack(eret_ack),
             .stall_load(stall),
@@ -284,20 +325,6 @@ mem_hier mh(
             .STALL(ISTALL),
             .BSTROBE(IBSTROBE),
             .csr_satp(csr_satp)
-            /*.wb_clk_i(clk),
-            .wb_rst_i(rst),
-            .wb_ack_i(wb_ack_i[1]),
-            .wb_err_i(wb_err_i[1]),
-            .wb_rty_i(wb_rty_i[1]),
-            .wb_dat_i(wb_dat_i[63:32]),
-            .wb_cyc_o(wb_cyc_o[1]),
-            .wb_stb_o(wb_stb_o[1]),
-            .wb_we_o(wb_we_o[1]),
-            .wb_adr_o(wb_adr_o[63:32]),
-            .wb_bte_o(wb_bte_o[3:2]),
-            .wb_cti_o(wb_cti_o[5:3]),
-            .wb_sel_o(wb_sel_o[7:4]),
-            .wb_dat_o(wb_dat_o[63:32])*/
             `ifdef itlb_def
              ,.tlb_trans_off(tlb_trans_off)
             ,.vpn_to_ppn_req_in(vpn_to_ppn_req)

@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
 
-`include "../Include/defines.v"
+`include "defines.v"
 //`include "defines.v"
 
 
 
-
+(* keep_hierarchy = "yes" *)
 module csr #( parameter XLEN = 32,
               parameter SB_LENGTH = 4*(XLEN+1)+1)
 (
@@ -45,6 +45,16 @@ module csr #( parameter XLEN = 32,
     output [2:0] frm,
     output cache_flush_csr,
     input flush_csr_clr,
+
+    //Debug Interface
+    input csr_dbg_wr,
+    input [2:0] csr_dbg_cause,
+    input [31:0] csr_dbg_dpc,
+    input debug_mode,
+    input [31:0] csr_dbg_dscratch0,
+    input [31:0] csr_dbg_dscratch1,
+    output [31:0] dcsr,
+    output reg [31:0] dpc,
 
     // SATP Register
     output reg [31:0] csr_satp,
@@ -88,6 +98,13 @@ wire ext_irq_pulse;
 wire timer_irq_pulse;
 wire sw_irq_pulse;
 wire csr_wr_en;
+
+//Debug CSR 
+
+//reg [31:0] dpc;
+reg [31:0] dscratch0;
+reg [31:0] dscratch1;
+
 
 // Physical Memory Protection (PMP)
 reg [`XLEN-1:0] pmpcfg0;       // 0x3A0    MRW
@@ -183,7 +200,7 @@ wire sw_irq_sync_neg_pulse;
 
 assign sw_irq_sync_neg_pulse = (sw_irq_sync_neg & (~sw_irq_pulse));
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
   if(rst) begin
     sw_irq_sync_neg <= 1'b0;
   end
@@ -197,7 +214,7 @@ end
 
 ////////////////////////////////////////////////////////////////////
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         csr_mepc <= 32'b0;
     else if(mepc_wr) begin
@@ -210,7 +227,7 @@ always @(posedge clk or posedge rst) begin
 end
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         csr_mepc_shadow <= 32'b0;
     else if(trap_en || ( csr_wr_en && (csr_adr_wr == `mepc)))
@@ -225,7 +242,7 @@ end
 
 ////////////////////////////////////////////////////////////////////
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         csr_mstatus <= `mstatus_default;
     /*else if(mret) begin
@@ -250,7 +267,7 @@ end
 
 ////////////////////////////////////////////////////////////////////
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         csr_mtvec <= `mtvec_default;
     else if(csr_wr_en && (csr_adr_wr == `mtvec))
@@ -263,7 +280,7 @@ end
 // MCAUSE - 0x342
 
 ////////////////////////////////////////////////////////////////////
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         csr_mcause <= `mcause_default;
     else if(mcause_wr) begin
@@ -281,7 +298,7 @@ end
 // MTVAL - 0x343
 
 ////////////////////////////////////////////////////////////////////
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         csr_mtval <= `mtval_default;
     else if(mtval_wr) begin
@@ -296,7 +313,7 @@ end
 // MIE - 0x304
 
 ////////////////////////////////////////////////////////////////////
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         csr_mie <= `mie_default;
     else if( csr_wr_en && (csr_adr_wr == `mie))
@@ -308,7 +325,7 @@ end
 // MIP - 0x344
 
 ////////////////////////////////////////////////////////////////////
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         csr_mip <= `mip_default;
     end
@@ -348,7 +365,7 @@ end
 
 ////////////////////////////////////////////////////////////////////
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         csr_mbadaddr <= `mbadaddr_default;
     else if(badaddr || addr_exception)
@@ -363,7 +380,7 @@ end
 // MISA - 0x301
 
 ////////////////////////////////////////////////////////////////////
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         csr_misa <= `misa_default;
     else if( csr_wr_en && (csr_adr_wr == `misa))
@@ -376,13 +393,13 @@ end
 // MEDELEG_DEFAULT  
 
 ////////////////////////////////////////////////////////////////////
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         csr_medeleg <= `medeleg_default;                             //  this will be writable as other modes will be implemented 
 end
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         csr_mideleg <= `mideleg_default;                             //  this will be writable as other modes will be implemented 
 end
@@ -393,7 +410,7 @@ end
 
 ////////////////////////////////////////////////////////////////////
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         csr_fcsr <= `mtvec_default;
     else if(csr_wr_en && (csr_adr_wr == `fcsr))
@@ -421,7 +438,7 @@ end
 //reg [31:0] csr_satp;
 wire csr_satp_mode;
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         csr_satp <= `satp_default;
     else if(csr_wr_en && (csr_adr_wr == `satp))
@@ -435,7 +452,7 @@ assign csr_satp_mode = (csr_wrdata[30:0] == 31'd0) ? 1'b0 : 1'b1;
 /////////////////////////////////////////////////////////////////////
 // CUSTOM CSR////////////////////////////////////////////////////////
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         csr_cache_flush <= 32'd0;
       else if( csr_wr_en && (csr_adr_wr == `cache_flush)) begin
@@ -445,6 +462,89 @@ always @(posedge clk or posedge rst) begin
 end
 
 assign cache_flush_csr = csr_cache_flush[0];
+
+
+/////////////////////////////////////////////////////////////////////
+
+// DCSR - 0x7b0, DPC - 0x7b1,  DSCRATCH0 - 0x7b2, DSCRATCH1-0x7b3
+
+////////////////////////////////////////////////////////////////////
+//These registers are only accessible in Debug mode (debug_mode = 1'b1)
+
+assign csr_dbg_allowed = (debug_mode == 1'b1);
+
+reg [3:0] debugver;
+reg [2:0] extcause;
+reg cetrig,pelp,ebreakvs,ebreakvu,ebreakm,ebreaks,ebreaku,stepie,stopcount,stoptime;
+reg mprven,nmip,step;
+reg [1:0] prv;
+reg v;
+reg [2:0] cause;
+
+//Structure of dcsr
+//dcsr = {debugver,1'b0,extcause,4'd0,cetrig,pelp,ebreakvs,ebreakvu,ebreakm,1'b0,ebreas,ebreaku,stepie,stopcount,stoptime,cause,v,mprven,nmip,step,prv}
+always @(posedge clk) begin
+  if(rst) begin
+    v <= 1'b0; 
+    prv <= 2'd3; // Only Machine mode supported
+    debugver <= 4'd4; //Debugger Supported
+    extcause <= 3'd0; //Not supported
+    cetrig <= 1'b0;
+    pelp <= 1'b0;
+    ebreakvs <= 1'b0;
+    ebreakvu <= 1'b0;
+    ebreakm <= 1'b1;
+    ebreaks <= 1'b0;
+    ebreaku <= 1'b0;
+    stepie <= 1'b0; //Interrupts are disable: TODO
+    stopcount <= 1'b0; //Not implemented
+    stoptime <= 1'b0;
+    cause <= 3'd0;
+    mprven <= 1'b0;
+    nmip <= 1'b0;
+    step <= 1'b0;
+  end
+  else if(csr_wr_en && (csr_adr_wr == `debug_dcsr) && csr_dbg_allowed) begin
+    {debugver,extcause,cetrig,pelp,ebreakvs,ebreakvu,ebreakm,ebreaks,ebreaku,stepie,stopcount,stoptime,v,mprven,nmip,step,prv} <= 
+    {csr_wrdata[31:28],csr_wrdata[26:24],csr_wrdata[19:15],csr_wrdata[13:9],csr_wrdata[5:0]};
+  end
+  else if(csr_dbg_wr) begin
+    cause <= csr_dbg_cause;
+  end
+end
+
+assign dcsr = {debugver,1'b0,extcause,4'd0,cetrig,pelp,ebreakvs,ebreakvu,ebreakm,1'b0,ebreaks,ebreaku,stepie,stopcount,stoptime,cause,v,mprven,nmip,step,prv};
+
+
+//dpc CSR Write logic
+always @(posedge clk) begin
+  if(rst) dpc <= 32'd0;
+  else if(csr_dbg_wr) begin
+    dpc <= csr_dbg_dpc; 
+  end
+end
+
+//dscratch0 CSR Write logic
+always @(posedge clk) begin
+  if(rst) dscratch0 <= 32'd0;
+  else if(csr_dbg_wr) begin
+    dscratch0 <= csr_dbg_dscratch0; 
+  end
+end
+
+
+//dscratch0 CSR Write logic
+
+always @(posedge clk) begin
+  if(rst) dscratch1 <= 32'd0;
+  else if(csr_dbg_wr) begin
+    dscratch1 <= csr_dbg_dscratch1; 
+  end
+end
+
+
+
+
 /////////////////////////////////////////////////////////////////////
 
 // Physical Memory Attributes (PMA/PMP) CSR
@@ -517,7 +617,7 @@ assign csr_pmp_sb[`CSR_SB_PMPADDR15+:XLEN] = pmpaddr15;
 
 ////////////////////////////////////////////////////////////////////
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
   if(rst) begin
     pmpcfg0 <= PMPCFG0_INIT;
     pmpcfg1 <= PMPCFG1_INIT;
@@ -564,7 +664,7 @@ end
 
 ////////////////////////////////////////////////////////////////////
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
   if(rst) begin
     pmpaddr0  <= PMPADDR0_INIT;
     pmpaddr1  <= PMPADDR1_INIT;
@@ -667,6 +767,18 @@ always @(*) begin
         else if(csr_adr_rd == `satp) begin
             csr_rddata = csr_satp;
         end
+        else if(csr_adr_rd == `debug_dcsr) begin
+            csr_rddata = dcsr;
+        end
+        else if(csr_adr_rd == `debug_dpc) begin
+            csr_rddata = dpc;
+        end
+        else if(csr_adr_rd == `debug_dscratch0) begin
+            csr_rddata = dscratch0;
+        end
+        else if(csr_adr_rd == `debug_dscratch1) begin
+            csr_rddata = dscratch1;
+        end        
         //PMP Register Reads
         else if(csr_adr_rd == `PMPCFG0)   csr_rddata = pmpcfg0;
         else if(csr_adr_rd == `PMPCFG1)   csr_rddata = pmpcfg1;
@@ -704,7 +816,7 @@ always @(*) begin
 end
  
     
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) 
         cur_prev_mode <= 2'b11;
 end

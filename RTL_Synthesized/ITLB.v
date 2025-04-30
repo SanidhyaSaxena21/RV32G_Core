@@ -186,7 +186,7 @@ assign WDATA = 32'b0; // No write needed in Instruction memory
 
 //assign wb_dat_o = 32'b0;
 
-always @(posedge clk or posedge rst)
+always @(posedge clk)
 begin
         if(rst) begin
 //            re <= 1'b0;
@@ -199,7 +199,7 @@ begin
 //        else re <= 1'b0;
 end
 
-always @(posedge clk or posedge rst)
+always @(posedge clk)
 begin
         if(rst)  access <= 1'b0;
         else if(~miss) access <= 1'b1;
@@ -221,7 +221,7 @@ end
 //                                V                     V
 // Virtual Address:     [-----PPN[31:22]-----][------PPN[21:12-----][-------Page offset[11:0]]
 
-always @(posedge clk or posedge rst)
+always @(posedge clk)
 begin
     if(rst) begin 
         state_PTW <= IDLE;
@@ -235,7 +235,7 @@ begin
     end
 end
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
   //if(rst) addr_pte <= {1'b0,csr_satp[30:0]};
   if(rst) addr_pte <= 32'd0;
   else if (~freeze_tlb) addr_pte <= next_addr;
@@ -467,7 +467,7 @@ assign leaf_page = RO_page || RW_page || XO_page || XOR_page || RWX_page;
 //assign wb_ack = wb_ack_i & !wb_err_i & !wb_rty_i;
 
 //LINT: To register page fault and sent it to processor
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
     	page_fault_processor <= 1'b0;	
     end
@@ -483,7 +483,7 @@ end
     wire EVA_en;
     reg re;
     
-    always @(posedge clk or posedge rst)
+    always @(posedge clk)
     begin
 	if(rst) begin
 	   compare_delayed <= 1'b0;

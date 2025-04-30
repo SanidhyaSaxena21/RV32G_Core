@@ -27,7 +27,7 @@ module divider(dividend,divisor,clk,result,sign,rst,op,start,done);
                          ~dividend_copy[31:0] + 1'b1;
 
 
-   always @( posedge clk or posedge rst ) begin 
+   always @( posedge clk ) begin 
      if(rst) begin
         quotient <= 32'b0;
         bit <= 6'b0;

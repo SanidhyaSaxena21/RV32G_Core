@@ -62,7 +62,7 @@ module interface_router (
   assign o_bus_data = bus_reg;
   assign biu_dat_o = RDATA;
 
-  always @(posedge clk or posedge reset) begin
+  always @(posedge clk) begin
     if(reset) begin
       present_state <= IDLE;
     end
@@ -108,7 +108,7 @@ module interface_router (
     endcase
   end
 
-  always @(posedge clk or posedge reset) begin
+  always @(posedge clk) begin
     if(reset) begin
         WRB <= 1'b0;
     end
@@ -117,7 +117,7 @@ module interface_router (
     end
   end
   
-  always @(posedge clk or posedge reset) begin
+  always @(posedge clk) begin
     if(reset) begin
         BSTROBE <= 1'b0;
     end
@@ -126,7 +126,7 @@ module interface_router (
     end
   end 
   
-  always @(posedge clk or posedge reset) begin
+  always @(posedge clk) begin
     if(reset) begin
       ADDR <= {32{1'b0}};
       REQ <= 1'b0;
@@ -170,7 +170,7 @@ module interface_router (
   end
 
 
-  always @(posedge clk or posedge reset) begin
+  always @(posedge clk) begin
     if(reset) begin
       bus_reg <= 256'd0;
     end
@@ -242,7 +242,7 @@ module interface_router (
 
   // Bus_rdy logic: If it is a peripheral access, ready will be ACK. If it's
   // a memory access, then bus_rdy will go high after the burst is completed
-  always @( posedge clk or posedge reset) begin
+  always @( posedge clk) begin
       if(reset) begin
           bus_rdy <= 1'b1;
       end
@@ -259,7 +259,7 @@ module interface_router (
       end
   end
   
-  always @(posedge clk or posedge reset) begin
+  always @(posedge clk) begin
     if(reset) begin
       count <= 0;
     end

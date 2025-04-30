@@ -29,7 +29,7 @@ wire [3:0] level_0_Write_Value = level_0[BTB_Write_Addr__reg];
 
 integer j;
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         for(j=0; j<128; j=j+1) begin
             level_1[j] <= 2'b00;

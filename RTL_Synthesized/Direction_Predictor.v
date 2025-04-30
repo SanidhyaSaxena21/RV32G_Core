@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-
+(* keep_hierarchy = "yes" *)
 module Direction_Predictor
 (
     input CLK,
@@ -36,7 +36,7 @@ reg GHR_Write_En__reg;
 assign PC_XOR_GHR = PC[12:8] ^ GHR;
 
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) begin
         PHT_Write_Index__reg <= 11'b0;
         PHT_Write_Data__reg <= 2'b0;
@@ -54,7 +54,7 @@ always @(posedge CLK or posedge RST) begin
 end
 
 
-always @(posedge CLK or posedge RST) begin
+always @(posedge CLK) begin
     if(RST) 
         GHR <= 5'b0;
     else if((GHR_Write_En__reg) & (~BPU__Stall))
@@ -75,6 +75,7 @@ always @(*) begin
         Branch_Taken = PHT_Read_Data[1];
 end
 
+/*
 TSDN65LPLLA2048X2M8M PHT (
   .AA(PHT_Write_Index__reg), 			// Address of A: Addra[6:0]
   .DA(PHT_Write_Data__reg),			// Data in of A: douta[127:0]	
@@ -94,7 +95,7 @@ TSDN65LPLLA2048X2M8M PHT (
   .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
   .QA(PHT_Read_Data),
   .QB()
-	);
+	);*/
 /*
 dual_port_RAM #(.DATA_WIDTH(2),.ADDR_WIDTH(11)) PHT ( .clka(CLK),
               .rsta(1'b0),
@@ -111,7 +112,7 @@ dual_port_RAM #(.DATA_WIDTH(2),.ADDR_WIDTH(11)) PHT ( .clka(CLK),
               .doutb(PHT_Read_Data));*/
 
 
-/*PHT_mem PHT ( .clka(CLK),
+PHT_mem PHT ( .clka(CLK),
               .wea((PHT_Write_En__reg) & (~BPU__Stall)),
               .addra(PHT_Write_Index__reg),
               .dina(PHT_Write_Data__reg),
@@ -119,7 +120,7 @@ dual_port_RAM #(.DATA_WIDTH(2),.ADDR_WIDTH(11)) PHT ( .clka(CLK),
               .rstb(RST),
               .enb(~BPU__Stall),
               .addrb(PHT_Read_Index),
-              .doutb(PHT_Read_Data));*/
+              .doutb(PHT_Read_Data));
 
 endmodule
 

@@ -19,7 +19,9 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`include "../Include/defines.v"
+`include "defines.v"
+(* keep_hierarchy = "yes" *)
+
 module EXCEPTION_UNIT #(parameter XLEN = 32,
                         parameter SB_LENGTH = 4*(XLEN+1)+1)
    (
@@ -33,6 +35,8 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
 
     input [6-1:0] sys,
     input IF_ID_freeze,
+
+    input interrupt_dbg_global_disable,
 
     // Exception PC and Instruction
     input [3*XLEN-1:0]  PC_EXCEPTION_BUS,
@@ -56,17 +60,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
     output reg pc_ctrl_ecall,
     output reg pc_ctrl_mret,
     output reg pc_ctrl_ebreak,
-    //output reg [`XLEN-1:0]  mepc,
-    //output reg              mepc_wr,
-    //output reg [`XLEN-1:0]  mstatus,
-    //output reg              mstatus_wr,
-    //output reg [`XLEN-1:0]  mcause,
-    //output reg              mcause_wr,
-    //output reg [`XLEN-1:0]  mtval,
-    //output reg              mtval_wr,
     output [`XLEN-1:0]                  mtvec_addr,
-    //output reg [63:0]       instret,
-    //output reg              clr_meip,
     output reg              interrupt_pending,
     output [SB_LENGTH-1:0]  sb_csr
     );
@@ -174,7 +168,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
     // Synchronous Interrupts
     assign MEM_STAGE_EXCEPTION      = (load_access_fault | load_misaligned | store_access_fault | store_misaligned | load_page_fault);
     assign DECODE_STAGE_EXCEPTION   = (inst_access_fault | illegal_instruction | csr_ro_wr | inst_dec_error);
-    assign ECALL_EBREAK_EXCEPTION   = (sys[`IS_ECALL] | sys[`IS_EBREAK] | sys[`IS_MRET]);
+    assign ECALL_EBREAK_EXCEPTION   = (sys[`IS_ECALL] /*| sys[`IS_EBREAK]*/ | sys[`IS_MRET]);
     assign FETCH_STAGE_EXCEPTION    = (inst_addr_misaligned | instruction_page_fault);
 
     // Asynchronous Interrupts 
@@ -200,7 +194,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
       //else if(PC_Control__IRQ_pulse && IF_ID_freeze) pc_sync_interrupt = pc_latch;
     end
 
-    always @(posedge CLK or posedge RST) begin
+    always @(posedge CLK) begin
       if(RST) begin
         Branch_Taken__EX_MEM_reg <= 1'b0;
         Branch_Taken__ex_mem_reg <= 1'b0;
@@ -228,7 +222,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
 
 
    // Sample the Async interrupt for checking which PC to store in MEPC
-    always  @(posedge CLK or posedge RST) begin
+    always @(posedge CLK) begin
       if(RST) begin
         async_trap_occuring_int <= 1'b0;
         DECODE_STAGE_EXCEPTION_INT <= 1'b0;
@@ -243,7 +237,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
 
 
     reg pc_latch_done;
-    always @(posedge CLK or posedge RST) begin
+    always @(posedge CLK) begin
       if(RST) begin 
         pc_latch <= 32'd0;
         pc_latch_cache_stall <= 1'b0;
@@ -276,7 +270,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
 
     assign async_pulse = async_trap_occuring & ~async_int;
 
-    always @(posedge CLK or posedge RST) begin
+    always @(posedge CLK) begin
       if(RST) begin
         async_int <= 1'b0;
       end
@@ -288,12 +282,15 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
     // Pipeline Stage Freeze and Control logic 
 
 
-    assign ID_IE_FLUSH = (PC_Control__IRQ & exp_ecall) || (inst_dec_error);
-    assign IF_ID_nop = inst_dec_error;
+    // Whenever we get the exception in DECODE stage, ID_IE Pipeline needs to be stalled.  
+    //assign ID_IE_FLUSH = (PC_Control__IRQ & exp_ecall) || (inst_dec_error);
+    assign ID_IE_FLUSH = (PC_Control__IRQ & exp_ecall) || (DECODE_STAGE_EXCEPTION);
+    //assign IF_ID_nop = inst_dec_error;
+    assign IF_ID_nop = DECODE_STAGE_EXCEPTION;
 
 
 
-    always @(posedge CLK or posedge RST) begin
+    always @(posedge CLK) begin
       if(RST) begin
         pc_ctrl_ecall   <= 1'b0;
         pc_ctrl_mret    <= 1'b0;
@@ -325,7 +322,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
 
 
     assign PC_Control__IRQ_pulse = ~PC_Control__IRQ_int & PC_Control__IRQ;
-    always @(posedge CLK or posedge RST) begin
+    always @(posedge CLK) begin
       if(RST) begin
         PC_Control__IRQ_int <= 1'b0;
       end
@@ -335,7 +332,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
     end
 
 
-    always @(posedge CLK or posedge RST) begin
+    always @(posedge CLK) begin
       if(RST) begin
         PC_Control__IRQ <= 1'b0;
         count <= 1'b0;
@@ -372,15 +369,15 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
     assign PC_Freeze_IRQ = PC_Control__IRQ;
 
 
-    always @(posedge CLK or posedge RST) begin
+    always @(posedge CLK) begin
       if(RST) interrupt_pending <= 1'b0;
-      else if(((sys[`IS_ECALL] | sys[`IS_EBREAK]) & ~Branch_Taken__ex_mem & ~PC_Control__IRQ & ~IF_ID_freeze)) interrupt_pending <= 1'b1;
+      else if((((sys[`IS_ECALL] | sys[`IS_EBREAK]) || trap_occuring )& ~Branch_Taken__ex_mem & ~PC_Control__IRQ & ~IF_ID_freeze)) interrupt_pending <= 1'b1;
       else if(sys[`IS_MRET] && ~PC_Control__IRQ) interrupt_pending <= 1'b0;
     end
 
     // CSR Register Write 
    reg mepc_wr_done; 
-    always @(posedge CLK or posedge RST) begin
+    always @(posedge CLK) begin
       if(RST) begin
         mepc <= {XLEN{1'b0}};
         mepc_wr <= 1'b0;
@@ -435,7 +432,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
         mepc <= PC_EXCEPTION_BUS[XLEN-1:0];
         mcause_wr <= 1'b1;
         mcause <= mcause_code;
-        PC_HALT_BREAK <= 1'b1; // Todo: Check what to do when EBREAK Occurs
+        PC_HALT_BREAK <= 1'b0; // Todo: Check what to do when EBREAK Occurs
       end
       else if(sys[`IS_MRET] && ~Branch_Taken__ex_mem /*&& ~IF_ID_freeze && exp_ecall*/) begin
         mstatus_wr <= 1'b1;
@@ -562,7 +559,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
     //
     ///////////////////////////////////////////////////////////////////////////
 
-    always @(posedge CLK or posedge RST) begin
+    always @(posedge CLK) begin
       if(RST) mcause_code_int <= {XLEN{1'b0}};
       else if(trap_occuring) mcause_code_int <= mcause_code;
     end
@@ -588,7 +585,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
                                                       32'd0;
   
 
-    always @(posedge CLK or posedge RST) begin
+    always @(posedge CLK) begin
       if(RST) mtval_info_int <= {XLEN{1'b0}};
       else if(trap_occuring) mtval_info_int <= mtval_info;
     end
@@ -621,7 +618,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
                                 store_access_fault   |
                                 inst_dec_error       ;
 
-    assign trap_occuring = async_pulse | sync_trap_occuring;
+    assign trap_occuring = (async_pulse | sync_trap_occuring) & ~interrupt_dbg_global_disable;
 
     
 endmodule

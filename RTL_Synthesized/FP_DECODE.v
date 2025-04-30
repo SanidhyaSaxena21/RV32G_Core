@@ -103,7 +103,7 @@
 
 
 
-
+(* keep_hierarchy = "yes" *)
 module FP_DECODE
 (
     input CLK,

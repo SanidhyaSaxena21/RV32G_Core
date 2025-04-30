@@ -3,11 +3,7 @@
 
 `timescale 1ns / 1ps
 module DATA_MEMORY #(parameter  ADDR_WIDTH = 18,
-                                DATA_WIDTH = 32,
-                              INSTR_INPUT_FILE = "Instruction_mem.mif",
-                              DATA_INPUT_FILE = "Instruction_mem.mif",
-                              PT_INPUT_FILE = "Instruction_mem.mif",
-                              HANDLER_INPUT_FILE = "Instruction_mem.mif"
+                                DATA_WIDTH = 32
                             ) 
 (
   input                     clk,
@@ -55,7 +51,49 @@ assign RDATA            = ~WRB & ((instruction_req) ? IRDATA :
                                  );
 assign ADDR_REDUCED = ADDR[ADDR_WIDTH-1:0];
 
- MEMORY_MACRO #(.ADDR_WIDTH(ADDR_WIDTH),.DATA_WIDTH(DATA_WIDTH),.INPUT_FILE(DATA_INPUT_FILE)) Data_Memory(
+
+
+ Data_Memory Data_Memory(
+   .clka(clk), // input clka
+   .rsta(rst),      // reset
+   .wea((BSTROBE & {4{WRB}})),
+   .ena(data_req && ~STALL), // input ena
+   .addra(ADDR[11:2] & 10'h3ff), // input [31 : 0] addra
+   .dina(WDATA), // input [31 : 0] dina
+   .douta(DRDATA) // output [31 : 0] douta
+ );
+ 
+  Instruction_Memory Instruction_Memory(
+   .clka(clk), // input clka
+   .rsta(rst),      // reset
+   .wea((BSTROBE & {4{WRB}})),
+   .ena(instruction_req && ~STALL), // input ena
+   .addra(ADDR[11:2] & 10'h3ff), // input [31 : 0] addra
+   .dina(WDATA), // input [31 : 0] dina
+   .douta(IRDATA) // output [31 : 0] douta
+ );
+ 
+  Page_Table Page_Table_memory(
+   .clka(clk), // input clka
+   .rsta(rst),      // reset
+   .wea((BSTROBE & {4{WRB}})),
+   .ena(pt_req && ~STALL), // input ena
+   .addra(ADDR[11:2] & 10'h3ff), // input [31 : 0] addra
+   .dina(WDATA), // input [31 : 0] dina
+   .douta(PRDATA) // output [31 : 0] douta
+ );
+ 
+  Handler_Memory handler_memory(
+   .clka(clk), // input clka
+   .rsta(rst),      // reset
+   .wea((BSTROBE & {4{WRB}})),
+   .ena(clint_req && ~STALL), // input ena
+   .addra(ADDR[11:2] & 10'h3ff), // input [31 : 0] addra
+   .dina(WDATA), // input [31 : 0] dina
+   .douta(HRDATA) // output [31 : 0] douta
+ );
+
+ /*MEMORY_MACRO #(.ADDR_WIDTH(ADDR_WIDTH),.DATA_WIDTH(DATA_WIDTH),.INPUT_FILE(DATA_INPUT_FILE)) Data_Memory(
    .clka(clk), // input clka
    .rsta(rst),      // reset
    .byte_en(BSTROBE),
@@ -86,18 +124,8 @@ assign ADDR_REDUCED = ADDR[ADDR_WIDTH-1:0];
    .addra(ADDR & 32'h00003fff), // input [31 : 0] addra
    .dina(WDATA), // input [31 : 0] dina
    .douta(PRDATA) // output [31 : 0] douta
- );
+ );*/
 
- MEMORY_MACRO #(.ADDR_WIDTH(ADDR_WIDTH),.DATA_WIDTH(DATA_WIDTH),.INPUT_FILE(HANDLER_INPUT_FILE)) handler_memory(
-   .clka(clk), // input clka
-   .rsta(rst),      // reset
-   .byte_en(BSTROBE),
-   .ena(clint_req && ~STALL), // input ena
-   .wea(WRB), // input [3 : 0] wea
-   .addra(ADDR & 32'h00003fff), // input [31 : 0] addra
-   .dina(WDATA), // input [31 : 0] dina
-   .douta(HRDATA) // output [31 : 0] douta
- );
     always @(posedge clk) begin
     if(rst) begin
       counter <= 4'b0000;
@@ -121,17 +149,17 @@ assign ADDR_REDUCED = ADDR[ADDR_WIDTH-1:0];
         //data_out <= 32'd0;
     end
     else if(REQ && counter < BURST_LENGTH && ~STALL && (BURST == 2'b01)) begin
-        #5 ACK <= 1'b1;
+        ACK <= 1'b1;
         //data_out <= RDATA;
     end
     else if (ACK && REQ && (BURST == 2'b00)) begin
-        #5 ACK <= 1'b0;
+        ACK <= 1'b0;
     end   
     else if(REQ && (BURST == 2'b00)) begin
-        #5 ACK <= 1'b1;
+        ACK <= 1'b1;
     end
     else if(counter == BURST_LENGTH /*&& (BURST == 2'b01)*/) begin
-        #5 ACK <= 1'b0;
+        ACK <= 1'b0;
         //data_out <= 32'd0;
     end
     else begin

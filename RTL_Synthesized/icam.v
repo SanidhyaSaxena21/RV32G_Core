@@ -189,7 +189,7 @@ end
 
 /////////  ***** Memory Write ***** ///////////////
                           
-always @ (posedge clk or posedge rst) begin
+always @(posedge clk ) begin
         if(rst) begin
             mem[0] <= 50'b0;
             mem[1] <= 50'b0;           

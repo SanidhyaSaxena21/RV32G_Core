@@ -1,6 +1,7 @@
 `timescale 1 ns / 1 ps
 
-`include "../DEFINES/defines.v"
+`include "defines.v"
+(* keep_hierarchy = "yes" *)
 module rv32_mpu
 
     #(

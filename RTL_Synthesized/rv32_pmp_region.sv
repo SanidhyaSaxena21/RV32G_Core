@@ -1,6 +1,6 @@
 `timescale 1 ns / 1 ps
 
-`include "../DEFINES/defines.v"
+`include "defines.v"
 
 module rv32_pmp_region
 

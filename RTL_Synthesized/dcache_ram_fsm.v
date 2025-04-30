@@ -228,7 +228,7 @@ assign read_buff = (write_buff_int & ((load_mask[i]) << (j << 5) << (k << 3))) |
 
 //assign proc_data_buff = (bus_data >> (j__store << 5)) >> (k__store << 3); 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst)
         proc_data_buff <= 32'b0; 
     else if(state == GET_MEM_DATA)
@@ -252,7 +252,7 @@ always @(*) begin
     //end
 end
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         proc_rq_reg <= 1'b0;
     end
@@ -263,7 +263,7 @@ end
 // Store Buffer
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin        
         Store_Addr__Buffer <= 32'b0; 
         Store_Data__Buffer <= 32'b0; 
@@ -297,7 +297,7 @@ always @(posedge clk or posedge rst) begin
     end
 end
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         MEM_Addr__reg <= 32'b0;
         Store_Data__reg <= 32'b0;
@@ -334,7 +334,7 @@ end
 
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         proc_addr_int2 <= 32'b0;
     end
@@ -346,7 +346,7 @@ always @(posedge clk or posedge rst) begin
 end
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         cache_flush_int <= 1'b0;
     end
@@ -365,7 +365,7 @@ assign flush_csr_clr = (flush_count == 8'hff);
 
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         tag_out_tlb_int <= 20'b0;
     end
@@ -379,7 +379,7 @@ assign o_bus_data = ((state == REPLACE) | ((state == WAIT) & (bus_data_en | bus_
                   (cache_flush_int ? ((state == REPLACE) ? ((LRU_Read_Data[0])? (DCache_Read_Data_w0) : (DCache_Read_Data_w1)) : queue_data_bus) : (prp_acs_int ? write_buff : queue_data_bus)) : 256'd0; 
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         wb_adr_o <= 0; 
     end 
@@ -395,7 +395,7 @@ end
 
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         tag_w0_reg <= 0;
         tag_w1_reg <= 0;
@@ -422,7 +422,7 @@ always @(posedge clk or posedge rst) begin
 end
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         flush_count <= 0;
     end
@@ -475,7 +475,7 @@ end
 
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         DCache_Write_Data_w0_temp <= 0;
         DCache_Write_Data_w1_temp <= 0;
@@ -511,7 +511,7 @@ always @(*) begin
 end
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         queue_addr_bus <= 32'b0;
         bus_data_en_reg <= 1'b0;
@@ -526,7 +526,7 @@ end
 reg [6:0] Tag_Addr_Counter;
 reg Tag_Clear_Done;
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         Tag_Addr_Counter <= 7'b0;
     end
@@ -547,7 +547,7 @@ end
 
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         prev_state <= START;
     end
@@ -557,7 +557,7 @@ always @(posedge clk or posedge rst) begin
 end
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst == 1'b1)
         state <= TAG_CLEAR;
     else if((addr_exception) || ((Ext_Stall == 1'b1) && (state == WT_HIT))) begin

@@ -2,7 +2,8 @@
 
 
 
-
+`include "defines.v"
+`define TSMC_RAM_EN 0
 
 module dcache_dpram
 (
@@ -159,7 +160,6 @@ wire [6:0] index_b;
 wire [2:0] blk_offst_b;
 wire [21:0] tag_b;
 
-
 reg [127:0] w0_a_1;
 reg [127:0] w1_a_1;
 reg [127:0] w0_b_1;
@@ -228,7 +228,7 @@ assign proc_rq_port2 = (lsu_op_port2[1] ^ lsu_op_port2[0]) & ~badaddr_data;
 
 
 //input register to take in the operand values;disabled by 'byp' pin
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         addr_in_a_int <= 32'b0;
         addr_in_b_int <= 32'b0;        
@@ -322,7 +322,7 @@ end
 reg [127:0] Dirty_Bit_w0;
 reg [127:0] Dirty_Bit_w1;
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
 		 Dirty_Bit_w0 <= 0;
     end
@@ -336,7 +336,7 @@ always @(posedge clk or posedge rst) begin
     end
 end
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
 		 Dirty_Bit_w1 <= 0;
     end
@@ -367,308 +367,391 @@ end
 
 //------------WAY0-------------------------------------------
 //-------------Bank1-----------------------------------------
+generate
+  if(`TSMC_RAM_EN) begin
+    wire [127:0] bit_write_en_a_w0_1;
+    wire [127:0] bit_write_en_b_w0_1;
+    
+    assign bit_write_en_a_w0_1 ={	{8{~we_a_w0[15]}},{8{~we_a_w0[14]}},{8{~we_a_w0[13]}},{8{~we_a_w0[12]}},
+    				{8{~we_a_w0[11]}},{8{~we_a_w0[10]}},{8{~we_a_w0[9]}}, {8{~we_a_w0[8]}},
+    				{8{~we_a_w0[7]}},{8{~we_a_w0[6]}},  {8{~we_a_w0[5]}}, {8{~we_a_w0[4]}},
+    				{8{~we_a_w0[3]}},{8{~we_a_w0[2]}},  {8{~we_a_w0[1]}}, {8{~we_a_w0[0]}} };
+    
+    assign bit_write_en_b_w0_1 ={	{8{~we_b_w0[15]}},{8{~we_b_w0[14]}},{8{~we_b_w0[13]}},{8{~we_b_w0[12]}},
+    				{8{~we_b_w0[11]}},{8{~we_b_w0[10]}},{8{~we_b_w0[9]}}, {8{~we_b_w0[8]}},
+    				{8{~we_b_w0[7]}}, {8{~we_b_w0[6]}}, {8{~we_b_w0[5]}}, {8{~we_b_w0[4]}},
+    				{8{~we_b_w0[3]}}, {8{~we_b_w0[2]}}, {8{~we_b_w0[1]}}, {8{~we_b_w0[0]}} };
+    
+    always @(posedge clk) begin
+    	if(rst) begin
+    		w0_a_1 <= 128'd0;
+    		w1_a_1 <= 128'd0;
+    		w0_b_1 <= 128'd0;
+    		w1_b_1 <= 128'd0;
+    		w0_a_2 <= 128'd0;
+    		w1_a_2 <= 128'd0;
+    		w0_b_2 <= 128'd0;
+    		w1_b_2 <= 128'd0;
+    		
+    	end
+    	else begin
+    		w0_a_1 <= w0_a_1_d;
+    		w1_a_1 <= w1_a_1_d;
+    		w0_b_1 <= w0_b_1_d;
+    		w1_b_1 <= w1_b_1_d;
+    		w0_a_2 <= w0_a_2_d;
+    		w1_a_2 <= w1_a_2_d;
+    		w0_b_2 <= w0_b_2_d;
+    		w1_b_2 <= w1_b_2_d;
+    		
+    	end
+    end	
+    
+    TSDN65LPLLA128X128M4F ram_w0_1 (
+    .AA(dcache_addr_w0_a), 			// Address of A: Addra[6:0]
+    .DA(dcache_in_a_w0[127:0]),			// Data in of A: douta[127:0]	
+    .BWEBA(bit_write_en_a_w0_1),			// Bit-Write ~en of A: {128{~en}}	
+    .WEBA(~|we_a_w0[15:0]),.CEBA(1'b0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
+    .AB(dcache_addr_w0_b),			// Address of B: Addra[6:0]
+    .DB(dcache_in_b_w0[127:0]),			// Data in of B: douta[127:0]
+    .BWEBB(bit_write_en_b_w0_1),			// Bit-Write ~en of B: {128{~en}}
+    .WEBB(~|we_b_w0[15:0]),.CEBB(1'b0),.CLKB(~clk),	// Write-~en, Chip-~en, CLKB
+    .AMA(7'd0),
+    .DMA(128'd0),
+    .BWEBMA(128'hffff_ffff_ffff_ffff),
+    .WEBMA(1'b1),.CEBMA(1'b1),
+    .AMB(7'd0),
+    .DMB(128'd0),
+    .BWEBMB(128'hffff_ffff_ffff_ffff),
+    .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
+    .QA(w0_a_1_d),
+    .QB(w0_b_1_d)
+	  );
+  end
+  else begin
 
-wire [127:0] bit_write_en_a_w0_1;
-wire [127:0] bit_write_en_b_w0_1;
+  assign bit_write_en_a_w0_1 = 128'd0;
+  assign bit_write_en_b_w0_1 = 128'd0;
+  //assign w0_a_1_d = 128'd0;
+  //assign w0_b_1_d = 128'd0;
 
-assign bit_write_en_a_w0_1 ={	{8{~we_a_w0[15]}},{8{~we_a_w0[14]}},{8{~we_a_w0[13]}},{8{~we_a_w0[12]}},
-				{8{~we_a_w0[11]}},{8{~we_a_w0[10]}},{8{~we_a_w0[9]}}, {8{~we_a_w0[8]}},
-				{8{~we_a_w0[7]}},{8{~we_a_w0[6]}},  {8{~we_a_w0[5]}}, {8{~we_a_w0[4]}},
-				{8{~we_a_w0[3]}},{8{~we_a_w0[2]}},  {8{~we_a_w0[1]}}, {8{~we_a_w0[0]}} };
-
-assign bit_write_en_b_w0_1 ={	{8{~we_b_w0[15]}},{8{~we_b_w0[14]}},{8{~we_b_w0[13]}},{8{~we_b_w0[12]}},
-				{8{~we_b_w0[11]}},{8{~we_b_w0[10]}},{8{~we_b_w0[9]}}, {8{~we_b_w0[8]}},
-				{8{~we_b_w0[7]}}, {8{~we_b_w0[6]}}, {8{~we_b_w0[5]}}, {8{~we_b_w0[4]}},
-				{8{~we_b_w0[3]}}, {8{~we_b_w0[2]}}, {8{~we_b_w0[1]}}, {8{~we_b_w0[0]}} };
-
-always @(posedge clk or posedge rst) begin
-	if(rst) begin
-		w0_a_1 <= 128'd0;
-		w1_a_1 <= 128'd0;
-		w0_b_1 <= 128'd0;
-		w1_b_1 <= 128'd0;
-		w0_a_2 <= 128'd0;
-		w1_a_2 <= 128'd0;
-		w0_b_2 <= 128'd0;
-		w1_b_2 <= 128'd0;
-		
-	end
-	else begin
-		w0_a_1 <= w0_a_1_d;
-		w1_a_1 <= w1_a_1_d;
-		w0_b_1 <= w0_b_1_d;
-		w1_b_1 <= w1_b_1_d;
-		w0_a_2 <= w0_a_2_d;
-		w1_a_2 <= w1_a_2_d;
-		w0_b_2 <= w0_b_2_d;
-		w1_b_2 <= w1_b_2_d;
-		
-	end
-end	
-
-TSDN65LPLLA128X128M4F ram_w0_1 (
-  .AA(dcache_addr_w0_a), 			// Address of A: Addra[6:0]
-  .DA(dcache_in_a_w0[127:0]),			// Data in of A: douta[127:0]	
-  .BWEBA(bit_write_en_a_w0_1),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(~|we_a_w0[15:0]),.CEBA(1'b0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
-  .AB(dcache_addr_w0_b),			// Address of B: Addra[6:0]
-  .DB(dcache_in_b_w0[127:0]),			// Data in of B: douta[127:0]
-  .BWEBB(bit_write_en_b_w0_1),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(~|we_b_w0[15:0]),.CEBB(1'b0),.CLKB(~clk),	// Write-~en, Chip-~en, CLKB
-  .AMA(7'd0),
-  .DMA(128'd0),
-  .BWEBMA(128'hffff_ffff_ffff_ffff),
-  .WEBMA(1'b1),.CEBMA(1'b1),
-  .AMB(7'd0),
-  .DMB(128'd0),
-  .BWEBMB(128'hffff_ffff_ffff_ffff),
-  .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
-  .QA(w0_a_1_d),
-  .QB(w0_b_1_d)
-	);
-
-/*dual_port_RAM #(.DATA_WIDTH(128),.ADDR_WIDTH(7)) ram_w0_1 (                                             //w0 data ram bank
-  .clka(clk),.rsta(rst),.wea(we_a_w0[15:0]),.addra(dcache_addr_w0_a),.dina(dcache_in_a_w0[127:0]),.douta(w0_a_1), .ena(1'b1),
-  .clkb(clk),.rstb(rst),.web(we_b_w0[15:0]),.addrb(dcache_addr_w0_b),.dinb(dcache_in_b_w0[127:0]),.doutb(w0_b_1)
-);*/
+  always @(*) begin
+  		w0_a_1 <= w0_a_1_d;
+  		w1_a_1 <= w1_a_1_d;
+  		w0_b_1 <= w0_b_1_d;
+  		w1_b_1 <= w1_b_1_d;
+  		w0_a_2 <= w0_a_2_d;
+  		w1_a_2 <= w1_a_2_d;
+  		w0_b_2 <= w0_b_2_d;
+  		w1_b_2 <= w1_b_2_d;		
+  end	
 
 
+dcache_DPRAM ram_w0_1 (                                             //w0 data ram bank
+  .clka(clk),.rsta(rst),.wea(we_a_w0[15:0]),.addra(dcache_addr_w0_a),.dina(dcache_in_a_w0[127:0]),.douta(w0_a_1_d),
+  .clkb(clk),.rstb(rst),.web(we_b_w0[15:0]),.addrb(dcache_addr_w0_b),.dinb(dcache_in_b_w0[127:0]),.doutb(w0_b_1_d)
+);
+
+  end
+endgenerate
 //-------------Bank2-----------------------------------------
-wire [127:0] bit_write_en_a_w0_2;
-wire [127:0] bit_write_en_b_w0_2;
 
-assign bit_write_en_a_w0_2 ={	{8{~we_a_w0[31]}},{8{~we_a_w0[30]}},{8{~we_a_w0[29]}},{8{~we_a_w0[28]}},
-				{8{~we_a_w0[27]}},{8{~we_a_w0[26]}},{8{~we_a_w0[25]}},{8{~we_a_w0[24]}},
-				{8{~we_a_w0[23]}},{8{~we_a_w0[22]}},{8{~we_a_w0[21]}},{8{~we_a_w0[20]}},
-				{8{~we_a_w0[19]}},{8{~we_a_w0[18]}},{8{~we_a_w0[17]}},{8{~we_a_w0[16]}}};
+generate 
+  if(`TSMC_RAM_EN) begin
+    wire [127:0] bit_write_en_a_w0_2;
+    wire [127:0] bit_write_en_b_w0_2;
+    
+    assign bit_write_en_a_w0_2 ={	{8{~we_a_w0[31]}},{8{~we_a_w0[30]}},{8{~we_a_w0[29]}},{8{~we_a_w0[28]}},
+    				{8{~we_a_w0[27]}},{8{~we_a_w0[26]}},{8{~we_a_w0[25]}},{8{~we_a_w0[24]}},
+    				{8{~we_a_w0[23]}},{8{~we_a_w0[22]}},{8{~we_a_w0[21]}},{8{~we_a_w0[20]}},
+    				{8{~we_a_w0[19]}},{8{~we_a_w0[18]}},{8{~we_a_w0[17]}},{8{~we_a_w0[16]}}};
+    
+    assign bit_write_en_b_w0_2 ={	{8{~we_b_w0[31]}},{8{~we_b_w0[30]}},{8{~we_b_w0[29]}},{8{~we_b_w0[28]}},
+    				{8{~we_b_w0[27]}},{8{~we_b_w0[26]}},{8{~we_b_w0[25]}},{8{~we_b_w0[24]}},
+    				{8{~we_b_w0[23]}},{8{~we_b_w0[22]}},{8{~we_b_w0[21]}},{8{~we_b_w0[20]}},
+    				{8{~we_b_w0[19]}},{8{~we_b_w0[18]}},{8{~we_b_w0[17]}},{8{~we_b_w0[16]}}};
+    
+    
+    
+    TSDN65LPLLA128X128M4F ram_w0_2 (
+      .AA(dcache_addr_w0_a), 			// Address of A: Addra[6:0]
+      .DA(dcache_in_a_w0[255:128]),			// Data in of A: douta[127:0]	
+      .BWEBA(bit_write_en_a_w0_2),			// Bit-Write ~en of A: {128{~en}}	
+      .WEBA(~|we_a_w0[31:16]),.CEBA(1'b0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
+      .AB(dcache_addr_w0_b),			// Address of B: Addra[6:0]
+      .DB(dcache_in_b_w0[255:128]),				// Data in of B: douta[127:0]
+      .BWEBB(bit_write_en_b_w0_2),			// Bit-Write ~en of B: {128{~en}}
+      .WEBB(~|we_b_w0[31:16]),.CEBB(1'b0),.CLKB(~clk),	// Write-~en, Chip-~en, CLKB
+      .AMA(7'd0),
+      .DMA(128'd0),
+      .BWEBMA(128'hffff_ffff_ffff_ffff),
+      .WEBMA(1'b1),.CEBMA(1'b1),
+      .AMB(7'd0),
+      .DMB(128'd0),
+      .BWEBMB(128'hffff_ffff_ffff_ffff),
+      .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
+      .QA(w0_a_2_d),
+      .QB(w0_b_2_d)
+    	);
+    end
+    else begin
+      assign bit_write_en_a_w0_2 = 128'd0;
+      assign bit_write_en_b_w0_2 = 128'd0;
+      //assign w0_a_2_d = 128'd0;
+      //assign w0_b_2_d = 128'd0;
 
-assign bit_write_en_b_w0_2 ={	{8{~we_b_w0[31]}},{8{~we_b_w0[30]}},{8{~we_b_w0[29]}},{8{~we_b_w0[28]}},
-				{8{~we_b_w0[27]}},{8{~we_b_w0[26]}},{8{~we_b_w0[25]}},{8{~we_b_w0[24]}},
-				{8{~we_b_w0[23]}},{8{~we_b_w0[22]}},{8{~we_b_w0[21]}},{8{~we_b_w0[20]}},
-				{8{~we_b_w0[19]}},{8{~we_b_w0[18]}},{8{~we_b_w0[17]}},{8{~we_b_w0[16]}}};
+      dcache_DPRAM ram_w0_2 (                                             //w0 data ram bank
+        .clka(clk),.rsta(rst),.wea(we_a_w0[31:16]),.addra(dcache_addr_w0_a),.dina(dcache_in_a_w0[255:128]),.douta(w0_a_2_d),
+        .clkb(clk),.rstb(rst),.web(we_b_w0[31:16]),.addrb(dcache_addr_w0_b),.dinb(dcache_in_b_w0[255:128]),.doutb(w0_b_2_d)
+      );
+    end
+  endgenerate
 
-
-
-TSDN65LPLLA128X128M4F ram_w0_2 (
-  .AA(dcache_addr_w0_a), 			// Address of A: Addra[6:0]
-  .DA(dcache_in_a_w0[255:128]),			// Data in of A: douta[127:0]	
-  .BWEBA(bit_write_en_a_w0_2),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(~|we_a_w0[31:16]),.CEBA(1'b0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
-  .AB(dcache_addr_w0_b),			// Address of B: Addra[6:0]
-  .DB(dcache_in_b_w0[255:128]),				// Data in of B: douta[127:0]
-  .BWEBB(bit_write_en_b_w0_2),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(~|we_b_w0[31:16]),.CEBB(1'b0),.CLKB(~clk),	// Write-~en, Chip-~en, CLKB
-  .AMA(7'd0),
-  .DMA(128'd0),
-  .BWEBMA(128'hffff_ffff_ffff_ffff),
-  .WEBMA(1'b1),.CEBMA(1'b1),
-  .AMB(7'd0),
-  .DMB(128'd0),
-  .BWEBMB(128'hffff_ffff_ffff_ffff),
-  .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
-  .QA(w0_a_2_d),
-  .QB(w0_b_2_d)
-	);
-
-
-/*dual_port_RAM #(.DATA_WIDTH(128),.ADDR_WIDTH(7)) ram_w0_2 (                                             //w0 data ram bank
-  .clka(clk),.rsta(rst),.wea(we_a_w0[31:16]),.addra(dcache_addr_w0_a),.dina(dcache_in_a_w0[255:128]),.douta(w0_a_2),.ena(1'b1),
-  .clkb(clk),.rstb(rst),.web(we_b_w0[31:16]),.addrb(dcache_addr_w0_b),.dinb(dcache_in_b_w0[255:128]),.doutb(w0_b_2)
-);*/
 
 
 
 //------------WAY1-------------------------------------------
 //-------------Bank1-----------------------------------------
-wire [127:0] bit_write_en_a_w1_1;
-wire [127:0] bit_write_en_b_w1_1;
+generate
+  if (`TSMC_RAM_EN) begin
+    wire [127:0] bit_write_en_a_w1_1;
+    wire [127:0] bit_write_en_b_w1_1;
+    
+    assign bit_write_en_a_w1_1 ={	{8{~we_a_w1[15]}},{8{~we_a_w1[14]}},{8{~we_a_w1[13]}},{8{~we_a_w1[12]}},
+    				{8{~we_a_w1[11]}},{8{~we_a_w1[10]}},{8{~we_a_w1[9]}}, {8{~we_a_w1[8]}},
+    				{8{~we_a_w1[7]}},{8{~we_a_w1[6]}},  {8{~we_a_w1[5]}}, {8{~we_a_w1[4]}},
+    				{8{~we_a_w1[3]}},{8{~we_a_w1[2]}},  {8{~we_a_w1[1]}}, {8{~we_a_w1[0]}} };
+    
+    assign bit_write_en_b_w1_1 ={	{8{~we_b_w1[15]}},{8{~we_b_w1[14]}},{8{~we_b_w1[13]}},{8{~we_b_w1[12]}},
+    				{8{~we_b_w1[11]}},{8{~we_b_w1[10]}},{8{~we_b_w1[9]}}, {8{~we_b_w1[8]}},
+    				{8{~we_b_w1[7]}}, {8{~we_b_w1[6]}}, {8{~we_b_w1[5]}}, {8{~we_b_w1[4]}},
+    				{8{~we_b_w1[3]}}, {8{~we_b_w1[2]}}, {8{~we_b_w1[1]}}, {8{~we_b_w1[0]}} };
+    
+    
+    TSDN65LPLLA128X128M4F ram_w1_1 (
+      .AA(dcache_addr_w1_a), 			// Address of A: Addra[6:0]
+      .DA(dcache_in_a_w1[127:0]),			// Data in of A: douta[127:0]	
+      .BWEBA(bit_write_en_a_w1_1),			// Bit-Write ~en of A: {128{~en}}	
+      .WEBA(~|we_a_w1[15:0]),.CEBA(1'b0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
+      .AB(dcache_addr_w1_b),			// Address of B: Addra[6:0]
+      .DB(dcache_in_b_w1[127:0]),			// Data in of B: douta[127:0]
+      .BWEBB(bit_write_en_b_w1_1),			// Bit-Write ~en of B: {128{~en}}
+      .WEBB(~|we_b_w1[15:0]),.CEBB(1'b0),.CLKB(~clk),	// Write-~en, Chip-~en, CLKB
+      .AMA(7'd0),
+      .DMA(128'd0),
+      .BWEBMA(128'hffff_ffff_ffff_ffff),
+      .WEBMA(1'b1),.CEBMA(1'b1),
+      .AMB(7'd0),
+      .DMB(128'd0),
+      .BWEBMB(128'hffff_ffff_ffff_ffff),
+      .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
+      .QA(w1_a_1_d),
+      .QB(w1_b_1_d)
+    	);
+    end
+    else begin
 
-assign bit_write_en_a_w1_1 ={	{8{~we_a_w1[15]}},{8{~we_a_w1[14]}},{8{~we_a_w1[13]}},{8{~we_a_w1[12]}},
-				{8{~we_a_w1[11]}},{8{~we_a_w1[10]}},{8{~we_a_w1[9]}}, {8{~we_a_w1[8]}},
-				{8{~we_a_w1[7]}},{8{~we_a_w1[6]}},  {8{~we_a_w1[5]}}, {8{~we_a_w1[4]}},
-				{8{~we_a_w1[3]}},{8{~we_a_w1[2]}},  {8{~we_a_w1[1]}}, {8{~we_a_w1[0]}} };
+      assign bit_write_en_a_w1_1 = 128'd0;
+      assign bit_write_en_b_w1_1 = 128'd0;
+      //assign w1_a_1_d = 128'd0;
+      //assign w1_b_1_d = 128'd0;
 
-assign bit_write_en_b_w1_1 ={	{8{~we_b_w1[15]}},{8{~we_b_w1[14]}},{8{~we_b_w1[13]}},{8{~we_b_w1[12]}},
-				{8{~we_b_w1[11]}},{8{~we_b_w1[10]}},{8{~we_b_w1[9]}}, {8{~we_b_w1[8]}},
-				{8{~we_b_w1[7]}}, {8{~we_b_w1[6]}}, {8{~we_b_w1[5]}}, {8{~we_b_w1[4]}},
-				{8{~we_b_w1[3]}}, {8{~we_b_w1[2]}}, {8{~we_b_w1[1]}}, {8{~we_b_w1[0]}} };
+      dcache_DPRAM ram_w1_1 (                                             //w1 data ram bank
+        .clka(clk),.rsta(rst),.wea(we_a_w1[15:0]),.addra(dcache_addr_w1_a),.dina(dcache_in_a_w1[127:0]),.douta(w1_a_1_d),
+        .clkb(clk),.rstb(rst),.web(we_b_w1[15:0]),.addrb(dcache_addr_w1_b),.dinb(dcache_in_b_w1[127:0]),.doutb(w1_b_1_d)
+      );
+    end
+  endgenerate
 
-
-TSDN65LPLLA128X128M4F ram_w1_1 (
-  .AA(dcache_addr_w1_a), 			// Address of A: Addra[6:0]
-  .DA(dcache_in_a_w1[127:0]),			// Data in of A: douta[127:0]	
-  .BWEBA(bit_write_en_a_w1_1),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(~|we_a_w1[15:0]),.CEBA(1'b0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
-  .AB(dcache_addr_w1_b),			// Address of B: Addra[6:0]
-  .DB(dcache_in_b_w1[127:0]),			// Data in of B: douta[127:0]
-  .BWEBB(bit_write_en_b_w1_1),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(~|we_b_w1[15:0]),.CEBB(1'b0),.CLKB(~clk),	// Write-~en, Chip-~en, CLKB
-  .AMA(7'd0),
-  .DMA(128'd0),
-  .BWEBMA(128'hffff_ffff_ffff_ffff),
-  .WEBMA(1'b1),.CEBMA(1'b1),
-  .AMB(7'd0),
-  .DMB(128'd0),
-  .BWEBMB(128'hffff_ffff_ffff_ffff),
-  .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
-  .QA(w1_a_1_d),
-  .QB(w1_b_1_d)
-	);
-
-/*dual_port_RAM #(.DATA_WIDTH(128),.ADDR_WIDTH(7)) ram_w1_1 (                                             //w1 data ram bank
-  .clka(clk),.rsta(rst),.wea(we_a_w1[15:0]),.addra(dcache_addr_w1_a),.dina(dcache_in_a_w1[127:0]),.douta(w1_a_1),.ena(1'b1),
-  .clkb(clk),.rstb(rst),.web(we_b_w1[15:0]),.addrb(dcache_addr_w1_b),.dinb(dcache_in_b_w1[127:0]),.doutb(w1_b_1)
-);*/
 
 //-------------Bank2-----------------------------------------
-wire [127:0] bit_write_en_a_w1_2;
-wire [127:0] bit_write_en_b_w1_2;
+generate
+  if (`TSMC_RAM_EN) begin
+    wire [127:0] bit_write_en_a_w1_2;
+    wire [127:0] bit_write_en_b_w1_2;
+    
+    assign bit_write_en_a_w1_2 ={	{8{~we_a_w1[31]}},{8{~we_a_w1[30]}},{8{~we_a_w1[29]}},{8{~we_a_w1[28]}},
+    				{8{~we_a_w1[27]}},{8{~we_a_w1[26]}},{8{~we_a_w1[25]}},{8{~we_a_w1[24]}},
+    				{8{~we_a_w1[23]}},{8{~we_a_w1[22]}},{8{~we_a_w1[21]}},{8{~we_a_w1[20]}},
+    				{8{~we_a_w1[19]}},{8{~we_a_w1[18]}},{8{~we_a_w1[17]}},{8{~we_a_w1[16]}}};
+    
+    assign bit_write_en_b_w1_2 ={	{8{~we_b_w1[31]}},{8{~we_b_w1[30]}},{8{~we_b_w1[29]}},{8{~we_b_w1[28]}},
+    				{8{~we_b_w1[27]}},{8{~we_b_w1[26]}},{8{~we_b_w1[25]}},{8{~we_b_w1[24]}},
+    				{8{~we_b_w1[23]}},{8{~we_b_w1[22]}},{8{~we_b_w1[21]}},{8{~we_b_w1[20]}},
+    				{8{~we_b_w1[19]}},{8{~we_b_w1[18]}},{8{~we_b_w1[17]}},{8{~we_b_w1[16]}}};
+    
+    
+    
+    TSDN65LPLLA128X128M4F ram_w1_2 (
+      .AA(dcache_addr_w1_a), 			// Address of A: Addra[6:0]
+      .DA(dcache_in_a_w1[255:128]),			// Data in of A: douta[127:0]	
+      .BWEBA(bit_write_en_a_w1_2),			// Bit-Write ~en of A: {128{~en}}	
+      .WEBA(~|we_a_w1[31:16]),.CEBA(1'b0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
+      .AB(dcache_addr_w1_b),			// Address of B: Addra[6:0]
+      .DB(dcache_in_b_w1[255:128]),				// Data in of B: douta[127:0]
+      .BWEBB(bit_write_en_b_w1_2),			// Bit-Write ~en of B: {128{~en}}
+      .WEBB(~|we_b_w1[31:16]),.CEBB(1'b0),.CLKB(~clk),	// Write-~en, Chip-~en, CLKB
+      .AMA(7'd0),
+      .DMA(128'd0),
+      .BWEBMA(128'hffff_ffff_ffff_ffff),
+      .WEBMA(1'b1),.CEBMA(1'b1),
+      .AMB(7'd0),
+      .DMB(128'd0),
+      .BWEBMB(128'hffff_ffff_ffff_ffff),
+      .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
+      .QA(w1_a_2_d),
+      .QB(w1_b_2_d)
+    	);
 
-assign bit_write_en_a_w1_2 ={	{8{~we_a_w1[31]}},{8{~we_a_w1[30]}},{8{~we_a_w1[29]}},{8{~we_a_w1[28]}},
-				{8{~we_a_w1[27]}},{8{~we_a_w1[26]}},{8{~we_a_w1[25]}},{8{~we_a_w1[24]}},
-				{8{~we_a_w1[23]}},{8{~we_a_w1[22]}},{8{~we_a_w1[21]}},{8{~we_a_w1[20]}},
-				{8{~we_a_w1[19]}},{8{~we_a_w1[18]}},{8{~we_a_w1[17]}},{8{~we_a_w1[16]}}};
+  end else begin
 
-assign bit_write_en_b_w1_2 ={	{8{~we_b_w1[31]}},{8{~we_b_w1[30]}},{8{~we_b_w1[29]}},{8{~we_b_w1[28]}},
-				{8{~we_b_w1[27]}},{8{~we_b_w1[26]}},{8{~we_b_w1[25]}},{8{~we_b_w1[24]}},
-				{8{~we_b_w1[23]}},{8{~we_b_w1[22]}},{8{~we_b_w1[21]}},{8{~we_b_w1[20]}},
-				{8{~we_b_w1[19]}},{8{~we_b_w1[18]}},{8{~we_b_w1[17]}},{8{~we_b_w1[16]}}};
+    assign bit_write_en_a_w1_2 = 128'd0;
+    assign bit_write_en_b_w1_2 = 128'd0;
+    //assign w1_a_2_d = 128'd0;
+    //assign w1_b_2_d = 128'd0;
 
+    dcache_DPRAM ram_w1_2 (                                             //w1 data ram bank
+      .clka(clk),.rsta(rst),.wea(we_a_w1[31:16]),.addra(dcache_addr_w1_a),.dina(dcache_in_a_w1[255:128]),.douta(w1_a_2_d),
+      .clkb(clk),.rstb(rst),.web(we_b_w1[31:16]),.addrb(dcache_addr_w1_b),.dinb(dcache_in_b_w1[255:128]),.doutb(w1_b_2_d)
+    );
 
-
-TSDN65LPLLA128X128M4F ram_w1_2 (
-  .AA(dcache_addr_w1_a), 			// Address of A: Addra[6:0]
-  .DA(dcache_in_a_w1[255:128]),			// Data in of A: douta[127:0]	
-  .BWEBA(bit_write_en_a_w1_2),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(~|we_a_w1[31:16]),.CEBA(1'b0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
-  .AB(dcache_addr_w1_b),			// Address of B: Addra[6:0]
-  .DB(dcache_in_b_w1[255:128]),				// Data in of B: douta[127:0]
-  .BWEBB(bit_write_en_b_w1_2),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(~|we_b_w1[31:16]),.CEBB(1'b0),.CLKB(~clk),	// Write-~en, Chip-~en, CLKB
-  .AMA(7'd0),
-  .DMA(128'd0),
-  .BWEBMA(128'hffff_ffff_ffff_ffff),
-  .WEBMA(1'b1),.CEBMA(1'b1),
-  .AMB(7'd0),
-  .DMB(128'd0),
-  .BWEBMB(128'hffff_ffff_ffff_ffff),
-  .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
-  .QA(w1_a_2_d),
-  .QB(w1_b_2_d)
-	);
-/*
-dual_port_RAM #(.DATA_WIDTH(128),.ADDR_WIDTH(7)) ram_w1_2 (                                             //w1 data ram bank
-  .clka(clk),.rsta(rst),.wea(we_a_w1[31:16]),.addra(dcache_addr_w1_a),.dina(dcache_in_a_w1[255:128]),.douta(w1_a_2),.ena(1'b1),
-  .clkb(clk),.rstb(rst),.web(we_b_w1[31:16]),.addrb(dcache_addr_w1_b),.dinb(dcache_in_b_w1[255:128]),.doutb(w1_b_2)
-);*/
+  end
+endgenerate
 
 //-------TAG ARRAY------------------------------------
+generate 
+  if (`TSMC_RAM_EN) begin
 
-wire [31:0] bit_write_en_b_tag_a_w0;
-wire [31:0] bit_write_en_b_tag_b_w0;
-always @(posedge clk or posedge rst) begin
-	if(rst) begin
-		tag_a_w0_int <= 0;
-		tag_b_w0_int <= 0;
-		tag_a_w1_int <= 0;
-		tag_b_w1_int <= 0;
-	end
-	else begin
-		tag_a_w0_int <= tag_a_w0_int_d;
-		tag_b_w0_int <= tag_b_w0_int_d;
-		tag_a_w1_int <= tag_a_w1_int_d;
-		tag_b_w1_int <= tag_b_w1_int_d;
-		
-	end
-end	
+    wire [31:0] bit_write_en_b_tag_a_w0;
+    wire [31:0] bit_write_en_b_tag_b_w0;
+    always @(posedge clk) begin
+    	if(rst) begin
+    		tag_a_w0_int <= 0;
+    		tag_b_w0_int <= 0;
+    		tag_a_w1_int <= 0;
+    		tag_b_w1_int <= 0;
+    	end
+    	else begin
+    		tag_a_w0_int <= tag_a_w0_int_d;
+    		tag_b_w0_int <= tag_b_w0_int_d;
+    		tag_a_w1_int <= tag_a_w1_int_d;
+    		tag_b_w1_int <= tag_b_w1_int_d;
+    		
+    	end
+    end	
+    
+    assign bit_write_en_b_tag_a_w0 = {{8{~we_tag_a_w0[3]}},{8{~we_tag_a_w0[2]}},{8{~we_tag_a_w0[1]}},{8{~we_tag_a_w0[0]}}}; 
+    assign bit_write_en_b_tag_b_w0 = {{8{~we_tag_b_w0[3]}},{8{~we_tag_b_w0[2]}},{8{~we_tag_b_w0[1]}},{8{~we_tag_b_w0[0]}}}; 
+    
+    TSDN65LPLLA128X32M8F tag_w0 (
+      .AA(tag_addr_a_w0), 			// Address of A: Addra[6:0]
+      .DA(tag_data_a_w0),			// Data in of A: douta[127:0]	
+      .BWEBA(32'b0),			// Bit-Write ~en of A: {128{~en}}	
+      .WEBA(~|we_tag_a_w0),.CEBA(1'b0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
+      .AB(tag_addr_b_w0),			// Address of B: Addra[6:0]
+      .DB(tag_data_b_w0),				// Data in of B: douta[127:0]
+      .BWEBB(32'd0),			// Bit-Write ~en of B: {128{~en}}
+      .WEBB(~|we_tag_b_w0),.CEBB(1'b0),.CLKB(~clk),	// Write-~en, Chip-~en, CLKB
+      .AMA(7'd0),
+      .DMA(128'd0),
+      .BWEBMA(128'hffff_ffff_ffff_ffff),
+      .WEBMA(1'b1),.CEBMA(1'b1),
+      .AMB(7'd0),
+      .DMB(128'd0),
+      .BWEBMB(128'hffff_ffff_ffff_ffff),
+      .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
+      .QA(tag_a_w0_int_d),
+      .QB(tag_b_w0_int_d)
+    	);
 
-assign bit_write_en_b_tag_a_w0 = {{8{~we_tag_a_w0[3]}},{8{~we_tag_a_w0[2]}},{8{~we_tag_a_w0[1]}},{8{~we_tag_a_w0[0]}}}; 
-assign bit_write_en_b_tag_b_w0 = {{8{~we_tag_b_w0[3]}},{8{~we_tag_b_w0[2]}},{8{~we_tag_b_w0[1]}},{8{~we_tag_b_w0[0]}}}; 
+  end else begin
 
-TSDN65LPLLA128X32M8F tag_w0 (
-  .AA(tag_addr_a_w0), 			// Address of A: Addra[6:0]
-  .DA(tag_data_a_w0),			// Data in of A: douta[127:0]	
-  .BWEBA(32'b0),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(~|we_tag_a_w0),.CEBA(1'b0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
-  .AB(tag_addr_b_w0),			// Address of B: Addra[6:0]
-  .DB(tag_data_b_w0),				// Data in of B: douta[127:0]
-  .BWEBB(32'd0),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(~|we_tag_b_w0),.CEBB(1'b0),.CLKB(~clk),	// Write-~en, Chip-~en, CLKB
-  .AMA(7'd0),
-  .DMA(128'd0),
-  .BWEBMA(128'hffff_ffff_ffff_ffff),
-  .WEBMA(1'b1),.CEBMA(1'b1),
-  .AMB(7'd0),
-  .DMB(128'd0),
-  .BWEBMB(128'hffff_ffff_ffff_ffff),
-  .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
-  .QA(tag_a_w0_int_d),
-  .QB(tag_b_w0_int_d)
-	);
+  assign bit_write_en_b_tag_a_w0 = 32'd0;
+  assign bit_write_en_b_tag_b_w0 = 32'd0;
+  //assign tag_a_w0_int_d = 32'd0; 
+  //assign tag_b_w0_int_d = 32'd0; 
 
+    always @(*) begin
+    		tag_a_w0_int <= tag_a_w0_int_d;
+    		tag_b_w0_int <= tag_b_w0_int_d;
+    		tag_a_w1_int <= tag_a_w1_int_d;
+    		tag_b_w1_int <= tag_b_w1_int_d;
+    		
+    end	
 
+    TAG_DPRAM tag_w0 (
+      .clka(clk), // input clka
+      .rsta(rst),
+      .wea(we_tag_a_w0), // input [3 : 0] wea
+      .addra(tag_addr_a_w0), // input [7 : 0] addra --[6:0] now
+      .dina(tag_data_a_w0), // input [31 : 0] dina
+      .douta(tag_a_w0_int_d), // output [31 : 0] douta
+      .clkb(clk), // input clkb
+      .rstb(rst),
+      .web(we_tag_b_w0), // input [3 : 0] web
+      .addrb(tag_addr_b_w0), // input [7 : 0] addrb --[6:0] now
+      .dinb(tag_data_b_w0), // input [31 : 0] dinb
+      .doutb(tag_b_w0_int_d) // output [31 : 0] doutb
+    );
+    
+  end
+endgenerate
 
-/*
-dual_port_RAM #(.DATA_WIDTH(32),.ADDR_WIDTH(7)) tag_w0 (
-  .clka(clk), // input clka
-  .rsta(rst),
-  .wea(we_tag_a_w0), // input [3 : 0] wea
-  .addra(tag_addr_a_w0), // input [7 : 0] addra --[6:0] now
-  .dina(tag_data_a_w0), // input [31 : 0] dina
-  .douta(tag_a_w0_int), // output [31 : 0] douta
-  .ena(1'b1),
-  .clkb(clk), // input clkb
-  .rstb(rst),
-  .web(we_tag_b_w0), // input [3 : 0] web
-  .addrb(tag_addr_b_w0), // input [7 : 0] addrb --[6:0] now
-  .dinb(tag_data_b_w0), // input [31 : 0] dinb
-  .doutb(tag_b_w0_int) // output [31 : 0] doutb
-);*/
+generate
+ if (`TSMC_RAM_EN) begin
 
-wire [31:0] bit_write_en_b_tag_a_w1;
-wire [31:0] bit_write_en_b_tag_b_w1;
+  wire [31:0] bit_write_en_b_tag_a_w1;
+  wire [31:0] bit_write_en_b_tag_b_w1;
 
 
-assign bit_write_en_b_tag_a_w1 = {{8{~we_tag_a_w1[3]}},{8{~we_tag_a_w1[2]}},{8{~we_tag_a_w1[1]}},{8{~we_tag_a_w1[0]}}}; 
-assign bit_write_en_b_tag_b_w1 = {{8{~we_tag_b_w1[3]}},{8{~we_tag_b_w1[2]}},{8{~we_tag_b_w1[1]}},{8{~we_tag_b_w1[0]}}}; 
+  assign bit_write_en_b_tag_a_w1 = {{8{~we_tag_a_w1[3]}},{8{~we_tag_a_w1[2]}},{8{~we_tag_a_w1[1]}},{8{~we_tag_a_w1[0]}}}; 
+  assign bit_write_en_b_tag_b_w1 = {{8{~we_tag_b_w1[3]}},{8{~we_tag_b_w1[2]}},{8{~we_tag_b_w1[1]}},{8{~we_tag_b_w1[0]}}}; 
 
-TSDN65LPLLA128X32M8F tag_w1 (
-  .AA(tag_addr_a_w1), 			// Address of A: Addra[6:0]
-  .DA(tag_data_a_w1),			// Data in of A: douta[127:0]	
-  .BWEBA(32'd0),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(~|we_tag_a_w1),.CEBA(1'b0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
-  .AB(tag_addr_b_w1),			// Address of B: Addra[6:0]
-  .DB(tag_data_b_w1),				// Data in of B: douta[127:0]
-  .BWEBB(32'd0),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(~|we_tag_b_w1),.CEBB(1'b0),.CLKB(~clk),	// Write-~en, Chip-~en, CLKB
-  .AMA(7'd0),
-  .DMA(128'd0),
-  .BWEBMA(128'hffff_ffff_ffff_ffff),
-  .WEBMA(1'b1),.CEBMA(1'b1),
-  .AMB(7'd0),
-  .DMB(128'd0),
-  .BWEBMB(128'hffff_ffff_ffff_ffff),
-  .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
-  .QA(tag_a_w1_int_d),
-  .QB(tag_b_w1_int_d)
-	);
+    TSDN65LPLLA128X32M8F tag_w1 (
+      .AA(tag_addr_a_w1), 			// Address of A: Addra[6:0]
+      .DA(tag_data_a_w1),			// Data in of A: douta[127:0]	
+      .BWEBA(32'd0),			// Bit-Write ~en of A: {128{~en}}	
+      .WEBA(~|we_tag_a_w1),.CEBA(1'b0),.CLKA(~clk),	// Write-~en, Chip-~en, CLKA	
+      .AB(tag_addr_b_w1),			// Address of B: Addra[6:0]
+      .DB(tag_data_b_w1),				// Data in of B: douta[127:0]
+      .BWEBB(32'd0),			// Bit-Write ~en of B: {128{~en}}
+      .WEBB(~|we_tag_b_w1),.CEBB(1'b0),.CLKB(~clk),	// Write-~en, Chip-~en, CLKB
+      .AMA(7'd0),
+      .DMA(128'd0),
+      .BWEBMA(128'hffff_ffff_ffff_ffff),
+      .WEBMA(1'b1),.CEBMA(1'b1),
+      .AMB(7'd0),
+      .DMB(128'd0),
+      .BWEBMB(128'hffff_ffff_ffff_ffff),
+      .WEBMB(1'b1),.CEBMB(1'b1),.AWT(1'b0),.BIST(1'b0),.CLKM(1'b0),
+      .QA(tag_a_w1_int_d),
+      .QB(tag_b_w1_int_d)
+    	);
 
-/*
-dual_port_RAM #(.DATA_WIDTH(32),.ADDR_WIDTH(7)) tag_w1 (
-  .clka(clk), // input clka
-  .rsta(rst),
-  .wea(we_tag_a_w1), // input [3 : 0] wea
-  .addra(tag_addr_a_w1), // input [7 : 0] addra --[6:0] now
-  .dina(tag_data_a_w1), // input [31 : 0] dina
-  .douta(tag_a_w1_int), // output [31 : 0] douta
-  .ena(1'b1),
-  .clkb(clk), // input clkb
-  .rstb(rst),
-  .web(we_tag_b_w1), // input [3 : 0] web
-  .addrb(tag_addr_b_w1), // input [7 : 0] addrb --[6:0] now
-  .dinb(tag_data_b_w1), // input [31 : 0] dinb
-  .doutb(tag_b_w1_int) // output [31 : 0] doutb
-);*/
+  end else begin
+
+    assign bit_write_en_b_tag_a_w1 = 32'd0;
+    assign bit_write_en_b_tag_b_w1 = 32'd0;
+    //assign tag_a_w1_int_d = 32'd0; 
+    //assign tag_b_w1_int_d = 32'd0;
+
+    TAG_DPRAM tag_w1 (
+      .clka(clk), // input clka
+      .rsta(rst),
+      .wea(we_tag_a_w1), // input [3 : 0] wea
+      .addra(tag_addr_a_w1), // input [7 : 0] addra --[6:0] now
+      .dina(tag_data_a_w1), // input [31 : 0] dina
+      .douta(tag_a_w1_int_d), // output [31 : 0] douta
+      .clkb(clk), // input clkb
+      .rstb(rst),
+      .web(we_tag_b_w1), // input [3 : 0] web
+      .addrb(tag_addr_b_w1), // input [7 : 0] addrb --[6:0] now
+      .dinb(tag_data_b_w1), // input [31 : 0] dinb
+      .doutb(tag_b_w1_int_d) // output [31 : 0] doutb
+    );
+
+  end
+endgenerate
 
     DTLB DTLB(
       .clk(clk), 

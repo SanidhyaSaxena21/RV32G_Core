@@ -1,7 +1,9 @@
 `timescale 1ns / 1ps
 
-`include "../Include/defines.v"
+`include "defines.v"
 
+
+(* keep_hierarchy = "yes" *)
 module dcache_biu /*(
 //wishbone and controller interfacee I/Os
 proc_clk,clk_x2,proc_rst,
@@ -232,7 +234,7 @@ or1200_wb_biu biu1(
 .biu_dat_o(biu_dat_o_int),
 .bus_data(bus_data),.bus_rdy(bus_rdy),.prp_acs(biu_prp_acs));*/
 
-
+(* keep_hierarchy = "yes" *)
 interface_router INTERFACE_ROUTER (
    // Global Signals
    .clk(proc_clk),
@@ -267,6 +269,7 @@ interface_router INTERFACE_ROUTER (
 
 );
 
+(* keep_hierarchy = "yes" *)
 dcache_top dt1(.rst(proc_rst),.clk(proc_clk),.freeze(freeze_int),.dtop_freeze(dcache_freeze),.cache_flush(cache_flush),.bus_rq(bus_rq),.o_mem_bus_data(i_bus_data),.i_mem_bus_data(o_bus_data),.bus_addr(bus_addr),.bus_re(bus_re),.bus_we(bus_we),.dtlb_trans_off(dtlb_trans_off),.badaddr_data(badaddr_data),
 .lsustall(lsustall),.lsu_op_port1(lsu_op_port1),.lsu_op_port2(lsu_op_port2),.prp_acs0(prp_acs0_int),.prp_acs1(prp_acs1_int),.biu_prp_acs(biu_prp_acs),
 .proc_data_in_port1(proc_data_in_port1),.proc_data_in_port2(proc_data_in_port2),.proc_addr_in_port1(proc_addr_in_port1),.proc_addr_in_port2(proc_addr_in_port2),

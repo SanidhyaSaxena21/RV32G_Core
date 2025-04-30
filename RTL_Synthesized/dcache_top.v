@@ -1,7 +1,8 @@
 `timescale 1ns / 1ps
-
+`include "defines.v"
 `define TESTING 1
 
+(* keep_hierarchy = "yes" *)
 module dcache_top /*(rst,clk,clk_x2,freeze,dtop_freeze,cache_flush,bus_rq,bus_data,bus_addr,bus_re,bus_we,lsustall,lsu_op_port1,
 lsu_op_port2,prp_acs0,prp_acs1,biu_prp_acs,proc_data_in_port1,proc_data_in_port2,proc_addr_in_port1,proc_addr_in_port2,
 proc_data_port1,proc_data_port2,bus_rdy,sc_chkdone,biu_sel_o,tlb_freeze_dcache, wb_ack_i,wb_err_i,wb_rty_i,wb_dat_i,wb_cyc_o,
@@ -254,7 +255,7 @@ always @(*) begin
     i = lru_addr;
 end
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
 //////////////////////////////////
 // RF is written on clock high //
 ////////////////////////////////
@@ -277,7 +278,7 @@ end
 /////////////////////////////
 
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk) begin
     if(rst) begin
         lsu_op_port1_reg <= 5'b0;
         lsu_op_port2_reg <= 5'b0;
@@ -354,7 +355,7 @@ end
 
 reg lru_addr_int[6:0];
 
-always @( posedge clk or posedge rst) begin
+always @( posedge clk) begin
     if(rst) begin
         state <= CHECK;  
     end
@@ -677,7 +678,7 @@ always @(*) begin
 end
 
 
-
+(* keep_hierarchy = "yes" *)
 dcache_ram_fsm drf0( .clk(clk),
                      .rst(rst),
                      .Ext_Stall(dtop_freeze),
@@ -744,7 +745,7 @@ dcache_ram_fsm drf0( .clk(clk),
                      .Dirty_bit_Write_En_w0(Dirty_bit_Write_En_a_w0),
                      .Dirty_bit_Write_En_w1(Dirty_bit_Write_En_a_w1));
 
-
+(* keep_hierarchy = "yes" *)
 dcache_ram_fsm drf1( .clk(clk),
                      .rst(rst),
                      .Ext_Stall(dtop_freeze),
@@ -811,7 +812,7 @@ dcache_ram_fsm drf1( .clk(clk),
                      .Dirty_bit_Write_En_w0(Dirty_bit_Write_En_b_w0),     
                      .Dirty_bit_Write_En_w1(Dirty_bit_Write_En_b_w1));    
                      
-
+(* keep_hierarchy = "yes" *)
 dcache_dpram dd( .rst(rst),
                  .clk(clk),
                  //.clk_x2(clk_x2),
