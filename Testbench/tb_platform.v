@@ -52,7 +52,6 @@ module tb_platform(
   
   riscv_platform riscv_platform(
   .clk_int(clk_int),
-  .clk_x2(clk_x2),
   .rst(rst),
   
   .RTC_CLOCK(RTC_CLOCK),
@@ -80,7 +79,7 @@ module tb_platform(
          interrupt = 32'd0; //Drive Alssl interrupts to 0
          ext_irq <= 1'b0; RTC_CLOCK <= 1'b0;
          
-         #200 rst <= 1'b0;
+         #1000 rst <= 1'b0;
          
          /*
          #3500 ext_irq <= 1'b1;
@@ -93,7 +92,7 @@ module tb_platform(
          
        end
 
-       always #10 clk_int <= ~clk_int;
+       always #50 clk_int <= ~clk_int;
 
        always #5 clk_x2 <= ~clk_x2;
 
