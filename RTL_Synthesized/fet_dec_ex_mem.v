@@ -36,6 +36,7 @@ output  [31:0]  IWDATA,
 input   [31:0]  IRDATA,
 input           IACK,
 input           ISTALL,
+input           ITLAST,
 output  [3:0]   IBSTROBE,
 
 output  [31:0]  DADDR,
@@ -46,6 +47,7 @@ output  [31:0]  DWDATA,
 input   [31:0]  DRDATA,
 input           DACK,
 input           DSTALL,
+input           DTLAST,
 output  [3:0]   DBSTROBE,
 input ext_irq,
 input sw_irq,
@@ -150,6 +152,8 @@ wire icache_en_o;
 wire [31:0] instruction;
 wire [31:0] instruction_ICACHE;
 
+wire imem_allow;
+wire dmem_allow;
 
 ///dcache signal
 wire [31:0] proc_addr_port1_int;
@@ -172,7 +176,6 @@ assign dtlb_trans_off = tlb_trans_off;
 wire instruction_page_fault;
 wire data_page_fault;
 wire badaddr_data;
-
 wire icache_freeze;
 wire flush_csr_clr;
 wire stall_mul;
@@ -189,6 +192,8 @@ assign PC_DEBUG = pc_cache;
 assign instruction = (debug_mode) ? instruction_DM : instruction_ICACHE; 
 assign RESET = RESET_BUTTON | core_dbg_reset;
 
+wire load_access_fault,store_access_fault;
+wire load_page_fault,store_page_fault;
 IF_ID_EX Pipeline( .CLK(clk),
                    .RESET_BUTTON(RESET_BUTTON),
                    .ext_irq(ext_irq),
@@ -200,6 +205,10 @@ IF_ID_EX Pipeline( .CLK(clk),
                    .Store_Data(store_data_int),
                    .lsustall_o(lsustall_int),
                    .Load__Stall(stall),
+                   .load_access_fault(load_access_fault),
+                   .store_access_fault(store_access_fault),
+                   .load_page_fault(load_page_fault),
+                   .store_page_fault(store_page_fault),
                    //Debug Interface
                 
                    .core_dbg_reset(core_dbg_reset), 
@@ -275,6 +284,7 @@ dcache_biu db1( //wishbone and controller interfacee I/Os
                 .ACK(DACK),
                 .STALL(DSTALL),
                 .BSTROBE(DBSTROBE),
+                .TLAST(DTLAST),
                 .csr_satp(csr_satp),
                 .dtlb_trans_off(dtlb_trans_off),
                 .lsu_op_port1(lsuop_int),
@@ -290,6 +300,13 @@ dcache_biu db1( //wishbone and controller interfacee I/Os
                 .ll_i(ll_int),
                 .sc_i(sc_int),
                 .data_page_fault(data_page_fault),
+                .load_access_fault(load_access_fault),
+                .store_access_fault(store_access_fault),
+                .load_page_fault(load_page_fault),
+                .store_page_fault(store_page_fault),
+                .csr_pmp_sb(csr_pmp_sb),
+                .dmem_allow(dmem_allow),
+
                 .addr_exception(addr_exception)
                 //.csr_satp(csr_satp)
                 /////////////////////////
@@ -323,11 +340,14 @@ mem_hier mh(
             .RDATA(IRDATA),
             .ACK(IACK),
             .STALL(ISTALL),
+            .TLAST(ITLAST),
             .BSTROBE(IBSTROBE),
             .csr_satp(csr_satp)
             `ifdef itlb_def
              ,.tlb_trans_off(tlb_trans_off)
             ,.vpn_to_ppn_req_in(vpn_to_ppn_req)
+            ,.imem_allow(imem_allow)
+            ,.csr_pmp_sb(csr_pmp_sb)
             `endif  
             );
 

@@ -55,7 +55,10 @@ ll_i,sc_i,addr_exception
   input              ACK,
   input              STALL,
   output reg [3:0]   BSTROBE,
+  input TLAST,
   output reg freeze,
+  input [`CSR_SB_W-1:0] csr_pmp_sb,
+  output dmem_allow,
   output reg [31:0] proc_data_port1,
   output reg [31:0] proc_data_port2,
   input [4:0] lsu_op_port1,
@@ -68,7 +71,11 @@ ll_i,sc_i,addr_exception
   input [31:0] proc_data_in_port2,
   input [31:0] proc_addr_in_port1,
   input [31:0] proc_addr_in_port2,
-  output addr_exception);
+  output addr_exception,
+  output load_access_fault,
+  output store_access_fault,
+  output load_page_fault,
+  output store_page_fault);
 
 ///////////////////
 
@@ -235,7 +242,7 @@ or1200_wb_biu biu1(
 .bus_data(bus_data),.bus_rdy(bus_rdy),.prp_acs(biu_prp_acs));*/
 
 (* keep_hierarchy = "yes" *)
-interface_router INTERFACE_ROUTER (
+MEMORY_REQUEST_MODULE INTERFACE_ROUTER (
    // Global Signals
    .clk(proc_clk),
    .reset(proc_rst),
@@ -262,6 +269,7 @@ interface_router INTERFACE_ROUTER (
    .ACK(ACK),
    .STALL(STALL),
    .BSTROBE(CACHE_BSTROBE),
+   .TLAST(TLAST),
    .peripheral_access(biu_prp_acs),
   
    //Control Signals
@@ -271,11 +279,13 @@ interface_router INTERFACE_ROUTER (
 
 (* keep_hierarchy = "yes" *)
 dcache_top dt1(.rst(proc_rst),.clk(proc_clk),.freeze(freeze_int),.dtop_freeze(dcache_freeze),.cache_flush(cache_flush),.bus_rq(bus_rq),.o_mem_bus_data(i_bus_data),.i_mem_bus_data(o_bus_data),.bus_addr(bus_addr),.bus_re(bus_re),.bus_we(bus_we),.dtlb_trans_off(dtlb_trans_off),.badaddr_data(badaddr_data),
-.lsustall(lsustall),.lsu_op_port1(lsu_op_port1),.lsu_op_port2(lsu_op_port2),.prp_acs0(prp_acs0_int),.prp_acs1(prp_acs1_int),.biu_prp_acs(biu_prp_acs),
+.lsustall(lsustall),.lsu_op_port1(lsu_op_port1),.lsu_op_port2(lsu_op_port2),.prp_acs0(prp_acs0_int),.prp_acs1(prp_acs1_int),.biu_prp_acs(biu_prp_acs),.dmem_allow(dmem_allow),.csr_pmp_sb(csr_pmp_sb),
 .proc_data_in_port1(proc_data_in_port1),.proc_data_in_port2(proc_data_in_port2),.proc_addr_in_port1(proc_addr_in_port1),.proc_addr_in_port2(proc_addr_in_port2),
 .proc_data_port1(proc_data_port1_int),.proc_data_port2(proc_data_port2_int),.bus_rdy(bus_rdy),.sc_chkdone(sc_i ? reservation_bit : 1'b1),
 .biu_sel_o(biu_sel_i),.tlb_freeze_dcache(tlb_freeze_dcache),.csr_satp(csr_satp),.ADDR(TLB_ADDR), .BURST(TLB_BURST),.REQ(TLB_REQ), .WRB(TLB_WRB), .WDATA(TLB_WDATA), .RDATA(RDATA), .ACK(ACK), .STALL(STALL), .BSTROBE(TLB_BSTROBE), /*.wb_ack_i(wb_ack_i),.wb_err_i(wb_err_i),.wb_rty_i(wb_rty_i),.wb_dat_i(wb_dat_i), .wb_cyc_o(wb_cyc_tlb_o),.wb_stb_o(wb_stb_tlb_o),.wb_we_o (wb_we_tlb_o ),.wb_adr_o(wb_adr_tlb_o), .wb_bte_o(wb_bte_tlb_o),
-.wb_cti_o(wb_cti_tlb_o),.wb_sel_o(wb_sel_tlb_o),.wb_dat_o(wb_dat_tlb_o),*/.addr_exception(addr_exception),.flush_csr_clr(flush_csr_clr),.data_page_fault(data_page_fault));
+.wb_cti_o(wb_cti_tlb_o),.wb_sel_o(wb_sel_tlb_o),.wb_dat_o(wb_dat_tlb_o),*/.addr_exception(addr_exception),.flush_csr_clr(flush_csr_clr),.data_page_fault(data_page_fault),
+.load_access_fault(load_access_fault),.store_access_fault(store_access_fault),.load_page_fault(load_page_fault),.store_page_fault(store_page_fault)
+);
 
 endmodule
 

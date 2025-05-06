@@ -78,6 +78,7 @@ module riscv_platform (
    wire [3:0]   BSTROBE;
 
    wire [31:0] s_RDATA;
+   wire s_tlast,m_tlast;
    wire [31:0] m_RDATA;
    wire s_ACK;
    wire s_STALL;
@@ -91,6 +92,10 @@ module riscv_platform (
 
    wire [63:0] lcd_reg;
    wire [3:0] imem_allow,dmem_allow; // L/X/W/R
+   wire  dmem_read_allowed,dmem_write_allowed,dmem_read_write_allowed;
+
+   wire imem_read_execute_allowed;
+   
 
    //Debug Module Interface 
    wire   haltreq_i;
@@ -136,6 +141,7 @@ module riscv_platform (
    wire freeze_int_dcache;
 
    wire pbuffer_execution;
+   wire TLAST, ITLAST, DTLAST;
 
        cpu cpu1(.clk(clk_int),/*.clk_x2(clk_x2),*/.RESET_BUTTON(rst), .ext_irq(ext_irq), .timer_irq(timer_irq), .sw_irq(sw_irq),
            .cache_en(cache_en_int),.tick_en(tick_en),.csr_pmp_sb(csr_pmp_sb),
@@ -172,6 +178,7 @@ module riscv_platform (
           .IACK(IACK),
           .ISTALL(ISTALL),
           .IBSTROBE(IBSTROBE),
+          .ITLAST(ITLAST),
 
           .DADDR(DADDR),
           .DBURST(DBURST), //00-Normal(), 01-INCR(), 10-WRAP(), 11-Reserved
@@ -181,7 +188,8 @@ module riscv_platform (
           .DRDATA(DRDATA),
           .DACK(DACK),
           .DSTALL(DSTALL),
-          .DBSTROBE(DBSTROBE)
+          .DBSTROBE(DBSTROBE),
+          .DTLAST(DTLAST)
        `ifdef TEST
        ,.block_instr_int(blck_instr_int)
        `endif
@@ -225,14 +233,12 @@ module riscv_platform (
         .dmem_allow(dmem_allow),
         .csr_sb(csr_pmp_sb)
        );
-      
-      assign dmem_read_allowed = (dmem_allow == 4'd5); 
-      assign dmem_write_allowed = (dmem_allow == 4'd6); 
-      assign dmem_read_write_allowed = (dmem_allow == 4'd7);
+     
+      assign dmem_read_allowed = (dmem_allow == 4'd1); 
+      assign dmem_write_allowed = (dmem_allow == 4'd2); 
+      assign dmem_read_write_allowed = (dmem_allow == 4'd3);
 
-      assign imem_read_allowed = (dmem_allow == 4'd5); 
-      assign imem_write_allowed = (dmem_allow == 4'd6); 
-      assign imem_read_write_allowed = (dmem_allow == 4'd7);
+      assign imem_read_execute_allowed = (imem_allow == 4'd5);
 
        interconnect interconnect (
         .clk(clk_int),
@@ -240,7 +246,7 @@ module riscv_platform (
         
 
     // Instruction Bus Interface
-        .instr_req(IREQ && imem_read_write_allowed),        // Instruction request signal
+        .instr_req(IREQ && imem_read_execute_allowed),        // Instruction request signal
         .instr_addr(IADDR),       // Instruction address bus
         .instr_burst(IBURST),
         .instr_write(IWRB),
@@ -250,6 +256,7 @@ module riscv_platform (
         .instr_data(IRDATA),       // Instruction read data
         .instr_ready(IACK),      // Instruction bus ready signal
         .instr_stall(ISTALL),
+        .instr_tlast(ITLAST),
 
     // Data Bus Interface
         .data_req(DREQ && dmem_read_write_allowed),         // Data request signal
@@ -262,6 +269,7 @@ module riscv_platform (
         .data_read_data(m_RDATA),   // Data read data
         .data_ready(m_ACK),       // Data bus ready signal
         .data_stall(m_STALL),
+        .data_tlast(m_tlast),
 
     // Memory Interface (Output Interface to Memory)
         .mem_req(REQ),          // Memory request signal
@@ -273,6 +281,7 @@ module riscv_platform (
 
         .mem_read_data(RDATA),    // Memory read data
         .mem_stall(STALL),
+        .mem_tlast(TLAST),
         .mem_ready(ACK)         // Memory ready signal
        
       
@@ -285,6 +294,7 @@ module riscv_platform (
       assign DRDATA   = (clint_en) ? s_RDATA    : m_RDATA;
       assign DACK     = (clint_en) ? s_ACK      : m_ACK;
       assign DSTALL   = (clint_en) ? s_STALL    : m_STALL;
+      assign DTLAST   = (clint_en) ? s_tlast    : m_tlast;
 
     rv32_clint #(.ADDRW(32),.XLEN(32)) CLINT (
         .CLK(clk_int),
@@ -295,6 +305,7 @@ module riscv_platform (
         .s_wdata(DWDATA),
         .s_strb(BSTROBE),
         .s_rdata(s_RDATA),
+        .s_tlast(s_tlast),
         .s_ready(s_ACK),
 
         .rtc(RTC_CLOCK),
@@ -302,7 +313,7 @@ module riscv_platform (
         .timer_irq(timer_irq)
       );
 
-     DATA_MEMORY #(.ADDR_WIDTH(14),.DATA_WIDTH(32)) Instruction_Memory (
+     DATA_MEMORY #(.ADDR_WIDTH(14),.DATA_WIDTH(32),.INSTR_INPUT_FILE("instruction_csr_test.mem"),.DATA_INPUT_FILE("data.mem")) Instruction_Memory (
         .clk(clk_int),
         .rst(rst),
         .ADDR(ADDR),
@@ -313,6 +324,7 @@ module riscv_platform (
         .RDATA(RDATA),
         .BURST(BURST),
         .ACK(ACK),
-        .STALL(STALL)
+        .STALL(STALL),
+        .TLAST(TLAST)
       );
 endmodule

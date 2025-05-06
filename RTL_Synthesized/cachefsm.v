@@ -23,6 +23,7 @@ module cachefsm
 clk, reset, freeze, freeze_in, i_hit, m_line_full,
 `ifdef itlb_def
  tag_hit,
+  imem_allow,
 `endif 
 i_acc, i_we, i_data,
 state, stall, vpn_to_ppn_req_out, vpn_to_ppn_req3, biu_cyc_i, biu_stb_i, biu_cab_i,
@@ -43,6 +44,7 @@ reg vpn_to_ppn_req4;
 
 `ifdef itlb_def
 input tag_hit;
+input imem_allow;
 `endif 
 
 wire mem_rdy;
@@ -108,7 +110,7 @@ always @(*) begin
             stall =1'b0;
 
         `ifdef itlb_def       
-        if(tag_hit)
+        if(tag_hit && imem_allow)
         `else       
         if(i_acc)
         `endif

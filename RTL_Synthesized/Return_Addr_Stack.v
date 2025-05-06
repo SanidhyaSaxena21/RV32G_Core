@@ -27,7 +27,7 @@ reg [4:0] TOS;
 reg [4:0] BOS;
 reg RAS_Empty;
 
-reg [4:0] Write_Pointer;
+wire [4:0] Write_Pointer;
 
 wire BOS_Incr;
 
@@ -110,14 +110,17 @@ always @(posedge CLK) begin
 end
 
 
-always @(*) begin
+assign Write_Pointer = TOS + 1;
+
+//Removing Reset from the combo logic
+/*always @(*) begin
     if (RST) begin
         Write_Pointer = 5'b00000;  
     end
     else begin
         Write_Pointer = TOS + 1;
     end
-end
+end*/
 
 always @(posedge CLK) begin
     if (RST) begin

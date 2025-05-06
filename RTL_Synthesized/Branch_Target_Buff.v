@@ -24,6 +24,11 @@ reg [31:0] BTB_Write_Addr__reg;
 reg [31:0] BTB_Write_Data__reg;
 reg BTB_Write_En__reg;
 
+wire [55:0] BTB_Read_Data_Set0_int;
+wire [55:0] BTB_Read_Data_Set1_int;
+wire [55:0] BTB_Read_Data_Set2_int;
+wire [55:0] BTB_Read_Data_Set3_int;
+
 wire [55:0] BTB_Read_Data_Set0;
 wire [55:0] BTB_Read_Data_Set1;
 wire [55:0] BTB_Read_Data_Set2;
@@ -42,10 +47,57 @@ reg BTB_Write_En_Set3;
 
 wire [1:0] LRU_Set; 
 
-assign BTB_Hit_Set0 = ((BTB_Read_Data_Set0[55] == 1'b1) && (BTB_Read_Data_Set0[54:32] == BTB_Read_Addr__reg[31:9])) ? 1'b1 : 1'b0;
-assign BTB_Hit_Set1 = ((BTB_Read_Data_Set1[55] == 1'b1) && (BTB_Read_Data_Set1[54:32] == BTB_Read_Addr__reg[31:9])) ? 1'b1 : 1'b0;
-assign BTB_Hit_Set2 = ((BTB_Read_Data_Set2[55] == 1'b1) && (BTB_Read_Data_Set2[54:32] == BTB_Read_Addr__reg[31:9])) ? 1'b1 : 1'b0;
-assign BTB_Hit_Set3 = ((BTB_Read_Data_Set3[55] == 1'b1) && (BTB_Read_Data_Set3[54:32] == BTB_Read_Addr__reg[31:9])) ? 1'b1 : 1'b0;
+// BTB Valid bit logic
+// We need to have this logic since we cannot read something from the memory
+// until it is written 
+
+reg [3:0] BTB_Read_Data_Valid_mem[127:0];
+reg [3:0] BTB_Read_Data_Valid; 
+integer i;
+
+always @(posedge CLK or posedge RST) begin
+    if(RST) begin
+    	for(i=0;i<128;i=i+1) begin
+	    BTB_Read_Data_Valid_mem[i] <= 4'd0;
+	end
+	BTB_Read_Data_Valid <= 4'd0;	
+    end
+    else if(~BPU__Stall) begin
+	 if(BTB_Write_En__reg) begin
+	     casex({BTB_Write_En_Set3,BTB_Write_En_Set2,BTB_Write_En_Set1,BTB_Write_En_Set0})
+		     4'b0001: begin
+			     BTB_Read_Data_Valid_mem[BTB_Write_Addr__reg[8:2]] <= 4'b0001;
+		     end
+		     4'b0010: begin
+			     BTB_Read_Data_Valid_mem[BTB_Write_Addr__reg[8:2]] <= 4'b0010;
+		     end
+		     4'b0100: begin
+			     BTB_Read_Data_Valid_mem[BTB_Write_Addr__reg[8:2]] <= 4'b0100;
+		     end
+		     4'b1000: begin
+			     BTB_Read_Data_Valid_mem[BTB_Write_Addr__reg[8:2]] <= 4'b1000;
+		     end
+		     default: begin
+			     BTB_Read_Data_Valid_mem[BTB_Write_Addr__reg[8:2]] <= 4'b0000;
+		     end
+	     endcase
+	 end
+	 else begin
+		 BTB_Read_Data_Valid <= BTB_Read_Data_Valid_mem[BTB_Read_Addr[8:2]];
+	 end
+    end
+    else begin
+	   BTB_Read_Data_Valid <= 4'd0; 
+    end
+end
+
+
+
+
+assign BTB_Hit_Set0 = ((BTB_Read_Data_Valid[0] == 1'b1) && (BTB_Read_Data_Set0[54:32] == BTB_Read_Addr__reg[31:9])) ? 1'b1 : 1'b0;
+assign BTB_Hit_Set1 = ((BTB_Read_Data_Valid[1] == 1'b1) && (BTB_Read_Data_Set1[54:32] == BTB_Read_Addr__reg[31:9])) ? 1'b1 : 1'b0;
+assign BTB_Hit_Set2 = ((BTB_Read_Data_Valid[2] == 1'b1) && (BTB_Read_Data_Set2[54:32] == BTB_Read_Addr__reg[31:9])) ? 1'b1 : 1'b0;
+assign BTB_Hit_Set3 = ((BTB_Read_Data_Valid[3] == 1'b1) && (BTB_Read_Data_Set3[54:32] == BTB_Read_Addr__reg[31:9])) ? 1'b1 : 1'b0;
 
 assign BTB_Write_Data_temp = {1'b1,BTB_Write_Addr__reg[31:9],BTB_Write_Data__reg};
 
@@ -66,12 +118,13 @@ always @(posedge CLK) begin
     end 
 end
 
+// Removing RESET from the Combo Logic
 always @(*) begin
-    if (RST) begin 
+    /*if (RST) begin 
         BTB_Hit = 1'b0;
         BTB_Read_Data = 32'h00000000;
     end
-    else if (BTB_Hit_Set0 | BTB_Hit_Set1 | BTB_Hit_Set2 | BTB_Hit_Set3) begin
+    else*/ if (BTB_Hit_Set0 | BTB_Hit_Set1 | BTB_Hit_Set2 | BTB_Hit_Set3) begin
         BTB_Hit = 1'b1;
         case({BTB_Hit_Set3,BTB_Hit_Set2,BTB_Hit_Set1,BTB_Hit_Set0})
             4'b0001 : BTB_Read_Data = BTB_Read_Data_Set0[31:0];
@@ -88,10 +141,10 @@ always @(*) begin
 end
 
 always @(*) begin
-    if (RST | BPU__Stall) begin 
+    /*if (RST | BPU__Stall) begin 
         BTB_Write_En_Set0 = 1'b0; BTB_Write_En_Set1 = 1'b0; BTB_Write_En_Set2 = 1'b0; BTB_Write_En_Set3 = 1'b0;
     end
-    else if (BTB_Write_En__reg) begin
+    else*/ if (BTB_Write_En__reg) begin
         casex(LRU_Set)
             2'b00 : begin
                 BTB_Write_En_Set0 = 1'b1; BTB_Write_En_Set1 = 1'b0; BTB_Write_En_Set2 = 1'b0; BTB_Write_En_Set3 = 1'b0;
@@ -133,11 +186,11 @@ TSDN65LPLLA128X56M8F BTB_Set0 (
   .AA(BTB_Read_Addr[8:2]), 			// Address of A: Addra[6:0]
   .DA(56'd0),			// Data in of A: douta[127:0]	
   .BWEBA({56{1'b1}}),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(1'b1),.CEBA(BPU__Stall),.CLKA(~CLK),	// Write-~en, Chip-~en, CLKA	
+  .WEBA(1'b1),.CEBA(BPU__Stall),.CLKA(CLK),	// Write-~en, Chip-~en, CLKA	
   .AB(BTB_Write_Addr__reg[8:2]),			// Address of B: Addra[6:0]
   .DB(BTB_Write_Data_temp),			// Data in of B: douta[127:0]
   .BWEBB({56{~BTB_Write_En_Set0}}),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(~BTB_Write_En_Set0),.CEBB(BPU__Stall),.CLKB(~CLK),	// Write-~en, Chip-~en, CLKB
+  .WEBB(~BTB_Write_En_Set0),.CEBB(BPU__Stall),.CLKB(CLK),	// Write-~en, Chip-~en, CLKB
   .AMA(7'd0),
   .DMA(56'd0),
   .BWEBMA({56{1'b1}}),
@@ -154,11 +207,11 @@ TSDN65LPLLA128X56M8F BTB_Set1 (
   .AA(BTB_Read_Addr[8:2]), 			// Address of A: Addra[6:0]
   .DA(56'd0),			// Data in of A: douta[127:0]	
   .BWEBA({56{1'b1}}),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(1'b1),.CEBA(BPU__Stall),.CLKA(~CLK),	// Write-~en, Chip-~en, CLKA	
+  .WEBA(1'b1),.CEBA(BPU__Stall),.CLKA(CLK),	// Write-~en, Chip-~en, CLKA	
   .AB(BTB_Write_Addr__reg[8:2]),			// Address of B: Addra[6:0]
   .DB(BTB_Write_Data_temp),			// Data in of B: douta[127:0]
   .BWEBB({56{~BTB_Write_En_Set1}}),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(~BTB_Write_En_Set1),.CEBB(BPU__Stall),.CLKB(~CLK),	// Write-~en, Chip-~en, CLKB
+  .WEBB(~BTB_Write_En_Set1),.CEBB(BPU__Stall),.CLKB(CLK),	// Write-~en, Chip-~en, CLKB
   .AMA(7'd0),
   .DMA(56'd0),
   .BWEBMA({56{1'b1}}),
@@ -175,11 +228,11 @@ TSDN65LPLLA128X56M8F BTB_Set2 (
   .AA(BTB_Read_Addr[8:2]), 			// Address of A: Addra[6:0]
   .DA(56'd0),			// Data in of A: douta[127:0]	
   .BWEBA({56{1'b1}}),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(1'b1),.CEBA(BPU__Stall),.CLKA(~CLK),	// Write-~en, Chip-~en, CLKA	
+  .WEBA(1'b1),.CEBA(BPU__Stall),.CLKA(CLK),	// Write-~en, Chip-~en, CLKA	
   .AB(BTB_Write_Addr__reg[8:2]),			// Address of B: Addra[6:0]
   .DB(BTB_Write_Data_temp),			// Data in of B: douta[127:0]
   .BWEBB({56{~BTB_Write_En_Set2}}),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(~BTB_Write_En_Set2),.CEBB(BPU__Stall),.CLKB(~CLK),	// Write-~en, Chip-~en, CLKB
+  .WEBB(~BTB_Write_En_Set2),.CEBB(BPU__Stall),.CLKB(CLK),	// Write-~en, Chip-~en, CLKB
   .AMA(7'd0),
   .DMA(56'd0),
   .BWEBMA({56{1'b1}}),
@@ -196,11 +249,11 @@ TSDN65LPLLA128X56M8F BTB_Set3 (
   .AA(BTB_Read_Addr[8:2]), 			// Address of A: Addra[6:0]
   .DA(56'd0),			// Data in of A: douta[127:0]	
   .BWEBA({56{1'b1}}),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(1'b1),.CEBA(BPU__Stall),.CLKA(~CLK),	// Write-~en, Chip-~en, CLKA	
+  .WEBA(1'b1),.CEBA(BPU__Stall),.CLKA(CLK),	// Write-~en, Chip-~en, CLKA	
   .AB(BTB_Write_Addr__reg[8:2]),			// Address of B: Addra[6:0]
   .DB(BTB_Write_Data_temp),			// Data in of B: douta[127:0]
   .BWEBB({56{~BTB_Write_En_Set3}}),			// Bit-Write ~en of B: {128{~en}}
-  .WEBB(~BTB_Write_En_Set3),.CEBB(BPU__Stall),.CLKB(~CLK),	// Write-~en, Chip-~en, CLKB
+  .WEBB(~BTB_Write_En_Set3),.CEBB(BPU__Stall),.CLKB(CLK),	// Write-~en, Chip-~en, CLKB
   .AMA(7'd0),
   .DMA(56'd0),
   .BWEBMA({56{1'b1}}),

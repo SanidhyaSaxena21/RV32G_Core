@@ -71,6 +71,12 @@ module dcache_ram_fsm
     output reg bus_cntrl,
     
     input addr_exception,
+    input read_exception_port,
+    input write_exception_port,
+    input load_page_fault,
+    input store_page_fault,
+    input load_access_fault,
+    input store_access_fault,
     input prp_acs,                                  // Memory address is in peripheral address range
     output reg proc_rq_o,                           // Load store request
     output reg proc_rq_reg,
@@ -171,7 +177,7 @@ reg Dirty_bit_Read_Data_w1_reg;
 
 reg [1:0] LRU_Read_Data__reg;
 
-
+wire load_store_exception;
 reg [31:0] i,j,k;
 //reg [2:0] j,i;
 //reg [1:0] k;
@@ -210,10 +216,9 @@ assign    load_mask[3] = 256'h00000000000000000000000000000000000000000000000000
 
 
 
+assign load_store_exception = badaddr_data || read_exception_port || write_exception_port || load_page_fault || store_page_fault || load_access_fault || store_access_fault;
 
-
-
-assign Load_Store__req = (sc_chkdone) & (Load_Store_op[1] ^ Load_Store_op[0]) & (~prp_acs) & ( ~freeze) & (~badaddr_data) ;    
+assign Load_Store__req = (sc_chkdone) & (Load_Store_op[1] ^ Load_Store_op[0]) & (~prp_acs) & ( ~freeze) & (~load_store_exception) ;    
 
 assign write_buff = (256'b0 | (((((state == START) || (state == WT_HIT)) ? Store_Data : Store_Data__reg) & store_mask[i]) << (j << 5) << (k << 3)));
 
@@ -625,19 +630,19 @@ always @(*) begin
                 
                 nextState = WT_HIT;
             end
-            else if(prp_acs & (~Load_Store_op[1] & Load_Store_op[0]) & ~badaddr_data) begin       //Peripheral read. Goto WT_HIT, generate bus signals and jump to bus transaction
+            else if(prp_acs & (~Load_Store_op[1] & Load_Store_op[0]) & ~load_store_exception) begin       //Peripheral read. Goto WT_HIT, generate bus signals and jump to bus transaction
                 LRU_Addr = 7'b0;
                 
                 nextState = WT_HIT;            
             end
-            else if(prp_acs & (Load_Store_op[1] & ~Load_Store_op[0]) & ~badaddr_data) begin       //Peripheral write. Goto REPLACE state directly
+            else if(prp_acs & (Load_Store_op[1] & ~Load_Store_op[0]) & ~load_store_exception) begin       //Peripheral write. Goto REPLACE state directly
                 LRU_Addr = 7'b0;
                 
                 nextState = REPLACE;            
             end
             else if(cache_flush_int) begin
                 LRU_Addr = 7'b0;
-                nextState = REPLACE;
+                nextState = WT_HIT;
             end            
             else begin
                 LRU_Addr = 7'b0;
@@ -1350,10 +1355,10 @@ always @(*) begin
             DCache_Write_En_w1 = (cache_flush_int & (LRU_Read_Data[0] & Dirty_bit_Read_Data_w1)) ? 32'hFFFFFFFF :
                           ((~prp_acs_int & LRU_Read_Data[0] & ~LRU_Read_Data[1] & ~Dirty_bit_Read_Data_w1 & ~cache_flush_int) ? 32'hFFFFFFFF : 32'b0);          //write a new block into address denoted by index
             
-            Tag_Write_En_w0 = (cache_flush_int & ((Dirty_bit_Read_Data_w0 | Tag_Read_Data_w0[22]) | (Dirty_bit_Read_Data_w1 | Tag_Read_Data_w1[22])) & ~LRU_Read_Data[0]) ? 4'b1111 : ((~prp_acs_int & ~LRU_Read_Data[0] & ~cache_flush_int) ? 4'b1111 : 4'b0);             //Dont write during peripheral access
-            Tag_Write_En_w1 = (cache_flush_int & ((Dirty_bit_Read_Data_w0 | Tag_Read_Data_w0[22]) | (Dirty_bit_Read_Data_w1 | Tag_Read_Data_w1[22])) & LRU_Read_Data[0] & ~LRU_Read_Data[1]) ? 4'b1111 : ((~prp_acs_int & LRU_Read_Data[0] & ~LRU_Read_Data[1] & ~cache_flush_int) ? 4'b1111 : 4'b0); //Dont write during peripheral access
-            Dirty_bit_Write_En_w0 = (cache_flush_int & ((Dirty_bit_Read_Data_w0 | Tag_Read_Data_w0[22]) | (Dirty_bit_Read_Data_w1 | Tag_Read_Data_w1[22])) & ~LRU_Read_Data[0]) ? 1'b1 : ((~prp_acs_int & ~LRU_Read_Data[0] & ~cache_flush_int) ? 1'b1 : 1'b0);
-            Dirty_bit_Write_En_w1 = (cache_flush_int & ((Dirty_bit_Read_Data_w0 | Tag_Read_Data_w0[22]) | (Dirty_bit_Read_Data_w1 | Tag_Read_Data_w1[22])) & LRU_Read_Data[0] & ~LRU_Read_Data[1]) ? 1'b1 : ((~prp_acs_int & LRU_Read_Data[0] & ~LRU_Read_Data[1] & ~cache_flush_int) ? 1'b1 : 1'b0);
+            Tag_Write_En_w0 = (cache_flush_int & ((Dirty_bit_Read_Data_w0 & Tag_Read_Data_w0[22]) /*| (Dirty_bit_Read_Data_w1 & Tag_Read_Data_w1[22])*/) & LRU_Read_Data[0]) ? 4'b1111 : ((~prp_acs_int & ~LRU_Read_Data[0] & ~cache_flush_int) ? 4'b1111 : 4'b0);             //Dont write during peripheral access
+            Tag_Write_En_w1 = (cache_flush_int & (/*(Dirty_bit_Read_Data_w0 & Tag_Read_Data_w0[22]) | */(Dirty_bit_Read_Data_w1 & Tag_Read_Data_w1[22])) & ~LRU_Read_Data[0] & LRU_Read_Data[1]) ? 4'b1111 : ((~prp_acs_int & LRU_Read_Data[0] & ~LRU_Read_Data[1] & ~cache_flush_int) ? 4'b1111 : 4'b0); //Dont write during peripheral access
+            Dirty_bit_Write_En_w0 = (cache_flush_int & ((Dirty_bit_Read_Data_w0 & Tag_Read_Data_w0[22])/* | (Dirty_bit_Read_Data_w1 & Tag_Read_Data_w1[22])*/) & LRU_Read_Data[0]) ? 1'b1 : ((~prp_acs_int & ~LRU_Read_Data[0] & ~cache_flush_int) ? 1'b1 : 1'b0);
+            Dirty_bit_Write_En_w1 = (cache_flush_int & (/*(Dirty_bit_Read_Data_w0 | Tag_Read_Data_w0[22]) | */(Dirty_bit_Read_Data_w1 & Tag_Read_Data_w1[22])) & ~LRU_Read_Data[0] & LRU_Read_Data[1]) ? 1'b1 : ((~prp_acs_int & LRU_Read_Data[0] & ~LRU_Read_Data[1] & ~cache_flush_int) ? 1'b1 : 1'b0);
                                       
             LRU_Addr = cache_flush_int ? flush_count[(index_last_bit-index_start_bit):0] : MEM_Addr__reg[index_last_bit:index_start_bit];     
             LRU_Write_Data[1] = (cache_flush_int & flush_count[7]) ? 1'b1  : ((w1_hit) | ((~w0_hit) & ~LRU_Read_Data[1] & LRU_Read_Data[0])); // priority to way0 

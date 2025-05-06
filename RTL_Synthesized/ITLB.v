@@ -21,7 +21,7 @@
 
 //////////Guidelines////////////////////////
 
-
+(* keep_hierarchy = "yes" *)
 module ITLB 
   #(parameter tag_width = 22, 
     parameter virtual_width=32,
@@ -46,7 +46,7 @@ module ITLB
   output vpn_to_ppn_req5,
 
   input [31:0] csr_satp,
-  output reg page_fault_processor,
+  output page_fault_processor,
 
   //-------------MEMORY INTERFACE---------------------
    output reg [31:0]  ADDR,
@@ -137,6 +137,7 @@ wire [4:0] eva_reg_int;
 reg [vpn_width-1:0] vpn_int;
 
 wire page_fault;
+wire page_fault_instruction;
 //wire TLB_MISS;
 wire TLB_VALID;
 wire [25:0] TLB_DATA;
@@ -364,117 +365,28 @@ begin
         endcase
 
 end
-/*
-always @(*)
-begin
-    case (state_PTW)
-        idle:   begin
-                wb_cyc_o	=  1'b0;
-                wb_stb_o    =  1'b0;
-                wb_cti_o    =  3'b111;  
-                wb_bte_o    =  2'b00;   
-                wb_we_o     =  1'b0;
-                wb_sel_o    =  4'hf;
-                wb_adr_o    =  {aw{1'b0}};
-                data_in     =  32'b0;
-                read_cam    = 1'b0;
-                compare     = 1'b0;
-                    if(miss) begin
-                        freeze  = 1'b1;
-                        next_state_PTW = send_entry_req;
-                    end
-                    else  begin       
-                        next_state_PTW = idle;
-                        freeze  = 1'b0;
-                    end
-                end
-                
-        send_entry_req:   begin
-                wb_cyc_o	=  1'b1;
-                wb_stb_o    =  1'b1;
-                wb_cti_o    =  3'b111;  
-                wb_bte_o    =  2'b00;   
-                wb_we_o     =  1'b0;
-                wb_sel_o    =  4'hf;
-                wb_adr_o    =  {10'b0,vpn_int,2'b0};
-                freeze  = 1'b1;
-                read_cam    = 1'b0;
-                compare     = 1'b1;
-                data_in     = wb_dat_i;
-                    if(wb_ack) 
-                        next_state_PTW  = replace;                   
-                    else 
-                        next_state_PTW  = send_entry_req;
-                end
-                   
-        replace:   begin
-                wb_cyc_o	=  1'b0;
-                wb_stb_o    =  1'b0;
-                wb_cti_o    =  3'b111;  
-                wb_bte_o    =  2'b00;   
-                wb_we_o     =  1'b0;
-                wb_sel_o    =  4'hf;
-                wb_adr_o    =  {aw{1'b0}};
-                freeze  = 1'b1;
-                read_cam    = 1'b0;
-                compare     = 1'b0;
-                next_state_PTW  = output_state_PTW;
-                data_in     = wb_dat_i;
-                end
-                
-        output_state_PTW: begin
-                wb_cyc_o	=  1'b0;
-                wb_stb_o    =  1'b0;
-                wb_cti_o    =  3'b111;  
-                wb_bte_o    =  2'b00;   
-                wb_we_o     =  1'b0;
-                wb_sel_o    =  4'hf;
-                wb_adr_o    =  {aw{1'b0}};
-                freeze  = 1'b1;
-                compare     = 1'b0;
-                read_cam    = 1'b1;
-                next_state_PTW  = idle;  
-                data_in     =  32'b0;
-                         
-                end       
-                
-        default:begin
-                wb_cyc_o	=  1'b0;
-                wb_stb_o    =  1'b0;
-                wb_cti_o    =  3'b111;  
-                wb_bte_o    =  2'b00;   
-                wb_we_o     =  1'b0;
-                wb_sel_o    =  4'hf;
-                wb_adr_o    =  {aw{1'b0}};
-                data_in     =  32'b0;
-                freeze  = 1'b0;
-                compare     = 1'b0;
-                read_cam    = 1'b0;
 
-                end
-        endcase
-
-end*/
-
-assign page_fault = (REQ && ACK) & (~data_in[0] | ~data_in[2] & data_in[1]);
-assign next_pte   = (REQ && ACK) & (data_in[0] & ~data_in[1] & ~data_in[2] & ~data_in[3]);
-assign RO_page  =   (REQ && ACK) & (data_in[1] & ~data_in[2] & ~data_in[3]);
-assign RW_page  =   (REQ && ACK) & (data_in[1] & data_in[2] & ~data_in[3]);
-assign XO_page  =   (REQ && ACK) & (~data_in[1] & ~data_in[2] & data_in[3]);
-assign XOR_page =   (REQ && ACK) & (data_in[1] & ~data_in[2] & data_in[3]);
-assign RWX_page =   (REQ && ACK) & (data_in[1] & data_in[2] & data_in[3]);
+assign page_fault = (REQ && ACK) & (~data_in[0] | (data_in[2] & ~data_in[1])); //V=0 or R=0,W=1
+assign next_pte   = (REQ && ACK) & (data_in[0] & ~data_in[1] & ~data_in[2] & ~data_in[3]); //V=0,R=W=X=0
+assign RO_page  =   (REQ && ACK) & (data_in[1] & ~data_in[2] & ~data_in[3]);//R=1,W=X=0
+assign RW_page  =   (REQ && ACK) & (data_in[1] & data_in[2] & ~data_in[3]);//R=1,W=1,X=0
+assign XO_page  =   (REQ && ACK) & (~data_in[1] & ~data_in[2] & data_in[3]);//R=0,W=0,X=1
+assign XOR_page =   (REQ && ACK) & (data_in[1] & ~data_in[2] & data_in[3]);//R=1,W=0,X=1
+assign RWX_page =   (REQ && ACK) & (data_in[1] & data_in[2] & data_in[3]);//R=W=X=1
 assign leaf_page = RO_page || RW_page || XO_page || XOR_page || RWX_page;
 //assign wb_ack = wb_ack_i & !wb_err_i & !wb_rty_i;
 
 //LINT: To register page fault and sent it to processor
-always @(posedge clk) begin
+assign page_fault_processor = (page_fault | RO_page | RW_page); //Attempt to access Instruction from a page that does not have execute permissions raises a fetch page-fault exception.
+
+/*always @(posedge clk) begin
     if(rst) begin
     	page_fault_processor <= 1'b0;	
     end
     else begin
-	page_fault_processor <= page_fault;
+	page_fault_processor <= page_fault_instruction;
     end
-end
+end*/
 
 
 ////////////////////////******** code by piyush ********////////////////////////

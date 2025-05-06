@@ -10,10 +10,10 @@ module Direction_Predictor
     
     input BPU__Stall,
     
-    output reg Branch_Taken,
+    output Branch_Taken,
     
-    output reg [10:0] PHT_Read_Index, 
-    output [1:0] PHT_Read_Data,
+    output  [10:0] PHT_Read_Index, 
+    output reg [1:0] PHT_Read_Data,
     
     input [10:0] PHT_Write_Index,
     input [1:0] PHT_Write_Data,
@@ -61,26 +61,50 @@ always @(posedge CLK) begin
         GHR <= {GHR[3:0],GHR_Write_Data__reg};
 end
 
-always @(*) begin
+assign PHT_Read_Index = {PC_XOR_GHR,PC[7:2]};
+
+//Removing RESET from the Combo Logic
+/*always @(*) begin
     if(RST) 
         PHT_Read_Index = 11'b0;
     else 
         PHT_Read_Index = {PC_XOR_GHR,PC[7:2]}; //PC[12:2]; //{PC_XOR_GHR,PC[7:2]}; 
-end
+end*/
 
-always @(*) begin
+assign Branch_Taken = PHT_Read_Data[1];
+
+//Removing RESET from the Combo Logic
+/*always @(*) begin
     if(RST) 
         Branch_Taken = 1'b0;
     else 
         Branch_Taken = PHT_Read_Data[1];
+end*/
+
+reg [1:0] PHT_mem [2047:0];
+integer i;
+
+always @(posedge CLK) begin
+	if(RST) begin
+		for(i=0;i<2048;i=i+1) begin
+			PHT_mem[i] <= 2'b00;
+		end
+	end
+	else if(~BPU__Stall) begin
+		if(PHT_Write_En__reg) PHT_mem[PHT_Write_Index__reg] <= PHT_Write_Data__reg;
+	end
 end
 
-/*
-TSDN65LPLLA2048X2M8M PHT (
+always @(posedge CLK) begin
+	if(RST) PHT_Read_Data <= 2'b00;
+	else if(~BPU__Stall) PHT_Read_Data <= PHT_mem[PHT_Read_Index];
+end
+
+/*TSDN65LPLLA2048X2M8M PHT (
   .AA(PHT_Write_Index__reg), 			// Address of A: Addra[6:0]
   .DA(PHT_Write_Data__reg),			// Data in of A: douta[127:0]	
   .BWEBA({2{~PHT_Write_En__reg}}),			// Bit-Write ~en of A: {128{~en}}	
-  .WEBA(PHT_Write_En__reg),.CEBA(BPU__Stall),.CLKA(~CLK),	// Write-~en, Chip-~en, CLKA	
+  .WEBA(~PHT_Write_En__reg),.CEBA(BPU__Stall),.CLKA(~CLK),	// Write-~en, Chip-~en, CLKA	
   .AB(PHT_Read_Index),			// Address of B: Addra[6:0]
   .DB(2'd0),			// Data in of B: douta[127:0]
   .BWEBB({2{1'b1}}),			// Bit-Write ~en of B: {128{~en}}
@@ -112,7 +136,7 @@ dual_port_RAM #(.DATA_WIDTH(2),.ADDR_WIDTH(11)) PHT ( .clka(CLK),
               .doutb(PHT_Read_Data));*/
 
 
-PHT_mem PHT ( .clka(CLK),
+/*PHT_mem PHT ( .clka(CLK),
               .wea((PHT_Write_En__reg) & (~BPU__Stall)),
               .addra(PHT_Write_Index__reg),
               .dina(PHT_Write_Data__reg),
@@ -120,7 +144,7 @@ PHT_mem PHT ( .clka(CLK),
               .rstb(RST),
               .enb(~BPU__Stall),
               .addrb(PHT_Read_Index),
-              .doutb(PHT_Read_Data));
+              .doutb(PHT_Read_Data));*/
 
 endmodule
 

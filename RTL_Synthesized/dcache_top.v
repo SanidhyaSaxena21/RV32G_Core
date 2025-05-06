@@ -32,7 +32,9 @@ wb_stb_o,wb_we_o,wb_adr_o,wb_bte_o,wb_cti_o,wb_sel_o,wb_dat_o,addr_exception
     input badaddr_data, 
     input bus_rdy,
     output reg freeze,
-    
+   
+    input [`CSR_SB_W-1:0] csr_pmp_sb,
+    output dmem_allow,
     output reg bus_rq,
     //inout [255:0] bus_data,
     //output [255:0] bus_data_o,
@@ -49,6 +51,10 @@ wb_stb_o,wb_we_o,wb_adr_o,wb_bte_o,wb_cti_o,wb_sel_o,wb_dat_o,addr_exception
     input dtlb_trans_off,
     input [31:0] csr_satp,
     output data_page_fault,
+    output load_access_fault,
+    output store_access_fault,
+    output load_page_fault,
+    output store_page_fault,
     
     /*//------------ Wishbone Signals -------------- 
     
@@ -219,6 +225,12 @@ wire proc_rq_reg_1;
 wire proc_rq_reg_2;
 
 
+
+wire read_exception_port1;
+wire read_exception_port2;
+wire write_exception_port1;
+wire write_exception_port2;
+
 //integer i;
 reg [6:0] i;
 integer j;
@@ -236,7 +248,8 @@ wire tag_hit_tlb_port1;
 wire tag_hit_tlb_port2;
 
 assign addr_exception = addr_exception_port1 || addr_exception_port2 ;
-
+//assign load_access_fault = read_exception_port1 | read_exception_port2;
+//assign store_access_fault = write_exception_port1 | write_exception_port2;
 
 assign wr_rd_clsh = (proc_addr_in_port1[11:5] == proc_addr_in_port2[11:5]);
 assign bus_clsh = bus_cntrl_int1 & bus_cntrl_int2;
@@ -735,7 +748,15 @@ dcache_ram_fsm drf0( .clk(clk),
                      .fsm_prp_acs(fsm0_prp_acs),
                      .tag_out_tlb(tag_out_tlb_port1),
                      .tag_hit_tlb(tag_hit_tlb_port1),
+
                      .addr_exception(addr_exception_port1),
+                     .read_exception_port(read_exception_port1),
+                     .write_exception_port(write_exception_port1),
+                     .load_page_fault(load_page_fault),
+                     .store_page_fault(store_page_fault),
+                     .load_access_fault(load_access_fault),
+                     .store_access_fault(store_access_fault),
+
                      .Dirty_bit_Addr_w0(Dirty_bit_Addr_a_w0),
                      .Dirty_bit_Addr_w1(Dirty_bit_Addr_a_w1),
                      .Dirty_bit_Read_Data_w0(Dirty_bit_Read_Data_a_w0),
@@ -803,6 +824,12 @@ dcache_ram_fsm drf1( .clk(clk),
                      .tag_out_tlb(tag_out_tlb_port2),
                      .tag_hit_tlb(tag_hit_tlb_port2),
                      .addr_exception(addr_exception_port2),
+                     .read_exception_port(read_exception_port2),
+                     .write_exception_port(write_exception_port2),
+                     .load_page_fault(load_page_fault),
+                     .store_page_fault(store_page_fault),
+                     .load_access_fault(load_access_fault),
+                     .store_access_fault(store_access_fault),
                      .Dirty_bit_Addr_w0(Dirty_bit_Addr_b_w0),             
                      .Dirty_bit_Addr_w1(Dirty_bit_Addr_b_w1),             
                      .Dirty_bit_Read_Data_w0(Dirty_bit_Read_Data_b_w0),   
@@ -876,7 +903,18 @@ dcache_dpram dd( .rst(rst),
                  .tlb_freeze_dcache(tlb_freeze_dcache),
                  .dtlb_trans_off(dtlb_trans_off),
                  .csr_satp(csr_satp),
+                 .dmem_allow(dmem_allow),
+                 .csr_pmp_sb(csr_pmp_sb),
                  .data_page_fault(data_page_fault),
+
+                 .load_page_fault(load_page_fault),
+                 .store_page_fault(store_page_fault),
+                 .load_access_fault(load_access_fault),
+                 .store_access_fault(store_access_fault),
+                 .read_exception_port1(read_exception_port1),
+                 .read_exception_port2(read_exception_port2),
+                 .write_exception_port1(write_exception_port1),
+                 .write_exception_port2(write_exception_port2),
                  /*
                  .wb_ack_i(wb_ack_i),
                  .wb_err_i(wb_err_i),

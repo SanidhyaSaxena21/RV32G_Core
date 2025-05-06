@@ -18,6 +18,9 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
+
+`include "defines.v"
+(* keep_hierarchy = "yes" *)
 module icache #(
                 parameter offset_start_bit = 0,
                 parameter offset_last_bit = 4,
@@ -69,6 +72,9 @@ module icache #(
     input              ACK,
     input              STALL,
     output  [3:0]   BSTROBE,
+
+    output imem_allow,
+    input [`CSR_SB_W-1:0] csr_pmp_sb,     
 
     output  [tag_phy_last_bit:tag_phy_start_bit] tag_o_tlb,
     output  tag_hit,
@@ -166,6 +172,9 @@ wire [6:0] icache_set0_addr;
 wire [6:0] icache_set1_addr;
 reg we_tag_valid_w0;
 reg we_tag_valid_w1;
+wire [3:0] imem_permission;
+wire [3:0] dmem_allow_nc;
+
 `else
 reg [tag_phy_last_bit : tag_phy_start_bit] tag;
 `endif
@@ -193,12 +202,16 @@ wire freeze_icache_miss;
 wire [6:0] icache_tag_w0_addr;
 wire [6:0] icache_tag_w1_addr;
 
+
+
 //---------------------------------------
 
 //---------------ITLB Logic-------------------------
 `ifdef itlb_def
 assign tag_o_tlb = tag_out_tlb[tag_tlb_last_bit:tag_tlb_start_bit];
 assign freeze_icache_miss = (state_fsm == 2'b01);
+assign imem_allow = (imem_permission == 4'd5);
+
 `endif
 //--------------------------------------------------
 
@@ -285,7 +298,7 @@ always @(posedge clk)
             physical_tag <=20'b0;
             //tag_valid <= 1'b0;
     end
-    else if( tag_hit && ~hit && (state_fsm != 2'b01)) begin
+    else if( tag_hit && ~hit && imem_allow && (state_fsm != 2'b01)) begin
             physical_tag <= tag_w;
     end
     end
@@ -357,7 +370,7 @@ always @(*)
 		    we_tag_valid_w0 = 1'b0;
 		    we_tag_valid_w1 = 1'b0;		    
                     nextstate_we=state_we0;
-		    hit = (tag_hit ? ((tag_valid_w1_read && (tag==dout2[(tag_last_bit - tag_start_bit):0])) ? 1'b1 :
+		    hit = ((tag_hit & imem_allow) ? ((tag_valid_w1_read && (tag==dout2[(tag_last_bit - tag_start_bit):0])) ? 1'b1 :
 			    	      (tag_valid_w0_read && (tag==dout1[(tag_last_bit - tag_start_bit):0])) ? 1'b1 : 1'b0)
 				      : 1'b0);
 
@@ -517,6 +530,24 @@ always@(*)//posedge clk or posedge reset)
 .wb_stb_o(wb_stb_o),.wb_we_o(wb_we_o),.wb_adr_o(wb_adr_o),.wb_bte_o(wb_bte_o),.wb_cti_o(wb_cti_o),
 .wb_sel_o(wb_sel_o),.wb_dat_o(wb_dat_o)         );*/
 
+//-------PMP Check -----------------
+
+wire [31:0] IMEM_ADDR;
+
+assign IMEM_ADDR =(vpn_to_ppn_req3 || (vpn_to_ppn_req7 && ~freeze_hit_status )) ? virtual_addr[19:0]: ( stall_load ? i_addr_min4[19:0]: i_addr[19:0]);
+rv32_mpu #(.MMU_SUPPORT(0)) IMEM_MPU (
+ .aclk(clk),
+ .aresetn(~reset),
+ .imem_addr(IMEM_ADDR),
+ .imem_allow(imem_permission),
+ .dmem_addr(32'd0),
+ .dmem_allow(dmem_allow_nc),
+ .csr_sb(csr_pmp_sb)
+);
+
+
+
+(* keep_hierarchy = "yes" *)
 ITLB ITLB(
 .clk(clk),
 //.clk_x2(clk_x2),

@@ -286,8 +286,6 @@ always @(posedge clk) begin
     else if(mcause_wr) begin
         csr_mcause <= csr_mcause_val;
     end
-    else if(addr_exception)
-            csr_mcause <= 32'b01;
     else if(csr_wr_en && (csr_adr_wr == `mcause))
         csr_mcause <= csr_wrdata;                                   // ***Mcause is WLRL not required to be updated in hardware 
 end
@@ -565,11 +563,11 @@ parameter MPU_SUPPORT = 2;
 parameter MAX_PMP_REGION = 16;
 
 //PMP Value at initialisation
-parameter PMPCFG0_INIT   = 32'h0;
+parameter PMPCFG0_INIT   = 32'h0000_000D;
 parameter PMPCFG1_INIT   = 32'h0;
 parameter PMPCFG2_INIT   = 32'h0;
 parameter PMPCFG3_INIT   = 32'h0;
-parameter PMPADDR0_INIT  = 32'h0;
+parameter PMPADDR0_INIT  = 32'h0000_1000;
 parameter PMPADDR1_INIT  = 32'h0;
 parameter PMPADDR2_INIT  = 32'h0;
 parameter PMPADDR3_INIT  = 32'h0;
@@ -633,21 +631,21 @@ always @(posedge clk) begin
         if(!pmpcfg0[3*8+7]) pmpcfg0[24+:8] <= csr_wrdata[24+:8];
       end
 
-      if (csr_adr_wr == `PMPCFG0 && NB_PMP_REGION >= 5) begin
+      if (csr_adr_wr == `PMPCFG1 && NB_PMP_REGION >= 5) begin
         if(!pmpcfg1[0*8+7]) pmpcfg1[0+:8]  <= csr_wrdata[0+:8];
         if(!pmpcfg1[1*8+7]) pmpcfg1[8+:8]  <= csr_wrdata[8+:8];
         if(!pmpcfg1[2*8+7]) pmpcfg1[16+:8] <= csr_wrdata[16+:8];
         if(!pmpcfg1[3*8+7]) pmpcfg1[24+:8] <= csr_wrdata[24+:8];
       end
 
-      if (csr_adr_wr == `PMPCFG0 && NB_PMP_REGION >= 9) begin
+      if (csr_adr_wr == `PMPCFG2 && NB_PMP_REGION >= 9) begin
         if(!pmpcfg2[0*8+7]) pmpcfg2[0+:8]  <= csr_wrdata[0+:8];
         if(!pmpcfg2[1*8+7]) pmpcfg2[8+:8]  <= csr_wrdata[8+:8];
         if(!pmpcfg2[2*8+7]) pmpcfg2[16+:8] <= csr_wrdata[16+:8];
         if(!pmpcfg2[3*8+7]) pmpcfg2[24+:8] <= csr_wrdata[24+:8];
       end
 
-      if (csr_adr_wr == `PMPCFG0 && NB_PMP_REGION >= 13) begin
+      if (csr_adr_wr == `PMPCFG3 && NB_PMP_REGION >= 13) begin
         if(!pmpcfg3[0*8+7]) pmpcfg3[0+:8]  <= csr_wrdata[0+:8];
         if(!pmpcfg3[1*8+7]) pmpcfg3[8+:8]  <= csr_wrdata[8+:8];
         if(!pmpcfg3[2*8+7]) pmpcfg3[16+:8] <= csr_wrdata[16+:8];

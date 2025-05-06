@@ -3,7 +3,13 @@
 
 `timescale 1ns / 1ps
 module DATA_MEMORY #(parameter  ADDR_WIDTH = 18,
-                                DATA_WIDTH = 32
+                                DATA_WIDTH = 32,
+                                INSTR_INPUT_FILE = "Instruction.mem",
+                                DATA_INPUT_FILE = "Data.mem",
+                                BASE_ADDR_INSTRUCTION = 32'h00000000,
+                                INSTRUCTION_MASK = 32'h00003FFF,
+                                BASE_ADDR_DATA = 32'h20000000,
+                                DATA_MASK = 32'h00003FFF
                             ) 
 (
   input                     clk,
@@ -16,7 +22,8 @@ module DATA_MEMORY #(parameter  ADDR_WIDTH = 18,
   output reg                ACK,
   input   [1:0]             BURST,
   input   [3:0]             BSTROBE,
-  output                    STALL
+  output                    STALL,
+  output                    TLAST
                                        
 );
 
@@ -29,6 +36,11 @@ reg [3:0] counter;
 wire instruction_req, data_req, pt_req, clint_req;
 wire [31:0] DRDATA, IRDATA, PRDATA,HRDATA;
 
+reg [31:0] ADDR_BURST;
+wire [31:0] ADDR_INSTR, ADDR_DATA;
+
+assign ADDR_INSTR = (REQ & (counter == 4'd0) & instruction_req) ? ADDR : ADDR_BURST;
+assign ADDR_DATA = (REQ & (counter == 4'd0) & data_req) ? ADDR : ADDR_BURST;
 localparam BURST_LENGTH = 8;
 
 //---------Decoding Logic ------------------------
@@ -38,8 +50,10 @@ localparam BURST_LENGTH = 8;
 // CLINT        : 0x0000_C000    <-->    0x0000_FFFF (16KB)
 //
 
-assign instruction_req  = ((ADDR[15:14] == 2'b00) && REQ);
-assign data_req         = ((ADDR[15:14] == 2'b01) && REQ); 
+//assign instruction_req  = ((ADDR[15:14] == 2'b00) && REQ && ~(ADDR[31:28] == 4'b0010));
+assign instruction_req  = ((ADDR & ~INSTRUCTION_MASK) == BASE_ADDR_INSTRUCTION);
+assign data_req         = ((ADDR & ~DATA_MASK) == BASE_ADDR_DATA);
+//assign data_req         = ((ADDR[31:28] == 4'b0010) && REQ); 
 assign pt_req           = ((ADDR[15:14] == 2'b10) && REQ);
 assign clint_req        = ((ADDR[15:14] == 2'b11) && REQ);
 
@@ -53,7 +67,7 @@ assign ADDR_REDUCED = ADDR[ADDR_WIDTH-1:0];
 
 
 
- Data_Memory Data_Memory(
+ /*Data_Memory Data_Memory(
    .clka(clk), // input clka
    .rsta(rst),      // reset
    .wea((BSTROBE & {4{WRB}})),
@@ -61,17 +75,29 @@ assign ADDR_REDUCED = ADDR[ADDR_WIDTH-1:0];
    .addra(ADDR[11:2] & 10'h3ff), // input [31 : 0] addra
    .dina(WDATA), // input [31 : 0] dina
    .douta(DRDATA) // output [31 : 0] douta
- );
+ );*/
  
-  Instruction_Memory Instruction_Memory(
+ /* Instruction_Memory Instruction_Memory(
    .clka(clk), // input clka
    .rsta(rst),      // reset
    .wea((BSTROBE & {4{WRB}})),
    .ena(instruction_req && ~STALL), // input ena
-   .addra(ADDR[11:2] & 10'h3ff), // input [31 : 0] addra
+   .addra(ADDR_INSTR[11:2] & 10'h3ff), // input [31 : 0] addra
+   .dina(WDATA), // input [31 : 0] dina
+   .douta(IRDATA) // output [31 : 0] douta
+ );*/
+ 
+  MEMORY_MACRO #(.ADDR_WIDTH(ADDR_WIDTH),.DATA_WIDTH(DATA_WIDTH),.INPUT_FILE(INSTR_INPUT_FILE)) Instruction_Memory(
+   .clka(clk), // input clka
+   .rsta(rst),      // reset
+   .byte_en(BSTROBE),
+   .ena(instruction_req && ~STALL), // input ena
+   .wea(WRB), // input [3 : 0] wea
+   .addra(ADDR_INSTR & 32'h00003fff), // input [31 : 0] addra
    .dina(WDATA), // input [31 : 0] dina
    .douta(IRDATA) // output [31 : 0] douta
  );
+ 
  
   Page_Table Page_Table_memory(
    .clka(clk), // input clka
@@ -93,28 +119,20 @@ assign ADDR_REDUCED = ADDR[ADDR_WIDTH-1:0];
    .douta(HRDATA) // output [31 : 0] douta
  );
 
- /*MEMORY_MACRO #(.ADDR_WIDTH(ADDR_WIDTH),.DATA_WIDTH(DATA_WIDTH),.INPUT_FILE(DATA_INPUT_FILE)) Data_Memory(
+ MEMORY_MACRO #(.ADDR_WIDTH(ADDR_WIDTH),.DATA_WIDTH(DATA_WIDTH),.INPUT_FILE(DATA_INPUT_FILE)) Data_Memory(
    .clka(clk), // input clka
    .rsta(rst),      // reset
    .byte_en(BSTROBE),
    .ena(data_req && ~STALL), // input ena
    .wea(WRB), // input [3 : 0] wea
-   .addra(ADDR & 32'h00003fff), // input [31 : 0] addra
+   .addra(ADDR_DATA & 32'h00003fff), // input [31 : 0] addra
    .dina(WDATA), // input [31 : 0] dina
    .douta(DRDATA) // output [31 : 0] douta
  );
- MEMORY_MACRO #(.ADDR_WIDTH(ADDR_WIDTH),.DATA_WIDTH(DATA_WIDTH),.INPUT_FILE(INSTR_INPUT_FILE)) Instruction_Memory(
-   .clka(clk), // input clka
-   .rsta(rst),      // reset
-   .byte_en(BSTROBE),
-   .ena(instruction_req && ~STALL), // input ena
-   .wea(WRB), // input [3 : 0] wea
-   .addra(ADDR & 32'h00003fff), // input [31 : 0] addra
-   .dina(WDATA), // input [31 : 0] dina
-   .douta(IRDATA) // output [31 : 0] douta
- );
+ 
 
 
+/*
  MEMORY_MACRO #(.ADDR_WIDTH(ADDR_WIDTH),.DATA_WIDTH(DATA_WIDTH),.INPUT_FILE(PT_INPUT_FILE)) Page_Table_memory(
    .clka(clk), // input clka
    .rsta(rst),      // reset
@@ -142,7 +160,27 @@ assign ADDR_REDUCED = ADDR[ADDR_WIDTH-1:0];
       end
     end
   end
-  
+ 
+
+  always @(posedge clk) begin
+    if(rst) ADDR_BURST <= 32'd0;
+    else begin
+      if(REQ & counter == 4'd0) begin
+        ADDR_BURST <= ADDR + 32'd4;
+      end
+      else if(REQ & counter < (BURST_LENGTH - 1)) begin
+        ADDR_BURST <= ADDR_BURST + 32'd4;
+      end
+      else if(REQ & counter == BURST_LENGTH-1) begin
+        ADDR_BURST <= ADDR;
+      end
+      else begin
+        ADDR_BURST <= ADDR;
+      end
+    end
+  end
+
+ assign TLAST = (counter == BURST_LENGTH); 
   always @(posedge clk) begin
     if(rst) begin
         ACK <= 1'b0;

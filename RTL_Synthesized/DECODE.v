@@ -9,6 +9,8 @@ module DECODE
     input IF_ID_Freeze,
     input debug_mode,
 
+    output reg active_instruction_id,
+
     input kill_id,
     output [31:0] PC_ID,
 
@@ -385,12 +387,15 @@ always @(*) begin
         BPU__PHT_Read_Data__id_ex = 2'b0; 
         BPU__BTB_Hit__id_ex = 1'b0;
         Branch_Type__id_ex = 3'b0;
+
+        active_instruction_id = 1'b0;
     
     end
     else begin 
     
         //forward the program counter
         pc_forw = PC__IF_ID;
+        active_instruction_id = 1'b1;
     
         
         RS1_Addr__rf = rs1;

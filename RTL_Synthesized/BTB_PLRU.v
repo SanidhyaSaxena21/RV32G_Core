@@ -86,10 +86,6 @@ always @(posedge CLK) begin
 end
 
 always@(*) begin
-    if(RST) begin
-        LRU_Set = 2'b00;
-    end
-    else begin
         if(level_1_Write_Value[0]==1'b0) begin
             if(level_0_Write_Value[0]==1'b0) 
                 LRU_Set = 2'b00;
@@ -102,7 +98,6 @@ always@(*) begin
             else                 
                 LRU_Set = 2'b11;
         end
-    end
 end
 endmodule
 

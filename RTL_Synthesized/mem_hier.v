@@ -51,6 +51,7 @@ module mem_hier(
       input   [31:0]  RDATA,
       input           ACK,
       input           STALL,
+      input           TLAST,
       output  [3:0]   BSTROBE,
 
       input [31:0] csr_satp,
@@ -62,6 +63,8 @@ module mem_hier(
 `ifdef itlb_def
 ,input tlb_trans_off
 ,input vpn_to_ppn_req_in
+,output imem_allow
+,input [`CSR_SB_W-1:0] csr_pmp_sb
 `endif
 );
 
@@ -344,8 +347,8 @@ assign vpn_to_ppn_req7 = (freeze_int && x_freeze );
     //.wb_fsm_state_cur(wb_fsm_state_cur),
     //.bus_line(bus_line)
 );*/
-
-interface_router INTERFACE_ROUTER_IMEM (
+(* keep_hierarchy = "yes" *)
+MEMORY_REQUEST_MODULE INTERFACE_ROUTER_IMEM (
    // Global Signals
    .clk(clk),
    .reset(reset),
@@ -371,6 +374,7 @@ interface_router INTERFACE_ROUTER_IMEM (
    .RDATA(RDATA),
    .ACK(ACK),
    .STALL(STALL),
+   .TLAST(TLAST),
    .BSTROBE(ICACHE_BSTROBE),
    .peripheral_access(1'b0),
   
@@ -380,6 +384,7 @@ interface_router INTERFACE_ROUTER_IMEM (
 );
 
 //---------------/*  Cache */------------------------
+(* keep_hierarchy = "yes" *)
 icache icache1(
     .clk(clk),//input
     //.clk_x2(clk_x2),//input
@@ -414,7 +419,9 @@ icache icache1(
       .RDATA(RDATA),
       .ACK(ACK),
       .STALL(STALL),
-      .BSTROBE(TLB_BSTROBE)
+      .BSTROBE(TLB_BSTROBE),
+      .imem_allow(imem_allow),
+      .csr_pmp_sb(csr_pmp_sb)
       
     /*  
     .wb_ack_i(wb_ack_i), .wb_err_i(wb_err_i), .wb_rty_i(wb_rty_i), 
@@ -425,6 +432,7 @@ icache icache1(
 );
 
 //-------------------/* Cache FSM */--------------------
+(* keep_hierarchy = "yes" *)
 cachefsm a3(
     .clk(clk),	
     .reset(reset),
@@ -434,6 +442,7 @@ cachefsm a3(
     .m_line_full(bus_data),
     `ifdef itlb_def
     .tag_hit(tag_hit),
+    .imem_allow(imem_allow),
     `endif    
     .i_acc(i_acc),
     .i_we(i_we),//output

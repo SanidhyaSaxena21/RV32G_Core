@@ -63,7 +63,9 @@ module dcache_dpram
     input Dirty_bit_Write_Data_b_w1, 
     input Dirty_bit_Write_En_b_w0,   
     input Dirty_bit_Write_En_b_w1,   
-    
+   
+    output dmem_allow,
+    input  [`CSR_SB_W-1:0] csr_pmp_sb,
     
     input [4:0] lsu_op_port1,
     input [4:0] lsu_op_port2,
@@ -130,7 +132,17 @@ module dcache_dpram
     input [31:0] csr_satp,
     output data_page_fault, 
     output addr_exception_port1,
-    output addr_exception_port2
+    output addr_exception_port2,
+    output load_page_fault,
+    output store_page_fault,
+
+    output load_access_fault,
+    output store_access_fault,
+
+    output read_exception_port1,
+    output read_exception_port2,
+    output write_exception_port1,
+    output write_exception_port2
 );
 
 parameter offset_start_bit = 0;
@@ -151,6 +163,10 @@ parameter tag_tlb_last_bit = 23;
 //----------------------------------------------------
 
 
+  wire [3:0] dmem_porta_permissions;
+  wire [3:0] dmem_portb_permissions;
+  wire dmem_porta_allow;
+  wire dmem_portb_allow;
 
 
 wire [21:0] tag_a;
@@ -207,10 +223,10 @@ localparam PULSE_DEL = 2'b01;
 localparam PULSE_HI = 2'b10;
 localparam PULSE_LOW = 2'b11;
 
-wire read_exception_port1;
-wire read_exception_port2;
-wire write_exception_port1;
-wire write_exception_port2;
+//wire read_exception_port1;
+//wire read_exception_port2;
+//wire write_exception_port1;
+//wire write_exception_port2;
 
 //assign load_exception = read_exception_port1 || read_exception_port2;
 //assign store_exception = write_exception_port1 || write_exception_port2;
@@ -219,8 +235,16 @@ assign read_exception_port1 = ((lsu_op_port1_int == 2'b01) && (~tag_out_tlb_port
 assign read_exception_port2 = ((lsu_op_port2_int == 2'b01) && (~tag_out_tlb_port2[1]) && tag_hit_tlb_port2);
 assign write_exception_port1 = ((lsu_op_port1_int == 2'b10) && (~(tag_out_tlb_port1[2:1] == 2'b11)) && tag_hit_tlb_port1);
 assign write_exception_port2 = ((lsu_op_port2_int == 2'b10) && (~(tag_out_tlb_port2[2:1] == 2'b11)) && tag_hit_tlb_port2);
-assign addr_exception_port1 =  read_exception_port1 || write_exception_port1 || badaddr_data;
-assign addr_exception_port2 =  read_exception_port2 || write_exception_port2;
+
+assign load_page_fault = ((lsu_op_port1_int == 2'b01) & data_page_fault) || ((lsu_op_port2_int == 2'b01) & data_page_fault) || read_exception_port1 || read_exception_port2;
+assign store_page_fault = ((lsu_op_port1_int == 2'b10) & data_page_fault) || ((lsu_op_port2_int == 2'b10) & data_page_fault) || write_exception_port1 || write_exception_port2;
+
+assign load_access_fault = ((lsu_op_port1_int == 2'b01) & ~dmem_porta_permissions[0] & tag_hit_tlb_port1) || ((lsu_op_port2_int == 2'b01) & ~dmem_portb_permissions[0] & tag_hit_tlb_port2);
+assign store_access_fault = ((lsu_op_port1_int == 2'b10) & ~dmem_porta_allow * tag_hit_tlb_port1) || ((lsu_op_port2_int == 2'b10) & ~dmem_portb_allow & tag_hit_tlb_port2);
+
+
+assign addr_exception_port1 =  read_exception_port1 || write_exception_port1 || badaddr_data || load_page_fault || store_page_fault || load_access_fault ||  store_access_fault;
+assign addr_exception_port2 =  read_exception_port2 || write_exception_port2 || store_page_fault || load_page_fault || load_access_fault || store_access_fault ;
 
 assign proc_rq_port1 = (lsu_op_port1[1] ^ lsu_op_port1[0]) & ~badaddr_data;
 assign proc_rq_port2 = (lsu_op_port2[1] ^ lsu_op_port2[0]) & ~badaddr_data;
@@ -252,10 +276,10 @@ assign index_a = addr_in_a[index_last_bit:index_start_bit];
 assign index_b = addr_in_b[index_last_bit:index_start_bit];
 assign tag_a = byp_a ? addr_in_a[tag_last_bit:tag_start_bit] : addr_in_a_int[tag_last_bit:tag_start_bit];
 assign tag_b = byp_b ? addr_in_b[tag_last_bit:tag_start_bit] : addr_in_b_int[tag_last_bit:tag_start_bit];
-assign tag_comp_w0_a = ((tag_out_tlb_port1[tag_tlb_last_bit:tag_tlb_start_bit] == tag_a_w0_int[(tag_last_bit-tag_start_bit):0]) & tag_a_w0_int[22] & tag_hit_tlb_port1) ? 1'b1 : 1'b0;
-assign tag_comp_w1_a = ((tag_out_tlb_port1[tag_tlb_last_bit:tag_tlb_start_bit] == tag_a_w1_int[(tag_last_bit-tag_start_bit):0]) & tag_a_w1_int[22] & tag_hit_tlb_port1) ? 1'b1 : 1'b0; 
-assign tag_comp_w0_b = ((tag_out_tlb_port2[tag_tlb_last_bit:tag_tlb_start_bit] == tag_b_w0_int[(tag_last_bit-tag_start_bit):0]) & tag_b_w0_int[22] & tag_hit_tlb_port2) ? 1'b1 : 1'b0;
-assign tag_comp_w1_b = ((tag_out_tlb_port2[tag_tlb_last_bit:tag_tlb_start_bit] == tag_b_w1_int[(tag_last_bit-tag_start_bit):0]) & tag_b_w1_int[22] & tag_hit_tlb_port2) ? 1'b1 : 1'b0; 
+assign tag_comp_w0_a = ((tag_out_tlb_port1[tag_tlb_last_bit:tag_tlb_start_bit] == tag_a_w0_int[(tag_last_bit-tag_start_bit):0]) & tag_a_w0_int[22] & tag_hit_tlb_port1 & dmem_porta_allow) ? 1'b1 : 1'b0;
+assign tag_comp_w1_a = ((tag_out_tlb_port1[tag_tlb_last_bit:tag_tlb_start_bit] == tag_a_w1_int[(tag_last_bit-tag_start_bit):0]) & tag_a_w1_int[22] & tag_hit_tlb_port1 & dmem_porta_allow) ? 1'b1 : 1'b0; 
+assign tag_comp_w0_b = ((tag_out_tlb_port2[tag_tlb_last_bit:tag_tlb_start_bit] == tag_b_w0_int[(tag_last_bit-tag_start_bit):0]) & tag_b_w0_int[22] & tag_hit_tlb_port2 & dmem_portb_allow) ? 1'b1 : 1'b0;
+assign tag_comp_w1_b = ((tag_out_tlb_port2[tag_tlb_last_bit:tag_tlb_start_bit] == tag_b_w1_int[(tag_last_bit-tag_start_bit):0]) & tag_b_w1_int[22] & tag_hit_tlb_port2 & dmem_portb_allow) ? 1'b1 : 1'b0; 
 
 
 always @(*) begin
@@ -752,6 +776,23 @@ generate
 
   end
 endgenerate
+
+
+//-------PMP Check -----------------
+
+
+  assign dmem_porta_allow = (dmem_porta_permissions == 4'd3);
+  assign dmem_portb_allow = (dmem_portb_permissions == 4'd3);
+    rv32_mpu #(.MMU_SUPPORT(0)) IMEM_MPU (
+     .aclk(clk),
+     .aresetn(~rst),
+     .imem_addr({tag_out_tlb_port1[tag_tlb_last_bit:tag_tlb_start_bit],addr_in_a[index_last_bit:offset_start_bit]}),
+     .imem_allow(dmem_porta_permissions),
+     .dmem_addr({tag_out_tlb_port2[tag_tlb_last_bit:tag_tlb_start_bit],addr_in_b[index_last_bit:offset_start_bit]}),
+     .dmem_allow(dmem_portb_permissions),
+     .csr_sb(csr_pmp_sb)
+    );
+  
 
     DTLB DTLB(
       .clk(clk), 

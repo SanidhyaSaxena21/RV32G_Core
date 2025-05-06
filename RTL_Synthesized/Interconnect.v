@@ -21,6 +21,7 @@ module interconnect (
     output   [31:0]  instr_data,       // Instruction read data
     output           instr_ready,      // Instruction bus ready signal
     output           instr_stall,
+    output           instr_tlast,
 
     // Data Bus Interface
     input  wire         data_req,         // Data request signal
@@ -33,6 +34,7 @@ module interconnect (
     output   [31:0]  data_read_data,   // Data read data
     output           data_ready,       // Data bus ready signal
     output           data_stall,
+    output           data_tlast,
 
     // Memory Interface (Output Interface to Memory)
     output reg          mem_req,          // Memory request signal
@@ -44,6 +46,7 @@ module interconnect (
 
     input  wire [31:0]  mem_read_data,    // Memory read data
     input  wire         mem_stall,
+    input  wire         mem_tlast,
     input  wire         mem_ready         // Memory ready signal
 );
 
@@ -91,10 +94,12 @@ module interconnect (
     assign instr_ready = (current_access == 1'b0) & mem_ready;
     assign instr_data  = (current_access == 1'b0) ? mem_read_data : 32'd0;
     assign instr_stall = (current_access == 1'b0) & mem_stall;
+    assign instr_tlast = (current_access == 1'b0) & mem_tlast;
     
     assign data_ready = (current_access == 1'b1) & mem_ready;
     assign data_read_data  = (current_access == 1'b1) ? mem_read_data : 32'd0;
     assign data_stall = (current_access == 1'b1) & mem_stall;
+    assign data_tlast = (current_access == 1'b1) & mem_tlast;
 
 endmodule
 

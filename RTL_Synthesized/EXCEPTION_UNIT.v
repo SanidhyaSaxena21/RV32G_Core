@@ -116,6 +116,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
     wire store_misaligned;
     wire instruction_page_fault;
     wire load_page_fault;    
+    wire store_page_fault;    
     wire inst_dec_error;       
 
     wire async_trap_occuring;
@@ -163,12 +164,13 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
     assign store_access_fault     = sync_exceptions[7];
     assign instruction_page_fault = sync_exceptions[12];
     assign load_page_fault        = sync_exceptions[13];
+    assign store_page_fault       = sync_exceptions[15];
     assign inst_dec_error         = sync_exceptions[24];
 
     // Synchronous Interrupts
-    assign MEM_STAGE_EXCEPTION      = (load_access_fault | load_misaligned | store_access_fault | store_misaligned | load_page_fault);
-    assign DECODE_STAGE_EXCEPTION   = (inst_access_fault | illegal_instruction | csr_ro_wr | inst_dec_error);
-    assign ECALL_EBREAK_EXCEPTION   = (sys[`IS_ECALL] /*| sys[`IS_EBREAK]*/ | sys[`IS_MRET]);
+    assign MEM_STAGE_EXCEPTION      = (load_access_fault | load_misaligned | store_access_fault | store_misaligned | load_page_fault |store_page_fault);
+    assign DECODE_STAGE_EXCEPTION   = (inst_access_fault | illegal_instruction | csr_ro_wr | inst_dec_error) & ~Branch_Taken__ex_mem;
+    assign ECALL_EBREAK_EXCEPTION   = (sys[`IS_ECALL] /*| sys[`IS_EBREAK]*/ | sys[`IS_MRET]) & ~Branch_Taken__ex_mem;
     assign FETCH_STAGE_EXCEPTION    = (inst_addr_misaligned | instruction_page_fault);
 
     // Asynchronous Interrupts 
@@ -340,7 +342,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
         exp_ecall <= 1'b0;
         //PC_Freeze_IRQ <= 1'b0;
       end
-      else if (trap_occuring & ~PC_Control__IRQ & ~interrupt_pending) begin
+      else if (trap_occuring & ~PC_Control__IRQ /*& ~interrupt_pending*/) begin
         PC_Control__IRQ <= 1'b1;
         count <= count + 2'd1;
         exp_trap <= 1'b1;
@@ -369,10 +371,11 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
     assign PC_Freeze_IRQ = PC_Control__IRQ;
 
 
+    //RISCV supports nested interrupts
     always @(posedge CLK) begin
       if(RST) interrupt_pending <= 1'b0;
-      else if((((sys[`IS_ECALL] | sys[`IS_EBREAK]) || trap_occuring )& ~Branch_Taken__ex_mem & ~PC_Control__IRQ & ~IF_ID_freeze)) interrupt_pending <= 1'b1;
-      else if(sys[`IS_MRET] && ~PC_Control__IRQ) interrupt_pending <= 1'b0;
+      else if(((((sys[`IS_ECALL] | sys[`IS_EBREAK]) & ~Branch_Taken__ex_mem) || trap_occuring ) & ~PC_Control__IRQ & ~IF_ID_freeze)) interrupt_pending <= 1'b1;
+      else if((sys[`IS_MRET] & ~Branch_Taken__ex_mem) && ~PC_Control__IRQ) interrupt_pending <= 1'b0;
     end
 
     // CSR Register Write 
@@ -578,9 +581,10 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
                           (load_access_fault)       ? {{XLEN-4{1'b0}}, 4'h5}   :
                           (store_misaligned)        ? {{XLEN-4{1'b0}}, 4'h6}   :
                           (store_access_fault)      ? {{XLEN-4{1'b0}}, 4'h7}   :
-                          (sys[`IS_ECALL])         ? {{XLEN-4{1'b0}}, 4'hB}   :
+                          (sys[`IS_ECALL])          ? {{XLEN-4{1'b0}}, 4'hB}   :
                           (instruction_page_fault)  ? {{XLEN-4{1'b0}}, 4'hC}   :
                           (load_page_fault)         ? {{XLEN-4{1'b0}}, 4'hD}   :
+                          (store_page_fault)        ? {{XLEN-4{1'b0}}, 4'hF}   :
                           (inst_dec_error)          ? {{XLEN-5{1'b0}}, 5'h18}  :
                                                       32'd0;
   
@@ -603,6 +607,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
                         (inst_dec_error)          ? exp_instruction :
                         (instruction_page_fault)  ? pc_reg_IF :
                         (load_page_fault)         ? exp_addr :
+                        (store_page_fault)        ? exp_addr :
                                                  32'd0;
     assign async_trap_occuring = ((csr_mip_msip & csr_mie_msie) | 
                                   (csr_mip_mtip & csr_mie_mtie) | 
@@ -616,6 +621,8 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
                                 store_misaligned     |
                                 load_access_fault    |
                                 store_access_fault   |
+                                load_page_fault      |
+                                store_page_fault     |
                                 inst_dec_error       ;
 
     assign trap_occuring = (async_pulse | sync_trap_occuring) & ~interrupt_dbg_global_disable;

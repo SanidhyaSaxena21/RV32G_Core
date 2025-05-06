@@ -30,7 +30,12 @@ module IF_ID_EX
     input Inst_Cache__Stall,
     input [31:0] Instruction__IF_ID,
     input instruction_page_fault,
-    input data_page_fault, 
+    input data_page_fault,
+    input load_access_fault,
+    input store_access_fault,
+    input load_page_fault,
+    input store_page_fault,
+    input load_store_fault,
     
     
     output LR_Inst,                                        //to register file
@@ -765,7 +770,7 @@ always @(posedge CLK) begin
         Double_Load_Data <= 64'b0;
         PC_MEM   <= 32'd0;        
     end
-    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || Double_Load_Store__Stall || /*PC_Freeze_IRQ* ||*/ PC_HALT_BREAK || halt_ie_mem)) begin            
+    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || Double_Load_Store__Stall || PC_Freeze_IRQ || PC_HALT_BREAK || halt_ie_mem)) begin            
         PC_MEM <= pc_ex_mem;
         Branch_Taken__EX_MEM  <= Branch_Taken__ex_mem;
         Branch_Target_Addr__EX_MEM  <= Branch_Target_Addr__ex_mem;
@@ -871,6 +876,11 @@ always @(posedge CLK ) begin
     end 
 end */
 
+//------------------------------------------------------------------------
+//  
+//   BRANCH PREDICTION UNIT 
+//
+//------------------------------------------------------------------------
 
 (* keep_hierarchy = "yes" *)
 Branch_Prediction_Unit BPU( .CLK(CLK),
@@ -895,7 +905,13 @@ Branch_Prediction_Unit BPU( .CLK(CLK),
                             .RAS_CALL_Inst_nextPC(RAS_CALL_Inst_nextPC__ex_mem),
                             .Branch_Taken__EX_MEM(Branch_Taken__EX_MEM),
                             .PC_Control__IRQ(PC_Control__IRQ));
-                            
+                           
+//------------------------------------------------------------------------
+//  
+//   INSTRUCTION FETCH UNIT 
+//
+//------------------------------------------------------------------------
+ 
 (* keep_hierarchy = "yes" *)
 INST_FETCH IF( .CLK(CLK),
                .RST(RST), 
@@ -1031,6 +1047,11 @@ DEBUG_CONTROLLER #(.PC_BOOT()) debug_Controller (
 
 
 
+//------------------------------------------------------------------------
+//  
+//   EXCEPTION UNIT 
+//
+//------------------------------------------------------------------------
 
 
 //TODO: Add PC and Instruction to memory stage for detection
@@ -1048,8 +1069,8 @@ assign inst_addr_misaligned   = (pc_cache[1:0] != 2'b00);
 assign illegal_instruction    = illegal_instruction_ID;
 
 assign inst_access_fault      = 1'b0; // Is fetching Instruction on forbidden Memory region
-assign load_access_fault      = 1'b0;
-assign store_access_fault     = 1'b0;
+//assign load_access_fault      = 1'b0;
+//assign store_access_fault     = 1'b0;
 assign load_misaligned        = badaddr_data_load;
 assign store_misaligned       = badaddr_data_store;
 
@@ -1081,8 +1102,10 @@ EXCEPTION_UNIT EXECPTION_UNIT(
                 .sync_exceptions({
                                   39'd0,
                                   inst_dec_error,
-                                  10'd0,
-                                  data_page_fault,
+                                  8'd0,
+                                  store_page_fault,
+                                  1'd0,
+                                  load_page_fault,
                                   instruction_page_fault,
                                   4'd0,
                                   store_access_fault,
@@ -1090,9 +1113,9 @@ EXCEPTION_UNIT EXECPTION_UNIT(
                                   load_access_fault,
                                   load_misaligned,
                                   1'b0,
-                                  inst_addr_misaligned,
+                                  illegal_instruction,
                                   inst_access_fault,
-                                  illegal_instruction
+                                  inst_addr_misaligned
                                   }),
                 // CSR Registers 
                 .csr_mstatus(csr_mstatus),
@@ -1114,11 +1137,19 @@ EXCEPTION_UNIT EXECPTION_UNIT(
                 .sb_csr(sb_csr)
               );
 
+//------------------------------------------------------------------------
+//  
+//   DECODE UNIT 
+//
+//------------------------------------------------------------------------
+
+wire active_instruction_id;
 (* keep_hierarchy = "yes" *)
 DECODE ID( .CLK(CLK),                                                              
            .RST(RST),
            .IF_ID_Freeze(Inst_Cache__Stall || Mult_Div_unit__Stall || FPU__Stall || Double_Load_Store__Stall || Data_Cache__Stall || PC_HALT_BREAK),
-           .Instruction__IF_ID(Instruction__IF_ID),                                               
+           .Instruction__IF_ID(Instruction__IF_ID),
+           .active_instruction_id(active_instruction_id),           
            .PC__IF_ID(PC__IF_ID),
            .PC_4__IF_ID(PC_4__IF_ID),
            .PC_ID(PC_ID),           
@@ -1252,6 +1283,11 @@ FP_DECODE FP__ID( .CLK(CLK),
                   //.inst_inj(inst_inj),
                   //.irq_ctrl(irq_ctrl)
                   );
+//------------------------------------------------------------------------
+//  
+//   EXECUTE UNIT 
+//
+//------------------------------------------------------------------------
 
 (* keep_hierarchy = "yes" *)           
 EXECUTE EX( .CLK(CLK),                                                              
@@ -1404,6 +1440,12 @@ EXECUTE EX( .CLK(CLK),
                   .frm(frm),
                   .FPU_flags(FPU_flags));*/
 
+//------------------------------------------------------------------------
+//  
+//   REGISTER FILE 
+//
+//------------------------------------------------------------------------
+                 
 (* keep_hierarchy = "yes" *)
 REG_FILE RF( .CLK(CLK),
              .RST(RST),
@@ -1449,6 +1491,11 @@ Sys_counter sc1( .rst(RST),
                  .csr_wr_en(csr_wr_en),
                  .tick_en(tick_en_int));
                  
+//------------------------------------------------------------------------
+//  
+//   CSR UNIT 
+//
+//------------------------------------------------------------------------
                  
  (* keep_hierarchy = "yes" *)
  csr c1( .clk(CLK),

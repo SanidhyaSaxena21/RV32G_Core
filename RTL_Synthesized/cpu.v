@@ -27,6 +27,7 @@ output  [31:0]  IWDATA,
 input      [31:0]  IRDATA,
 input              IACK,
 input              ISTALL,
+input              ITLAST,
 output  [3:0]   IBSTROBE,
 
 output  [31:0]  DADDR,
@@ -37,6 +38,7 @@ output  [31:0]  DWDATA,
 input      [31:0]  DRDATA,
 input              DACK,
 input              DSTALL,
+input              DTLAST,
 output  [3:0]   DBSTROBE,
 
 input  wire                    ext_irq,
@@ -96,8 +98,8 @@ assign block_instr_int = instruction_int;
 fet_dec_ex_mem fdem( .RESET_BUTTON(RESET_BUTTON),.clk(clk),/*.led(led),*/.tick_en(tick_en),.addr_exception(addr_exception)
                       ,.ext_irq(ext_irq),.sw_irq(sw_irq),.timer_irq(timer_irq)
                      ,.interrupt(interrupt),.clmode(2'b00),.cache_en(cache_en),.csr_pmp_sb(csr_pmp_sb)
-                     ,.DADDR(DADDR),.DBURST(DBURST),.DREQ(DREQ),.DWRB(DWRB),.DWDATA(DWDATA),.DRDATA(DRDATA),.DACK(DACK),.DSTALL(DSTALL),.DBSTROBE(DBSTROBE)
-                     ,.IADDR(IADDR),.IBURST(IBURST),.IREQ(IREQ),.IWRB(IWRB),.IWDATA(IWDATA),.IRDATA(IRDATA),.IACK(IACK),.ISTALL(ISTALL),.IBSTROBE(IBSTROBE),
+                     ,.DADDR(DADDR),.DBURST(DBURST),.DREQ(DREQ),.DWRB(DWRB),.DWDATA(DWDATA),.DRDATA(DRDATA),.DACK(DACK),.DSTALL(DSTALL),.DTLAST(DTLAST),.DBSTROBE(DBSTROBE)
+                     ,.IADDR(IADDR),.IBURST(IBURST),.IREQ(IREQ),.IWRB(IWRB),.IWDATA(IWDATA),.IRDATA(IRDATA),.IACK(IACK),.ISTALL(ISTALL),.ITLAST(ITLAST),.IBSTROBE(IBSTROBE),
                       .instruction_DM(instruction_DM),
                       .PC_DEBUG(PC_DEBUG),
                       .freeze_int_dcache(freeze_int_dcache),

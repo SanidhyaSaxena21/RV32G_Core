@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
-//`define BPU_ENABLE
-`undef BPU_ENABLE
+`define BPU_ENABLE
+//`undef BPU_ENABLE
 
 (* keep_hierarchy = "yes" *)
 module Branch_Prediction_Unit
@@ -49,11 +49,11 @@ assign RET_Inst__RAS = (Branch_Target_Addr__BTB[1:0] == 2'b11) ? 1'b1 : 1'b0;
 
 `ifdef BPU_ENABLE
 always @(*) begin
-    if (RST) begin
+    /*if (RST) begin
         Branch_Taken = 1'b0;
         Branch_Target_Addr = 32'b0;
     end
-    else begin
+    else begin*/
         if (PC_Control__IRQ == 1'b1) begin
             Branch_Taken = 1'b0;
             Branch_Target_Addr = 32'b0;
@@ -78,18 +78,19 @@ always @(*) begin
             Branch_Taken = 1'b0;
             Branch_Target_Addr = 32'b0;
         end   
-    end
+    //end
 end
 `else
+//Removing RESET from Combo Logic
 always @(*) begin
-    if (RST) begin
+    /*if (RST) begin
         Branch_Taken = 1'b0;
         Branch_Target_Addr = 32'b0;
     end
-    else begin
+    else begin*/
         Branch_Taken = 1'b0;
         Branch_Target_Addr = 32'b0;
-    end
+    //end
 end
 `endif
 

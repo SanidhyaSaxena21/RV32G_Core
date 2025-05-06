@@ -342,7 +342,7 @@ begin
 end
 
 // data_in_L1[31:0] = 
-assign page_fault = (REQ && ACK) & (~data_in[0] | ~data_in[2] & data_in[1]);
+assign page_fault = (REQ && ACK) & (~data_in[0] | (data_in[2] & ~data_in[1]));
 assign next_pte   = (REQ && ACK) & (data_in[0] & ~data_in[1] & ~data_in[2] & ~data_in[3]);
 assign RO_page  =   (REQ && ACK) & (data_in[1] & ~data_in[2] & ~data_in[3]);
 assign RW_page  =   (REQ && ACK) & (data_in[1] & data_in[2] & ~data_in[3]);
