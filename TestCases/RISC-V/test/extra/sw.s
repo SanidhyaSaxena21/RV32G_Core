@@ -1,3 +1,4 @@
+.include "csr.inc";
 #
 # TEST CODE FOR SW
 #
@@ -17,7 +18,8 @@ main:
         
         # store word with zero immediate
         li      x1, 0x12345678  # set x1 to 0x12345678 
-        li      x2, 0x1008      # set x2 to 0x1008
+        lla     x2, __DATA_BEGIN__     # set x2 to 0x1008
+        addi    x2, x2, 0x8
         sw      x1, 0(x2)       # store word from x1 (0x12345678) to 0x1008, mem(0x1008)=0x12345678 
         
         # store word with positive immediate
@@ -26,6 +28,9 @@ main:
         
         #store word with negative immediate
         sw      x3, -4(x2)      # store word from x3(0xAABBCCDD) to 0x1004, mem(0x1004)=0xAABBCCDD
+
+        lw      x7, 0(x2)
+        sw      x7, 8(x2)
           
         # self-check 
         li      x4, 0x12345678  # set x4 to 0x12345678 (expected value for mem(0x1008)
@@ -45,6 +50,8 @@ main:
 
         # Exit test using RISC-V International's riscv-tests pass/fail criteria
         pass:
+        li      a0,1
+        csrw CSR_FLUSH,a0
         li      a0, 0           # set a0 (x10) to 0 to indicate a pass code
         li      a7, 93          # set a7 (x17) to 93 (5dh) to indicate reached the end of the test
         ebreak

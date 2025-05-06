@@ -37,100 +37,124 @@ Disassembly of section .text:
   74:	00000e93          	li	t4,0
   78:	00000f13          	li	t5,0
   7c:	00000f93          	li	t6,0
-  80:	00008117          	auipc	sp,0x8
-  84:	f7c10113          	addi	sp,sp,-132 # 7ffc <__stack_pointer>
+  80:	20004117          	auipc	sp,0x20004
+  84:	f7c10113          	addi	sp,sp,-132 # 20003ffc <__stack_pointer>
   88:	00018193          	mv	gp,gp
   8c:	30501073          	csrw	mtvec,zero
   90:	30401073          	csrw	mie,zero
   94:	30001073          	csrw	mstatus,zero
   98:	34401073          	csrw	mip,zero
-  9c:	00004717          	auipc	a4,0x4
-  a0:	f6470713          	addi	a4,a4,-156 # 4000 <__DATA_BEGIN__>
-  a4:	00004797          	auipc	a5,0x4
-  a8:	f5c78793          	addi	a5,a5,-164 # 4000 <__DATA_BEGIN__>
+  9c:	000042b7          	lui	t0,0x4
+  a0:	0022d293          	srli	t0,t0,0x2
+  a4:	3b029073          	csrw	pmpaddr0,t0
+  a8:	200002b7          	lui	t0,0x20000
+  ac:	0022d293          	srli	t0,t0,0x2
+  b0:	3b129073          	csrw	pmpaddr1,t0
+  b4:	200042b7          	lui	t0,0x20004
+  b8:	0022d293          	srli	t0,t0,0x2
+  bc:	3b229073          	csrw	pmpaddr2,t0
+  c0:	5f0002b7          	lui	t0,0x5f000
+  c4:	0022d293          	srli	t0,t0,0x2
+  c8:	3b329073          	csrw	pmpaddr3,t0
+  cc:	5f0042b7          	lui	t0,0x5f004
+  d0:	0022d293          	srli	t0,t0,0x2
+  d4:	3b429073          	csrw	pmpaddr4,t0
+  d8:	fff00293          	li	t0,-1
+  dc:	0022d293          	srli	t0,t0,0x2
+  e0:	3b529073          	csrw	pmpaddr5,t0
+  e4:	070b02b7          	lui	t0,0x70b0
+  e8:	70d28293          	addi	t0,t0,1805 # 70b070d <__rom_end+0x70ac70d>
+  ec:	3a029073          	csrw	pmpcfg0,t0
+  f0:	070702b7          	lui	t0,0x7070
+  f4:	70b28293          	addi	t0,t0,1803 # 707070b <__rom_end+0x706c70b>
+  f8:	3a129073          	csrw	pmpcfg1,t0
+  fc:	20000717          	auipc	a4,0x20000
+ 100:	f0470713          	addi	a4,a4,-252 # 20000000 <__DATA_BEGIN__>
+ 104:	20000797          	auipc	a5,0x20000
+ 108:	efc78793          	addi	a5,a5,-260 # 20000000 <__DATA_BEGIN__>
 
-000000ac <clear_bss_loop>:
-  ac:	00f75863          	bge	a4,a5,bc <clear_bss_end>
-  b0:	00072023          	sw	zero,0(a4)
-  b4:	00470713          	addi	a4,a4,4
-  b8:	ff5ff06f          	j	ac <clear_bss_loop>
+0000010c <clear_bss_loop>:
+ 10c:	00f75863          	bge	a4,a5,11c <clear_bss_end>
+ 110:	00072023          	sw	zero,0(a4)
+ 114:	00470713          	addi	a4,a4,4
+ 118:	ff5ff06f          	j	10c <clear_bss_loop>
 
-000000bc <clear_bss_end>:
-  bc:	010000ef          	jal	ra,cc <main>
-  c0:	00000513          	li	a0,0
-  c4:	05d00893          	li	a7,93
-  c8:	00100073          	ebreak
+0000011c <clear_bss_end>:
+ 11c:	010000ef          	jal	ra,12c <main>
+ 120:	00000513          	li	a0,0
+ 124:	05d00893          	li	a7,93
+ 128:	00100073          	ebreak
 
-000000cc <main>:
-  cc:	00800093          	li	ra,8
-  d0:	30009073          	csrw	mstatus,ra
-  d4:	000010b7          	lui	ra,0x1
-  d8:	88808093          	addi	ra,ra,-1912 # 888 <fail1+0x6ec>
-  dc:	30409073          	csrw	mie,ra
-  e0:	00000097          	auipc	ra,0x0
-  e4:	04008093          	addi	ra,ra,64 # 120 <interrupt_handler>
-  e8:	30509073          	csrw	mtvec,ra
-  ec:	5f000137          	lui	sp,0x5f000
-  f0:	00100193          	li	gp,1
-  f4:	00312023          	sw	gp,0(sp) # 5f000000 <MSIP_BASE_ADDRESS>
-  f8:	5f0000b7          	lui	ra,0x5f000
-  fc:	00408093          	addi	ra,ra,4 # 5f000004 <MTIME_BASE_ADDRESS>
- 100:	0000a103          	lw	sp,0(ra)
- 104:	00310113          	addi	sp,sp,3
- 108:	5f0001b7          	lui	gp,0x5f000
- 10c:	00c18193          	addi	gp,gp,12 # 5f00000c <MTIMECMP_BASE_ADDRESS>
- 110:	0021a023          	sw	sp,0(gp) # 4800 <__global_pointer$>
- 114:	0001a223          	sw	zero,4(gp) # 4804 <__global_pointer$+0x4>
-
-00000118 <loop>:
- 118:	00000013          	nop
- 11c:	ffdff06f          	j	118 <loop>
-
-00000120 <interrupt_handler>:
- 120:	34202173          	csrr	sp,mcause
- 124:	800001b7          	lui	gp,0x80000
- 128:	00b18193          	addi	gp,gp,11 # 8000000b <MTIMECMP_BASE_ADDRESS+0x20ffffff>
- 12c:	80000237          	lui	tp,0x80000
- 130:	00320213          	addi	tp,tp,3 # 80000003 <MTIMECMP_BASE_ADDRESS+0x20fffff7>
- 134:	800002b7          	lui	t0,0x80000
- 138:	00728293          	addi	t0,t0,7 # 80000007 <MTIMECMP_BASE_ADDRESS+0x20fffffb>
- 13c:	04018a63          	beqz	gp,190 <fail0>
- 140:	04020863          	beqz	tp,190 <fail0>
- 144:	04028663          	beqz	t0,190 <fail0>
- 148:	00410663          	beq	sp,tp,154 <check_software_interrupt>
- 14c:	00510c63          	beq	sp,t0,164 <check_timer_interrupt>
- 150:	30200073          	mret
-
-00000154 <check_software_interrupt>:
- 154:	5f000137          	lui	sp,0x5f000
- 158:	00012023          	sw	zero,0(sp) # 5f000000 <MSIP_BASE_ADDRESS>
- 15c:	00100513          	li	a0,1
- 160:	30200073          	mret
-
-00000164 <check_timer_interrupt>:
- 164:	fff00113          	li	sp,-1
+0000012c <main>:
+ 12c:	00800093          	li	ra,8
+ 130:	30009073          	csrw	mstatus,ra
+ 134:	000010b7          	lui	ra,0x1
+ 138:	88808093          	addi	ra,ra,-1912 # 888 <CSR_FLUSH+0x488>
+ 13c:	30409073          	csrw	mie,ra
+ 140:	00000097          	auipc	ra,0x0
+ 144:	04008093          	addi	ra,ra,64 # 180 <interrupt_handler>
+ 148:	30509073          	csrw	mtvec,ra
+ 14c:	5f000137          	lui	sp,0x5f000
+ 150:	00100193          	li	gp,1
+ 154:	00312023          	sw	gp,0(sp) # 5f000000 <MSIP_BASE_ADDRESS>
+ 158:	5f0000b7          	lui	ra,0x5f000
+ 15c:	00408093          	addi	ra,ra,4 # 5f000004 <MTIME_BASE_ADDRESS>
+ 160:	0000a103          	lw	sp,0(ra)
+ 164:	00310113          	addi	sp,sp,3
  168:	5f0001b7          	lui	gp,0x5f000
  16c:	00c18193          	addi	gp,gp,12 # 5f00000c <MTIMECMP_BASE_ADDRESS>
- 170:	0021a023          	sw	sp,0(gp) # 4800 <__global_pointer$>
- 174:	00100593          	li	a1,1
- 178:	00100793          	li	a5,1
- 17c:	00f51a63          	bne	a0,a5,190 <fail0>
- 180:	00f59e63          	bne	a1,a5,19c <fail1>
+ 170:	0021a023          	sw	sp,0(gp) # 20000800 <__global_pointer$>
+ 174:	0001a223          	sw	zero,4(gp) # 20000804 <__global_pointer$+0x4>
 
-00000184 <pass>:
- 184:	00000513          	li	a0,0
- 188:	05d00893          	li	a7,93
- 18c:	00100073          	ebreak
+00000178 <loop>:
+ 178:	00000013          	nop
+ 17c:	ffdff06f          	j	178 <loop>
 
-00000190 <fail0>:
- 190:	00100513          	li	a0,1
- 194:	05d00893          	li	a7,93
- 198:	00100073          	ebreak
+00000180 <interrupt_handler>:
+ 180:	34202173          	csrr	sp,mcause
+ 184:	800001b7          	lui	gp,0x80000
+ 188:	00b18193          	addi	gp,gp,11 # 8000000b <PMP_REGION5+0x8000000c>
+ 18c:	80000237          	lui	tp,0x80000
+ 190:	00320213          	addi	tp,tp,3 # 80000003 <PMP_REGION5+0x80000004>
+ 194:	800002b7          	lui	t0,0x80000
+ 198:	00728293          	addi	t0,t0,7 # 80000007 <PMP_REGION5+0x80000008>
+ 19c:	04018a63          	beqz	gp,1f0 <fail0>
+ 1a0:	04020863          	beqz	tp,1f0 <fail0>
+ 1a4:	04028663          	beqz	t0,1f0 <fail0>
+ 1a8:	00410663          	beq	sp,tp,1b4 <check_software_interrupt>
+ 1ac:	00510c63          	beq	sp,t0,1c4 <check_timer_interrupt>
+ 1b0:	30200073          	mret
 
-0000019c <fail1>:
- 19c:	00200513          	li	a0,2
- 1a0:	05d00893          	li	a7,93
- 1a4:	00100073          	ebreak
+000001b4 <check_software_interrupt>:
+ 1b4:	5f000137          	lui	sp,0x5f000
+ 1b8:	00012023          	sw	zero,0(sp) # 5f000000 <MSIP_BASE_ADDRESS>
+ 1bc:	00100513          	li	a0,1
+ 1c0:	30200073          	mret
+
+000001c4 <check_timer_interrupt>:
+ 1c4:	fff00113          	li	sp,-1
+ 1c8:	5f0001b7          	lui	gp,0x5f000
+ 1cc:	00c18193          	addi	gp,gp,12 # 5f00000c <MTIMECMP_BASE_ADDRESS>
+ 1d0:	0021a023          	sw	sp,0(gp) # 20000800 <__global_pointer$>
+ 1d4:	00100593          	li	a1,1
+ 1d8:	00100793          	li	a5,1
+ 1dc:	00f51a63          	bne	a0,a5,1f0 <fail0>
+ 1e0:	00f59e63          	bne	a1,a5,1fc <fail1>
+
+000001e4 <pass>:
+ 1e4:	00000513          	li	a0,0
+ 1e8:	05d00893          	li	a7,93
+ 1ec:	00100073          	ebreak
+
+000001f0 <fail0>:
+ 1f0:	00100513          	li	a0,1
+ 1f4:	05d00893          	li	a7,93
+ 1f8:	00100073          	ebreak
+
+000001fc <fail1>:
+ 1fc:	00200513          	li	a0,2
+ 200:	05d00893          	li	a7,93
+ 204:	00100073          	ebreak
 
 Disassembly of section .riscv.attributes:
 

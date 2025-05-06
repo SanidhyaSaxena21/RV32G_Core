@@ -37,61 +37,84 @@ Disassembly of section .text:
   74:	00000e93          	li	t4,0
   78:	00000f13          	li	t5,0
   7c:	00000f93          	li	t6,0
-  80:	00008117          	auipc	sp,0x8
-  84:	f7c10113          	addi	sp,sp,-132 # 7ffc <__stack_pointer>
+  80:	20004117          	auipc	sp,0x20004
+  84:	f7c10113          	addi	sp,sp,-132 # 20003ffc <__stack_pointer>
   88:	00018193          	mv	gp,gp
   8c:	30501073          	csrw	mtvec,zero
   90:	30401073          	csrw	mie,zero
   94:	30001073          	csrw	mstatus,zero
   98:	34401073          	csrw	mip,zero
-  9c:	81018713          	addi	a4,gp,-2032 # 4010 <__bss_end>
-  a0:	81018793          	addi	a5,gp,-2032 # 4010 <__bss_end>
+  9c:	000042b7          	lui	t0,0x4
+  a0:	0022d293          	srli	t0,t0,0x2
+  a4:	3b029073          	csrw	pmpaddr0,t0
+  a8:	200002b7          	lui	t0,0x20000
+  ac:	0022d293          	srli	t0,t0,0x2
+  b0:	3b129073          	csrw	pmpaddr1,t0
+  b4:	200042b7          	lui	t0,0x20004
+  b8:	0022d293          	srli	t0,t0,0x2
+  bc:	3b229073          	csrw	pmpaddr2,t0
+  c0:	5f0002b7          	lui	t0,0x5f000
+  c4:	0022d293          	srli	t0,t0,0x2
+  c8:	3b329073          	csrw	pmpaddr3,t0
+  cc:	5f0042b7          	lui	t0,0x5f004
+  d0:	0022d293          	srli	t0,t0,0x2
+  d4:	3b429073          	csrw	pmpaddr4,t0
+  d8:	fff00293          	li	t0,-1
+  dc:	0022d293          	srli	t0,t0,0x2
+  e0:	3b529073          	csrw	pmpaddr5,t0
+  e4:	070b02b7          	lui	t0,0x70b0
+  e8:	70d28293          	addi	t0,t0,1805 # 70b070d <__rom_end+0x70ac70d>
+  ec:	3a029073          	csrw	pmpcfg0,t0
+  f0:	070702b7          	lui	t0,0x7070
+  f4:	70b28293          	addi	t0,t0,1803 # 707070b <__rom_end+0x706c70b>
+  f8:	3a129073          	csrw	pmpcfg1,t0
+  fc:	82418713          	addi	a4,gp,-2012 # 20000024 <__bss_end>
+ 100:	82418793          	addi	a5,gp,-2012 # 20000024 <__bss_end>
 
-000000a4 <clear_bss_loop>:
-  a4:	00f75863          	bge	a4,a5,b4 <clear_bss_end>
-  a8:	00072023          	sw	zero,0(a4)
-  ac:	00470713          	addi	a4,a4,4
-  b0:	ff5ff06f          	j	a4 <clear_bss_loop>
+00000104 <clear_bss_loop>:
+ 104:	00f75863          	bge	a4,a5,114 <clear_bss_end>
+ 108:	00072023          	sw	zero,0(a4)
+ 10c:	00470713          	addi	a4,a4,4
+ 110:	ff5ff06f          	j	104 <clear_bss_loop>
 
-000000b4 <clear_bss_end>:
-  b4:	010000ef          	jal	ra,c4 <main>
-  b8:	00000513          	li	a0,0
-  bc:	05d00893          	li	a7,93
-  c0:	00100073          	ebreak
+00000114 <clear_bss_end>:
+ 114:	010000ef          	jal	ra,124 <main>
+ 118:	00000513          	li	a0,0
+ 11c:	05d00893          	li	a7,93
+ 120:	00100073          	ebreak
 
-000000c4 <main>:
-  c4:	00004097          	auipc	ra,0x4
-  c8:	f3c08093          	addi	ra,ra,-196 # 4000 <__DATA_BEGIN__>
-  cc:	00002137          	lui	sp,0x2
-  d0:	f7410113          	addi	sp,sp,-140 # 1f74 <UART_TX_DATA_ADDR>
-  d4:	000021b7          	lui	gp,0x2
-  d8:	f7818193          	addi	gp,gp,-136 # 1f78 <UART_TX_BUSY_ADDR>
+00000124 <main>:
+ 124:	20000097          	auipc	ra,0x20000
+ 128:	edc08093          	addi	ra,ra,-292 # 20000000 <__DATA_BEGIN__>
+ 12c:	20000137          	lui	sp,0x20000
+ 130:	00c10113          	addi	sp,sp,12 # 2000000c <UART_TX_DATA_ADDR>
+ 134:	200001b7          	lui	gp,0x20000
+ 138:	01018193          	addi	gp,gp,16 # 20000010 <UART_TX_BUSY_ADDR>
 
-000000dc <ready>:
-  dc:	00018203          	lb	tp,0(gp) # 4800 <__global_pointer$>
-  e0:	fe021ee3          	bnez	tp,dc <ready>
+0000013c <ready>:
+ 13c:	00018203          	lb	tp,0(gp) # 20000800 <__global_pointer$>
+ 140:	fe021ee3          	bnez	tp,13c <ready>
 
-000000e4 <print_char>:
-  e4:	0000c283          	lbu	t0,0(ra)
-  e8:	00510023          	sb	t0,0(sp)
-  ec:	00028663          	beqz	t0,f8 <exit>
-  f0:	00108093          	addi	ra,ra,1
-  f4:	fe9ff06f          	j	dc <ready>
+00000144 <print_char>:
+ 144:	0000c283          	lbu	t0,0(ra)
+ 148:	00510023          	sb	t0,0(sp)
+ 14c:	00028663          	beqz	t0,158 <exit>
+ 150:	00108093          	addi	ra,ra,1
+ 154:	fe9ff06f          	j	13c <ready>
 
-000000f8 <exit>:
-  f8:	00000513          	li	a0,0
-  fc:	05d00893          	li	a7,93
- 100:	00100073          	ebreak
+00000158 <exit>:
+ 158:	00000513          	li	a0,0
+ 15c:	05d00893          	li	a7,93
+ 160:	00100073          	ebreak
 
 Disassembly of section .data:
 
-00004000 <__DATA_BEGIN__>:
-    4000:	6548                	flw	fa0,12(a0)
-    4002:	6c6c                	flw	fa1,92(s0)
-    4004:	6f57206f          	j	76ef8 <__ram_end+0x6eef8>
-    4008:	6c72                	flw	fs8,28(sp)
-    400a:	2164                	fld	fs1,192(a0)
-    400c:	0000                	unimp
+20000000 <__DATA_BEGIN__>:
+20000000:	6548                	flw	fa0,12(a0)
+20000002:	6c6c                	flw	fa1,92(s0)
+20000004:	6f57206f          	j	20072ef8 <__ram_end+0x6eef8>
+20000008:	6c72                	flw	fs8,28(sp)
+2000000a:	2164                	fld	fs1,192(a0)
 	...
 
 Disassembly of section .riscv.attributes:

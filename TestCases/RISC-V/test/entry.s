@@ -1,3 +1,12 @@
+.equiv PMP_REGION0, 0x00004000
+.equiv PMP_REGION1, 0x20000000
+.equiv PMP_REGION2, 0x20004000
+.equiv PMP_REGION3, 0x5F000000
+.equiv PMP_REGION4, 0x5F004000
+.equiv PMP_REGION5, 0xFFFFFFFF
+.equiv CSR_FLUSH, 0x400
+
+
 .section .text
 .global _start
 
@@ -59,7 +68,37 @@ _start:
         csrw mie, zero
         csrw mstatus, zero
         csrw mip, zero
-    
+    # PMP Configuration
+        li t0,PMP_REGION0
+        srli t0,t0,2
+        csrw pmpaddr0,t0
+        
+        li t0,PMP_REGION1
+        srli t0,t0,2
+        csrw pmpaddr1,t0
+
+        li t0,PMP_REGION2
+        srli t0,t0,2
+        csrw pmpaddr2,t0
+
+        li t0,PMP_REGION3
+        srli t0,t0,2
+        csrw pmpaddr3,t0
+
+        li t0,PMP_REGION4
+        srli t0,t0,2
+        csrw pmpaddr4,t0
+        
+        li t0,PMP_REGION5
+        srli t0,t0,2
+        csrw pmpaddr5,t0
+
+        li t0,0x070B070D
+        csrw pmpcfg0,t0
+
+        li t0,0x0707070B
+        csrw pmpcfg1,t0
+ 
     # Clear BSS section
       la   x14,  __bss_start
       la   x15,  __bss_end

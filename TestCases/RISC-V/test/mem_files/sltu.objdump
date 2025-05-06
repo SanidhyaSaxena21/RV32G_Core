@@ -37,75 +37,99 @@ Disassembly of section .text:
   74:	00000e93          	li	t4,0
   78:	00000f13          	li	t5,0
   7c:	00000f93          	li	t6,0
-  80:	00008117          	auipc	sp,0x8
-  84:	f7c10113          	addi	sp,sp,-132 # 7ffc <__stack_pointer>
+  80:	20004117          	auipc	sp,0x20004
+  84:	f7c10113          	addi	sp,sp,-132 # 20003ffc <__stack_pointer>
   88:	00018193          	mv	gp,gp
   8c:	30501073          	csrw	mtvec,zero
   90:	30401073          	csrw	mie,zero
   94:	30001073          	csrw	mstatus,zero
   98:	34401073          	csrw	mip,zero
-  9c:	00004717          	auipc	a4,0x4
-  a0:	f6470713          	addi	a4,a4,-156 # 4000 <__DATA_BEGIN__>
-  a4:	00004797          	auipc	a5,0x4
-  a8:	f5c78793          	addi	a5,a5,-164 # 4000 <__DATA_BEGIN__>
+  9c:	000042b7          	lui	t0,0x4
+  a0:	0022d293          	srli	t0,t0,0x2
+  a4:	3b029073          	csrw	pmpaddr0,t0
+  a8:	200002b7          	lui	t0,0x20000
+  ac:	0022d293          	srli	t0,t0,0x2
+  b0:	3b129073          	csrw	pmpaddr1,t0
+  b4:	200042b7          	lui	t0,0x20004
+  b8:	0022d293          	srli	t0,t0,0x2
+  bc:	3b229073          	csrw	pmpaddr2,t0
+  c0:	5f0002b7          	lui	t0,0x5f000
+  c4:	0022d293          	srli	t0,t0,0x2
+  c8:	3b329073          	csrw	pmpaddr3,t0
+  cc:	5f0042b7          	lui	t0,0x5f004
+  d0:	0022d293          	srli	t0,t0,0x2
+  d4:	3b429073          	csrw	pmpaddr4,t0
+  d8:	fff00293          	li	t0,-1
+  dc:	0022d293          	srli	t0,t0,0x2
+  e0:	3b529073          	csrw	pmpaddr5,t0
+  e4:	070b02b7          	lui	t0,0x70b0
+  e8:	70d28293          	addi	t0,t0,1805 # 70b070d <__rom_end+0x70ac70d>
+  ec:	3a029073          	csrw	pmpcfg0,t0
+  f0:	070702b7          	lui	t0,0x7070
+  f4:	70b28293          	addi	t0,t0,1803 # 707070b <__rom_end+0x706c70b>
+  f8:	3a129073          	csrw	pmpcfg1,t0
+  fc:	20000717          	auipc	a4,0x20000
+ 100:	f0470713          	addi	a4,a4,-252 # 20000000 <__DATA_BEGIN__>
+ 104:	20000797          	auipc	a5,0x20000
+ 108:	efc78793          	addi	a5,a5,-260 # 20000000 <__DATA_BEGIN__>
 
-000000ac <clear_bss_loop>:
-  ac:	00f75863          	bge	a4,a5,bc <clear_bss_end>
-  b0:	00072023          	sw	zero,0(a4)
-  b4:	00470713          	addi	a4,a4,4
-  b8:	ff5ff06f          	j	ac <clear_bss_loop>
+0000010c <clear_bss_loop>:
+ 10c:	00f75863          	bge	a4,a5,11c <clear_bss_end>
+ 110:	00072023          	sw	zero,0(a4)
+ 114:	00470713          	addi	a4,a4,4
+ 118:	ff5ff06f          	j	10c <clear_bss_loop>
 
-000000bc <clear_bss_end>:
-  bc:	010000ef          	jal	ra,cc <main>
-  c0:	00000513          	li	a0,0
-  c4:	05d00893          	li	a7,93
-  c8:	00100073          	ebreak
+0000011c <clear_bss_end>:
+ 11c:	010000ef          	jal	ra,12c <main>
+ 120:	00000513          	li	a0,0
+ 124:	05d00893          	li	a7,93
+ 128:	00100073          	ebreak
 
-000000cc <main>:
-  cc:	06400093          	li	ra,100
-  d0:	09600113          	li	sp,150
-  d4:	0020b1b3          	sltu	gp,ra,sp
-  d8:	00113233          	sltu	tp,sp,ra
-  dc:	f9c00293          	li	t0,-100
-  e0:	f6a00313          	li	t1,-150
-  e4:	005333b3          	sltu	t2,t1,t0
-  e8:	0062b433          	sltu	s0,t0,t1
-  ec:	006134b3          	sltu	s1,sp,t1
-  f0:	02018063          	beqz	gp,110 <fail1>
-  f4:	02021463          	bnez	tp,11c <fail2>
-  f8:	02038863          	beqz	t2,128 <fail3>
-  fc:	02041c63          	bnez	s0,134 <fail4>
- 100:	04048063          	beqz	s1,140 <fail5>
+0000012c <main>:
+ 12c:	06400093          	li	ra,100
+ 130:	09600113          	li	sp,150
+ 134:	0020b1b3          	sltu	gp,ra,sp
+ 138:	00113233          	sltu	tp,sp,ra
+ 13c:	f9c00293          	li	t0,-100
+ 140:	f6a00313          	li	t1,-150
+ 144:	005333b3          	sltu	t2,t1,t0
+ 148:	0062b433          	sltu	s0,t0,t1
+ 14c:	006134b3          	sltu	s1,sp,t1
+ 150:	02018063          	beqz	gp,170 <fail1>
+ 154:	02021463          	bnez	tp,17c <fail2>
+ 158:	02038863          	beqz	t2,188 <fail3>
+ 15c:	02041c63          	bnez	s0,194 <fail4>
+ 160:	04048063          	beqz	s1,1a0 <fail5>
 
-00000104 <pass>:
- 104:	00000513          	li	a0,0
- 108:	05d00893          	li	a7,93
- 10c:	00100073          	ebreak
+00000164 <pass>:
+ 164:	00000513          	li	a0,0
+ 168:	05d00893          	li	a7,93
+ 16c:	00100073          	ebreak
 
-00000110 <fail1>:
- 110:	00200513          	li	a0,2
- 114:	05d00893          	li	a7,93
- 118:	00100073          	ebreak
+00000170 <fail1>:
+ 170:	00200513          	li	a0,2
+ 174:	05d00893          	li	a7,93
+ 178:	00100073          	ebreak
 
-0000011c <fail2>:
- 11c:	00400513          	li	a0,4
- 120:	05d00893          	li	a7,93
- 124:	00100073          	ebreak
+0000017c <fail2>:
+ 17c:	00400513          	li	a0,4
+ 180:	05d00893          	li	a7,93
+ 184:	00100073          	ebreak
 
-00000128 <fail3>:
- 128:	00600513          	li	a0,6
- 12c:	05d00893          	li	a7,93
- 130:	00100073          	ebreak
+00000188 <fail3>:
+ 188:	00600513          	li	a0,6
+ 18c:	05d00893          	li	a7,93
+ 190:	00100073          	ebreak
 
-00000134 <fail4>:
- 134:	00800513          	li	a0,8
- 138:	05d00893          	li	a7,93
- 13c:	00100073          	ebreak
+00000194 <fail4>:
+ 194:	00800513          	li	a0,8
+ 198:	05d00893          	li	a7,93
+ 19c:	00100073          	ebreak
 
-00000140 <fail5>:
- 140:	00a00513          	li	a0,10
- 144:	05d00893          	li	a7,93
- 148:	00100073          	ebreak
+000001a0 <fail5>:
+ 1a0:	00a00513          	li	a0,10
+ 1a4:	05d00893          	li	a7,93
+ 1a8:	00100073          	ebreak
 
 Disassembly of section .riscv.attributes:
 

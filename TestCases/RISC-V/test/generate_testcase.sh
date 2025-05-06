@@ -4,7 +4,7 @@
 RISCV_GCC=riscv64-unknown-elf-gcc
 OBJCOPY=riscv64-unknown-elf-objcopy
 OBJDUMP=riscv64-unknown-elf-objdump
-
+DEFINES=./extra/defines.s
 # Check if at least one linker script and one assembly file are provided
 if [ "$#" -lt 2 ]; then
     echo "Usage: $0 <linker_file.ld> <assembly_file1.s> [assembly_file2.s ...]"
@@ -27,7 +27,7 @@ for file in $TEST_DIR/*.s; do
     test_name=$(basename $file .s)
     
     # Assemble and link
-    $RISCV_GCC -march=rv32i -mabi=ilp32 -nostdlib -nodefaultlibs -nostartfiles -T "$LINKER_SCRIPT" -o $MEM_DIR/$test_name.elf "$START_ASM" $file
+    $RISCV_GCC -march=rv32i -mabi=ilp32 -nostdlib -nodefaultlibs -nostartfiles -T "$LINKER_SCRIPT" -o $MEM_DIR/$test_name.elf "$START_ASM" $file $DEFINES
     
     # Convert to binary
     $OBJCOPY -O binary $MEM_DIR/$test_name.elf $MEM_DIR/$test_name.bin

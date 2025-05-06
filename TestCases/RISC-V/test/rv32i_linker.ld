@@ -9,13 +9,13 @@ MEMORY
   ROM (rx) : ORIGIN = 0x00000000, LENGTH = 0x04000
 
   /* Define the RAM(read,write,executable) memory region for the program */
-  RAM (rwx) : ORIGIN = 0x00004000, LENGTH = 0x04000
+  RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 0x04000
 
   /* Page Table */
-  PageTable (rwx) : ORIGIN = 0x00008000, LENGTH = 0x04000
+  PageTable (rwx) : ORIGIN = 0xF0000000, LENGTH = 0x04000
 
   /*Handler */
-  Handler (rwx) : ORIGIN = 0x0000C000, LENGTH = 0x04000
+  Handler (rwx) : ORIGIN = 0xF0004000, LENGTH = 0x04000
 }
 
 

@@ -1,3 +1,4 @@
+#.inc "defines.S";
 #
 # Display String via UART TX model of ISS
 #
@@ -13,8 +14,8 @@
 
 # Label for entry point of test code
 main:
-        .equ UART_TX_DATA_ADDR, 8052
-        .equ UART_TX_BUSY_ADDR, 8056
+        .equ UART_TX_DATA_ADDR, 0x2000000C
+        .equ UART_TX_BUSY_ADDR, 0x20000010
         
         ### TEST CODE STARTS HERE ###
         la      x1, data                # set x1 to address of data (0x00001000)
@@ -50,5 +51,10 @@ main:
         # Data section
 data:
         .string "Hello World!"
+        .word 0
+        .word 0
+        .word 0
+        .word 0
+        .word 0
         
 

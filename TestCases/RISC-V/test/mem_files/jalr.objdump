@@ -37,91 +37,115 @@ Disassembly of section .text:
   74:	00000e93          	li	t4,0
   78:	00000f13          	li	t5,0
   7c:	00000f93          	li	t6,0
-  80:	00008117          	auipc	sp,0x8
-  84:	f7c10113          	addi	sp,sp,-132 # 7ffc <__stack_pointer>
+  80:	20004117          	auipc	sp,0x20004
+  84:	f7c10113          	addi	sp,sp,-132 # 20003ffc <__stack_pointer>
   88:	00018193          	mv	gp,gp
   8c:	30501073          	csrw	mtvec,zero
   90:	30401073          	csrw	mie,zero
   94:	30001073          	csrw	mstatus,zero
   98:	34401073          	csrw	mip,zero
-  9c:	00004717          	auipc	a4,0x4
-  a0:	f6470713          	addi	a4,a4,-156 # 4000 <__DATA_BEGIN__>
-  a4:	00004797          	auipc	a5,0x4
-  a8:	f5c78793          	addi	a5,a5,-164 # 4000 <__DATA_BEGIN__>
+  9c:	000042b7          	lui	t0,0x4
+  a0:	0022d293          	srli	t0,t0,0x2
+  a4:	3b029073          	csrw	pmpaddr0,t0
+  a8:	200002b7          	lui	t0,0x20000
+  ac:	0022d293          	srli	t0,t0,0x2
+  b0:	3b129073          	csrw	pmpaddr1,t0
+  b4:	200042b7          	lui	t0,0x20004
+  b8:	0022d293          	srli	t0,t0,0x2
+  bc:	3b229073          	csrw	pmpaddr2,t0
+  c0:	5f0002b7          	lui	t0,0x5f000
+  c4:	0022d293          	srli	t0,t0,0x2
+  c8:	3b329073          	csrw	pmpaddr3,t0
+  cc:	5f0042b7          	lui	t0,0x5f004
+  d0:	0022d293          	srli	t0,t0,0x2
+  d4:	3b429073          	csrw	pmpaddr4,t0
+  d8:	fff00293          	li	t0,-1
+  dc:	0022d293          	srli	t0,t0,0x2
+  e0:	3b529073          	csrw	pmpaddr5,t0
+  e4:	070b02b7          	lui	t0,0x70b0
+  e8:	70d28293          	addi	t0,t0,1805 # 70b070d <__rom_end+0x70ac70d>
+  ec:	3a029073          	csrw	pmpcfg0,t0
+  f0:	070702b7          	lui	t0,0x7070
+  f4:	70b28293          	addi	t0,t0,1803 # 707070b <__rom_end+0x706c70b>
+  f8:	3a129073          	csrw	pmpcfg1,t0
+  fc:	20000717          	auipc	a4,0x20000
+ 100:	f0470713          	addi	a4,a4,-252 # 20000000 <__DATA_BEGIN__>
+ 104:	20000797          	auipc	a5,0x20000
+ 108:	efc78793          	addi	a5,a5,-260 # 20000000 <__DATA_BEGIN__>
 
-000000ac <clear_bss_loop>:
-  ac:	00f75863          	bge	a4,a5,bc <clear_bss_end>
-  b0:	00072023          	sw	zero,0(a4)
-  b4:	00470713          	addi	a4,a4,4
-  b8:	ff5ff06f          	j	ac <clear_bss_loop>
+0000010c <clear_bss_loop>:
+ 10c:	00f75863          	bge	a4,a5,11c <clear_bss_end>
+ 110:	00072023          	sw	zero,0(a4)
+ 114:	00470713          	addi	a4,a4,4
+ 118:	ff5ff06f          	j	10c <clear_bss_loop>
 
-000000bc <clear_bss_end>:
-  bc:	010000ef          	jal	ra,cc <main>
-  c0:	00000513          	li	a0,0
-  c4:	05d00893          	li	a7,93
-  c8:	00100073          	ebreak
+0000011c <clear_bss_end>:
+ 11c:	010000ef          	jal	ra,12c <main>
+ 120:	00000513          	li	a0,0
+ 124:	05d00893          	li	a7,93
+ 128:	00100073          	ebreak
 
-000000cc <main>:
-  cc:	00000013          	nop
-  d0:	00000013          	nop
-  d4:	00000097          	auipc	ra,0x0
-  d8:	01808093          	addi	ra,ra,24 # ec <jump1>
-  dc:	00008167          	jalr	sp,ra
+0000012c <main>:
+ 12c:	00000013          	nop
+ 130:	00000013          	nop
+ 134:	00000097          	auipc	ra,0x0
+ 138:	01808093          	addi	ra,ra,24 # 14c <jump1>
+ 13c:	00008167          	jalr	sp,ra
 
-000000e0 <x2_val>:
-  e0:	05c0006f          	j	13c <fail1>
-  e4:	00000013          	nop
-  e8:	00000013          	nop
+00000140 <x2_val>:
+ 140:	05c0006f          	j	19c <fail1>
+ 144:	00000013          	nop
+ 148:	00000013          	nop
 
-000000ec <jump1>:
-  ec:	00000013          	nop
-  f0:	00000013          	nop
-  f4:	018081e7          	jalr	gp,24(ra)
+0000014c <jump1>:
+ 14c:	00000013          	nop
+ 150:	00000013          	nop
+ 154:	018081e7          	jalr	gp,24(ra)
 
-000000f8 <x3_val>:
-  f8:	050000ef          	jal	ra,148 <fail2>
-  fc:	00000013          	nop
- 100:	00000013          	nop
+00000158 <x3_val>:
+ 158:	050000ef          	jal	ra,1a8 <fail2>
+ 15c:	00000013          	nop
+ 160:	00000013          	nop
 
-00000104 <jump2>:
- 104:	00000217          	auipc	tp,0x0
- 108:	fdc20213          	addi	tp,tp,-36 # e0 <x2_val>
- 10c:	02020263          	beqz	tp,130 <fail0>
- 110:	00000297          	auipc	t0,0x0
- 114:	fe828293          	addi	t0,t0,-24 # f8 <x3_val>
- 118:	00028c63          	beqz	t0,130 <fail0>
- 11c:	02411c63          	bne	sp,tp,154 <fail3>
- 120:	04519063          	bne	gp,t0,160 <fail4>
+00000164 <jump2>:
+ 164:	00000217          	auipc	tp,0x0
+ 168:	fdc20213          	addi	tp,tp,-36 # 140 <x2_val>
+ 16c:	02020263          	beqz	tp,190 <fail0>
+ 170:	00000297          	auipc	t0,0x0
+ 174:	fe828293          	addi	t0,t0,-24 # 158 <x3_val>
+ 178:	00028c63          	beqz	t0,190 <fail0>
+ 17c:	02411c63          	bne	sp,tp,1b4 <fail3>
+ 180:	04519063          	bne	gp,t0,1c0 <fail4>
 
-00000124 <pass>:
- 124:	00000513          	li	a0,0
- 128:	05d00893          	li	a7,93
- 12c:	00100073          	ebreak
+00000184 <pass>:
+ 184:	00000513          	li	a0,0
+ 188:	05d00893          	li	a7,93
+ 18c:	00100073          	ebreak
 
-00000130 <fail0>:
- 130:	00100513          	li	a0,1
- 134:	05d00893          	li	a7,93
- 138:	00100073          	ebreak
+00000190 <fail0>:
+ 190:	00100513          	li	a0,1
+ 194:	05d00893          	li	a7,93
+ 198:	00100073          	ebreak
 
-0000013c <fail1>:
- 13c:	00200513          	li	a0,2
- 140:	05d00893          	li	a7,93
- 144:	00100073          	ebreak
+0000019c <fail1>:
+ 19c:	00200513          	li	a0,2
+ 1a0:	05d00893          	li	a7,93
+ 1a4:	00100073          	ebreak
 
-00000148 <fail2>:
- 148:	00400513          	li	a0,4
- 14c:	05d00893          	li	a7,93
- 150:	00100073          	ebreak
+000001a8 <fail2>:
+ 1a8:	00400513          	li	a0,4
+ 1ac:	05d00893          	li	a7,93
+ 1b0:	00100073          	ebreak
 
-00000154 <fail3>:
- 154:	00600513          	li	a0,6
- 158:	05d00893          	li	a7,93
- 15c:	00100073          	ebreak
+000001b4 <fail3>:
+ 1b4:	00600513          	li	a0,6
+ 1b8:	05d00893          	li	a7,93
+ 1bc:	00100073          	ebreak
 
-00000160 <fail4>:
- 160:	00800513          	li	a0,8
- 164:	05d00893          	li	a7,93
- 168:	00100073          	ebreak
+000001c0 <fail4>:
+ 1c0:	00800513          	li	a0,8
+ 1c4:	05d00893          	li	a7,93
+ 1c8:	00100073          	ebreak
 
 Disassembly of section .riscv.attributes:
 

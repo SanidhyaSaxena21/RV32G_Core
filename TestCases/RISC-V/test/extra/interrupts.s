@@ -1,3 +1,4 @@
+#.include "defines.S"
 #
 # TEST CODE FOR INTERRUPTS (EXTERNAL, SOFTWARE, TIMER)
 #
