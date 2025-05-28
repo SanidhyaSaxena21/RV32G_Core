@@ -27,7 +27,7 @@ module REG_FILE
 (* keep = "true" *) reg [31:0] MEM[0:31];
 (* keep = "true" *) reg [31:0] MEM_Shadow[4:3];
 
-assign led = {MEM[14],MEM[15]};
+assign led = {MEM[1],MEM[17]};
 
 
 always @(posedge CLK ) begin

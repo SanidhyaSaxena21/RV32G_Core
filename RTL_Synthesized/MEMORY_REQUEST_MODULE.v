@@ -1,7 +1,7 @@
 //Designer: Sanidhya Saxena
 //Date: 5th May 2025
 //Guide: Kuruvilla varghese
-
+(* keep_hierarchy = "yes" *)
 module MEMORY_REQUEST_MODULE (
    // Global Signals
    input clk,
@@ -53,7 +53,7 @@ always @(posedge clk) begin
     BURST   <= 2'd0;
   end
   else if(~freeze) begin
-    if(TLAST & ~STALL) begin
+    if(TLAST) begin
       ADDR  <= 32'd0;
       REQ   <= 1'b0;
       WRB   <= 1'b0;
@@ -89,7 +89,7 @@ always @(posedge clk) begin
     bus_reg <= 256'd0;
   end
   else if(~freeze & ~peripheral_access) begin
-    if (ACK) begin
+    if (ACK & biu_cyc_i & biu_stb_i & biu_cab_i) begin
       case(counter)
         4'd0: bus_reg[31:0] <= RDATA;
         4'd1: bus_reg[63:32] <= RDATA;
@@ -123,11 +123,11 @@ end
 
 //Write Logic
 
-always @(posedge clk) begin
-  if(reset) begin
+always @(*) begin
+  /*if(reset) begin
     WDATA <= 32'd0;
-  end
-  else if(~freeze) begin
+  end*/
+  if(~freeze) begin
     if(~peripheral_access) begin
       case(write_counter)
         3'd0: WDATA <= i_bus_data[31:0];
@@ -160,14 +160,20 @@ end
 always @(posedge clk) begin
   if(reset) counter <= 3'd0;
   else if(~freeze) begin
-    counter <= (ACK & ~STALL & ~TLAST) ? (counter + 3'd1) : 3'd0;
+    if(ACK & ~STALL & ~TLAST & biu_cyc_i & biu_stb_i & biu_cab_i) begin
+        counter <= (counter + 3'd1);
+    end
+    else begin
+        counter <= 0;
+    end
+    
   end
 end
 
 always @(posedge clk) begin
   if(reset) write_counter <= 3'd0;
   else if(~freeze & ~peripheral_access) begin
-    if(biu_cyc_i & biu_stb_i & biu_cab_i & ~TLAST) begin
+    if(biu_cyc_i & biu_stb_i & biu_cab_i & ~TLAST & ACK) begin
       write_counter <= write_counter + 3'd1;
     end
     else if(TLAST) begin

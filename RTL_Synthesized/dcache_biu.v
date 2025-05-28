@@ -30,8 +30,7 @@ ll_i,sc_i,addr_exception
   input wb_err_i,
   input wb_rty_i,
   input [31:0] wb_dat_i,*/
-  input [1:0] clmode,
-  input cache_en,
+  input cache_dis,
   input lsustall,
   input ll_i,             //signal to latch the address as linked address
   input sc_i,             //signal to initiate check of input address and write
@@ -175,8 +174,8 @@ always @(posedge proc_clk or posedge proc_rst) begin
     end
 end
 
-assign prp_acs0_int = cache_en | (proc_addr_in_port1[31:24] == `PERIPH_BASE);    //Check if address is in peripheral address range or cache disabled
-assign prp_acs1_int = cache_en | (proc_addr_in_port2[31:24] == `PERIPH_BASE);    //Check if address is in peripheral address range or cache disabled
+assign prp_acs0_int = cache_dis | (proc_addr_in_port1[31:24] == `PERIPH_BASE);    //Check if address is in peripheral address range or cache disabled
+assign prp_acs1_int = cache_dis | (proc_addr_in_port2[31:24] == `PERIPH_BASE);    //Check if address is in peripheral address range or cache disabled
 
 //////////////////////For LR/SC Instruction address violation check
 always @(posedge proc_clk or posedge proc_rst) begin

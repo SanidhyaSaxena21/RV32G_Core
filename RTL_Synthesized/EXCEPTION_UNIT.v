@@ -21,6 +21,7 @@
 
 `include "defines.v"
 (* keep_hierarchy = "yes" *)
+//(* DONT_TOUCH = "yes" *)
 
 module EXCEPTION_UNIT #(parameter XLEN = 32,
                         parameter SB_LENGTH = 4*(XLEN+1)+1)
@@ -454,6 +455,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
 
 
     // MSTATUS CSR to write when executing MRET
+    //(* DONT_TOUCH = "yes" *)
     assign mstatus_for_mret = {csr_mstatus[XLEN-1:23],  // WPRI
                                csr_mstatus[22],         // TSR
                                csr_mstatus[21],         // TW
@@ -476,6 +478,7 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
                                1'b0};                   // WPRI
 
     // MSTATUS CSR when handling a trap
+    //(* DONT_TOUCH = "yes" *)
     assign mstatus_for_trap = {csr_mstatus[XLEN-1:23],  // WPRI
                                csr_mstatus[22],         // TSR
                                csr_mstatus[21],         // TW
@@ -562,11 +565,13 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
     //
     ///////////////////////////////////////////////////////////////////////////
 
+    
     always @(posedge CLK) begin
       if(RST) mcause_code_int <= {XLEN{1'b0}};
       else if(trap_occuring) mcause_code_int <= mcause_code;
     end
 
+    (* dont_touch = "yes" *)
     assign mcause_code = // aync exceptions have highest priority
                           (csr_mip_msip & csr_mie_msie)    ? {1'b1, {XLEN-5{1'b0}}, 4'h3} :
                           (csr_mip_mtip & csr_mie_mtie)    ? {1'b1, {XLEN-5{1'b0}}, 4'h7} :
@@ -611,19 +616,19 @@ module EXCEPTION_UNIT #(parameter XLEN = 32,
                                                  32'd0;
     assign async_trap_occuring = ((csr_mip_msip & csr_mie_msie) | 
                                   (csr_mip_mtip & csr_mie_mtie) | 
-                                  (csr_mip_meip & csr_mie_meie & !clr_meip)) & csr_mstatus_mie;
+                                  (csr_mip_meip & csr_mie_meie & !clr_meip)) & csr_mstatus_mie & ~interrupt_dbg_global_disable;
 
-    assign sync_trap_occuring = csr_ro_wr            |
-                                inst_addr_misaligned |
-                                inst_access_fault    |
-                                illegal_instruction  |
-                                load_misaligned      |
-                                store_misaligned     |
-                                load_access_fault    |
-                                store_access_fault   |
-                                load_page_fault      |
-                                store_page_fault     |
-                                inst_dec_error       ;
+    assign sync_trap_occuring = ( csr_ro_wr            |
+                                  inst_addr_misaligned |
+                                  inst_access_fault    |
+                                  illegal_instruction  |
+                                  load_misaligned      |
+                                  store_misaligned     |
+                                  load_access_fault    |
+                                  store_access_fault   |
+                                  load_page_fault      |
+                                  store_page_fault     |
+                                  inst_dec_error) & ~interrupt_dbg_global_disable;
 
     assign trap_occuring = (async_pulse | sync_trap_occuring) & ~interrupt_dbg_global_disable;
 

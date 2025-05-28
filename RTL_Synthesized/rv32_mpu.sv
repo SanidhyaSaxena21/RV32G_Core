@@ -77,6 +77,9 @@ module rv32_mpu
     logic imem_match;
     logic dmem_match;
 
+    logic [3:0] imem_allow_n;
+    logic [3:0] dmem_allow_n;
+
     integer imem_match_i;
     integer dmem_match_i;
 
@@ -90,12 +93,12 @@ module rv32_mpu
     assign imem_pmp_matchs = '0;
     assign imem_match = 1'b0;
     assign imem_match_i = 0;
-    assign imem_allow = 4'h7; // R/W/X but not locked
+    assign imem_allow_n = 4'h7; // R/W/X but not locked
 
     assign dmem_pmp_matchs = '0;
     assign dmem_match = 1'b0;
     assign dmem_match_i = 0;
-    assign dmem_allow = 4'h7; // R/W/X but not locked
+    assign dmem_allow_n = 4'h7; // R/W/X but not locked
 
     end else begin: MPU_ON
 
@@ -184,14 +187,14 @@ module rv32_mpu
         // PMA rights
         ////////////////////////////////
 
-        assign imem_allow = (mpu_off)    ? 4'h7 :
+        assign imem_allow_n = (mpu_off)    ? 4'h7 :
                             (imem_match) ? {csr_sb[imem_match_i*8+`PMA_L],
                                             csr_sb[imem_match_i*8+`PMA_X],
                                             csr_sb[imem_match_i*8+`PMA_W],
                                             csr_sb[imem_match_i*8+`PMA_R]} : 
                                            4'b0;
 
-        assign dmem_allow = (mpu_off)    ? 4'h7 :
+        assign dmem_allow_n = (mpu_off)    ? 4'h7 :
                             (dmem_match) ? {csr_sb[dmem_match_i*8+`PMA_L],
                                             csr_sb[dmem_match_i*8+`PMA_X],
                                             csr_sb[dmem_match_i*8+`PMA_W],
@@ -200,4 +203,19 @@ module rv32_mpu
 
     end
     endgenerate
+
+
+    assign imem_allow = imem_allow_n;
+    assign dmem_allow = dmem_allow_n;
+/*
+    always @(posedge aclk) begin
+      if(~aresetn) begin
+        imem_allow <= 4'd0;
+        dmem_allow <= 4'd0;
+      end
+      else begin
+        imem_allow <= imem_allow_n;
+        dmem_allow <= dmem_allow_n;
+      end
+    end*/
 endmodule

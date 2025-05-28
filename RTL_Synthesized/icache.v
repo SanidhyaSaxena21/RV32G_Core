@@ -174,6 +174,8 @@ reg we_tag_valid_w0;
 reg we_tag_valid_w1;
 wire [3:0] imem_permission;
 wire [3:0] dmem_allow_nc;
+wire imem_allow_n;
+reg imem_allow_q;
 
 `else
 reg [tag_phy_last_bit : tag_phy_start_bit] tag;
@@ -210,7 +212,6 @@ wire [6:0] icache_tag_w1_addr;
 `ifdef itlb_def
 assign tag_o_tlb = tag_out_tlb[tag_tlb_last_bit:tag_tlb_start_bit];
 assign freeze_icache_miss = (state_fsm == 2'b01);
-assign imem_allow = (imem_permission == 4'd5);
 
 `endif
 //--------------------------------------------------
@@ -534,8 +535,19 @@ always@(*)//posedge clk or posedge reset)
 
 wire [31:0] IMEM_ADDR;
 
+//assign imem_permission = 4'd5;
+
+//assign imem_allow_n = (imem_permission == 4'd5) | (imem_permission == 4'd7);
+
+assign imem_allow = (imem_permission == 4'd5) | (imem_permission == 4'd7);
+
+/*always @(posedge clk) begin
+  if(reset) imem_allow_q <= 1'b0;
+  else imem_allow_q <= imem_allow_n;
+end*/
+
 assign IMEM_ADDR =(vpn_to_ppn_req3 || (vpn_to_ppn_req7 && ~freeze_hit_status )) ? virtual_addr[19:0]: ( stall_load ? i_addr_min4[19:0]: i_addr[19:0]);
-rv32_mpu #(.MMU_SUPPORT(0)) IMEM_MPU (
+rv32_mpu #(.MMU_SUPPORT(0),.MPU_SUPPORT(0)) IMEM_MPU (
  .aclk(clk),
  .aresetn(~reset),
  .imem_addr(IMEM_ADDR),

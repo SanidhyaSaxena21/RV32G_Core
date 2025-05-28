@@ -14,9 +14,14 @@ A	or1200_amultp2_32x32.v	/^input  A;$/;"	p	module:BLOCK0
 A	or1200_amultp2_32x32.v	/^input  A;$/;"	p	module:XXOR1
 A	or1200_amultp2_32x32.v	/^input  [0:63] A;$/;"	p	module:PRESTAGE_64
 A	or1200_amultp2_32x32.v	/^input  [0:63] A;$/;"	p	module:XORSTAGE_64
+ABSTRACT_COMMAND	DEBUG_CONTROLLER.v	/^localparam ABSTRACT_COMMAND = 3'b111;$/;"	c	module:DEBUG_CONTROLLER
+ABSTRACT_COMMAND	Debug_Module.v	/^reg [31:0] ABSTRACT_COMMAND;$/;"	r	module:Debug_Module
+ABSTRACT_COMMAND_DECODER	ABSTRACT_COMMAND_DECODER.v	/^module ABSTRACT_COMMAND_DECODER ($/;"	m
+ABSTRACT_COMMAND_encoder	Debug_Module.v	/^wire [31:0] ABSTRACT_COMMAND_encoder;$/;"	n	module:Debug_Module
 ACK	DATA_MEMORY_1.2.v	/^  output reg                ACK,$/;"	p	module:DATA_MEMORY
 ACK	DTLB.v	/^   input              ACK,$/;"	p	module:DTLB
 ACK	ITLB.v	/^   input              ACK,$/;"	p	module:ITLB
+ACK	MEMORY_REQUEST_MODULE.v	/^   input              ACK,$/;"	p	module:MEMORY_REQUEST_MODULE
 ACK	dcache_biu.v	/^  input              ACK,$/;"	p	module:dcache_biu
 ACK	dcache_dpram.v	/^    input              ACK,$/;"	p	module:dcache_dpram
 ACK	dcache_top.v	/^     input              ACK,$/;"	p	module:dcache_top
@@ -30,6 +35,7 @@ ADD	FP_DECODE.v	/^`define ADD             3'b000$/;"	c
 ADDR	DATA_MEMORY_1.2.v	/^  input                     [31:0] ADDR,$/;"	p	module:DATA_MEMORY
 ADDR	DTLB.v	/^   output reg [31:0]  ADDR,$/;"	p	module:DTLB
 ADDR	ITLB.v	/^   output reg [31:0]  ADDR,$/;"	p	module:ITLB
+ADDR	MEMORY_REQUEST_MODULE.v	/^   output reg [31:0]  ADDR,$/;"	p	module:MEMORY_REQUEST_MODULE
 ADDR	dcache_biu.v	/^  output reg [31:0]  ADDR,$/;"	p	module:dcache_biu
 ADDR	dcache_dpram.v	/^    output  [31:0]  ADDR,$/;"	p	module:dcache_dpram
 ADDR	dcache_top.v	/^     output  [31:0]  ADDR,$/;"	p	module:dcache_top
@@ -37,8 +43,12 @@ ADDR	icache.v	/^    ,output  [31:0]  ADDR,$/;"	p	module:icache
 ADDR	interface_router.v	/^   output reg [31:0]  ADDR,$/;"	p	module:interface_router
 ADDR	mem_hier.v	/^      output  [31:0]  ADDR,$/;"	p	module:mem_hier
 ADDR	riscv_platform.v	/^   wire  [31:0]  ADDR;$/;"	n	module:riscv_platform
+ADDRW	rv32_clint.sv	/^        parameter ADDRW = 16,$/;"	c	module:rv32_clint
+ADDR_BURST	DATA_MEMORY_1.2.v	/^reg [31:0] ADDR_BURST;$/;"	r	module:DATA_MEMORY
 ADDR_CHK	fet_dec_ex_mem.v	/^wire ADDR_CHK = ((pc_cache == 32'h0000887C)) ? 1'b1 : 1'b0;$/;"	n	module:fet_dec_ex_mem
 ADDR_CHK_2	fet_dec_ex_mem.v	/^wire ADDR_CHK_2 = ((pc_cache == 32'h00008970)) ? 1'b1 : 1'b0;$/;"	n	module:fet_dec_ex_mem
+ADDR_DATA	DATA_MEMORY_1.2.v	/^wire [31:0] ADDR_INSTR, ADDR_DATA;$/;"	n	module:DATA_MEMORY
+ADDR_INSTR	DATA_MEMORY_1.2.v	/^wire [31:0] ADDR_INSTR, ADDR_DATA;$/;"	n	module:DATA_MEMORY
 ADDR_MATCH	rv32_mpu.sv	/^    } ADDR_MATCH;$/;"	T	module:rv32_mpu
 ADDR_MATCH	rv32_pmp_region.sv	/^    } ADDR_MATCH;$/;"	T	module:rv32_pmp_region
 ADDR_REDUCED	DATA_MEMORY_1.2.v	/^wire [ADDR_WIDTH-1:0] ADDR_REDUCED;$/;"	n	module:DATA_MEMORY
@@ -58,6 +68,8 @@ AW	defines.v	/^`define AW 32$/;"	c
 AXI_ADDR_W	rv32_mpu.sv	/^        parameter AXI_ADDR_W = ILEN$/;"	c	module:rv32_mpu
 AXI_ADDR_W	rv32_pmp_region.sv	/^        parameter AXI_ADDR_W = XLEN$/;"	c	module:rv32_pmp_region
 A_32	or1200_amultp2_32x32.v	/^   wire [63:0] A_32;$/;"	n	module:or1200_amultp2_32x32
+Abstract_Command_decoder	IF_ID_EX.v	/^ABSTRACT_COMMAND_DECODER Abstract_Command_decoder ($/;"	i	module:IF_ID_EX
+Abstract_command	ABSTRACT_COMMAND_DECODER.v	/^  input [31:0] Abstract_command$/;"	p	module:ABSTRACT_COMMAND_DECODER
 Access	cam.v	/^    parameter Access = 6; $/;"	c	module:Registers
 Access	icam.v	/^    parameter Access = 6; $/;"	c	module:iregisters
 Alu_Src_1_sel__ID_EX	EXECUTE.v	/^    input [1:0] Alu_Src_1_sel__ID_EX,                   \/\/ALU source 1 select mux signals from/;"	p	module:EXECUTE
@@ -76,6 +88,8 @@ B	or1200_amultp2_32x32.v	/^input  [0:63] B;$/;"	p	module:PRESTAGE_64
 B	or1200_amultp2_32x32.v	/^input  [0:63] B;$/;"	p	module:XORSTAGE_64
 BASE_ADDR	DTLB.v	/^parameter BASE_ADDR = 32'd48;$/;"	c	module:DTLB
 BASE_ADDR	ITLB.v	/^localparam BASE_ADDR = 32'd72;$/;"	c	module:ITLB
+BASE_ADDR_DATA	DATA_MEMORY_1.2.v	/^                                BASE_ADDR_DATA = 32'h20000000,$/;"	c	module:DATA_MEMORY
+BASE_ADDR_INSTRUCTION	DATA_MEMORY_1.2.v	/^                                BASE_ADDR_INSTRUCTION = 32'h00000000,$/;"	c	module:DATA_MEMORY
 BLOCK0	or1200_amultp2_32x32.v	/^module BLOCK0 ( A, B, PHI, POUT, GOUT );$/;"	m
 BLOCK1	or1200_amultp2_32x32.v	/^module BLOCK1 ( PIN1, PIN2, GIN1, GIN2, PHI, POUT, GOUT );$/;"	m
 BLOCK1A	or1200_amultp2_32x32.v	/^module BLOCK1A ( PIN2, GIN1, GIN2, PHI, GOUT );$/;"	m
@@ -85,6 +99,7 @@ BOOTHCODER_33_32	or1200_amultp2_32x32.v	/^module BOOTHCODER_33_32 ( OPA, OPB, SU
 BOS	Return_Addr_Stack.v	/^reg [4:0] BOS;$/;"	r	module:Return_Addr_Stack
 BOS_Incr	Return_Addr_Stack.v	/^wire BOS_Incr;$/;"	n	module:Return_Addr_Stack
 BPU	IF_ID_EX.v	/^Branch_Prediction_Unit BPU( .CLK(CLK),$/;"	i	module:IF_ID_EX
+BPU_ENABLE	Branch_Prediction_Unit.v	/^`define BPU_ENABLE$/;"	c
 BPU__BTB_Hit__ID_EX	EXECUTE.v	/^    input BPU__BTB_Hit__ID_EX,       $/;"	p	module:EXECUTE
 BPU__BTB_Hit__ID_EX	IF_ID_EX.v	/^reg BPU__BTB_Hit__ID_EX;  $/;"	r	module:IF_ID_EX
 BPU__BTB_Hit__IF_ID	DECODE.v	/^    input BPU__BTB_Hit__IF_ID,   $/;"	p	module:DECODE
@@ -126,6 +141,7 @@ BPU__Stall	Return_Addr_Stack.v	/^    input BPU__Stall,$/;"	p	module:Return_Addr_
 BSTROBE	DATA_MEMORY_1.2.v	/^  input   [3:0]             BSTROBE,$/;"	p	module:DATA_MEMORY
 BSTROBE	DTLB.v	/^   output reg [3:0]   BSTROBE$/;"	p	module:DTLB
 BSTROBE	ITLB.v	/^   output reg [3:0]   BSTROBE$/;"	p	module:ITLB
+BSTROBE	MEMORY_REQUEST_MODULE.v	/^   output reg [3:0]   BSTROBE,$/;"	p	module:MEMORY_REQUEST_MODULE
 BSTROBE	dcache_biu.v	/^  output reg [3:0]   BSTROBE,$/;"	p	module:dcache_biu
 BSTROBE	dcache_dpram.v	/^    output  [3:0]   BSTROBE,$/;"	p	module:dcache_dpram
 BSTROBE	dcache_top.v	/^     output  [3:0]   BSTROBE,                              $/;"	p	module:dcache_top
@@ -150,9 +166,15 @@ BTB_Read_Addr__reg	BTB_PLRU.v	/^    input [6:0] BTB_Read_Addr__reg,$/;"	p	module
 BTB_Read_Addr__reg	Branch_Target_Buff.v	/^reg [31:0] BTB_Read_Addr__reg;$/;"	r	module:Branch_Target_Buff
 BTB_Read_Data	Branch_Target_Buff.v	/^    output reg [31:0] BTB_Read_Data,$/;"	p	module:Branch_Target_Buff
 BTB_Read_Data_Set0	Branch_Target_Buff.v	/^wire [55:0] BTB_Read_Data_Set0;$/;"	n	module:Branch_Target_Buff
+BTB_Read_Data_Set0_int	Branch_Target_Buff.v	/^wire [55:0] BTB_Read_Data_Set0_int;$/;"	n	module:Branch_Target_Buff
 BTB_Read_Data_Set1	Branch_Target_Buff.v	/^wire [55:0] BTB_Read_Data_Set1;$/;"	n	module:Branch_Target_Buff
+BTB_Read_Data_Set1_int	Branch_Target_Buff.v	/^wire [55:0] BTB_Read_Data_Set1_int;$/;"	n	module:Branch_Target_Buff
 BTB_Read_Data_Set2	Branch_Target_Buff.v	/^wire [55:0] BTB_Read_Data_Set2;$/;"	n	module:Branch_Target_Buff
+BTB_Read_Data_Set2_int	Branch_Target_Buff.v	/^wire [55:0] BTB_Read_Data_Set2_int;$/;"	n	module:Branch_Target_Buff
 BTB_Read_Data_Set3	Branch_Target_Buff.v	/^wire [55:0] BTB_Read_Data_Set3;$/;"	n	module:Branch_Target_Buff
+BTB_Read_Data_Set3_int	Branch_Target_Buff.v	/^wire [55:0] BTB_Read_Data_Set3_int;$/;"	n	module:Branch_Target_Buff
+BTB_Read_Data_Valid	Branch_Target_Buff.v	/^reg [3:0] BTB_Read_Data_Valid; $/;"	r	module:Branch_Target_Buff
+BTB_Read_Data_Valid_mem	Branch_Target_Buff.v	/^reg [3:0] BTB_Read_Data_Valid_mem[127:0];$/;"	r	module:Branch_Target_Buff
 BTB_Set0	Branch_Target_Buff.v	/^BTB_mem BTB_Set0( .clka(CLK),.rsta(RST),.wea(7'h00),.addra(BTB_Read_Addr[8:2]),.dina(56'h0),.dou/;"	i	module:Branch_Target_Buff
 BTB_Set1	Branch_Target_Buff.v	/^BTB_mem BTB_Set1( .clka(CLK),.rsta(RST),.wea(7'h00),.addra(BTB_Read_Addr[8:2]),.dina(56'h0),.dou/;"	i	module:Branch_Target_Buff
 BTB_Set2	Branch_Target_Buff.v	/^BTB_mem BTB_Set2( .clka(CLK),.rsta(RST),.wea(7'h00),.addra(BTB_Read_Addr[8:2]),.dina(56'h0),.dou/;"	i	module:Branch_Target_Buff
@@ -181,6 +203,7 @@ BTB_Write_En__reg	Branch_Target_Buff.v	/^reg BTB_Write_En__reg;$/;"	r	module:Bra
 BURST	DATA_MEMORY_1.2.v	/^  input   [1:0]             BURST,$/;"	p	module:DATA_MEMORY
 BURST	DTLB.v	/^   output reg [1:0]   BURST, \/\/00-Normal, 01-INCR, 10-WRAP, 11-Reserved$/;"	p	module:DTLB
 BURST	ITLB.v	/^   output reg [1:0]   BURST, \/\/00-Normal, 01-INCR, 10-WRAP, 11-Reserved$/;"	p	module:ITLB
+BURST	MEMORY_REQUEST_MODULE.v	/^   output reg [1:0]   BURST, \/\/00-Normal, 01-INCR, 10-WRAP, 11-Reserved$/;"	p	module:MEMORY_REQUEST_MODULE
 BURST	dcache_biu.v	/^  output reg [1:0]   BURST, \/\/00-Normal, 01-INCR, 10-WRAP, 11-Reserved$/;"	p	module:dcache_biu
 BURST	dcache_dpram.v	/^    output  [1:0]   BURST, \/\/00-Normal, 01-INCR, 10-WRAP, 11-Reserved$/;"	p	module:dcache_dpram
 BURST	dcache_top.v	/^     output  [1:0]   BURST, \/\/00-Normal, 01-INCR, 10-WRAP, 11-Reserved$/;"	p	module:dcache_top
@@ -201,7 +224,7 @@ Branch_Inst__id_ex	DECODE.v	/^    output reg Branch_Inst__id_ex,                
 Branch_Inst__id_ex	IF_ID_EX.v	/^wire Branch_Inst__id_ex;$/;"	n	module:IF_ID_EX
 Branch_Prediction_Unit	Branch_Prediction_Unit.v	/^module Branch_Prediction_Unit$/;"	m
 Branch_Taken	Branch_Prediction_Unit.v	/^    output reg Branch_Taken,$/;"	p	module:Branch_Prediction_Unit
-Branch_Taken	Direction_Predictor.v	/^    output reg Branch_Taken,$/;"	p	module:Direction_Predictor
+Branch_Taken	Direction_Predictor.v	/^    output Branch_Taken,$/;"	p	module:Direction_Predictor
 Branch_Taken	EXECUTE.v	/^wire Branch_Taken;$/;"	n	module:EXECUTE
 Branch_Taken__DP	Branch_Prediction_Unit.v	/^wire Branch_Taken__DP;$/;"	n	module:Branch_Prediction_Unit
 Branch_Taken__EX_MEM	Branch_Prediction_Unit.v	/^    input Branch_Taken__EX_MEM,$/;"	p	module:Branch_Prediction_Unit
@@ -255,6 +278,7 @@ CHECK	dcache_top.v	/^localparam CHECK = 3'b000;$/;"	c	module:dcache_top
 CIN	or1200_amultp2_32x32.v	/^input  CIN;$/;"	p	module:DBLCADDER_64_64
 CIN	or1200_amultp2_32x32.v	/^input  CIN;$/;"	p	module:PRESTAGE_64
 CLINT	riscv_platform.v	/^    rv32_clint #(.ADDRW(32),.XLEN(32)) CLINT ($/;"	i	module:riscv_platform
+CLK	ABSTRACT_COMMAND_DECODER.v	/^  input CLK,$/;"	p	module:ABSTRACT_COMMAND_DECODER
 CLK	BTB_PLRU.v	/^    input CLK,$/;"	p	module:BTB_PLRU
 CLK	Branch_Prediction_Unit.v	/^    input CLK,$/;"	p	module:Branch_Prediction_Unit
 CLK	Branch_Target_Buff.v	/^    input CLK,$/;"	p	module:Branch_Target_Buff
@@ -272,6 +296,7 @@ CLK	or1200_amultp2_32x32.v	/^input  CLK;$/;"	p	module:FLIPFLOP
 CLK	or1200_amultp2_32x32.v	/^input  CLK;$/;"	p	module:MULTIPLIER_33_32
 CLK	or1200_amultp2_32x32.v	/^input  CLK;$/;"	p	module:WALLACE_33_32
 CLK	or1200_amultp2_32x32.v	/^input  CLK;$/;"	p	module:or1200_amultp2_32x32
+CLK	rv32_clint.sv	/^        input  wire                   CLK,$/;"	p	module:rv32_clint
 COMPARE	FP_DECODE.v	/^`define COMPARE         3'b100$/;"	c
 CONVERT	FP_DECODE.v	/^`define CONVERT         3'b101$/;"	c
 COUT	or1200_amultp2_32x32.v	/^output COUT;$/;"	p	module:DBLCADDER_64_64
@@ -302,22 +327,34 @@ Condition_CHK__1	Return_Addr_Stack.v	/^wire Condition_CHK__1 = ((RAS_Empty == 1'
 Condition_CHK__2	Return_Addr_Stack.v	/^wire Condition_CHK__2 = ((TOS == 5'b11111)) ? 1'b1 : 1'b0;$/;"	n	module:Return_Addr_Stack
 Condition_CHK__3	Return_Addr_Stack.v	/^wire Condition_CHK__3 = ((Branch_Taken__EX_MEM == 1'b1) && ((RET_Inst == 1'b1) || (RET_Inst__reg/;"	n	module:Return_Addr_Stack
 D	or1200_amultp2_32x32.v	/^   DBLCADDER_64_64 D (.OPA(INT_SUM[0:63]) , .OPB(INT_CARRY[0:63]) , .CIN (LOGIC_ZERO) , .PHI (PH/;"	i	module:MULTIPLIER_33_32
-DACK	cpu.v	/^input              DACK;$/;"	p	module:cpu
+DACK	cpu.v	/^input              DACK,$/;"	p	module:cpu
 DACK	fet_dec_ex_mem.v	/^input           DACK,$/;"	p	module:fet_dec_ex_mem
 DACK	riscv_platform.v	/^   wire              DACK;$/;"	n	module:riscv_platform
-DADDR	cpu.v	/^output  [31:0]  DADDR;$/;"	p	module:cpu
+DADDR	cpu.v	/^output  [31:0]  DADDR,$/;"	p	module:cpu
 DADDR	fet_dec_ex_mem.v	/^output  [31:0]  DADDR,$/;"	p	module:fet_dec_ex_mem
 DADDR	riscv_platform.v	/^   wire  [31:0]  DADDR;$/;"	n	module:riscv_platform
+DATA0	Debug_Module.v	/^reg [31:0] DATA0,DATA1;$/;"	r	module:Debug_Module
+DATA1	Debug_Module.v	/^reg [31:0] DATA0,DATA1;$/;"	r	module:Debug_Module
 DATA_A	or1200_amultp2_32x32.v	/^input  DATA_A;$/;"	p	module:FULL_ADDER
 DATA_A	or1200_amultp2_32x32.v	/^input  DATA_A;$/;"	p	module:HALF_ADDER
 DATA_B	or1200_amultp2_32x32.v	/^input  DATA_B;$/;"	p	module:FULL_ADDER
 DATA_B	or1200_amultp2_32x32.v	/^input  DATA_B;$/;"	p	module:HALF_ADDER
 DATA_C	or1200_amultp2_32x32.v	/^input  DATA_C;$/;"	p	module:FULL_ADDER
-DATA_INPUT_FILE	DATA_MEMORY_1.2.v	/^                              DATA_INPUT_FILE = "Instruction_mem.mif",$/;"	c	module:DATA_MEMORY
+DATA_INPUT_FILE	DATA_MEMORY_1.2.v	/^                                DATA_INPUT_FILE = "Data.mem",$/;"	c	module:DATA_MEMORY
+DATA_MASK	DATA_MEMORY_1.2.v	/^                                DATA_MASK = 32'h00003FFF$/;"	c	module:DATA_MEMORY
 DATA_MEMORY	DATA_MEMORY_1.2.v	/^module DATA_MEMORY #(parameter  ADDR_WIDTH = 18,$/;"	m
 DATA_WIDTH	DATA_MEMORY_1.2.v	/^                                DATA_WIDTH = 32,$/;"	c	module:DATA_MEMORY
 DATA_WIDTH	MEMORY_MACRO.v	/^module MEMORY_MACRO #(parameter ADDR_WIDTH=32, DATA_WIDTH=32, INPUT_FILE = "Instruction_mem.mif"/;"	c	module:MEMORY_MACRO
 DATA_WIDTH	dual_port_RAM.v	/^    parameter DATA_WIDTH = 56,  \/\/ Data width$/;"	c	module:dual_port_RAM
+DBG_CAUSE_EBREAK	DEBUG_CONTROLLER.v	/^localparam DBG_CAUSE_EBREAK = 1;$/;"	c	module:DEBUG_CONTROLLER
+DBG_CAUSE_HALTREQ	DEBUG_CONTROLLER.v	/^localparam DBG_CAUSE_HALTREQ = 3;$/;"	c	module:DEBUG_CONTROLLER
+DBG_CAUSE_NONE	DEBUG_CONTROLLER.v	/^localparam DBG_CAUSE_NONE = 0;$/;"	c	module:DEBUG_CONTROLLER
+DBG_CAUSE_RESET_HALTREQ	DEBUG_CONTROLLER.v	/^localparam DBG_CAUSE_RESET_HALTREQ = 5;$/;"	c	module:DEBUG_CONTROLLER
+DBG_CAUSE_STEP	DEBUG_CONTROLLER.v	/^localparam DBG_CAUSE_STEP = 4;$/;"	c	module:DEBUG_CONTROLLER
+DBG_CAUSE_TRIGGER	DEBUG_CONTROLLER.v	/^localparam DBG_CAUSE_TRIGGER = 2;$/;"	c	module:DEBUG_CONTROLLER
+DBG_MODE	DEBUG_CONTROLLER.v	/^localparam DBG_MODE = 3'b100;$/;"	c	module:DEBUG_CONTROLLER
+DBG_RESET_REQ	DEBUG_CONTROLLER.v	/^localparam DBG_RESET_REQ = 3'b010;$/;"	c	module:DEBUG_CONTROLLER
+DBG_TAKEN	DEBUG_CONTROLLER.v	/^localparam DBG_TAKEN = 3'b011;$/;"	c	module:DEBUG_CONTROLLER
 DBLCADDER_64_64	or1200_amultp2_32x32.v	/^module DBLCADDER_64_64 ( OPA, OPB, CIN, PHI, SUM, COUT );$/;"	m
 DBLCTREE_64	or1200_amultp2_32x32.v	/^module DBLCTREE_64 ( PIN, GIN, PHI, GOUT, POUT );$/;"	m
 DBLC_0_64	or1200_amultp2_32x32.v	/^module DBLC_0_64 ( PIN, GIN, PHI, POUT, GOUT );$/;"	m
@@ -326,10 +363,10 @@ DBLC_2_64	or1200_amultp2_32x32.v	/^module DBLC_2_64 ( PIN, GIN, PHI, POUT, GOUT 
 DBLC_3_64	or1200_amultp2_32x32.v	/^module DBLC_3_64 ( PIN, GIN, PHI, POUT, GOUT );$/;"	m
 DBLC_4_64	or1200_amultp2_32x32.v	/^module DBLC_4_64 ( PIN, GIN, PHI, POUT, GOUT );$/;"	m
 DBLC_5_64	or1200_amultp2_32x32.v	/^module DBLC_5_64 ( PIN, GIN, PHI, POUT, GOUT );$/;"	m
-DBSTROBE	cpu.v	/^output  [3:0]   DBSTROBE;$/;"	p	module:cpu
+DBSTROBE	cpu.v	/^output  [3:0]   DBSTROBE,$/;"	p	module:cpu
 DBSTROBE	fet_dec_ex_mem.v	/^output  [3:0]   DBSTROBE,$/;"	p	module:fet_dec_ex_mem
 DBSTROBE	riscv_platform.v	/^   wire [3:0]   DBSTROBE;$/;"	n	module:riscv_platform
-DBURST	cpu.v	/^output  [1:0]   DBURST; \/\/00-Normal; 01-INCR; 10-WRAP; 11-Reserved$/;"	p	module:cpu
+DBURST	cpu.v	/^output  [1:0]   DBURST, \/\/00-Normal, 01-INCR, 10-WRAP, 11-Reserved$/;"	p	module:cpu
 DBURST	fet_dec_ex_mem.v	/^output  [1:0]   DBURST, \/\/00-Normal; 01-INCR; 10-WRAP; 11-Reserved$/;"	p	module:fet_dec_ex_mem
 DBURST	riscv_platform.v	/^   wire  [1:0]   DBURST; \/\/00-Normal; 01-INCR; 10-WRAP; 11-Reserved$/;"	n	module:riscv_platform
 DCache_Addr_w0	dcache_ram_fsm.v	/^    output reg [6:0] DCache_Addr_w0,                \/\/ Dcache Address $/;"	p	module:dcache_ram_fsm
@@ -343,6 +380,8 @@ DCache_Write_Data_w1	dcache_ram_fsm.v	/^    output reg [255:0] DCache_Write_Data
 DCache_Write_Data_w1_temp	dcache_ram_fsm.v	/^reg [255:0] DCache_Write_Data_w1_temp;$/;"	r	module:dcache_ram_fsm
 DCache_Write_En_w0	dcache_ram_fsm.v	/^    output reg [31:0] DCache_Write_En_w0,           \/\/ Dcache data write enable for 32 bytes$/;"	p	module:dcache_ram_fsm
 DCache_Write_En_w1	dcache_ram_fsm.v	/^    output reg [31:0] DCache_Write_En_w1,           \/\/ Dcache data write enable for 32 bytes$/;"	p	module:dcache_ram_fsm
+DEBUG_CONTROLLER	DEBUG_CONTROLLER.v	/^module DEBUG_CONTROLLER #(parameter PC_BOOT = 32'h0000_0000)($/;"	m
+DEBUG_MODULE	riscv_platform.v	/^       Debug_Module DEBUG_MODULE ($/;"	i	module:riscv_platform
 DECODE	DECODE.v	/^module DECODE$/;"	m
 DECODER	or1200_amultp2_32x32.v	/^module DECODER ( INA, INB, INC, TWOPOS, TWONEG, ONEPOS, ONENEG );                   \/\/radix 4 /;"	m
 DECODE_STAGE_EXCEPTION	EXCEPTION_UNIT.v	/^    wire MEM_STAGE_EXCEPTION, DECODE_STAGE_EXCEPTION, ECALL_EBREAK_EXCEPTION, FETCH_STAGE_EXCEPT/;"	n	module:EXCEPTION_UNIT
@@ -374,26 +413,30 @@ DOUT	or1200_amultp2_32x32.v	/^output DOUT;$/;"	p	module:FLIPFLOP
 DOUT_reg	or1200_amultp2_32x32.v	/^   reg DOUT_reg;$/;"	r	module:FLIPFLOP
 DP	Branch_Prediction_Unit.v	/^Direction_Predictor DP( .CLK(CLK),                           $/;"	i	module:Branch_Prediction_Unit
 DRDATA	DATA_MEMORY_1.2.v	/^wire [31:0] DRDATA, IRDATA, PRDATA,HRDATA;$/;"	n	module:DATA_MEMORY
-DRDATA	cpu.v	/^input      [31:0]  DRDATA;$/;"	p	module:cpu
+DRDATA	cpu.v	/^input      [31:0]  DRDATA,$/;"	p	module:cpu
 DRDATA	fet_dec_ex_mem.v	/^input   [31:0]  DRDATA,$/;"	p	module:fet_dec_ex_mem
 DRDATA	riscv_platform.v	/^   wire      [31:0]  DRDATA;$/;"	n	module:riscv_platform
-DREQ	cpu.v	/^output          DREQ;$/;"	p	module:cpu
+DREQ	cpu.v	/^output          DREQ,$/;"	p	module:cpu
 DREQ	fet_dec_ex_mem.v	/^output          DREQ,$/;"	p	module:fet_dec_ex_mem
 DREQ	riscv_platform.v	/^   wire          DREQ;$/;"	n	module:riscv_platform
-DSTALL	cpu.v	/^input              DSTALL;$/;"	p	module:cpu
+DSTALL	cpu.v	/^input              DSTALL,$/;"	p	module:cpu
 DSTALL	fet_dec_ex_mem.v	/^input           DSTALL,$/;"	p	module:fet_dec_ex_mem
 DSTALL	riscv_platform.v	/^   wire              DSTALL;$/;"	n	module:riscv_platform
+DTLAST	cpu.v	/^input              DTLAST,$/;"	p	module:cpu
+DTLAST	fet_dec_ex_mem.v	/^input           DTLAST,$/;"	p	module:fet_dec_ex_mem
+DTLAST	riscv_platform.v	/^   wire TLAST, ITLAST, DTLAST;$/;"	n	module:riscv_platform
 DTLB	DTLB.v	/^module DTLB #($/;"	m
 DTLB	dcache_dpram.v	/^    DTLB DTLB($/;"	i	module:dcache_dpram
 DW	defines.v	/^`define DW 32$/;"	c
-DWDATA	cpu.v	/^output  [31:0]  DWDATA;$/;"	p	module:cpu
+DWDATA	cpu.v	/^output  [31:0]  DWDATA,$/;"	p	module:cpu
 DWDATA	fet_dec_ex_mem.v	/^output  [31:0]  DWDATA,$/;"	p	module:fet_dec_ex_mem
 DWDATA	riscv_platform.v	/^   wire [31:0]  DWDATA;$/;"	n	module:riscv_platform
-DWRB	cpu.v	/^output          DWRB;$/;"	p	module:cpu
+DWRB	cpu.v	/^output          DWRB,$/;"	p	module:cpu
 DWRB	fet_dec_ex_mem.v	/^output          DWRB,$/;"	p	module:fet_dec_ex_mem
 DWRB	riscv_platform.v	/^   wire          DWRB;$/;"	n	module:riscv_platform
 Data_Cache__Stall	IF_ID_EX.v	/^    input  Data_Cache__Stall,$/;"	p	module:IF_ID_EX
-Data_Memory	DATA_MEMORY_1.2.v	/^ Data_Memory Data_Memory($/;"	i	module:DATA_MEMORY
+Data_Memory	DATA_MEMORY_1.2.v	/^ MEMORY_MACRO #(.ADDR_WIDTH(ADDR_WIDTH),.DATA_WIDTH(DATA_WIDTH),.INPUT_FILE(DATA_INPUT_FILE)) Da/;"	i	module:DATA_MEMORY
+Debug_Module	Debug_Module.v	/^module Debug_Module ($/;"	m
 Demo_En	defines.v	/^`define Demo_En 1$/;"	c
 Direction_Predictor	Direction_Predictor.v	/^module Direction_Predictor$/;"	m
 Dirty_Bit_w0	dcache_dpram.v	/^reg [127:0] Dirty_Bit_w0;$/;"	r	module:dcache_dpram
@@ -454,6 +497,7 @@ Double_Load_Store__Stall	IF_ID_EX.v	/^reg Double_Load_Store__Stall;$/;"	r	module
 Double_Load_Store__Stall_pre	IF_ID_EX.v	/^reg Double_Load_Store__Stall_pre;$/;"	r	module:IF_ID_EX
 Double_Load_Store__Stall_reg	IF_ID_EX.v	/^reg Double_Load_Store__Stall_reg;$/;"	r	module:IF_ID_EX
 Double_Store_Buffer	IF_ID_EX.v	/^reg [31:0] Double_Store_Buffer;$/;"	r	module:IF_ID_EX
+EBREAKM	defines.v	/^`define EBREAKM 15$/;"	c
 ECALL_EBREAK_EXCEPTION	EXCEPTION_UNIT.v	/^    wire MEM_STAGE_EXCEPTION, DECODE_STAGE_EXCEPTION, ECALL_EBREAK_EXCEPTION, FETCH_STAGE_EXCEPT/;"	n	module:EXCEPTION_UNIT
 EN	or1200_amultp2_32x32.v	/^input EN;$/;"	p	module:FLIPFLOP
 EN	or1200_amultp2_32x32.v	/^input EN;$/;"	p	module:MULTIPLIER_33_32
@@ -465,6 +509,7 @@ EX	IF_ID_EX.v	/^EXECUTE EX( .CLK(CLK),                                          
 EXCEPTION_UNIT	EXCEPTION_UNIT.v	/^module EXCEPTION_UNIT #(parameter XLEN = 32,$/;"	m
 EXECPTION_UNIT	IF_ID_EX.v	/^EXCEPTION_UNIT EXECPTION_UNIT( $/;"	i	module:IF_ID_EX
 EXECUTE	EXECUTE.v	/^module EXECUTE$/;"	m
+EXIT_DEBUG	DEBUG_CONTROLLER.v	/^localparam EXIT_DEBUG = 3'b101;$/;"	c	module:DEBUG_CONTROLLER
 EXTERNAL_INTERRUPT	EXCEPTION_UNIT.v	/^    wire SOFTWARE_INTERRUPT, TIMER_INTERRUPT, EXTERNAL_INTERRUPT;$/;"	n	module:EXCEPTION_UNIT
 Ext_Stall	dcache_ram_fsm.v	/^    input Ext_Stall,$/;"	p	module:dcache_ram_fsm
 FADD	FP_DECODE.v	/^`define FADD        5'b00000$/;"	c
@@ -1117,6 +1162,7 @@ FSGNJ	FP_DECODE.v	/^`define FSGNJ       5'b00100$/;"	c
 FSQRT	FP_DECODE.v	/^`define FSQRT       5'b01011$/;"	c
 FSUB	FP_DECODE.v	/^`define FSUB        5'b00001$/;"	c
 FULL_ADDER	or1200_amultp2_32x32.v	/^module FULL_ADDER ( DATA_A, DATA_B, DATA_C, SAVE, CARRY );$/;"	m
+FUNCTIONAL	DEBUG_CONTROLLER.v	/^localparam FUNCTIONAL = 3'b001;$/;"	c	module:DEBUG_CONTROLLER
 FUNC_CLASS	FP_DECODE.v	/^`define FUNC_CLASS 3'b001$/;"	c
 FUNC_DP	FP_DECODE.v	/^`define FUNC_DP 2'b01$/;"	c
 FUNC_EQ	FP_DECODE.v	/^`define FUNC_EQ 3'b010$/;"	c
@@ -1216,7 +1262,8 @@ GOUT	or1200_amultp2_32x32.v	/^output [0:64] GOUT;$/;"	p	module:DBLC_4_64
 GOUT	or1200_amultp2_32x32.v	/^output [0:64] GOUT;$/;"	p	module:DBLC_5_64
 GOUT	or1200_amultp2_32x32.v	/^output [0:64] GOUT;$/;"	p	module:PRESTAGE_64
 HALF_ADDER	or1200_amultp2_32x32.v	/^module HALF_ADDER ( DATA_A, DATA_B, SAVE, CARRY );$/;"	m
-HANDLER_INPUT_FILE	DATA_MEMORY_1.2.v	/^                              HANDLER_INPUT_FILE = "Instruction_mem.mif"$/;"	c	module:DATA_MEMORY
+HALTED	DEBUG_CONTROLLER.v	/^localparam HALTED    = 2'b11;$/;"	c	module:DEBUG_CONTROLLER
+HAVERESET	DEBUG_CONTROLLER.v	/^localparam HAVERESET = 2'b00;$/;"	c	module:DEBUG_CONTROLLER
 HA_0	or1200_amultp2_32x32.v	/^   HALF_ADDER HA_0 (.DATA_A (SUMMAND[0]) , .DATA_B (SUMMAND[1]) , .SAVE (INT_SUM[0]) , .CARRY (I/;"	i	module:WALLACE_33_32
 HA_1	or1200_amultp2_32x32.v	/^   HALF_ADDER HA_1 (.DATA_A (SUMMAND[6]) , .DATA_B (SUMMAND[7]) , .SAVE (INT_SUM[3]) , .CARRY (I/;"	i	module:WALLACE_33_32
 HA_10	or1200_amultp2_32x32.v	/^   HALF_ADDER HA_10 (.DATA_A (INT_SUM[45]) , .DATA_B (INT_CARRY[30]) , .SAVE (INT_SUM[46]) , .CA/;"	i	module:WALLACE_33_32
@@ -1273,16 +1320,16 @@ HA_9	or1200_amultp2_32x32.v	/^   HALF_ADDER HA_9 (.DATA_A (INT_SUM[36]) , .DATA_
 HOLD	dcache_top.v	/^localparam HOLD = 3'b011;$/;"	c	module:dcache_top
 HOLD_2	dcache_top.v	/^localparam HOLD_2 = 3'b100;$/;"	c	module:dcache_top
 HRDATA	DATA_MEMORY_1.2.v	/^wire [31:0] DRDATA, IRDATA, PRDATA,HRDATA;$/;"	n	module:DATA_MEMORY
-IACK	cpu.v	/^input              IACK;$/;"	p	module:cpu
+IACK	cpu.v	/^input              IACK,$/;"	p	module:cpu
 IACK	fet_dec_ex_mem.v	/^input           IACK,$/;"	p	module:fet_dec_ex_mem
 IACK	riscv_platform.v	/^   wire              IACK;$/;"	n	module:riscv_platform
-IADDR	cpu.v	/^output  [31:0]  IADDR;$/;"	p	module:cpu
+IADDR	cpu.v	/^output  [31:0]  IADDR,$/;"	p	module:cpu
 IADDR	fet_dec_ex_mem.v	/^output  [31:0]  IADDR,$/;"	p	module:fet_dec_ex_mem
 IADDR	riscv_platform.v	/^   wire  [31:0]  IADDR;$/;"	n	module:riscv_platform
-IBSTROBE	cpu.v	/^output  [3:0]   IBSTROBE;$/;"	p	module:cpu
+IBSTROBE	cpu.v	/^output  [3:0]   IBSTROBE,$/;"	p	module:cpu
 IBSTROBE	fet_dec_ex_mem.v	/^output  [3:0]   IBSTROBE,$/;"	p	module:fet_dec_ex_mem
 IBSTROBE	riscv_platform.v	/^   wire [3:0]   IBSTROBE;$/;"	n	module:riscv_platform
-IBURST	cpu.v	/^output  [1:0]   IBURST; \/\/00-Normal; 01-INCR; 10-WRAP; 11-Reserved$/;"	p	module:cpu
+IBURST	cpu.v	/^output  [1:0]   IBURST, \/\/00-Normal, 01-INCR, 10-WRAP, 11-Reserved$/;"	p	module:cpu
 IBURST	fet_dec_ex_mem.v	/^output  [1:0]   IBURST, \/\/00-Normal; 01-INCR; 10-WRAP; 11-Reserved$/;"	p	module:fet_dec_ex_mem
 IBURST	riscv_platform.v	/^   wire  [1:0]   IBURST; \/\/00-Normal; 01-INCR; 10-WRAP; 11-Reserved$/;"	n	module:riscv_platform
 ICACHE_ACK	mem_hier.v	/^wire          ICACHE_ACK;$/;"	n	module:mem_hier
@@ -1309,6 +1356,9 @@ IF_ID_nop	EXCEPTION_UNIT.v	/^    output IF_ID_nop,$/;"	p	module:EXCEPTION_UNIT
 IF_ID_nop	IF_ID_EX.v	/^wire PC_Freeze_IRQ, ID_IE_FLUSH, IF_ID_nop;$/;"	n	module:IF_ID_EX
 IF_ID_nop	INST_FETCH.v	/^    input IF_ID_nop,$/;"	p	module:INST_FETCH
 ILEN	rv32_mpu.sv	/^        parameter ILEN = 32,$/;"	c	module:rv32_mpu
+IMEM_ADDR	icache.v	/^wire [31:0] IMEM_ADDR;$/;"	n	module:icache
+IMEM_MPU	dcache_dpram.v	/^    rv32_mpu #(.MMU_SUPPORT(0)) IMEM_MPU ($/;"	i	module:dcache_dpram
+IMEM_MPU	icache.v	/^rv32_mpu #(.MMU_SUPPORT(0)) IMEM_MPU ($/;"	i	module:icache
 IMEM_MPU	riscv_platform.v	/^       rv32_mpu #(.ILEN(),.XLEN(), .MPU_SUPPORT(), .NB_PMP_REGION(),.MAX_PMP_REGION(),.MMU_SUPPO/;"	i	module:riscv_platform
 INA	or1200_amultp2_32x32.v	/^input  INA;                                                                     $/;"	p	module:DECODER
 INA	or1200_amultp2_32x32.v	/^input  INA;$/;"	p	module:PP_HIGH
@@ -1325,11 +1375,13 @@ INC	or1200_amultp2_32x32.v	/^input  INC;$/;"	p	module:PP_MIDDLE
 INC	or1200_amultp2_32x32.v	/^input  INC;$/;"	p	module:R_GATE
 IND	or1200_amultp2_32x32.v	/^input  IND;$/;"	p	module:PP_MIDDLE
 INPUT_FILE	MEMORY_MACRO.v	/^module MEMORY_MACRO #(parameter ADDR_WIDTH=32, DATA_WIDTH=32, INPUT_FILE = "Instruction_mem.mif"/;"	c	module:MEMORY_MACRO
+INSTRUCTION_DEBUG	Debug_Module.v	/^  output [31:0] INSTRUCTION_DEBUG,$/;"	p	module:Debug_Module
 INSTRUCTION_EXCEPTION_BUS	EXCEPTION_UNIT.v	/^    input [3*XLEN-1:0]  INSTRUCTION_EXCEPTION_BUS,$/;"	p	module:EXCEPTION_UNIT
-INSTR_INPUT_FILE	DATA_MEMORY_1.2.v	/^                              INSTR_INPUT_FILE = "Instruction_mem.mif",$/;"	c	module:DATA_MEMORY
+INSTRUCTION_MASK	DATA_MEMORY_1.2.v	/^                                INSTRUCTION_MASK = 32'h00003FFF,$/;"	c	module:DATA_MEMORY
+INSTR_INPUT_FILE	DATA_MEMORY_1.2.v	/^                                INSTR_INPUT_FILE = "Instruction.mem",$/;"	c	module:DATA_MEMORY
 INST_FETCH	INST_FETCH.v	/^module INST_FETCH$/;"	m
-INTERFACE_ROUTER	dcache_biu.v	/^interface_router INTERFACE_ROUTER ($/;"	i	module:dcache_biu
-INTERFACE_ROUTER_IMEM	mem_hier.v	/^interface_router INTERFACE_ROUTER_IMEM ($/;"	i	module:mem_hier
+INTERFACE_ROUTER	dcache_biu.v	/^MEMORY_REQUEST_MODULE INTERFACE_ROUTER ($/;"	i	module:dcache_biu
+INTERFACE_ROUTER_IMEM	mem_hier.v	/^MEMORY_REQUEST_MODULE INTERFACE_ROUTER_IMEM ($/;"	i	module:mem_hier
 INTGEN	or1200_amultp2_32x32.v	/^   wire [0:64] INTGEN;$/;"	n	module:DBLCADDER_64_64
 INTGEN_0	or1200_amultp2_32x32.v	/^   wire [0:64] INTGEN_0;$/;"	n	module:DBLCTREE_64
 INTGEN_1	or1200_amultp2_32x32.v	/^   wire [0:64] INTGEN_1;$/;"	n	module:DBLCTREE_64
@@ -1352,15 +1404,15 @@ INT_TO_FP_UNSIGNED	FP_DECODE.v	/^`define INT_TO_FP_UNSIGNED  3'b011$/;"	c
 INVBLOCK	or1200_amultp2_32x32.v	/^module INVBLOCK ( GIN, PHI, GOUT );$/;"	m
 INV_MULTIPLICAND	or1200_amultp2_32x32.v	/^   wire [0:32] INV_MULTIPLICAND;$/;"	n	module:BOOTHCODER_33_32
 IRDATA	DATA_MEMORY_1.2.v	/^wire [31:0] DRDATA, IRDATA, PRDATA,HRDATA;$/;"	n	module:DATA_MEMORY
-IRDATA	cpu.v	/^input      [31:0]  IRDATA;$/;"	p	module:cpu
+IRDATA	cpu.v	/^input      [31:0]  IRDATA,$/;"	p	module:cpu
 IRDATA	fet_dec_ex_mem.v	/^input   [31:0]  IRDATA,$/;"	p	module:fet_dec_ex_mem
 IRDATA	riscv_platform.v	/^   wire      [31:0]  IRDATA;$/;"	n	module:riscv_platform
-IREQ	cpu.v	/^output          IREQ;$/;"	p	module:cpu
+IREQ	cpu.v	/^output          IREQ,$/;"	p	module:cpu
 IREQ	fet_dec_ex_mem.v	/^output          IREQ,$/;"	p	module:fet_dec_ex_mem
 IREQ	riscv_platform.v	/^   wire          IREQ;$/;"	n	module:riscv_platform
 ISR_ADDRESS	INST_FETCH.v	/^wire [31:0] ISR_ADDRESS;$/;"	n	module:INST_FETCH
 ISR_ADDRESS	defines.v	/^`define ISR_ADDRESS 32'd800     \/\/ ISR address made 800 instead 400 not to clash with PTE when/;"	c
-ISTALL	cpu.v	/^input              ISTALL;$/;"	p	module:cpu
+ISTALL	cpu.v	/^input              ISTALL,$/;"	p	module:cpu
 ISTALL	fet_dec_ex_mem.v	/^input           ISTALL,$/;"	p	module:fet_dec_ex_mem
 ISTALL	riscv_platform.v	/^   wire              ISTALL;$/;"	n	module:riscv_platform
 IS_CSR	defines.v	/^`define IS_CSR    2$/;"	c
@@ -1369,12 +1421,15 @@ IS_ECALL	defines.v	/^`define IS_ECALL  0$/;"	c
 IS_MRET	defines.v	/^`define IS_MRET   3$/;"	c
 IS_SRET	defines.v	/^`define IS_SRET   4$/;"	c
 IS_WFI	defines.v	/^`define IS_WFI    5$/;"	c
+ITLAST	cpu.v	/^input              ITLAST,$/;"	p	module:cpu
+ITLAST	fet_dec_ex_mem.v	/^input           ITLAST,$/;"	p	module:fet_dec_ex_mem
+ITLAST	riscv_platform.v	/^   wire TLAST, ITLAST, DTLAST;$/;"	n	module:riscv_platform
 ITLB	ITLB.v	/^module ITLB $/;"	m
 ITLB	icache.v	/^ITLB ITLB($/;"	i	module:icache
-IWDATA	cpu.v	/^output  [31:0]  IWDATA;$/;"	p	module:cpu
+IWDATA	cpu.v	/^output  [31:0]  IWDATA,$/;"	p	module:cpu
 IWDATA	fet_dec_ex_mem.v	/^output  [31:0]  IWDATA,$/;"	p	module:fet_dec_ex_mem
 IWDATA	riscv_platform.v	/^   wire [31:0]  IWDATA;$/;"	n	module:riscv_platform
-IWRB	cpu.v	/^output          IWRB;$/;"	p	module:cpu
+IWRB	cpu.v	/^output          IWRB,$/;"	p	module:cpu
 IWRB	fet_dec_ex_mem.v	/^output          IWRB,$/;"	p	module:fet_dec_ex_mem
 IWRB	riscv_platform.v	/^   wire          IWRB;$/;"	n	module:riscv_platform
 Immediate__ID_EX	EXECUTE.v	/^    input [31:0] Immediate__ID_EX,                      \/\/immediate for alu from ID_EX stage$/;"	p	module:EXECUTE
@@ -1387,7 +1442,7 @@ Inst_Cache__Stall	IF_ID_EX.v	/^    input Inst_Cache__Stall,$/;"	p	module:IF_ID_E
 Inst_Cache__Stall__reg	EXECUTE.v	/^    input Inst_Cache__Stall__reg,$/;"	p	module:EXECUTE
 Inst_Cache__Stall__reg	IF_ID_EX.v	/^reg Inst_Cache__Stall__reg;$/;"	r	module:IF_ID_EX
 Instruction_Memory	DATA_MEMORY_1.2.v	/^  Instruction_Memory Instruction_Memory($/;"	i	module:DATA_MEMORY
-Instruction_Memory	riscv_platform.v	/^                   .PT_INPUT_FILE("Page_Table.mem"),.HANDLER_INPUT_FILE("handler.mem")) Instruct/;"	i	module:riscv_platform
+Instruction_Memory	riscv_platform.v	/^     DATA_MEMORY #(.ADDR_WIDTH(14),.DATA_WIDTH(32),.INSTR_INPUT_FILE("instruction_csr_test.mem")/;"	i	module:riscv_platform
 Instruction__IF_ID	DECODE.v	/^    input [31:0] Instruction__IF_ID,                \/\/Instruction from IF_ID stage$/;"	p	module:DECODE
 Instruction__IF_ID	FP_DECODE.v	/^    input [31:0] Instruction__IF_ID,$/;"	p	module:FP_DECODE
 Instruction__IF_ID	IF_ID_EX.v	/^    input [31:0] Instruction__IF_ID,$/;"	p	module:IF_ID_EX
@@ -1634,12 +1689,16 @@ Load__Stall_ID_EX	EXECUTE.v	/^    input Load__Stall_ID_EX,                      
 Load__Stall_ID_EX	IF_ID_EX.v	/^reg  Load__Stall_ID_EX;$/;"	r	module:IF_ID_EX
 Load__Stall_id_ex	DECODE.v	/^    output reg Load__Stall_id_ex,                   \/\/For dependancy between load and ALU inst/;"	p	module:DECODE
 Load__Stall_id_ex	IF_ID_EX.v	/^wire Load__Stall_id_ex;                       $/;"	n	module:IF_ID_EX
+Lsu_op_dbg	ABSTRACT_COMMAND_DECODER.v	/^  output reg [4:0] Lsu_op_dbg,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+Lsu_op_dbg	IF_ID_EX.v	/^wire [4:0] Lsu_op_dbg;$/;"	n	module:IF_ID_EX
 MAX	FP_DECODE.v	/^`define MAX             3'b101$/;"	c
 MAX_PMP_REGION	csr.v	/^parameter MAX_PMP_REGION = 16;$/;"	c	module:csr
 MAX_PMP_REGION	rv32_mpu.sv	/^        parameter MAX_PMP_REGION = 16,$/;"	c	module:rv32_mpu
 MEM	REG_FILE.v	/^(* keep = "true" *) reg [31:0] MEM[0:31];$/;"	r	module:REG_FILE
 MEMORY	FP_REG_FILE.v	/^reg [63:0] MEMORY[0:31];$/;"	r	module:FP_REG_FILE
 MEMORY_MACRO	MEMORY_MACRO.v	/^module MEMORY_MACRO #(parameter ADDR_WIDTH=32, DATA_WIDTH=32, INPUT_FILE = "Instruction_mem.mif"/;"	m
+MEMORY_REQUEST_MODULE	MEMORY_REQUEST_MODULE.v	/^module MEMORY_REQUEST_MODULE ($/;"	m
+MEM_ADDR	Debug_Module.v	/^ wire [31:0] MEM_ADDR;$/;"	n	module:Debug_Module
 MEM_ADDR_EXCEPTION	EXCEPTION_UNIT.v	/^    input [XLEN-1:0]    MEM_ADDR_EXCEPTION,$/;"	p	module:EXCEPTION_UNIT
 MEM_Addr	dcache_ram_fsm.v	/^    input [31:0] MEM_Addr,                          \/\/ Data Memory Address from pipeline MEM s/;"	p	module:dcache_ram_fsm
 MEM_Addr__reg	dcache_ram_fsm.v	/^reg [31:0] MEM_Addr__reg;$/;"	r	module:dcache_ram_fsm
@@ -1735,11 +1794,14 @@ Opcode__id_ex	IF_ID_EX.v	/^wire [6:0] Opcode__id_ex;$/;"	n	module:IF_ID_EX
 P	or1200_amultp2_32x32.v	/^reg [63:0] P;$/;"	r	module:or1200_amultp2_32x32
 PBIT	or1200_amultp2_32x32.v	/^   wire [0:0] PBIT;$/;"	n	module:DBLCADDER_64_64
 PBIT	or1200_amultp2_32x32.v	/^input  PBIT;$/;"	p	module:XORSTAGE_64
+PBUFFER_INSTRUCTION	Debug_Module.v	/^wire [31:0] PBUFFER_INSTRUCTION;$/;"	n	module:Debug_Module
 PC	Branch_Prediction_Unit.v	/^    input [31:0] PC,$/;"	p	module:Branch_Prediction_Unit
 PC	Direction_Predictor.v	/^    input [31:0] PC,$/;"	p	module:Direction_Predictor
 PC_4__IF_ID	DECODE.v	/^    input [31:0] PC_4__IF_ID,                       \/\/the next instruction PC for storing in j/;"	p	module:DECODE
 PC_4__IF_ID	IF_ID_EX.v	/^wire [31:0] PC_4__IF_ID;$/;"	n	module:IF_ID_EX
 PC_4__IF_ID	INST_FETCH.v	/^    output reg [31:0] PC_4__IF_ID,                      \/\/PC + 4 output for IF_ID stage$/;"	p	module:INST_FETCH
+PC_BOOT	DEBUG_CONTROLLER.v	/^module DEBUG_CONTROLLER #(parameter PC_BOOT = 32'h0000_0000)($/;"	c	module:DEBUG_CONTROLLER
+PC_BUS	DEBUG_CONTROLLER.v	/^  input [95:0] PC_BUS,$/;"	p	module:DEBUG_CONTROLLER
 PC_Control__IRQ	Branch_Prediction_Unit.v	/^    input PC_Control__IRQ$/;"	p	module:Branch_Prediction_Unit
 PC_Control__IRQ	EXCEPTION_UNIT.v	/^    output reg PC_Control__IRQ,$/;"	p	module:EXCEPTION_UNIT
 PC_Control__IRQ	EXECUTE.v	/^    input PC_Control__IRQ$/;"	p	module:EXECUTE
@@ -1747,11 +1809,25 @@ PC_Control__IRQ	IF_ID_EX.v	/^wire PC_Control__IRQ;$/;"	n	module:IF_ID_EX
 PC_Control__IRQ	INST_FETCH.v	/^    input PC_Control__IRQ,                              \/\/Sets PC to interrupt vector address$/;"	p	module:INST_FETCH
 PC_Control__IRQ_int	EXCEPTION_UNIT.v	/^    reg PC_Control__IRQ_int;$/;"	r	module:EXCEPTION_UNIT
 PC_Control__IRQ_pulse	EXCEPTION_UNIT.v	/^    wire PC_Control__IRQ_pulse;$/;"	n	module:EXCEPTION_UNIT
+PC_DEBUG	Debug_Module.v	/^  input [31:0] PC_DEBUG,$/;"	p	module:Debug_Module
+PC_DEBUG	cpu.v	/^output [31:0] PC_DEBUG,$/;"	p	module:cpu
+PC_DEBUG	fet_dec_ex_mem.v	/^output [31:0] PC_DEBUG,$/;"	p	module:fet_dec_ex_mem
+PC_DEBUG	riscv_platform.v	/^   wire [31:0] PC_DEBUG;$/;"	n	module:riscv_platform
+PC_DEBUG_Q	Debug_Module.v	/^reg [31:0] PC_DEBUG_Q;$/;"	r	module:Debug_Module
 PC_EXCEPTION_BUS	EXCEPTION_UNIT.v	/^    input [3*XLEN-1:0]  PC_EXCEPTION_BUS,$/;"	p	module:EXCEPTION_UNIT
 PC_Freeze_IRQ	EXCEPTION_UNIT.v	/^    output PC_Freeze_IRQ,$/;"	p	module:EXCEPTION_UNIT
 PC_Freeze_IRQ	IF_ID_EX.v	/^wire PC_Freeze_IRQ, ID_IE_FLUSH, IF_ID_nop;$/;"	n	module:IF_ID_EX
 PC_HALT_BREAK	EXCEPTION_UNIT.v	/^    output reg PC_HALT_BREAK,$/;"	p	module:EXCEPTION_UNIT
 PC_HALT_BREAK	IF_ID_EX.v	/^wire PC_HALT_BREAK;$/;"	n	module:IF_ID_EX
+PC_ID	DEBUG_CONTROLLER.v	/^wire [31:0] PC_WB,PC_IF,PC_ID;$/;"	n	module:DEBUG_CONTROLLER
+PC_ID	DECODE.v	/^    output [31:0] PC_ID,$/;"	p	module:DECODE
+PC_ID	IF_ID_EX.v	/^wire [31:0] PC_ID;$/;"	n	module:IF_ID_EX
+PC_ID_EX	EXECUTE.v	/^    input [31:0] PC_ID_EX, $/;"	p	module:EXECUTE
+PC_IE	IF_ID_EX.v	/^reg [31:0] PC_IE;$/;"	r	module:IF_ID_EX
+PC_IF	DEBUG_CONTROLLER.v	/^wire [31:0] PC_WB,PC_IF,PC_ID;$/;"	n	module:DEBUG_CONTROLLER
+PC_MEM	IF_ID_EX.v	/^reg [31:0] PC_MEM;$/;"	r	module:IF_ID_EX
+PC_REQUEST	Debug_Module.v	/^wire [31:0] PC_REQUEST;$/;"	n	module:Debug_Module
+PC_WB	DEBUG_CONTROLLER.v	/^wire [31:0] PC_WB,PC_IF,PC_ID;$/;"	n	module:DEBUG_CONTROLLER
 PC_XOR_GHR	Direction_Predictor.v	/^wire [4:0] PC_XOR_GHR;$/;"	n	module:Direction_Predictor
 PC__IF_ID	DECODE.v	/^    input [31:0] PC__IF_ID,                         \/\/the PC from IF_ID stage                 /;"	p	module:DECODE
 PC__IF_ID	IF_ID_EX.v	/^wire [31:0] PC__IF_ID;$/;"	n	module:IF_ID_EX
@@ -1776,11 +1852,10 @@ PHI	or1200_amultp2_32x32.v	/^input  PHI;$/;"	p	module:MULTIPLIER_33_32
 PHI	or1200_amultp2_32x32.v	/^input  PHI;$/;"	p	module:PRESTAGE_64
 PHI	or1200_amultp2_32x32.v	/^input  PHI;$/;"	p	module:XORSTAGE_64
 PHI	or1200_amultp2_32x32.v	/^input  PHI;$/;"	p	module:XXOR1
-PHT	Direction_Predictor.v	/^PHT_mem PHT ( .clka(CLK),$/;"	i	module:Direction_Predictor
 PHT_Read_Data	Branch_Prediction_Unit.v	/^    output [1:0] PHT_Read_Data,$/;"	p	module:Branch_Prediction_Unit
-PHT_Read_Data	Direction_Predictor.v	/^    output [1:0] PHT_Read_Data,$/;"	p	module:Direction_Predictor
+PHT_Read_Data	Direction_Predictor.v	/^    output reg [1:0] PHT_Read_Data,$/;"	p	module:Direction_Predictor
 PHT_Read_Index	Branch_Prediction_Unit.v	/^    output [10:0] PHT_Read_Index, $/;"	p	module:Branch_Prediction_Unit
-PHT_Read_Index	Direction_Predictor.v	/^    output reg [10:0] PHT_Read_Index, $/;"	p	module:Direction_Predictor
+PHT_Read_Index	Direction_Predictor.v	/^    output  [10:0] PHT_Read_Index, $/;"	p	module:Direction_Predictor
 PHT_Write_Data	Branch_Prediction_Unit.v	/^    input [1:0] PHT_Write_Data,$/;"	p	module:Branch_Prediction_Unit
 PHT_Write_Data	Direction_Predictor.v	/^    input [1:0] PHT_Write_Data,$/;"	p	module:Direction_Predictor
 PHT_Write_Data__ex_mem	EXECUTE.v	/^    output reg [1:0] PHT_Write_Data__ex_mem,$/;"	p	module:EXECUTE
@@ -1796,6 +1871,7 @@ PHT_Write_Index	Direction_Predictor.v	/^    input [10:0] PHT_Write_Index,$/;"	p	
 PHT_Write_Index__ex_mem	EXECUTE.v	/^    output reg [10:0] PHT_Write_Index__ex_mem,$/;"	p	module:EXECUTE
 PHT_Write_Index__ex_mem	IF_ID_EX.v	/^wire [10:0] PHT_Write_Index__ex_mem;$/;"	n	module:IF_ID_EX
 PHT_Write_Index__reg	Direction_Predictor.v	/^reg [10:0] PHT_Write_Index__reg;$/;"	r	module:Direction_Predictor
+PHT_mem	Direction_Predictor.v	/^reg [1:0] PHT_mem [2047:0];$/;"	r	module:Direction_Predictor
 PIN	or1200_amultp2_32x32.v	/^input  [0:32] PIN;$/;"	p	module:DBLC_5_64
 PIN	or1200_amultp2_32x32.v	/^input  [0:48] PIN;$/;"	p	module:DBLC_4_64
 PIN	or1200_amultp2_32x32.v	/^input  [0:56] PIN;$/;"	p	module:DBLC_3_64
@@ -1816,7 +1892,7 @@ PMA_R	defines.v	/^`define PMA_R 0$/;"	c
 PMA_W	defines.v	/^`define PMA_W 1$/;"	c
 PMA_X	defines.v	/^`define PMA_X 2$/;"	c
 PMPADDR0	defines.v	/^`define PMPADDR0      12'h3B0$/;"	c
-PMPADDR0_INIT	csr.v	/^parameter PMPADDR0_INIT  = 32'h0;$/;"	c	module:csr
+PMPADDR0_INIT	csr.v	/^parameter PMPADDR0_INIT  = 32'h0000_1000;$/;"	c	module:csr
 PMPADDR1	defines.v	/^`define PMPADDR1      12'h3B1$/;"	c
 PMPADDR10	defines.v	/^`define PMPADDR10     12'h3BA$/;"	c
 PMPADDR10_INIT	csr.v	/^parameter PMPADDR10_INIT = 32'h0;$/;"	c	module:csr
@@ -1848,7 +1924,7 @@ PMPADDR8_INIT	csr.v	/^parameter PMPADDR8_INIT  = 32'h0;$/;"	c	module:csr
 PMPADDR9	defines.v	/^`define PMPADDR9      12'h3B9$/;"	c
 PMPADDR9_INIT	csr.v	/^parameter PMPADDR9_INIT  = 32'h0;$/;"	c	module:csr
 PMPCFG0	defines.v	/^`define PMPCFG0       12'h3A0$/;"	c
-PMPCFG0_INIT	csr.v	/^parameter PMPCFG0_INIT   = 32'h0;$/;"	c	module:csr
+PMPCFG0_INIT	csr.v	/^parameter PMPCFG0_INIT   = 32'h0000_000D;$/;"	c	module:csr
 PMPCFG1	defines.v	/^`define PMPCFG1       12'h3A1$/;"	c
 PMPCFG1_INIT	csr.v	/^parameter PMPCFG1_INIT   = 32'h0;$/;"	c	module:csr
 PMPCFG2	defines.v	/^`define PMPCFG2       12'h3A2$/;"	c
@@ -2430,6 +2506,7 @@ PRIORITY_REG0	defines.v	/^`define PRIORITY_REG0       12'h7d3$/;"	c
 PRIORITY_REG1	defines.v	/^`define PRIORITY_REG1       12'h7d4$/;"	c
 PRIORITY_REG2	defines.v	/^`define PRIORITY_REG2       12'h7d5$/;"	c
 PRIORITY_REG3	defines.v	/^`define PRIORITY_REG3       12'h7d6$/;"	c
+PROGRAM_BUFFER	DEBUG_CONTROLLER.v	/^localparam PROGRAM_BUFFER = 3'b110;$/;"	c	module:DEBUG_CONTROLLER
 PTC_RPTC_CNTR	defines.v	/^`define PTC_RPTC_CNTR 32'h100005F0$/;"	c
 PTC_RPTC_CTRL	defines.v	/^`define PTC_RPTC_CTRL 32'h100005FC$/;"	c
 PTC_RPTC_CTRL_CAPTE	defines.v	/^`define PTC_RPTC_CTRL_CAPTE 8$/;"	c
@@ -2443,7 +2520,6 @@ PTC_RPTC_CTRL_OE	defines.v	/^`define PTC_RPTC_CTRL_OE 3$/;"	c
 PTC_RPTC_CTRL_SINGLE	defines.v	/^`define PTC_RPTC_CTRL_SINGLE 4$/;"	c
 PTC_RPTC_HRC	defines.v	/^`define PTC_RPTC_HRC 32'h100005F4$/;"	c
 PTC_RPTC_LRC	defines.v	/^`define PTC_RPTC_LRC 32'h100005F8$/;"	c
-PT_INPUT_FILE	DATA_MEMORY_1.2.v	/^                              PT_INPUT_FILE = "Instruction_mem.mif",$/;"	c	module:DATA_MEMORY
 PULSE_DEL	dcache_dpram.v	/^localparam PULSE_DEL = 2'b01;$/;"	c	module:dcache_dpram
 PULSE_HI	dcache_dpram.v	/^localparam PULSE_HI = 2'b10;$/;"	c	module:dcache_dpram
 PULSE_LOW	dcache_dpram.v	/^localparam PULSE_LOW = 2'b11;$/;"	c	module:dcache_dpram
@@ -2471,6 +2547,7 @@ RAS_RET_Inst_EX__ex_mem	IF_ID_EX.v	/^wire RAS_RET_Inst_EX__ex_mem;$/;"	n	module:
 RDATA	DATA_MEMORY_1.2.v	/^  output  [DATA_WIDTH-1:0]  RDATA,$/;"	p	module:DATA_MEMORY
 RDATA	DTLB.v	/^   input      [31:0]  RDATA,$/;"	p	module:DTLB
 RDATA	ITLB.v	/^   input      [31:0]  RDATA,$/;"	p	module:ITLB
+RDATA	MEMORY_REQUEST_MODULE.v	/^   input      [31:0]  RDATA,$/;"	p	module:MEMORY_REQUEST_MODULE
 RDATA	dcache_biu.v	/^  input      [31:0]  RDATA,$/;"	p	module:dcache_biu
 RDATA	dcache_dpram.v	/^    input      [31:0]  RDATA,$/;"	p	module:dcache_dpram
 RDATA	dcache_top.v	/^     input      [31:0]  RDATA,$/;"	p	module:dcache_top
@@ -2508,6 +2585,7 @@ REPLACE	dcache_ram_fsm.v	/^localparam REPLACE = 3'b011;$/;"	c	module:dcache_ram_
 REQ	DATA_MEMORY_1.2.v	/^  input                     REQ,$/;"	p	module:DATA_MEMORY
 REQ	DTLB.v	/^   output reg         REQ,$/;"	p	module:DTLB
 REQ	ITLB.v	/^   output reg         REQ,$/;"	p	module:ITLB
+REQ	MEMORY_REQUEST_MODULE.v	/^   output reg         REQ,$/;"	p	module:MEMORY_REQUEST_MODULE
 REQ	dcache_biu.v	/^  output reg         REQ,$/;"	p	module:dcache_biu
 REQ	dcache_dpram.v	/^    output          REQ,$/;"	p	module:dcache_dpram
 REQ	dcache_top.v	/^     output          REQ,$/;"	p	module:dcache_top
@@ -2515,6 +2593,12 @@ REQ	icache.v	/^    output          REQ,$/;"	p	module:icache
 REQ	interface_router.v	/^   output reg         REQ,$/;"	p	module:interface_router
 REQ	mem_hier.v	/^      output          REQ,$/;"	p	module:mem_hier
 REQ	riscv_platform.v	/^   wire          REQ;$/;"	n	module:riscv_platform
+RESET	ABSTRACT_COMMAND_DECODER.v	/^  input RESET,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+RESET	DEBUG_CONTROLLER.v	/^localparam RESET = 3'b000;$/;"	c	module:DEBUG_CONTROLLER
+RESET	fet_dec_ex_mem.v	/^wire RESET;$/;"	n	module:fet_dec_ex_mem
+RESET_BUTTON	IF_ID_EX.v	/^    input RESET_BUTTON,$/;"	p	module:IF_ID_EX
+RESET_BUTTON	cpu.v	/^input RESET_BUTTON,$/;"	p	module:cpu
+RESET_BUTTON	fet_dec_ex_mem.v	/^input RESET_BUTTON,$/;"	p	module:fet_dec_ex_mem
 RESULT	or1200_amultp2_32x32.v	/^   reg [0:63] RESULT;$/;"	r	module:MULTIPLIER_33_32
 RESULT	or1200_amultp2_32x32.v	/^output [0:63] RESULT;$/;"	p	module:MULTIPLIER_33_32
 RET_Addr_Valid	Return_Addr_Stack.v	/^    output reg RET_Addr_Valid,$/;"	p	module:Return_Addr_Stack
@@ -2557,6 +2641,10 @@ RS1_Data__rf	IF_ID_EX.v	/^wire [31:0] RS1_Data__rf;$/;"	n	module:IF_ID_EX
 RS1_Dec_Ctrl__IRQ	REG_FILE.v	/^    input RS1_Dec_Ctrl__IRQ,$/;"	p	module:REG_FILE
 RS1_Read_Addr	REG_FILE.v	/^    input [4:0] RS1_Read_Addr,$/;"	p	module:REG_FILE
 RS1_Read_Data	REG_FILE.v	/^    output reg[31:0] RS1_Read_Data,$/;"	p	module:REG_FILE
+RS1_debug_addr	ABSTRACT_COMMAND_DECODER.v	/^  output [4:0] RS1_debug_addr,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+RS1_debug_addr	IF_ID_EX.v	/^wire [4:0] RS1_debug_addr;$/;"	n	module:IF_ID_EX
+RS1_debug_addr_q	ABSTRACT_COMMAND_DECODER.v	/^reg [4:0] RS1_debug_addr_q,Rd_debug_addr_q;$/;"	r	module:ABSTRACT_COMMAND_DECODER
+RS1_debug_data	ABSTRACT_COMMAND_DECODER.v	/^  input [31:0] RS1_debug_data,$/;"	p	module:ABSTRACT_COMMAND_DECODER
 RS2_Addr__rf	DECODE.v	/^    output reg [4:0] RS2_Addr__rf,                  \/\/Source Regester - 2  Addr to RF$/;"	p	module:DECODE
 RS2_Addr__rf	IF_ID_EX.v	/^wire [4:0] RS2_Addr__rf;$/;"	n	module:IF_ID_EX
 RS2_Data__ID_EX	EXECUTE.v	/^    input [31:0] RS2_Data__ID_EX,                       \/\/Source Regester - 2  Data from ID_EX/;"	p	module:EXECUTE
@@ -2577,7 +2665,6 @@ RST	EXCEPTION_UNIT.v	/^    input RST,$/;"	p	module:EXCEPTION_UNIT
 RST	EXECUTE.v	/^    input RST,$/;"	p	module:EXECUTE
 RST	FP_DECODE.v	/^    input RST,$/;"	p	module:FP_DECODE
 RST	FP_REG_FILE.v	/^    input RST,$/;"	p	module:FP_REG_FILE
-RST	IF_ID_EX.v	/^    input RST,$/;"	p	module:IF_ID_EX
 RST	INST_FETCH.v	/^    input RST,$/;"	p	module:INST_FETCH
 RST	REG_FILE.v	/^    input RST,$/;"	p	module:REG_FILE
 RST	Return_Addr_Stack.v	/^    input RST,$/;"	p	module:Return_Addr_Stack
@@ -2585,15 +2672,29 @@ RST	or1200_amultp2_32x32.v	/^input  RST;$/;"	p	module:FLIPFLOP
 RST	or1200_amultp2_32x32.v	/^input  RST;$/;"	p	module:MULTIPLIER_33_32
 RST	or1200_amultp2_32x32.v	/^input  RST;$/;"	p	module:WALLACE_33_32
 RST	or1200_amultp2_32x32.v	/^input  RST;$/;"	p	module:or1200_amultp2_32x32
+RST	rv32_clint.sv	/^        input  wire                   RST,$/;"	p	module:rv32_clint
 RTC_CLOCK	riscv_platform.v	/^  input RTC_CLOCK,$/;"	p	module:riscv_platform
+RUNNING	DEBUG_CONTROLLER.v	/^localparam RUNNING   = 2'b01;$/;"	c	module:DEBUG_CONTROLLER
 RWX_page	DTLB.v	/^wire RO_page,RW_page,XO_page,XOR_page,RWX_page;$/;"	n	module:DTLB
 RWX_page	ITLB.v	/^wire RW_page, RWX_page, RO_page, XOR_page, XO_page;$/;"	n	module:ITLB
 RW_page	DTLB.v	/^wire RO_page,RW_page,XO_page,XOR_page,RWX_page;$/;"	n	module:DTLB
 RW_page	ITLB.v	/^wire RW_page, RWX_page, RO_page, XOR_page, XO_page;$/;"	n	module:ITLB
 R_GATE	or1200_amultp2_32x32.v	/^module R_GATE ( INA, INB, INC, PPBIT );$/;"	m
+Rd_debug_addr	ABSTRACT_COMMAND_DECODER.v	/^  output [4:0] Rd_debug_addr,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+Rd_debug_addr	IF_ID_EX.v	/^wire [4:0] Rd_debug_addr;$/;"	n	module:IF_ID_EX
+Rd_debug_addr_q	ABSTRACT_COMMAND_DECODER.v	/^reg [4:0] RS1_debug_addr_q,Rd_debug_addr_q;$/;"	r	module:ABSTRACT_COMMAND_DECODER
+Rd_debug_data	ABSTRACT_COMMAND_DECODER.v	/^  output [31:0] Rd_debug_data,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+Rd_debug_data	IF_ID_EX.v	/^wire [31:0] Rd_debug_data;$/;"	n	module:IF_ID_EX
+Rd_debug_data_q	ABSTRACT_COMMAND_DECODER.v	/^reg [31:0] Rd_debug_data_q;$/;"	r	module:ABSTRACT_COMMAND_DECODER
 Read	dcache_ram_fsm.v	/^wire Read,Write;$/;"	n	module:dcache_ram_fsm
 Read_Access	BTB_PLRU.v	/^    input Read_Access,$/;"	p	module:BTB_PLRU
 Read__reg	dcache_ram_fsm.v	/^reg Read__reg,Write__reg,Write__reg__reg;$/;"	r	module:dcache_ram_fsm
+RegRead_debug	ABSTRACT_COMMAND_DECODER.v	/^  output RegRead_debug,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+RegRead_debug	IF_ID_EX.v	/^wire RegRead_debug;$/;"	n	module:IF_ID_EX
+RegRead_debug_q	ABSTRACT_COMMAND_DECODER.v	/^reg RegWrite_debug_q,RegRead_debug_q;$/;"	r	module:ABSTRACT_COMMAND_DECODER
+RegWrite_debug	ABSTRACT_COMMAND_DECODER.v	/^  output RegWrite_debug,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+RegWrite_debug	IF_ID_EX.v	/^wire RegWrite_debug;$/;"	n	module:IF_ID_EX
+RegWrite_debug_q	ABSTRACT_COMMAND_DECODER.v	/^reg RegWrite_debug_q,RegRead_debug_q;$/;"	r	module:ABSTRACT_COMMAND_DECODER
 Reg_Write_Enable__EX_MEM	DECODE.v	/^    input Reg_Write_Enable__EX_MEM,                 \/\/Reg write-back control signal from EX_ME/;"	p	module:DECODE
 Reg_Write_Enable__EX_MEM	FP_DECODE.v	/^    input Reg_Write_Enable__EX_MEM,                 \/\/Reg write-back control signal from EX_ME/;"	p	module:FP_DECODE
 Reg_Write_Enable__EX_MEM	IF_ID_EX.v	/^reg  Reg_Write_Enable__EX_MEM;$/;"	r	module:IF_ID_EX
@@ -2630,9 +2731,10 @@ SOFTWARE_INTERRUPT	EXCEPTION_UNIT.v	/^    wire SOFTWARE_INTERRUPT, TIMER_INTERRU
 SQRT	FP_DECODE.v	/^`define SQRT            3'b011$/;"	c
 STACK_SAVE_REG	defines.v	/^`define STACK_SAVE_REG      12'h7d7$/;"	c
 STACK_SAVE_REG_S	defines.v	/^`define STACK_SAVE_REG_S    12'h7d8  \/\/ shadow register for STACK_SAVE_REG $/;"	c
-STALL	DATA_MEMORY_1.2.v	/^  output                    STALL$/;"	p	module:DATA_MEMORY
+STALL	DATA_MEMORY_1.2.v	/^  output                    STALL,$/;"	p	module:DATA_MEMORY
 STALL	DTLB.v	/^   input              STALL,$/;"	p	module:DTLB
 STALL	ITLB.v	/^   input              STALL,$/;"	p	module:ITLB
+STALL	MEMORY_REQUEST_MODULE.v	/^   input              STALL,$/;"	p	module:MEMORY_REQUEST_MODULE
 STALL	dcache_biu.v	/^  input              STALL,$/;"	p	module:dcache_biu
 STALL	dcache_dpram.v	/^    input              STALL,$/;"	p	module:dcache_dpram
 STALL	dcache_top.v	/^     input              STALL,$/;"	p	module:dcache_top
@@ -2642,6 +2744,7 @@ STALL	mem_hier.v	/^      input           STALL,$/;"	p	module:mem_hier
 STALL	riscv_platform.v	/^   wire              STALL;$/;"	n	module:riscv_platform
 START	cachefsm.v	/^localparam START = 2'b00;\/\/0;$/;"	c	module:cachefsm
 START	dcache_ram_fsm.v	/^localparam START = 3'b000;$/;"	c	module:dcache_ram_fsm
+STEP	defines.v	/^`define STEP 2$/;"	c
 SUM	or1200_amultp2_32x32.v	/^output SUM;$/;"	p	module:XXOR1
 SUM	or1200_amultp2_32x32.v	/^output [0:63] SUM;$/;"	p	module:DBLCADDER_64_64
 SUM	or1200_amultp2_32x32.v	/^output [0:63] SUM;$/;"	p	module:WALLACE_33_32
@@ -2681,6 +2784,11 @@ TESTING	dcache_ram_fsm.v	/^`define TESTING 1$/;"	c
 TESTING	dcache_top.v	/^`define TESTING 1$/;"	c
 TESTING	defines.v	/^`define TESTING 1$/;"	c
 TIMER_INTERRUPT	EXCEPTION_UNIT.v	/^    wire SOFTWARE_INTERRUPT, TIMER_INTERRUPT, EXTERNAL_INTERRUPT;$/;"	n	module:EXCEPTION_UNIT
+TLAST	DATA_MEMORY_1.2.v	/^  output                    TLAST$/;"	p	module:DATA_MEMORY
+TLAST	MEMORY_REQUEST_MODULE.v	/^   input              TLAST,$/;"	p	module:MEMORY_REQUEST_MODULE
+TLAST	dcache_biu.v	/^  input TLAST,$/;"	p	module:dcache_biu
+TLAST	mem_hier.v	/^      input           TLAST,$/;"	p	module:mem_hier
+TLAST	riscv_platform.v	/^   wire TLAST, ITLAST, DTLAST;$/;"	n	module:riscv_platform
 TLB_ACK	mem_hier.v	/^wire          TLB_ACK;$/;"	n	module:mem_hier
 TLB_ADDR	dcache_biu.v	/^wire [31:0]  TLB_ADDR;$/;"	n	module:dcache_biu
 TLB_ADDR	mem_hier.v	/^wire  [31:0]  TLB_ADDR;$/;"	n	module:mem_hier
@@ -3348,6 +3456,7 @@ WB_Ctrl__IRQ	REG_FILE.v	/^    input WB_Ctrl__IRQ,$/;"	p	module:REG_FILE
 WDATA	DATA_MEMORY_1.2.v	/^  input   [DATA_WIDTH-1:0]  WDATA,$/;"	p	module:DATA_MEMORY
 WDATA	DTLB.v	/^   output wire [31:0]  WDATA,$/;"	p	module:DTLB
 WDATA	ITLB.v	/^   output wire [31:0]  WDATA,$/;"	p	module:ITLB
+WDATA	MEMORY_REQUEST_MODULE.v	/^   output reg [31:0]  WDATA,$/;"	p	module:MEMORY_REQUEST_MODULE
 WDATA	dcache_biu.v	/^  output reg [31:0]  WDATA,$/;"	p	module:dcache_biu
 WDATA	dcache_dpram.v	/^    output wire [31:0]  WDATA,$/;"	p	module:dcache_dpram
 WDATA	dcache_top.v	/^     output wire [31:0]  WDATA,$/;"	p	module:dcache_top
@@ -3358,6 +3467,7 @@ WDATA	riscv_platform.v	/^   wire [31:0]  WDATA;$/;"	n	module:riscv_platform
 WRB	DATA_MEMORY_1.2.v	/^  input                     WRB,$/;"	p	module:DATA_MEMORY
 WRB	DTLB.v	/^   output reg         WRB,$/;"	p	module:DTLB
 WRB	ITLB.v	/^   output reg         WRB,$/;"	p	module:ITLB
+WRB	MEMORY_REQUEST_MODULE.v	/^   output reg         WRB,$/;"	p	module:MEMORY_REQUEST_MODULE
 WRB	dcache_biu.v	/^  output reg         WRB,$/;"	p	module:dcache_biu
 WRB	dcache_dpram.v	/^    output          WRB,$/;"	p	module:dcache_dpram
 WRB	dcache_top.v	/^     output          WRB,$/;"	p	module:dcache_top
@@ -3368,7 +3478,7 @@ WRB	riscv_platform.v	/^   wire          WRB;$/;"	n	module:riscv_platform
 WT_HIT	dcache_ram_fsm.v	/^localparam WT_HIT = 3'b001;$/;"	c	module:dcache_ram_fsm
 Write	dcache_ram_fsm.v	/^wire Read,Write;$/;"	n	module:dcache_ram_fsm
 Write_Access	BTB_PLRU.v	/^    input Write_Access,$/;"	p	module:BTB_PLRU
-Write_Pointer	Return_Addr_Stack.v	/^reg [4:0] Write_Pointer;$/;"	r	module:Return_Addr_Stack
+Write_Pointer	Return_Addr_Stack.v	/^wire [4:0] Write_Pointer;$/;"	n	module:Return_Addr_Stack
 Write__reg	dcache_ram_fsm.v	/^reg Read__reg,Write__reg,Write__reg__reg;$/;"	r	module:dcache_ram_fsm
 Write__reg__reg	dcache_ram_fsm.v	/^reg Read__reg,Write__reg,Write__reg__reg;$/;"	r	module:dcache_ram_fsm
 X	cam.v	/^    parameter X = 3; $/;"	c	module:Registers
@@ -3379,6 +3489,7 @@ XLEN	EXCEPTION_UNIT.v	/^module EXCEPTION_UNIT #(parameter XLEN = 32,$/;"	c	modul
 XLEN	IF_ID_EX.v	/^parameter XLEN = 32;$/;"	c	module:IF_ID_EX
 XLEN	csr.v	/^module csr #( parameter XLEN = 32,$/;"	c	module:csr
 XLEN	defines.v	/^`define XLEN 32$/;"	c
+XLEN	rv32_clint.sv	/^        parameter XLEN = 32$/;"	c	module:rv32_clint
 XLEN	rv32_mpu.sv	/^        parameter XLEN = 32,$/;"	c	module:rv32_mpu
 XLEN	rv32_pmp_region.sv	/^        parameter XLEN = 32,$/;"	c	module:rv32_pmp_region
 XORSTAGE_64	or1200_amultp2_32x32.v	/^module XORSTAGE_64 ( A, B, PBIT, PHI, CARRY, SUM, COUT );$/;"	m
@@ -3391,6 +3502,38 @@ Y	or1200_amultp2_32x32.v	/^input  [31:0] Y;$/;"	p	module:or1200_amultp2_32x32
 a3	mem_hier.v	/^cachefsm a3($/;"	i	module:mem_hier
 a_w0_hit	dcache_dpram.v	/^    output reg a_w0_hit,          \/\/signals the fsm which way was hit. that way will be writte/;"	p	module:dcache_dpram
 a_w1_hit	dcache_dpram.v	/^    output reg a_w1_hit,          \/\/  "       "   "   "   "   "   "       "   "   "   "   "   /;"	p	module:dcache_dpram
+abs_cmd_ack	ABSTRACT_COMMAND_DECODER.v	/^  input abs_cmd_ack,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+abs_cmd_ack	Debug_Module.v	/^  output abs_cmd_ack,$/;"	p	module:Debug_Module
+abs_cmd_ack	IF_ID_EX.v	/^    input abs_cmd_ack,$/;"	p	module:IF_ID_EX
+abs_cmd_ack	cpu.v	/^input abs_cmd_ack,$/;"	p	module:cpu
+abs_cmd_ack	fet_dec_ex_mem.v	/^input abs_cmd_ack,$/;"	p	module:fet_dec_ex_mem
+abs_cmd_ack	riscv_platform.v	/^   wire valid_abs_cmd,abs_cmd_ack,regRW_done;$/;"	n	module:riscv_platform
+abs_cmd_ack_q	Debug_Module.v	/^reg abs_cmd_ack_q;$/;"	r	module:Debug_Module
+abstract_cmd_bus_error	DEBUG_CONTROLLER.v	/^  output abstract_cmd_bus_error,$/;"	p	module:DEBUG_CONTROLLER
+abstract_cmd_bus_error	Debug_Module.v	/^  input abstract_cmd_bus_error,$/;"	p	module:Debug_Module
+abstract_cmd_bus_error	IF_ID_EX.v	/^    output  abstract_cmd_bus_error,$/;"	p	module:IF_ID_EX
+abstract_cmd_bus_error	cpu.v	/^output abstract_cmd_bus_error );$/;"	p	module:cpu
+abstract_cmd_bus_error	fet_dec_ex_mem.v	/^output abstract_cmd_bus_error,$/;"	p	module:fet_dec_ex_mem
+abstract_cmd_bus_error	riscv_platform.v	/^   wire abstract_cmd_bus_error;$/;"	n	module:riscv_platform
+abstract_cmd_exception_o	DEBUG_CONTROLLER.v	/^  output abstract_cmd_exception_o,$/;"	p	module:DEBUG_CONTROLLER
+abstract_cmd_exception_o	Debug_Module.v	/^  input abstract_cmd_exception_o,$/;"	p	module:Debug_Module
+abstract_cmd_exception_o	IF_ID_EX.v	/^    output  abstract_cmd_exception_o,$/;"	p	module:IF_ID_EX
+abstract_cmd_exception_o	cpu.v	/^output abstract_cmd_exception_o,$/;"	p	module:cpu
+abstract_cmd_exception_o	fet_dec_ex_mem.v	/^output abstract_cmd_exception_o,$/;"	p	module:fet_dec_ex_mem
+abstract_cmd_exception_o	riscv_platform.v	/^   wire abstract_cmd_exception_o;$/;"	n	module:riscv_platform
+abstract_cmd_fail_o	DEBUG_CONTROLLER.v	/^  output abstract_cmd_fail_o,$/;"	p	module:DEBUG_CONTROLLER
+abstract_cmd_fail_o	Debug_Module.v	/^  input abstract_cmd_fail_o,$/;"	p	module:Debug_Module
+abstract_cmd_fail_o	IF_ID_EX.v	/^    output  abstract_cmd_fail_o,$/;"	p	module:IF_ID_EX
+abstract_cmd_fail_o	cpu.v	/^output abstract_cmd_fail_o,$/;"	p	module:cpu
+abstract_cmd_fail_o	fet_dec_ex_mem.v	/^output abstract_cmd_fail_o,$/;"	p	module:fet_dec_ex_mem
+abstract_cmd_fail_o	riscv_platform.v	/^   wire abstract_cmd_fail_o;$/;"	n	module:riscv_platform
+abstract_cmd_wrong_hart_state_o	DEBUG_CONTROLLER.v	/^  output abstract_cmd_wrong_hart_state_o,$/;"	p	module:DEBUG_CONTROLLER
+abstract_cmd_wrong_hart_state_o	Debug_Module.v	/^  input abstract_cmd_wrong_hart_state_o,$/;"	p	module:Debug_Module
+abstract_cmd_wrong_hart_state_o	IF_ID_EX.v	/^    output  abstract_cmd_wrong_hart_state_o,$/;"	p	module:IF_ID_EX
+abstract_cmd_wrong_hart_state_o	cpu.v	/^output abstract_cmd_wrong_hart_state_o,$/;"	p	module:cpu
+abstract_cmd_wrong_hart_state_o	fet_dec_ex_mem.v	/^output abstract_cmd_wrong_hart_state_o,$/;"	p	module:fet_dec_ex_mem
+abstract_cmd_wrong_hart_state_o	riscv_platform.v	/^   wire abstract_cmd_wrong_hart_state_o;$/;"	n	module:riscv_platform
+abstract_command_req	Debug_Module.v	/^wire abstract_command_req;$/;"	n	module:Debug_Module
 access	DTLB.v	/^reg access;$/;"	r	module:DTLB
 access	ITLB.v	/^reg access;$/;"	r	module:ITLB
 access	ilru.v	/^    input access;$/;"	p	module:ilru
@@ -3399,10 +3542,24 @@ access_addr	DTLB.v	/^wire [4:0] access_addr;$/;"	n	module:DTLB
 access_addr	ITLB.v	/^wire [4:0] access_addr;$/;"	n	module:ITLB
 access_addr	cam.v	/^    output reg [4:0] access_addr;$/;"	p	module:Registers
 access_addr	icam.v	/^    output reg [4:0] access_addr;$/;"	p	module:iregisters
+ackhavereset	DEBUG_CONTROLLER.v	/^  input   ackhavereset,$/;"	p	module:DEBUG_CONTROLLER
+ackhavereset	Debug_Module.v	/^  output   ackhavereset,$/;"	p	module:Debug_Module
+ackhavereset	IF_ID_EX.v	/^    input   ackhavereset,ackunavail,$/;"	p	module:IF_ID_EX
+ackhavereset	cpu.v	/^input ackhavereset,ackunavail,$/;"	p	module:cpu
+ackhavereset	fet_dec_ex_mem.v	/^input ackhavereset,ackunavail,$/;"	p	module:fet_dec_ex_mem
+ackhavereset	riscv_platform.v	/^   wire   ackhavereset;$/;"	n	module:riscv_platform
+ackunavail	DEBUG_CONTROLLER.v	/^  input   ackunavail,$/;"	p	module:DEBUG_CONTROLLER
+ackunavail	Debug_Module.v	/^  output   ackunavail,$/;"	p	module:Debug_Module
+ackunavail	IF_ID_EX.v	/^    input   ackhavereset,ackunavail,$/;"	p	module:IF_ID_EX
+ackunavail	cpu.v	/^input ackhavereset,ackunavail,$/;"	p	module:cpu
+ackunavail	fet_dec_ex_mem.v	/^input ackhavereset,ackunavail,$/;"	p	module:fet_dec_ex_mem
+ackunavail	riscv_platform.v	/^   wire   ackunavail;$/;"	n	module:riscv_platform
 aclk	irq_bit_sync.v	/^        input  wire                       aclk,$/;"	p	module:irq_bit_sync
 aclk	irq_pulser.v	/^        input  wire        aclk,$/;"	p	module:irq_pulser
 aclk	rv32_mpu.sv	/^        input  wire                        aclk,$/;"	p	module:rv32_mpu
 act	EXECUTE.v	/^parameter act  = 2'b01;$/;"	c	module:EXECUTE
+active_instruction_id	DECODE.v	/^    output reg active_instruction_id,$/;"	p	module:DECODE
+active_instruction_id	IF_ID_EX.v	/^wire active_instruction_id;$/;"	n	module:IF_ID_EX
 adder	DECODE.v	/^wire adder;$/;"	n	module:DECODE
 adderout	EXECUTE.v	/^wire[31:0] adderout;$/;"	n	module:EXECUTE
 addout	EXECUTE.v	/^wire [31:0] addout;$/;"	n	module:EXECUTE
@@ -3412,16 +3569,16 @@ addr_access	ilru.v	/^    input [4:0] addr_access;$/;"	p	module:ilru
 addr_access	lru.v	/^    input [4:0]addr_access;$/;"	p	module:lru
 addr_comp	dcache_biu.v	/^reg [31:0] addr_comp;       \/\/store the lr\/sc address alongwith reservation for checking viol/;"	r	module:dcache_biu
 addr_exception	IF_ID_EX.v	/^    input addr_exception,$/;"	p	module:IF_ID_EX
-addr_exception	cpu.v	/^output addr_exception;$/;"	p	module:cpu
+addr_exception	cpu.v	/^output addr_exception,$/;"	p	module:cpu
 addr_exception	csr.v	/^    input addr_exception,    $/;"	p	module:csr
-addr_exception	dcache_biu.v	/^  output addr_exception);$/;"	p	module:dcache_biu
+addr_exception	dcache_biu.v	/^  output addr_exception,$/;"	p	module:dcache_biu
 addr_exception	dcache_ram_fsm.v	/^    input addr_exception,$/;"	p	module:dcache_ram_fsm
 addr_exception	dcache_top.v	/^    output addr_exception);$/;"	p	module:dcache_top
 addr_exception	fet_dec_ex_mem.v	/^output addr_exception,$/;"	p	module:fet_dec_ex_mem
 addr_exception	riscv_platform.v	/^  output addr_exception,$/;"	p	module:riscv_platform
 addr_exception_port1	dcache_dpram.v	/^    output addr_exception_port1,$/;"	p	module:dcache_dpram
 addr_exception_port1	dcache_top.v	/^wire  addr_exception_port1;$/;"	n	module:dcache_top
-addr_exception_port2	dcache_dpram.v	/^    output addr_exception_port2$/;"	p	module:dcache_dpram
+addr_exception_port2	dcache_dpram.v	/^    output addr_exception_port2,$/;"	p	module:dcache_dpram
 addr_exception_port2	dcache_top.v	/^wire  addr_exception_port2;$/;"	n	module:dcache_top
 addr_in_a	dcache_dpram.v	/^    input [31:0] addr_in_a,$/;"	p	module:dcache_dpram
 addr_in_a_int	dcache_dpram.v	/^reg [31:0] addr_in_a_int;$/;"	r	module:dcache_dpram
@@ -3451,6 +3608,25 @@ andout	EXECUTE.v	/^wire[31:0] andout;$/;"	n	module:EXECUTE
 areset	irq_bit_sync.v	/^        input  wire                       areset,$/;"	p	module:irq_bit_sync
 areset	irq_pulser.v	/^        input  wire        areset,$/;"	p	module:irq_pulser
 aresetn	rv32_mpu.sv	/^        input  wire                        aresetn,$/;"	p	module:rv32_mpu
+arg0_i	ABSTRACT_COMMAND_DECODER.v	/^  input [31:0] arg0_i,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+arg0_i	IF_ID_EX.v	/^    input [31:0] arg0_i,$/;"	p	module:IF_ID_EX
+arg0_i	cpu.v	/^input [31:0] arg0_i,$/;"	p	module:cpu
+arg0_i	fet_dec_ex_mem.v	/^input [31:0] arg0_i,$/;"	p	module:fet_dec_ex_mem
+arg0_i	riscv_platform.v	/^   wire [31:0] arg0_i,arg1_i,arg1_o;$/;"	n	module:riscv_platform
+arg0_o	Debug_Module.v	/^  output reg [31:0] arg0_o,$/;"	p	module:Debug_Module
+arg1_i	ABSTRACT_COMMAND_DECODER.v	/^  input [31:0] arg1_i,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+arg1_i	Debug_Module.v	/^  input [31:0] arg1_i,$/;"	p	module:Debug_Module
+arg1_i	IF_ID_EX.v	/^    input [31:0] arg1_i,$/;"	p	module:IF_ID_EX
+arg1_i	cpu.v	/^input [31:0] arg1_i,$/;"	p	module:cpu
+arg1_i	fet_dec_ex_mem.v	/^input [31:0] arg1_i,$/;"	p	module:fet_dec_ex_mem
+arg1_i	riscv_platform.v	/^   wire [31:0] arg0_i,arg1_i,arg1_o;$/;"	n	module:riscv_platform
+arg1_o	ABSTRACT_COMMAND_DECODER.v	/^  output reg [31:0] arg1_o,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+arg1_o	Debug_Module.v	/^  output reg [31:0] arg1_o,$/;"	p	module:Debug_Module
+arg1_o	IF_ID_EX.v	/^    output [31:0] arg1_o,$/;"	p	module:IF_ID_EX
+arg1_o	cpu.v	/^output [31:0] arg1_o,$/;"	p	module:cpu
+arg1_o	fet_dec_ex_mem.v	/^output [31:0] arg1_o,$/;"	p	module:fet_dec_ex_mem
+arg1_o	riscv_platform.v	/^   wire [31:0] arg0_i,arg1_i,arg1_o;$/;"	n	module:riscv_platform
+async_dbg_allowed	DEBUG_CONTROLLER.v	/^wire async_dbg_allowed,pending_async_dbg;$/;"	n	module:DEBUG_CONTROLLER
 async_int	EXCEPTION_UNIT.v	/^    reg async_int;$/;"	r	module:EXCEPTION_UNIT
 async_pulse	EXCEPTION_UNIT.v	/^    wire async_pulse;$/;"	n	module:EXCEPTION_UNIT
 async_trap_occuring	EXCEPTION_UNIT.v	/^    wire async_trap_occuring;$/;"	n	module:EXCEPTION_UNIT
@@ -3476,7 +3652,9 @@ bge	EXECUTE.v	/^wire beq,bne,blt,bge,bltu,bgeu;$/;"	n	module:EXECUTE
 bgeu	EXECUTE.v	/^wire beq,bne,blt,bge,bltu,bgeu;$/;"	n	module:EXECUTE
 bit	or1200_fpu_div.v	/^   reg [5:0]     bit; $/;"	r	module:divider
 bit_i	irq_bit_sync.v	/^        input  wire                       bit_i,$/;"	p	module:irq_bit_sync
+bit_i	rv32_2dffsync.v	/^    input bit_i,$/;"	p	module:rv32_2dffsync
 bit_o	irq_bit_sync.v	/^        output wire                      bit_o$/;"	p	module:irq_bit_sync
+bit_o	rv32_2dffsync.v	/^    output bit_o$/;"	p	module:rv32_2dffsync
 bit_write_en_a_w0_1	dcache_dpram.v	/^    wire [127:0] bit_write_en_a_w0_1;$/;"	n	module:dcache_dpram
 bit_write_en_a_w0_2	dcache_dpram.v	/^    wire [127:0] bit_write_en_a_w0_2;$/;"	n	module:dcache_dpram
 bit_write_en_a_w1_1	dcache_dpram.v	/^    wire [127:0] bit_write_en_a_w1_1;$/;"	n	module:dcache_dpram
@@ -3489,33 +3667,40 @@ bit_write_en_b_w0_1	dcache_dpram.v	/^    wire [127:0] bit_write_en_b_w0_1;$/;"	n
 bit_write_en_b_w0_2	dcache_dpram.v	/^    wire [127:0] bit_write_en_b_w0_2;$/;"	n	module:dcache_dpram
 bit_write_en_b_w1_1	dcache_dpram.v	/^    wire [127:0] bit_write_en_b_w1_1;$/;"	n	module:dcache_dpram
 bit_write_en_b_w1_2	dcache_dpram.v	/^    wire [127:0] bit_write_en_b_w1_2;$/;"	n	module:dcache_dpram
+biu_adr_i	MEMORY_REQUEST_MODULE.v	/^   input  [32-1:0] 			biu_adr_i,	  \/\/ address bus$/;"	p	module:MEMORY_REQUEST_MODULE
 biu_adr_i	interface_router.v	/^   input  [32-1:0] 			biu_adr_i,	  \/\/ address bus$/;"	p	module:interface_router
+biu_cab_i	MEMORY_REQUEST_MODULE.v	/^   input				        biu_cab_i,	  \/\/ CAB input$/;"	p	module:MEMORY_REQUEST_MODULE
 biu_cab_i	cachefsm.v	/^output reg biu_cyc_i,biu_stb_i,biu_cab_i;$/;"	p	module:cachefsm
 biu_cab_i	interface_router.v	/^   input				        biu_cab_i,	  \/\/ CAB input$/;"	p	module:interface_router
 biu_cab_i	mem_hier.v	/^wire biu_cyc_i,biu_stb_i,biu_cab_i;$/;"	n	module:mem_hier
+biu_cyc_i	MEMORY_REQUEST_MODULE.v	/^   input				        biu_cyc_i,	  \/\/ WB cycle$/;"	p	module:MEMORY_REQUEST_MODULE
 biu_cyc_i	cachefsm.v	/^output reg biu_cyc_i,biu_stb_i,biu_cab_i;$/;"	p	module:cachefsm
 biu_cyc_i	interface_router.v	/^   input				        biu_cyc_i,	  \/\/ WB cycle$/;"	p	module:interface_router
 biu_cyc_i	mem_hier.v	/^wire biu_cyc_i,biu_stb_i,biu_cab_i;$/;"	n	module:mem_hier
+biu_dat_o	MEMORY_REQUEST_MODULE.v	/^   output [31:0] 			  	biu_dat_o,	  \/\/ output data bus$/;"	p	module:MEMORY_REQUEST_MODULE
 biu_dat_o	interface_router.v	/^   output [31:0] 			  	biu_dat_o,	  \/\/ output data bus$/;"	p	module:interface_router
 biu_dat_o	mem_hier.v	/^wire [31:0] 			biu_dat_o;$/;"	n	module:mem_hier
 biu_dat_o_int	dcache_biu.v	/^wire [31:0] biu_dat_o_int; $/;"	n	module:dcache_biu
 biu_prp_acs	dcache_biu.v	/^wire biu_prp_acs;$/;"	n	module:dcache_biu
 biu_prp_acs	dcache_top.v	/^    output biu_prp_acs,                     \/\/Signal for biu from FSM$/;"	p	module:dcache_top
+biu_sel_i	MEMORY_REQUEST_MODULE.v	/^   input  [3:0] 				biu_sel_i,	  \/\/ byte selects$/;"	p	module:MEMORY_REQUEST_MODULE
 biu_sel_i	cachefsm.v	/^output reg [3:0]biu_sel_i;$/;"	p	module:cachefsm
 biu_sel_i	dcache_biu.v	/^wire [3:0] biu_sel_i;$/;"	n	module:dcache_biu
 biu_sel_i	interface_router.v	/^   input  [3:0] 				biu_sel_i,	  \/\/ byte selects$/;"	p	module:interface_router
 biu_sel_i	mem_hier.v	/^wire [3:0] 	biu_sel_i;	\/\/ byte selects$/;"	n	module:mem_hier
 biu_sel_o	dcache_top.v	/^    output reg [3:0] biu_sel_o,$/;"	p	module:dcache_top
+biu_stb_i	MEMORY_REQUEST_MODULE.v	/^   input				        biu_stb_i,	  \/\/ WB strobe$/;"	p	module:MEMORY_REQUEST_MODULE
 biu_stb_i	cachefsm.v	/^output reg biu_cyc_i,biu_stb_i,biu_cab_i;$/;"	p	module:cachefsm
 biu_stb_i	interface_router.v	/^   input				        biu_stb_i,	  \/\/ WB strobe$/;"	p	module:interface_router
 biu_stb_i	mem_hier.v	/^wire biu_cyc_i,biu_stb_i,biu_cab_i;$/;"	n	module:mem_hier
+biu_we_i	MEMORY_REQUEST_MODULE.v	/^   input				        biu_we_i,	    \/\/ WB write enable$/;"	p	module:MEMORY_REQUEST_MODULE
 biu_we_i	interface_router.v	/^   input				        biu_we_i,	    \/\/ WB write enable$/;"	p	module:interface_router
 biu_we_i	mem_hier.v	/^wire				biu_we_i;	\/\/ WB write enable$/;"	n	module:mem_hier
 bl	DTLB.v	/^              parameter bl = 8$/;"	c	module:DTLB
 bl	ITLB.v	/^    parameter bl = 8$/;"	c	module:ITLB
 blk_offst_a	dcache_dpram.v	/^wire [2:0] blk_offst_a;$/;"	n	module:dcache_dpram
 blk_offst_b	dcache_dpram.v	/^wire [2:0] blk_offst_b;$/;"	n	module:dcache_dpram
-block_instr_int	cpu.v	/^output [31:0] block_instr_int;$/;"	p	module:cpu
+block_instr_int	cpu.v	/^output [31:0] block_instr_int,$/;"	p	module:cpu
 block_instr_int	riscv_platform.v	/^  ,output [31:0] block_instr_int$/;"	p	module:riscv_platform
 blt	EXECUTE.v	/^wire beq,bne,blt,bge,bltu,bgeu;$/;"	n	module:EXECUTE
 bltu	EXECUTE.v	/^wire beq,bne,blt,bge,bltu,bgeu;$/;"	n	module:EXECUTE
@@ -3535,6 +3720,7 @@ bus_data	mem_hier.v	/^wire [255:0] bus_data;          $/;"	n	module:mem_hier
 bus_data_en	dcache_ram_fsm.v	/^reg bus_data_en;$/;"	r	module:dcache_ram_fsm
 bus_data_en_reg	dcache_ram_fsm.v	/^reg bus_data_en_reg;$/;"	r	module:dcache_ram_fsm
 bus_line	mem_hier.v	/^wire [255:0] bus_line;	\/\/ output data bus$/;"	n	module:mem_hier
+bus_rdy	MEMORY_REQUEST_MODULE.v	/^   output reg           			bus_rdy,      \/\/interface to the dcache unit$/;"	p	module:MEMORY_REQUEST_MODULE
 bus_rdy	dcache_biu.v	/^wire bus_rdy;$/;"	n	module:dcache_biu
 bus_rdy	dcache_ram_fsm.v	/^    input bus_rdy,$/;"	p	module:dcache_ram_fsm
 bus_rdy	dcache_top.v	/^    input bus_rdy,$/;"	p	module:dcache_top
@@ -3547,6 +3733,7 @@ bus_re	dcache_ram_fsm.v	/^    output reg bus_re,$/;"	p	module:dcache_ram_fsm
 bus_re	dcache_top.v	/^    output reg bus_re,$/;"	p	module:dcache_top
 bus_re_int1	dcache_top.v	/^wire bus_re_int1;$/;"	n	module:dcache_top
 bus_re_int2	dcache_top.v	/^wire bus_re_int2;$/;"	n	module:dcache_top
+bus_reg	MEMORY_REQUEST_MODULE.v	/^reg [255:0] bus_reg;$/;"	r	module:MEMORY_REQUEST_MODULE
 bus_reg	interface_router.v	/^  reg [255:0] bus_reg;$/;"	r	module:interface_router
 bus_rq	dcache_biu.v	/^wire bus_rq;$/;"	n	module:dcache_biu
 bus_rq	dcache_ram_fsm.v	/^    output reg bus_rq,$/;"	p	module:dcache_ram_fsm
@@ -3567,7 +3754,7 @@ byte_en	MEMORY_MACRO.v	/^    input [3:0] byte_en,$/;"	p	module:MEMORY_MACRO
 c1	IF_ID_EX.v	/^ csr c1( .clk(CLK),$/;"	i	module:IF_ID_EX
 c_int	or1200_amultp2_32x32.v	/^reg [1:0] c_int;$/;"	r	module:or1200_amultp2_32x32
 c_strt	DECODE.v	/^wire c_strt;                    \/\/counter start$/;"	n	module:DECODE
-cache_en	cpu.v	/^input cache_en;$/;"	p	module:cpu
+cache_en	cpu.v	/^input cache_en,$/;"	p	module:cpu
 cache_en	dcache_biu.v	/^  input cache_en,$/;"	p	module:dcache_biu
 cache_en	fet_dec_ex_mem.v	/^input cache_en,$/;"	p	module:fet_dec_ex_mem
 cache_en_int	riscv_platform.v	/^  input cache_en_int,$/;"	p	module:riscv_platform
@@ -3586,21 +3773,26 @@ cache_flush_o	dcache_ram_fsm.v	/^    output cache_flush_o$/;"	p	module:dcache_ra
 cachefsm	cachefsm.v	/^module cachefsm$/;"	m
 cam	DTLB.v	/^Registers cam( .clk(clk), .rst(rst),.dtlb_trans_off(dtlb_trans_off),$/;"	i	module:DTLB
 cam	ITLB.v	/^iregisters cam( .clk(clk), .rst(rst),$/;"	i	module:ITLB
+cause	csr.v	/^reg [2:0] cause;$/;"	r	module:csr
+cetrig	csr.v	/^reg cetrig,pelp,ebreakvs,ebreakvu,ebreakm,ebreaks,ebreaku,stepie,stopcount,stoptime;$/;"	r	module:csr
 ci1	Sys_counter.v	/^counter_instr_clk ci1   ($/;"	i	module:Sys_counter
 clear_pend_act_stackrestore	defines.v	/^`define clear_pend_act_stackrestore 2$/;"	c
 clint_en	riscv_platform.v	/^   wire clint_en;$/;"	n	module:riscv_platform
 clint_req	DATA_MEMORY_1.2.v	/^wire instruction_req, data_req, pt_req, clint_req;$/;"	n	module:DATA_MEMORY
 clk	DATA_MEMORY_1.2.v	/^  input                     clk,$/;"	p	module:DATA_MEMORY
+clk	DEBUG_CONTROLLER.v	/^  input clk,$/;"	p	module:DEBUG_CONTROLLER
 clk	DTLB.v	/^  input                       clk, rst, \/\/clk_x2,$/;"	p	module:DTLB
+clk	Debug_Module.v	/^  input clk,$/;"	p	module:Debug_Module
 clk	ITLB.v	/^  input clk, rst\/*,clk_x2*\/,$/;"	p	module:ITLB
 clk	Interconnect.v	/^    input  wire         clk,              \/\/ Clock signal$/;"	p	module:interconnect
+clk	MEMORY_REQUEST_MODULE.v	/^   input clk,$/;"	p	module:MEMORY_REQUEST_MODULE
 clk	Sys_counter.v	/^     input  clk, reset,freeze,wr_en,wr_en_h,rd_instret;$/;"	p	module:counter_instr_clk
 clk	Sys_counter.v	/^     input  clk, reset,wr_en ,wr_en_h,rd_cycle;$/;"	p	module:counter_proc_clk
 clk	Sys_counter.v	/^     input  clk, reset,wr_en ,wr_en_h,wr_tcmp_en,rd_time;$/;"	p	module:counter_real_clk
 clk	Sys_counter.v	/^     input  clk, reset,wr_en ,wr_en_timer,rd_time;$/;"	p	module:counter_tick
 clk	cachefsm.v	/^input clk,freeze, freeze_in, reset, i_hit, i_acc, wb_ack_i;$/;"	p	module:cachefsm
 clk	cam.v	/^    input clk;$/;"	p	module:Registers
-clk	cpu.v	/^input clk;$/;"	p	module:cpu
+clk	cpu.v	/^input clk,$/;"	p	module:cpu
 clk	csr.v	/^    input clk,$/;"	p	module:csr
 clk	dcache_dpram.v	/^    input clk,$/;"	p	module:dcache_dpram
 clk	dcache_ram_fsm.v	/^    input clk,$/;"	p	module:dcache_ram_fsm
@@ -3613,6 +3805,7 @@ clk	interface_router.v	/^   input clk,$/;"	p	module:interface_router
 clk	lru.v	/^    input clk;$/;"	p	module:lru
 clk	mem_hier.v	/^      input clk\/*,clk_x2*\/, reset,$/;"	p	module:mem_hier
 clk	or1200_fpu_div.v	/^   input         clk;$/;"	p	module:divider
+clk	rv32_2dffsync.v	/^    input clk,$/;"	p	module:rv32_2dffsync
 clk_counter	cam.v	/^    reg [15:0] clk_counter;$/;"	r	module:Registers
 clk_int	riscv_platform.v	/^  input clk_int,$/;"	p	module:riscv_platform
 clk_x2	dcache_dpram.v	/^    input clk_x2,$/;"	p	module:dcache_dpram
@@ -3622,11 +3815,56 @@ clkb	dual_port_RAM.v	/^    input wire clkb,            \/\/ Clock for Port B$/;"
 clmode	dcache_biu.v	/^  input [1:0] clmode,$/;"	p	module:dcache_biu
 clmode	fet_dec_ex_mem.v	/^input [1:0] clmode,$/;"	p	module:fet_dec_ex_mem
 clr_meip	EXCEPTION_UNIT.v	/^    reg              clr_meip;$/;"	r	module:EXCEPTION_UNIT
+cmd_not_supported_i	DEBUG_CONTROLLER.v	/^  input cmd_not_supported_i,$/;"	p	module:DEBUG_CONTROLLER
+cmd_not_supported_i	Debug_Module.v	/^  output cmd_not_supported_i,$/;"	p	module:Debug_Module
+cmd_not_supported_i	IF_ID_EX.v	/^    input   ndmreset,cmd_not_supported_i,new_cmd_flag_i,$/;"	p	module:IF_ID_EX
+cmd_not_supported_i	cpu.v	/^input ndmreset,cmd_not_supported_i,new_cmd_flag_i,$/;"	p	module:cpu
+cmd_not_supported_i	fet_dec_ex_mem.v	/^input ndmreset,cmd_not_supported_i,new_cmd_flag_i,$/;"	p	module:fet_dec_ex_mem
+cmd_not_supported_i	riscv_platform.v	/^   wire cmd_not_supported_i;$/;"	n	module:riscv_platform
+cmdtype	ABSTRACT_COMMAND_DECODER.v	/^wire [7:0] cmdtype;$/;"	n	module:ABSTRACT_COMMAND_DECODER
+cmdtype	Debug_Module.v	/^wire [7:0] cmdtype;$/;"	n	module:Debug_Module
+command_complete_o	DEBUG_CONTROLLER.v	/^  output command_complete_o,$/;"	p	module:DEBUG_CONTROLLER
+command_complete_o	Debug_Module.v	/^  input command_complete_o,$/;"	p	module:Debug_Module
+command_complete_o	IF_ID_EX.v	/^    output  command_complete_o,reg_access_complete_o,mem_access_complete_o,$/;"	p	module:IF_ID_EX
+command_complete_o	cpu.v	/^output command_complete_o,reg_access_complete_o,mem_access_complete_o,$/;"	p	module:cpu
+command_complete_o	fet_dec_ex_mem.v	/^output command_complete_o,reg_access_complete_o,mem_access_complete_o,$/;"	p	module:fet_dec_ex_mem
+command_complete_o	riscv_platform.v	/^   wire command_complete_o;$/;"	n	module:riscv_platform
 compare	DTLB.v	/^reg  compare;$/;"	r	module:DTLB
 compare	ITLB.v	/^reg  compare;$/;"	r	module:ITLB
 compare	ilru.v	/^    input compare;$/;"	p	module:ilru
 compare	lru.v	/^    input compare;$/;"	p	module:lru
 compare_delayed	ITLB.v	/^    reg compare_delayed;$/;"	r	module:ITLB
+core_dbg_reset	DEBUG_CONTROLLER.v	/^  output core_dbg_reset,$/;"	p	module:DEBUG_CONTROLLER
+core_dbg_reset	IF_ID_EX.v	/^    output core_dbg_reset,$/;"	p	module:IF_ID_EX
+core_dbg_reset	fet_dec_ex_mem.v	/^wire core_dbg_reset;$/;"	n	module:fet_dec_ex_mem
+core_halted_o	DEBUG_CONTROLLER.v	/^  output  core_halted_o,$/;"	p	module:DEBUG_CONTROLLER
+core_halted_o	Debug_Module.v	/^  input  core_halted_o,$/;"	p	module:Debug_Module
+core_halted_o	IF_ID_EX.v	/^    output  core_halted_o,core_running_o,core_resumeack_o,$/;"	p	module:IF_ID_EX
+core_halted_o	cpu.v	/^output core_halted_o,core_running_o,core_resumeack_o,$/;"	p	module:cpu
+core_halted_o	fet_dec_ex_mem.v	/^output core_halted_o,core_running_o,core_resumeack_o,$/;"	p	module:fet_dec_ex_mem
+core_halted_o	riscv_platform.v	/^   wire  core_halted_o;$/;"	n	module:riscv_platform
+core_havereset_o	DEBUG_CONTROLLER.v	/^  output  core_havereset_o,$/;"	p	module:DEBUG_CONTROLLER
+core_havereset_o	Debug_Module.v	/^  input  core_havereset_o,$/;"	p	module:Debug_Module
+core_havereset_o	IF_ID_EX.v	/^    output  core_havereset_o,$/;"	p	module:IF_ID_EX
+core_havereset_o	cpu.v	/^output core_havereset_o,$/;"	p	module:cpu
+core_havereset_o	fet_dec_ex_mem.v	/^output core_havereset_o,$/;"	p	module:fet_dec_ex_mem
+core_havereset_o	riscv_platform.v	/^   wire  core_havereset_o;$/;"	n	module:riscv_platform
+core_resumeack_o	DEBUG_CONTROLLER.v	/^  output  core_resumeack_o,$/;"	p	module:DEBUG_CONTROLLER
+core_resumeack_o	Debug_Module.v	/^  input  core_resumeack_o,$/;"	p	module:Debug_Module
+core_resumeack_o	IF_ID_EX.v	/^    output  core_halted_o,core_running_o,core_resumeack_o,$/;"	p	module:IF_ID_EX
+core_resumeack_o	cpu.v	/^output core_halted_o,core_running_o,core_resumeack_o,$/;"	p	module:cpu
+core_resumeack_o	fet_dec_ex_mem.v	/^output core_halted_o,core_running_o,core_resumeack_o,$/;"	p	module:fet_dec_ex_mem
+core_resumeack_o	riscv_platform.v	/^   wire  core_resumeack_o;$/;"	n	module:riscv_platform
+core_running_o	DEBUG_CONTROLLER.v	/^  output  core_running_o,$/;"	p	module:DEBUG_CONTROLLER
+core_running_o	Debug_Module.v	/^  input  core_running_o,$/;"	p	module:Debug_Module
+core_running_o	IF_ID_EX.v	/^    output  core_halted_o,core_running_o,core_resumeack_o,$/;"	p	module:IF_ID_EX
+core_running_o	cpu.v	/^output core_halted_o,core_running_o,core_resumeack_o,$/;"	p	module:cpu
+core_running_o	fet_dec_ex_mem.v	/^output core_halted_o,core_running_o,core_resumeack_o,$/;"	p	module:fet_dec_ex_mem
+core_running_o	riscv_platform.v	/^   wire  core_running_o;$/;"	n	module:riscv_platform
+core_unavail_o	DEBUG_CONTROLLER.v	/^  output  core_unavail_o,$/;"	p	module:DEBUG_CONTROLLER
+core_unavail_o	Debug_Module.v	/^  input  core_unavail_o,$/;"	p	module:Debug_Module
+core_unavail_o	riscv_platform.v	/^   wire  core_unavail_o;$/;"	n	module:riscv_platform
+core_warm_reset	DEBUG_CONTROLLER.v	/^reg core_warm_reset;$/;"	r	module:DEBUG_CONTROLLER
 count	DECODE.v	/^reg count[5:0];$/;"	r	module:DECODE
 count	EXCEPTION_UNIT.v	/^    reg [1:0] count;$/;"	r	module:EXCEPTION_UNIT
 count	IF_ID_EX.v	/^wire [31:0] count;                 \/\/System timers\/counter value. RDCYC[H], RDTIM[H], RDINST[/;"	n	module:IF_ID_EX
@@ -3639,14 +3877,15 @@ count_sel	Sys_counter.v	/^    input [3:0] count_sel,$/;"	p	module:Sys_counter
 count_sel_int	IF_ID_EX.v	/^wire [3:0] count_sel_int;$/;"	n	module:IF_ID_EX
 count_tick_int	Sys_counter.v	/^wire [16:0] count_tick_int;$/;"	n	module:Sys_counter
 counter	DATA_MEMORY_1.2.v	/^reg [3:0] counter;$/;"	r	module:DATA_MEMORY
+counter	MEMORY_REQUEST_MODULE.v	/^reg [2:0] counter;$/;"	r	module:MEMORY_REQUEST_MODULE
 counter_instr_clk	Sys_counter.v	/^module counter_instr_clk    ($/;"	m
 counter_proc_clk	Sys_counter.v	/^module counter_proc_clk    ($/;"	m
 counter_real_clk	Sys_counter.v	/^module counter_real_clk    ($/;"	m
 counter_tick	Sys_counter.v	/^module counter_tick($/;"	m
 counttick	defines.v	/^`define counttick 12'h7c3$/;"	c
 cp1	Sys_counter.v	/^counter_proc_clk cp1( .out(proc_count_int),                                                 \/\//;"	i	module:Sys_counter
-cpu	cpu.v	/^module cpu(clk,rst,ext_irq,sw_irq,timer_irq,csr_pmp_sb,$/;"	m
-cpu1	riscv_platform.v	/^       cpu cpu1(.clk(clk_int),\/*.clk_x2(clk_x2),*\/.rst(rst), .ext_irq(ext_irq), .timer_irq(tim/;"	i	module:riscv_platform
+cpu	cpu.v	/^module cpu \/*(clk,rst,ext_irq,sw_irq,timer_irq,csr_pmp_sb,$/;"	m
+cpu1	riscv_platform.v	/^       cpu cpu1(.clk(clk_int),$/;"	i	module:riscv_platform
 cr1	Sys_counter.v	/^counter_real_clk cr1   ($/;"	i	module:Sys_counter
 csr	csr.v	/^module csr #( parameter XLEN = 32,$/;"	m
 csr_addr	rv32_pmp_region.sv	/^    function automatic [2*RLEN-1:0] get_na4(input logic [XLEN-1:0] csr_addr);$/;"	p	function:rv32_pmp_region.get_na4
@@ -3658,6 +3897,17 @@ csr_adr_int	IF_ID_EX.v	/^wire [11:0] csr_adr_int;$/;"	n	module:IF_ID_EX
 csr_adr_rd	csr.v	/^    input [11:0] csr_adr_rd,$/;"	p	module:csr
 csr_adr_wr	csr.v	/^    input [11:0] csr_adr_wr,$/;"	p	module:csr
 csr_cache_flush	csr.v	/^reg [31:0] csr_cache_flush;$/;"	r	module:csr
+csr_dbg_cause	DEBUG_CONTROLLER.v	/^  output [2:0] csr_dbg_cause,$/;"	p	module:DEBUG_CONTROLLER
+csr_dbg_cause	IF_ID_EX.v	/^wire [2:0] csr_dbg_cause;$/;"	n	module:IF_ID_EX
+csr_dbg_cause	csr.v	/^    input [2:0] csr_dbg_cause,$/;"	p	module:csr
+csr_dbg_dpc	DEBUG_CONTROLLER.v	/^  output [31:0] csr_dbg_dpc,$/;"	p	module:DEBUG_CONTROLLER
+csr_dbg_dpc	IF_ID_EX.v	/^wire [31:0] csr_dbg_dpc;$/;"	n	module:IF_ID_EX
+csr_dbg_dpc	csr.v	/^    input [31:0] csr_dbg_dpc,$/;"	p	module:csr
+csr_dbg_dscratch0	csr.v	/^    input [31:0] csr_dbg_dscratch0,$/;"	p	module:csr
+csr_dbg_dscratch1	csr.v	/^    input [31:0] csr_dbg_dscratch1,$/;"	p	module:csr
+csr_dbg_wr	DEBUG_CONTROLLER.v	/^  output csr_dbg_wr,$/;"	p	module:DEBUG_CONTROLLER
+csr_dbg_wr	IF_ID_EX.v	/^wire csr_dbg_wr;$/;"	n	module:IF_ID_EX
+csr_dbg_wr	csr.v	/^    input csr_dbg_wr,$/;"	p	module:csr
 csr_fcsr	csr.v	/^reg [31:0] csr_fcsr;$/;"	r	module:csr
 csr_indata	EXECUTE.v	/^    input [31:0] csr_indata,$/;"	p	module:EXECUTE
 csr_indata	IF_ID_EX.v	/^wire [31:0] csr_indata;$/;"	n	module:IF_ID_EX
@@ -3694,9 +3944,14 @@ csr_mtvec	EXCEPTION_UNIT.v	/^    input [`XLEN-1:0] csr_mtvec,$/;"	p	module:EXCEP
 csr_mtvec	IF_ID_EX.v	/^wire [31:0] csr_mtvec;$/;"	n	module:IF_ID_EX
 csr_mtvec	csr.v	/^    output reg [31:0] csr_mtvec,$/;"	p	module:csr
 csr_pmp_sb	IF_ID_EX.v	/^    output [`CSR_SB_W-1:0] csr_pmp_sb, $/;"	p	module:IF_ID_EX
-csr_pmp_sb	cpu.v	/^output [`CSR_SB_W-1:0] csr_pmp_sb;$/;"	p	module:cpu
+csr_pmp_sb	cpu.v	/^output [`CSR_SB_W-1:0] csr_pmp_sb,$/;"	p	module:cpu
 csr_pmp_sb	csr.v	/^    output [`CSR_SB_W-1:0] csr_pmp_sb,$/;"	p	module:csr
+csr_pmp_sb	dcache_biu.v	/^  input [`CSR_SB_W-1:0] csr_pmp_sb,$/;"	p	module:dcache_biu
+csr_pmp_sb	dcache_dpram.v	/^    input  [`CSR_SB_W-1:0] csr_pmp_sb,$/;"	p	module:dcache_dpram
+csr_pmp_sb	dcache_top.v	/^    input [`CSR_SB_W-1:0] csr_pmp_sb,$/;"	p	module:dcache_top
 csr_pmp_sb	fet_dec_ex_mem.v	/^output [`CSR_SB_W-1:0] csr_pmp_sb,$/;"	p	module:fet_dec_ex_mem
+csr_pmp_sb	icache.v	/^    input [`CSR_SB_W-1:0] csr_pmp_sb,     $/;"	p	module:icache
+csr_pmp_sb	mem_hier.v	/^,input [`CSR_SB_W-1:0] csr_pmp_sb$/;"	p	module:mem_hier
 csr_pmp_sb	riscv_platform.v	/^   wire [`CSR_SB_W-1:0] csr_pmp_sb;$/;"	n	module:riscv_platform
 csr_rddata	csr.v	/^    output reg [31:0] csr_rddata,$/;"	p	module:csr
 csr_ready	EXCEPTION_UNIT.v	/^    input             csr_ready,$/;"	p	module:EXCEPTION_UNIT
@@ -3731,6 +3986,18 @@ cur_prev_mode	csr.v	/^reg [1:0] cur_prev_mode; $/;"	r	module:csr
 current_access	Interconnect.v	/^    reg current_access; \/\/ 0 = instruction bus, 1 = data bus$/;"	r	module:interconnect
 d_we	mem_hier.v	/^wire d_we,rdy;$/;"	n	module:mem_hier
 dat	mem_hier.v	/^reg dat;$/;"	r	module:mem_hier
+data0_i	ABSTRACT_COMMAND_DECODER.v	/^  input [31:0] data0_i,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+data0_i	IF_ID_EX.v	/^    input [31:0] data0_i,$/;"	p	module:IF_ID_EX
+data0_i	cpu.v	/^input [31:0] data0_i,$/;"	p	module:cpu
+data0_i	fet_dec_ex_mem.v	/^input [31:0] data0_i,$/;"	p	module:fet_dec_ex_mem
+data0_i	riscv_platform.v	/^   wire [31:0] data0_i,data1_o;$/;"	n	module:riscv_platform
+data0_o	Debug_Module.v	/^  output [31:0] data0_o,$/;"	p	module:Debug_Module
+data1_i	Debug_Module.v	/^  input [31:0] data1_i,$/;"	p	module:Debug_Module
+data1_o	ABSTRACT_COMMAND_DECODER.v	/^  output reg [31:0] data1_o,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+data1_o	IF_ID_EX.v	/^    output [31:0] data1_o,$/;"	p	module:IF_ID_EX
+data1_o	cpu.v	/^output [31:0] data1_o,$/;"	p	module:cpu
+data1_o	fet_dec_ex_mem.v	/^output [31:0] data1_o,$/;"	p	module:fet_dec_ex_mem
+data1_o	riscv_platform.v	/^   wire [31:0] data0_i,data1_o;$/;"	n	module:riscv_platform
 data_addr	Interconnect.v	/^    input  wire [31:0]  data_addr,        \/\/ Data address bus$/;"	p	module:interconnect
 data_addr_int	cam.v	/^    wire [4:0] data_addr_int;$/;"	n	module:Registers
 data_addr_int	icam.v	/^    wire [4:0] data_addr_int;$/;"	n	module:iregisters
@@ -3744,19 +4011,31 @@ data_in_L1	DTLB.v	/^reg [31:0] data_in_L1,data_in_L2;$/;"	r	module:DTLB
 data_in_L1	ITLB.v	/^reg [31:0] data_in_L1,data_in_L2;$/;"	r	module:ITLB
 data_in_L2	DTLB.v	/^reg [31:0] data_in_L1,data_in_L2;$/;"	r	module:DTLB
 data_in_L2	ITLB.v	/^reg [31:0] data_in_L1,data_in_L2;$/;"	r	module:ITLB
-data_page_fault	IF_ID_EX.v	/^    input data_page_fault, $/;"	p	module:IF_ID_EX
+data_page_fault	IF_ID_EX.v	/^    input data_page_fault,$/;"	p	module:IF_ID_EX
 data_page_fault	dcache_biu.v	/^  output data_page_fault,$/;"	p	module:dcache_biu
 data_page_fault	dcache_dpram.v	/^    output data_page_fault, $/;"	p	module:dcache_dpram
 data_page_fault	dcache_top.v	/^    output data_page_fault,$/;"	p	module:dcache_top
 data_page_fault	fet_dec_ex_mem.v	/^wire data_page_fault;$/;"	n	module:fet_dec_ex_mem
 data_read_data	Interconnect.v	/^    output   [31:0]  data_read_data,   \/\/ Data read data$/;"	p	module:interconnect
+data_read_dbg	ABSTRACT_COMMAND_DECODER.v	/^  input [31:0] data_read_dbg,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+data_read_dbg	IF_ID_EX.v	/^wire [31:0] memory_addr_dbg,data_write_dbg,data_read_dbg;$/;"	n	module:IF_ID_EX
 data_ready	Interconnect.v	/^    output           data_ready,       \/\/ Data bus ready signal$/;"	p	module:interconnect
 data_req	DATA_MEMORY_1.2.v	/^wire instruction_req, data_req, pt_req, clint_req;$/;"	n	module:DATA_MEMORY
 data_req	Interconnect.v	/^    input  wire         data_req,         \/\/ Data request signal$/;"	p	module:interconnect
 data_stall	Interconnect.v	/^    output           data_stall,$/;"	p	module:interconnect
+data_tlast	Interconnect.v	/^    output           data_tlast,$/;"	p	module:interconnect
 data_write	Interconnect.v	/^    input  wire         data_write,       \/\/ Data write enable$/;"	p	module:interconnect
 data_write_data	Interconnect.v	/^    input  wire [31:0]  data_write_data,  \/\/ Data write data$/;"	p	module:interconnect
+data_write_dbg	ABSTRACT_COMMAND_DECODER.v	/^  output reg [31:0] data_write_dbg,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+data_write_dbg	IF_ID_EX.v	/^wire [31:0] memory_addr_dbg,data_write_dbg,data_read_dbg;$/;"	n	module:IF_ID_EX
 db1	fet_dec_ex_mem.v	/^dcache_biu db1( \/\/wishbone and controller interfacee I\/Os$/;"	i	module:fet_dec_ex_mem
+dbg_ack	DEBUG_CONTROLLER.v	/^reg pc_dbg_valid,dbg_ack;$/;"	r	module:DEBUG_CONTROLLER
+dbg_csr_save	DEBUG_CONTROLLER.v	/^reg dbg_csr_save;$/;"	r	module:DEBUG_CONTROLLER
+dbg_instr_req	IF_ID_EX.v	/^wire dbg_instr_req;$/;"	n	module:IF_ID_EX
+dbg_instr_req	INST_FETCH.v	/^    input dbg_instr_req,$/;"	p	module:INST_FETCH
+dbg_memory_req	ABSTRACT_COMMAND_DECODER.v	/^  output reg dbg_memory_req,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+dbg_memory_req	IF_ID_EX.v	/^wire dbg_memory_req;$/;"	n	module:IF_ID_EX
+dbg_memory_req_q	ABSTRACT_COMMAND_DECODER.v	/^reg dbg_memory_req_q;$/;"	r	module:ABSTRACT_COMMAND_DECODER
 dcache_addr_w0_a	dcache_dpram.v	/^    input [6:0] dcache_addr_w0_a,$/;"	p	module:dcache_dpram
 dcache_addr_w0_a	dcache_top.v	/^wire [6:0] dcache_addr_w0_a;$/;"	n	module:dcache_top
 dcache_addr_w0_b	dcache_dpram.v	/^    input [6:0] dcache_addr_w0_b,$/;"	p	module:dcache_dpram
@@ -3783,8 +4062,32 @@ dcache_out_a_w1	dcache_top.v	/^wire [255:0] dcache_out_a_w1;$/;"	n	module:dcache
 dcache_out_b_w0	dcache_top.v	/^wire [255:0] dcache_out_b_w0;$/;"	n	module:dcache_top
 dcache_out_b_w1	dcache_top.v	/^wire [255:0] dcache_out_b_w1;$/;"	n	module:dcache_top
 dcache_ram_fsm	dcache_ram_fsm.v	/^module dcache_ram_fsm$/;"	m
+dcache_stall	ABSTRACT_COMMAND_DECODER.v	/^  input dcache_stall,$/;"	p	module:ABSTRACT_COMMAND_DECODER
 dcache_top	dcache_top.v	/^module dcache_top \/*(rst,clk,clk_x2,freeze,dtop_freeze,cache_flush,bus_rq,bus_data,bus_addr,bus/;"	m
+dcsr	DEBUG_CONTROLLER.v	/^  input [31:0] dcsr,$/;"	p	module:DEBUG_CONTROLLER
+dcsr	IF_ID_EX.v	/^wire [31:0] dcsr;$/;"	n	module:IF_ID_EX
+dcsr	csr.v	/^    output [31:0] dcsr,$/;"	p	module:csr
 dd	dcache_top.v	/^dcache_dpram dd( .rst(rst),$/;"	i	module:dcache_top
+debug_Controller	IF_ID_EX.v	/^DEBUG_CONTROLLER #(.PC_BOOT()) debug_Controller ($/;"	i	module:IF_ID_EX
+debug_cause_n	DEBUG_CONTROLLER.v	/^reg [2:0]  debug_cause_n, debug_cause_q;$/;"	r	module:DEBUG_CONTROLLER
+debug_cause_q	DEBUG_CONTROLLER.v	/^reg [2:0]  debug_cause_n, debug_cause_q;$/;"	r	module:DEBUG_CONTROLLER
+debug_dcsr	defines.v	/^`define debug_dcsr      12'h7b0$/;"	c
+debug_dpc	defines.v	/^`define debug_dpc       12'h7b1$/;"	c
+debug_dscratch0	defines.v	/^`define debug_dscratch0 12'h7b2$/;"	c
+debug_dscratch1	defines.v	/^`define debug_dscratch1 12'h7b3$/;"	c
+debug_memory	Debug_Module.v	/^ MEMORY_MACRO #(.ADDR_WIDTH(10),.DATA_WIDTH(32),.INPUT_FILE("debug.mem")) debug_memory($/;"	i	module:Debug_Module
+debug_mode	ABSTRACT_COMMAND_DECODER.v	/^  input debug_mode,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+debug_mode	DEBUG_CONTROLLER.v	/^  output debug_mode,$/;"	p	module:DEBUG_CONTROLLER
+debug_mode	DECODE.v	/^    input debug_mode,$/;"	p	module:DECODE
+debug_mode	IF_ID_EX.v	/^    output  debug_mode,$/;"	p	module:IF_ID_EX
+debug_mode	csr.v	/^    input debug_mode,$/;"	p	module:csr
+debug_mode	fet_dec_ex_mem.v	/^wire debug_mode;$/;"	n	module:fet_dec_ex_mem
+debug_mode_n	DEBUG_CONTROLLER.v	/^reg debug_mode_n,debug_mode_q;$/;"	r	module:DEBUG_CONTROLLER
+debug_mode_q	DEBUG_CONTROLLER.v	/^reg debug_mode_n,debug_mode_q;$/;"	r	module:DEBUG_CONTROLLER
+debug_stall	IF_ID_EX.v	/^    output  debug_stall,$/;"	p	module:IF_ID_EX
+debug_stall	fet_dec_ex_mem.v	/^wire debug_stall;$/;"	n	module:fet_dec_ex_mem
+debugver	csr.v	/^reg [3:0] debugver;$/;"	r	module:csr
+delay_counter	Debug_Module.v	/^reg [2:0] delay_counter;$/;"	r	module:Debug_Module
 device_id	IF_ID_EX.v	/^wire [5:0] device_id;$/;"	n	module:IF_ID_EX
 diff	or1200_fpu_div.v	/^   reg [63:0]    dividend_copy, divisor_copy, diff;$/;"	r	module:divider
 din	DTLB.v	/^wire [4:0] din;$/;"	n	module:DTLB
@@ -3805,12 +4108,36 @@ dividend_copy	or1200_fpu_div.v	/^   reg [63:0]    dividend_copy, divisor_copy, d
 divider	or1200_fpu_div.v	/^module divider(dividend,divisor,clk,result,sign,rst,op,start,done);$/;"	m
 divisor	or1200_fpu_div.v	/^   input [31:0]  dividend, divisor;$/;"	p	module:divider
 divisor_copy	or1200_fpu_div.v	/^   reg [63:0]    dividend_copy, divisor_copy, diff;$/;"	r	module:divider
+dm_exception_addr	DEBUG_CONTROLLER.v	/^  input [31:0] dm_exception_addr,$/;"	p	module:DEBUG_CONTROLLER
+dm_exception_addr	Debug_Module.v	/^  output [31:0] dm_exception_addr,$/;"	p	module:Debug_Module
+dm_exception_addr	IF_ID_EX.v	/^    input [31:0] dm_halt_addr,dm_exception_addr,$/;"	p	module:IF_ID_EX
+dm_exception_addr	cpu.v	/^input [31:0] dm_halt_addr,dm_exception_addr,$/;"	p	module:cpu
+dm_exception_addr	fet_dec_ex_mem.v	/^input [31:0] dm_halt_addr,dm_exception_addr,$/;"	p	module:fet_dec_ex_mem
+dm_exception_addr	riscv_platform.v	/^   wire [31:0] dm_exception_addr;$/;"	n	module:riscv_platform
+dm_halt_addr	DEBUG_CONTROLLER.v	/^  input [31:0] dm_halt_addr,$/;"	p	module:DEBUG_CONTROLLER
+dm_halt_addr	Debug_Module.v	/^  output [31:0] dm_halt_addr,$/;"	p	module:Debug_Module
+dm_halt_addr	IF_ID_EX.v	/^    input [31:0] dm_halt_addr,dm_exception_addr,$/;"	p	module:IF_ID_EX
+dm_halt_addr	cpu.v	/^input [31:0] dm_halt_addr,dm_exception_addr,$/;"	p	module:cpu
+dm_halt_addr	fet_dec_ex_mem.v	/^input [31:0] dm_halt_addr,dm_exception_addr,$/;"	p	module:fet_dec_ex_mem
+dm_halt_addr	riscv_platform.v	/^   wire [31:0] dm_halt_addr;$/;"	n	module:riscv_platform
 dmem_addr	rv32_mpu.sv	/^        input  wire  [XLEN    -1:0]        dmem_addr,$/;"	p	module:rv32_mpu
+dmem_allow	dcache_biu.v	/^  output dmem_allow,$/;"	p	module:dcache_biu
+dmem_allow	dcache_dpram.v	/^    output dmem_allow,$/;"	p	module:dcache_dpram
+dmem_allow	dcache_top.v	/^    output dmem_allow,$/;"	p	module:dcache_top
+dmem_allow	fet_dec_ex_mem.v	/^wire dmem_allow;$/;"	n	module:fet_dec_ex_mem
 dmem_allow	riscv_platform.v	/^   wire [3:0] imem_allow,dmem_allow; \/\/ L\/X\/W\/R$/;"	n	module:riscv_platform
 dmem_allow	rv32_mpu.sv	/^        output logic [4             -1:0]  dmem_allow, \/\/ {L, X, W, R}$/;"	p	module:rv32_mpu
+dmem_allow_nc	icache.v	/^wire [3:0] dmem_allow_nc;$/;"	n	module:icache
 dmem_match	rv32_mpu.sv	/^    logic dmem_match;$/;"	r	module:rv32_mpu
 dmem_match_i	rv32_mpu.sv	/^    integer dmem_match_i;$/;"	r	module:rv32_mpu
 dmem_pmp_matchs	rv32_mpu.sv	/^    logic [NB_PMP_REGION-1:0] dmem_pmp_matchs;$/;"	r	module:rv32_mpu
+dmem_porta_allow	dcache_dpram.v	/^  wire dmem_porta_allow;$/;"	n	module:dcache_dpram
+dmem_porta_permissions	dcache_dpram.v	/^  wire [3:0] dmem_porta_permissions;$/;"	n	module:dcache_dpram
+dmem_portb_allow	dcache_dpram.v	/^  wire dmem_portb_allow;$/;"	n	module:dcache_dpram
+dmem_portb_permissions	dcache_dpram.v	/^  wire [3:0] dmem_portb_permissions;$/;"	n	module:dcache_dpram
+dmem_read_allowed	riscv_platform.v	/^   wire  dmem_read_allowed,dmem_write_allowed,dmem_read_write_allowed;$/;"	n	module:riscv_platform
+dmem_read_write_allowed	riscv_platform.v	/^   wire  dmem_read_allowed,dmem_write_allowed,dmem_read_write_allowed;$/;"	n	module:riscv_platform
+dmem_write_allowed	riscv_platform.v	/^   wire  dmem_read_allowed,dmem_write_allowed,dmem_read_write_allowed;$/;"	n	module:riscv_platform
 done	or1200_fpu_div.v	/^   output        done;$/;"	p	module:divider
 done	or1200_fpu_div.v	/^   wire          done = !bit;$/;"	n	module:divider
 done_div	EXECUTE.v	/^wire done_div;$/;"	n	module:EXECUTE
@@ -3827,8 +4154,13 @@ dout_b	dcache_top.v	/^wire [31:0] dout_b;$/;"	n	module:dcache_top
 douta	MEMORY_MACRO.v	/^    output  [DATA_WIDTH-1:0] douta$/;"	p	module:MEMORY_MACRO
 douta	dual_port_RAM.v	/^    output reg [DATA_WIDTH-1:0] douta, \/\/ Data output for Port A$/;"	p	module:dual_port_RAM
 doutb	dual_port_RAM.v	/^    output reg [DATA_WIDTH-1:0] doutb  \/\/ Data output for Port B (unused in instantiation)$/;"	p	module:dual_port_RAM
+dpc	DEBUG_CONTROLLER.v	/^  input [31:0] dpc,$/;"	p	module:DEBUG_CONTROLLER
+dpc	IF_ID_EX.v	/^wire [31:0] dpc;$/;"	n	module:IF_ID_EX
+dpc	csr.v	/^    output reg [31:0] dpc,$/;"	p	module:csr
 drf0	dcache_top.v	/^dcache_ram_fsm drf0( .clk(clk),$/;"	i	module:dcache_top
 drf1	dcache_top.v	/^dcache_ram_fsm drf1( .clk(clk),$/;"	i	module:dcache_top
+dscratch0	csr.v	/^reg [31:0] dscratch0;$/;"	r	module:csr
+dscratch1	csr.v	/^reg [31:0] dscratch1;$/;"	r	module:csr
 dt1	dcache_biu.v	/^dcache_top dt1(.rst(proc_rst),.clk(proc_clk),.freeze(freeze_int),.dtop_freeze(dcache_freeze),.ca/;"	i	module:dcache_biu
 dtlb_trans_off	DTLB.v	/^  input dtlb_trans_off,$/;"	p	module:DTLB
 dtlb_trans_off	cam.v	/^    input dtlb_trans_off;$/;"	p	module:Registers
@@ -3840,6 +4172,14 @@ dtop_freeze	dcache_top.v	/^    input dtop_freeze,$/;"	p	module:dcache_top
 dual_port_RAM	dual_port_RAM.v	/^module dual_port_RAM #($/;"	m
 dw	DTLB.v	/^              parameter dw = 32,$/;"	c	module:DTLB
 dw	ITLB.v	/^    parameter dw = 32,$/;"	c	module:ITLB
+ebreak_id_detected	DEBUG_CONTROLLER.v	/^reg ebreak_id_detected;$/;"	r	module:DEBUG_CONTROLLER
+ebreak_in_id	DEBUG_CONTROLLER.v	/^wire ebreak_in_id;$/;"	n	module:DEBUG_CONTROLLER
+ebreak_in_wb	DEBUG_CONTROLLER.v	/^wire ebreak_in_wb;$/;"	n	module:DEBUG_CONTROLLER
+ebreakm	csr.v	/^reg cetrig,pelp,ebreakvs,ebreakvu,ebreakm,ebreaks,ebreaku,stepie,stopcount,stoptime;$/;"	r	module:csr
+ebreaks	csr.v	/^reg cetrig,pelp,ebreakvs,ebreakvu,ebreakm,ebreaks,ebreaku,stepie,stopcount,stoptime;$/;"	r	module:csr
+ebreaku	csr.v	/^reg cetrig,pelp,ebreakvs,ebreakvu,ebreakm,ebreaks,ebreaku,stepie,stopcount,stoptime;$/;"	r	module:csr
+ebreakvs	csr.v	/^reg cetrig,pelp,ebreakvs,ebreakvu,ebreakm,ebreaks,ebreaku,stepie,stopcount,stoptime;$/;"	r	module:csr
+ebreakvu	csr.v	/^reg cetrig,pelp,ebreakvs,ebreakvu,ebreakm,ebreaks,ebreaku,stepie,stopcount,stoptime;$/;"	r	module:csr
 eirq_pulse	csr.v	/^irq_pulser eirq_pulse $/;"	i	module:csr
 empty	DTLB.v	/^wire empty;$/;"	n	module:DTLB
 empty	ITLB.v	/^wire empty;$/;"	n	module:ITLB
@@ -3861,17 +4201,16 @@ exp_ecall	EXCEPTION_UNIT.v	/^    reg exp_trap, exp_ecall;$/;"	r	module:EXCEPTION
 exp_instruction	EXCEPTION_UNIT.v	/^    wire [`XLEN-1:0] exp_instruction;$/;"	n	module:EXCEPTION_UNIT
 exp_pc	EXCEPTION_UNIT.v	/^    wire [`XLEN-1:0] exp_pc;$/;"	n	module:EXCEPTION_UNIT
 exp_trap	EXCEPTION_UNIT.v	/^    reg exp_trap, exp_ecall;$/;"	r	module:EXCEPTION_UNIT
-ext_irq	IF_ID_EX.v	/^    input ext_irq,$/;"	p	module:IF_ID_EX
-ext_irq	cpu.v	/^input  wire                    ext_irq;$/;"	p	module:cpu
+ext_irq	IF_ID_EX.v	/^wire ext_irq;$/;"	n	module:IF_ID_EX
 ext_irq	csr.v	/^    input  wire                    ext_irq,$/;"	p	module:csr
-ext_irq	fet_dec_ex_mem.v	/^input ext_irq,$/;"	p	module:fet_dec_ex_mem
 ext_irq	riscv_platform.v	/^  input ext_irq,$/;"	p	module:riscv_platform
 ext_irq_pulse	csr.v	/^wire ext_irq_pulse;$/;"	n	module:csr
 ext_irq_sync	csr.v	/^wire ext_irq_sync;$/;"	n	module:csr
 ext_irq_synchro	csr.v	/^    ext_irq_synchro$/;"	i	module:csr
+extcause	csr.v	/^reg [2:0] extcause;$/;"	r	module:csr
 fcsr	defines.v	/^`define fcsr   12'h003$/;"	c
 fcsr_default	defines.v	/^`define fcsr_default 32'h00000000$/;"	c
-fdem	cpu.v	/^fet_dec_ex_mem fdem( .rst(rst),.clk(clk),\/*.led(led),*\/.tick_en(tick_en),.addr_exception(addr_/;"	i	module:cpu
+fdem	cpu.v	/^fet_dec_ex_mem fdem( .RESET_BUTTON(RESET_BUTTON),.clk(clk),\/*.led(led),*\/.tick_en(tick_en),.ad/;"	i	module:cpu
 fet_dec_ex_mem	fet_dec_ex_mem.v	/^module fet_dec_ex_mem($/;"	m
 ffcsr_mask	defines.v	/^`define ffcsr_mask   32'h000000FF$/;"	c
 fflags	defines.v	/^`define fflags 12'h001$/;"	c
@@ -3895,8 +4234,10 @@ forw_rs2_mem_fp_int	DECODE.v	/^wire forw_rs2_mem_fp_int;$/;"	n	module:DECODE
 forw_rs2_mem_int	DECODE.v	/^wire forw_rs2_mem_int;$/;"	n	module:DECODE
 forw_rs2_wb_fp_int	DECODE.v	/^wire forw_rs2_wb_fp_int;$/;"	n	module:DECODE
 forw_rs2_wb_int	DECODE.v	/^wire forw_rs2_wb_int;$/;"	n	module:DECODE
+freeze	DEBUG_CONTROLLER.v	/^  input freeze,$/;"	p	module:DEBUG_CONTROLLER
 freeze	DTLB.v	/^  output reg                  freeze,$/;"	p	module:DTLB
 freeze	ITLB.v	/^  output reg freeze,$/;"	p	module:ITLB
+freeze	MEMORY_REQUEST_MODULE.v	/^   input freeze$/;"	p	module:MEMORY_REQUEST_MODULE
 freeze	Sys_counter.v	/^     input  clk, reset,freeze,wr_en,wr_en_h,rd_instret;$/;"	p	module:counter_instr_clk
 freeze	Sys_counter.v	/^    input freeze,      \/\/include when 1Hz timer implemented$/;"	p	module:Sys_counter
 freeze	cachefsm.v	/^input clk,freeze, freeze_in, reset, i_hit, i_acc, wb_ack_i;$/;"	p	module:cachefsm
@@ -3917,10 +4258,13 @@ freeze_in	cachefsm.v	/^input clk,freeze, freeze_in, reset, i_hit, i_acc, wb_ack_
 freeze_in	icache.v	/^    input clk\/*,clk_x2*\/,reset,freeze,freeze_in,$/;"	p	module:icache
 freeze_in	mem_hier.v	/^      input freeze_in,$/;"	p	module:mem_hier
 freeze_int	dcache_biu.v	/^wire freeze_int;$/;"	n	module:dcache_biu
-freeze_int	fet_dec_ex_mem.v	/^wire freeze_int;$/;"	n	module:fet_dec_ex_mem
 freeze_int	mem_hier.v	/^reg freeze_int;$/;"	r	module:mem_hier
 freeze_int1	dcache_top.v	/^wire freeze_int1; $/;"	n	module:dcache_top
 freeze_int2	dcache_top.v	/^wire freeze_int2; $/;"	n	module:dcache_top
+freeze_int_dcache	Debug_Module.v	/^  input freeze_int_dcache$/;"	p	module:Debug_Module
+freeze_int_dcache	cpu.v	/^output freeze_int_dcache,$/;"	p	module:cpu
+freeze_int_dcache	fet_dec_ex_mem.v	/^output freeze_int_dcache,$/;"	p	module:fet_dec_ex_mem
+freeze_int_dcache	riscv_platform.v	/^   wire freeze_int_dcache;$/;"	n	module:riscv_platform
 freeze_tlb	DTLB.v	/^  input                       freeze_tlb,$/;"	p	module:DTLB
 freeze_tlb	ITLB.v	/^  input freeze_tlb,$/;"	p	module:ITLB
 freeze_tlb	dcache_dpram.v	/^    input freeze_tlb,$/;"	p	module:dcache_dpram
@@ -3970,6 +4314,22 @@ get_na4	rv32_pmp_region.sv	/^    function automatic [2*RLEN-1:0] get_na4(input l
 get_napot	rv32_pmp_region.sv	/^    function automatic [2*RLEN-1:0] get_napot(input logic [XLEN-1:0] csr_addr);$/;"	f	module:rv32_pmp_region
 global	cam.v	/^    parameter global = 5; $/;"	c	module:Registers
 global	icam.v	/^    parameter global = 5; $/;"	c	module:iregisters
+halt_id	DEBUG_CONTROLLER.v	/^  output reg halt_id,$/;"	p	module:DEBUG_CONTROLLER
+halt_id_ie	IF_ID_EX.v	/^wire halt_if_id,halt_id_ie,halt_ie_mem,halt_mem_wb;$/;"	n	module:IF_ID_EX
+halt_ie	DEBUG_CONTROLLER.v	/^  output reg halt_ie,$/;"	p	module:DEBUG_CONTROLLER
+halt_ie_mem	IF_ID_EX.v	/^wire halt_if_id,halt_id_ie,halt_ie_mem,halt_mem_wb;$/;"	n	module:IF_ID_EX
+halt_ie_mem_reg	IF_ID_EX.v	/^reg halt_ie_mem_reg;$/;"	r	module:IF_ID_EX
+halt_if	DEBUG_CONTROLLER.v	/^  output reg halt_if,$/;"	p	module:DEBUG_CONTROLLER
+halt_if	INST_FETCH.v	/^    input halt_if,$/;"	p	module:INST_FETCH
+halt_if_id	IF_ID_EX.v	/^wire halt_if_id,halt_id_ie,halt_ie_mem,halt_mem_wb;$/;"	n	module:IF_ID_EX
+halt_mem	DEBUG_CONTROLLER.v	/^  output reg halt_mem,$/;"	p	module:DEBUG_CONTROLLER
+halt_mem_wb	IF_ID_EX.v	/^wire halt_if_id,halt_id_ie,halt_ie_mem,halt_mem_wb;$/;"	n	module:IF_ID_EX
+haltreq_i	DEBUG_CONTROLLER.v	/^  input   haltreq_i,$/;"	p	module:DEBUG_CONTROLLER
+haltreq_i	Debug_Module.v	/^  output   haltreq_i,$/;"	p	module:Debug_Module
+haltreq_i	IF_ID_EX.v	/^    input   haltreq_i,$/;"	p	module:IF_ID_EX
+haltreq_i	cpu.v	/^input haltreq_i,$/;"	p	module:cpu
+haltreq_i	fet_dec_ex_mem.v	/^input haltreq_i,$/;"	p	module:fet_dec_ex_mem
+haltreq_i	riscv_platform.v	/^   wire   haltreq_i;$/;"	n	module:riscv_platform
 handler_memory	DATA_MEMORY_1.2.v	/^  Handler_Memory handler_memory($/;"	i	module:DATA_MEMORY
 hardware_test	defines.v	/^`define hardware_test 1'b0$/;"	c
 hit	dcache_ram_fsm.v	/^    input hit,                                      \/\/ Dcache hit$/;"	p	module:dcache_ram_fsm
@@ -3981,6 +4341,8 @@ hit_b	dcache_top.v	/^wire hit_b;$/;"	n	module:dcache_top
 hit_counter	cam.v	/^    reg [31:0] hit_counter;$/;"	r	module:Registers
 hit_out	icache.v	/^    output hit_out,$/;"	p	module:icache
 hit_q	icache.v	/^reg hit_q;$/;"	r	module:icache
+i	Branch_Target_Buff.v	/^integer i;$/;"	r	module:Branch_Target_Buff
+i	Direction_Predictor.v	/^integer i;$/;"	r	module:Direction_Predictor
 i	dcache_ram_fsm.v	/^reg [31:0] i,j,k;$/;"	r	module:dcache_ram_fsm
 i	dcache_top.v	/^reg [6:0] i;$/;"	r	module:dcache_top
 i	dual_port_RAM.v	/^    integer i;$/;"	r	module:dual_port_RAM
@@ -3995,6 +4357,7 @@ i_addr	mem_hier.v	/^      input [31:0]  i_addr,$/;"	p	module:mem_hier
 i_addr_cache	mem_hier.v	/^wire [31:0] i_addr_cache;$/;"	n	module:mem_hier
 i_addr_int	mem_hier.v	/^reg [31:0]  i_addr_int;$/;"	r	module:mem_hier
 i_addr_min4	icache.v	/^wire [31:0] i_addr_min4;$/;"	n	module:icache
+i_bus_data	MEMORY_REQUEST_MODULE.v	/^   input  [255:0]       			i_bus_data,     \/\/Give data back to Main Memory (sw) $/;"	p	module:MEMORY_REQUEST_MODULE
 i_bus_data	dcache_biu.v	/^wire [255:0] i_bus_data;$/;"	n	module:dcache_biu
 i_bus_data	dcache_ram_fsm.v	/^    input [255:0] i_bus_data,$/;"	p	module:dcache_ram_fsm
 i_bus_data	interface_router.v	/^   input  [255:0]       			i_bus_data,     \/\/Give data back to Main Memory (sw) $/;"	p	module:interface_router
@@ -4014,15 +4377,26 @@ icache_set1_addr	icache.v	/^wire [6:0] icache_set1_addr;$/;"	n	module:icache
 icache_tag_w0_addr	icache.v	/^wire [6:0] icache_tag_w0_addr;$/;"	n	module:icache
 icache_tag_w1_addr	icache.v	/^wire [6:0] icache_tag_w1_addr;$/;"	n	module:icache
 idle	EXECUTE.v	/^parameter idle = 2'b00;$/;"	c	module:EXECUTE
+illegal_instruction	DECODE.v	/^    output illegal_instruction,$/;"	p	module:DECODE
 illegal_instruction	EXCEPTION_UNIT.v	/^    wire illegal_instruction;  $/;"	n	module:EXCEPTION_UNIT
 illegal_instruction	IF_ID_EX.v	/^wire inst_addr_misaligned, inst_access_fault, illegal_instruction, load_misaligned, load_access_/;"	n	module:IF_ID_EX
+illegal_instruction_ID	IF_ID_EX.v	/^wire illegal_instruction_ID;$/;"	n	module:IF_ID_EX
+illegal_instruction_IE	IF_ID_EX.v	/^reg illegal_instruction_IE;$/;"	r	module:IF_ID_EX
+illegal_instruction_csr	DECODE.v	/^reg illegal_instruction_decode,illegal_instruction_csr;$/;"	r	module:DECODE
+illegal_instruction_decode	DECODE.v	/^reg illegal_instruction_decode,illegal_instruction_csr;$/;"	r	module:DECODE
 ilru	ilru.v	/^module ilru( clk,rst,access,addr_access,compare,lru_addr$/;"	m
 imem_addr	rv32_mpu.sv	/^        input  wire  [XLEN    -1:0]        imem_addr,$/;"	p	module:rv32_mpu
+imem_allow	cachefsm.v	/^input imem_allow;$/;"	p	module:cachefsm
+imem_allow	fet_dec_ex_mem.v	/^wire imem_allow;$/;"	n	module:fet_dec_ex_mem
+imem_allow	icache.v	/^    output imem_allow,$/;"	p	module:icache
+imem_allow	mem_hier.v	/^,output imem_allow$/;"	p	module:mem_hier
 imem_allow	riscv_platform.v	/^   wire [3:0] imem_allow,dmem_allow; \/\/ L\/X\/W\/R$/;"	n	module:riscv_platform
 imem_allow	rv32_mpu.sv	/^        output logic [4             -1:0]  imem_allow, \/\/ {L, X, W, R}$/;"	p	module:rv32_mpu
 imem_match	rv32_mpu.sv	/^    logic imem_match;$/;"	r	module:rv32_mpu
 imem_match_i	rv32_mpu.sv	/^    integer imem_match_i;$/;"	r	module:rv32_mpu
+imem_permission	icache.v	/^wire [3:0] imem_permission;$/;"	n	module:icache
 imem_pmp_matchs	rv32_mpu.sv	/^    logic [NB_PMP_REGION-1:0] imem_pmp_matchs;$/;"	r	module:rv32_mpu
+imem_read_execute_allowed	riscv_platform.v	/^   wire imem_read_execute_allowed;$/;"	n	module:riscv_platform
 in1_mux	EXECUTE.v	/^reg [31:0] in1_mux;$/;"	r	module:EXECUTE
 in2_mux	EXECUTE.v	/^reg [31:0] in2_mux;$/;"	r	module:EXECUTE
 indata1	EXECUTE.v	/^wire [31:0] indata1;$/;"	n	module:EXECUTE
@@ -4061,11 +4435,17 @@ instr_data	Interconnect.v	/^    output   [31:0]  instr_data,       \/\/ Instruct
 instr_out	mem_hier.v	/^      output [31:0] instr_out,$/;"	p	module:mem_hier
 instr_ready	Interconnect.v	/^    output           instr_ready,      \/\/ Instruction bus ready signal$/;"	p	module:interconnect
 instr_reg	mem_hier.v	/^reg [31:0] instr_reg;$/;"	r	module:mem_hier
+instr_req	DEBUG_CONTROLLER.v	/^  output reg instr_req,$/;"	p	module:DEBUG_CONTROLLER
 instr_req	Interconnect.v	/^    input  wire         instr_req,        \/\/ Instruction request signal$/;"	p	module:interconnect
 instr_stall	Interconnect.v	/^    output           instr_stall,$/;"	p	module:interconnect
+instr_tlast	Interconnect.v	/^    output           instr_tlast,$/;"	p	module:interconnect
 instr_write	Interconnect.v	/^    input  wire         instr_write,$/;"	p	module:interconnect
 instr_write_data	Interconnect.v	/^    input  wire [31:0]  instr_write_data,$/;"	p	module:interconnect
 instruction	fet_dec_ex_mem.v	/^wire [31:0] instruction;$/;"	n	module:fet_dec_ex_mem
+instruction_DM	cpu.v	/^input [31:0] instruction_DM,$/;"	p	module:cpu
+instruction_DM	fet_dec_ex_mem.v	/^input [31:0] instruction_DM,$/;"	p	module:fet_dec_ex_mem
+instruction_DM	riscv_platform.v	/^   wire [31:0] instruction_DM;$/;"	n	module:riscv_platform
+instruction_ICACHE	fet_dec_ex_mem.v	/^wire [31:0] instruction_ICACHE;$/;"	n	module:fet_dec_ex_mem
 instruction_int	cpu.v	/^wire [31:0] instruction_int;$/;"	n	module:cpu
 instruction_page_fault	EXCEPTION_UNIT.v	/^    wire instruction_page_fault;$/;"	n	module:EXCEPTION_UNIT
 instruction_page_fault	IF_ID_EX.v	/^    input instruction_page_fault,$/;"	p	module:IF_ID_EX
@@ -4076,12 +4456,12 @@ instruction_req	DATA_MEMORY_1.2.v	/^wire instruction_req, data_req, pt_req, clin
 interconnect	Interconnect.v	/^module interconnect ($/;"	m
 interconnect	riscv_platform.v	/^       interconnect interconnect ($/;"	i	module:riscv_platform
 interface_router	interface_router.v	/^module interface_router ($/;"	m
-interrupt	IF_ID_EX.v	/^    input [31:0] interrupt,$/;"	p	module:IF_ID_EX
-interrupt	cpu.v	/^input [31:0] interrupt;$/;"	p	module:cpu
-interrupt	fet_dec_ex_mem.v	/^input [31:0] interrupt$/;"	p	module:fet_dec_ex_mem
 interrupt	riscv_platform.v	/^  input [31:0] interrupt$/;"	p	module:riscv_platform
 interrupt_active	defines.v	/^`define interrupt_active 2$/;"	c
+interrupt_dbg_global_disable	DEBUG_CONTROLLER.v	/^  output reg interrupt_dbg_global_disable,$/;"	p	module:DEBUG_CONTROLLER
+interrupt_dbg_global_disable	EXCEPTION_UNIT.v	/^    input interrupt_dbg_global_disable,$/;"	p	module:EXCEPTION_UNIT
 interrupt_inactive	defines.v	/^`define interrupt_inactive 0$/;"	c
+interrupt_pending	DEBUG_CONTROLLER.v	/^  input interrupt_pending, \/\/TODO$/;"	p	module:DEBUG_CONTROLLER
 interrupt_pending	EXCEPTION_UNIT.v	/^    output reg              interrupt_pending,$/;"	p	module:EXCEPTION_UNIT
 interrupt_pending	IF_ID_EX.v	/^wire interrupt_pending;$/;"	n	module:IF_ID_EX
 interrupt_pending	INST_FETCH.v	/^    input interrupt_pending,$/;"	p	module:INST_FETCH
@@ -4091,6 +4471,9 @@ intp_reg	irq_pulser.v	/^    reg intp_reg;$/;"	r	module:irq_pulser
 iregisters	icam.v	/^module iregisters( clk, rst, we, re,  write_addr, write_data, vpn, miss, valid_data, output_data/;"	m
 irq	IF_ID_EX.v	/^wire irq;$/;"	n	module:IF_ID_EX
 irq_bit_sync	irq_bit_sync.v	/^module irq_bit_sync$/;"	m
+irq_i	IF_ID_EX.v	/^    input [31:0] irq_i,$/;"	p	module:IF_ID_EX
+irq_i	cpu.v	/^input [31:0] irq_i,$/;"	p	module:cpu
+irq_i	fet_dec_ex_mem.v	/^input [31:0] irq_i$/;"	p	module:fet_dec_ex_mem
 irq_pulser	irq_pulser.v	/^module irq_pulser($/;"	m
 is32	EXECUTE.v	/^wire is32;$/;"	n	module:EXECUTE
 isr_inst_count	INST_FETCH.v	/^parameter isr_inst_count = 3;  \/\/for n instruction (log2(n) + 2)$/;"	c	module:INST_FETCH
@@ -4110,6 +4493,17 @@ k	dcache_ram_fsm.v	/^reg [31:0] i,j,k;$/;"	r	module:dcache_ram_fsm
 k	icache.v	/^integer i,k;$/;"	r	module:icache
 k__store	dcache_ram_fsm.v	/^reg [31:0] i__store,j__store,k__store;$/;"	r	module:dcache_ram_fsm
 k__store_buff	dcache_ram_fsm.v	/^reg [31:0] i__store_buff,j__store_buff,k__store_buff;$/;"	r	module:dcache_ram_fsm
+kill_id	DEBUG_CONTROLLER.v	/^  output reg kill_id,$/;"	p	module:DEBUG_CONTROLLER
+kill_id	DECODE.v	/^    input kill_id,$/;"	p	module:DECODE
+kill_id	IF_ID_EX.v	/^wire kill_if,kill_id,kill_ie,kill_mem;$/;"	n	module:IF_ID_EX
+kill_ie	DEBUG_CONTROLLER.v	/^  output reg kill_ie,$/;"	p	module:DEBUG_CONTROLLER
+kill_ie	EXECUTE.v	/^    input kill_ie,$/;"	p	module:EXECUTE
+kill_ie	IF_ID_EX.v	/^wire kill_if,kill_id,kill_ie,kill_mem;$/;"	n	module:IF_ID_EX
+kill_if	DEBUG_CONTROLLER.v	/^  output reg kill_if,$/;"	p	module:DEBUG_CONTROLLER
+kill_if	IF_ID_EX.v	/^wire kill_if,kill_id,kill_ie,kill_mem;$/;"	n	module:IF_ID_EX
+kill_if	INST_FETCH.v	/^    input kill_if,$/;"	p	module:INST_FETCH
+kill_mem	DEBUG_CONTROLLER.v	/^  output reg kill_mem$/;"	p	module:DEBUG_CONTROLLER
+kill_mem	IF_ID_EX.v	/^wire kill_if,kill_id,kill_ie,kill_mem;$/;"	n	module:IF_ID_EX
 last_zero	rv32_pmp_region.sv	/^        int unsigned last_zero;$/;"	r	function:rv32_pmp_region.get_napot
 lcd_reg	riscv_platform.v	/^   wire [63:0] lcd_reg;$/;"	n	module:riscv_platform
 leaf_page	DTLB.v	/^wire  leaf_page;$/;"	n	module:DTLB
@@ -4136,11 +4530,25 @@ level_4	lru.v	/^    reg [1:0]level_4;$/;"	r	module:lru
 ll_i	dcache_biu.v	/^  input ll_i,             \/\/signal to latch the address as linked address$/;"	p	module:dcache_biu
 ll_int	fet_dec_ex_mem.v	/^wire ll_int;$/;"	n	module:fet_dec_ex_mem
 load_access_fault	EXCEPTION_UNIT.v	/^    wire load_access_fault;    $/;"	n	module:EXCEPTION_UNIT
+load_access_fault	IF_ID_EX.v	/^    input load_access_fault,$/;"	p	module:IF_ID_EX
 load_access_fault	IF_ID_EX.v	/^wire inst_addr_misaligned, inst_access_fault, illegal_instruction, load_misaligned, load_access_/;"	n	module:IF_ID_EX
+load_access_fault	dcache_biu.v	/^  output load_access_fault,$/;"	p	module:dcache_biu
+load_access_fault	dcache_dpram.v	/^    output load_access_fault,$/;"	p	module:dcache_dpram
+load_access_fault	dcache_ram_fsm.v	/^    input load_access_fault,$/;"	p	module:dcache_ram_fsm
+load_access_fault	dcache_top.v	/^    output load_access_fault,$/;"	p	module:dcache_top
+load_access_fault	fet_dec_ex_mem.v	/^wire load_access_fault,store_access_fault;$/;"	n	module:fet_dec_ex_mem
 load_mask	dcache_ram_fsm.v	/^wire [255:0] load_mask[0:3];$/;"	n	module:dcache_ram_fsm
 load_misaligned	EXCEPTION_UNIT.v	/^    wire load_misaligned;      $/;"	n	module:EXCEPTION_UNIT
 load_misaligned	IF_ID_EX.v	/^wire inst_addr_misaligned, inst_access_fault, illegal_instruction, load_misaligned, load_access_/;"	n	module:IF_ID_EX
 load_page_fault	EXCEPTION_UNIT.v	/^    wire load_page_fault;    $/;"	n	module:EXCEPTION_UNIT
+load_page_fault	IF_ID_EX.v	/^    input load_page_fault,$/;"	p	module:IF_ID_EX
+load_page_fault	dcache_biu.v	/^  output load_page_fault,$/;"	p	module:dcache_biu
+load_page_fault	dcache_dpram.v	/^    output load_page_fault,$/;"	p	module:dcache_dpram
+load_page_fault	dcache_ram_fsm.v	/^    input load_page_fault,$/;"	p	module:dcache_ram_fsm
+load_page_fault	dcache_top.v	/^    output load_page_fault,$/;"	p	module:dcache_top
+load_page_fault	fet_dec_ex_mem.v	/^wire load_page_fault,store_page_fault;$/;"	n	module:fet_dec_ex_mem
+load_store_exception	dcache_ram_fsm.v	/^wire load_store_exception;$/;"	n	module:dcache_ram_fsm
+load_store_fault	IF_ID_EX.v	/^    input load_store_fault,$/;"	p	module:IF_ID_EX
 load_store_op	DECODE.v	/^wire [4:0] load_store_op;$/;"	n	module:DECODE
 lru	lru.v	/^module lru( clk,rst,access,addr_access,compare,lru_addr$/;"	m
 lru_addr	dcache_top.v	/^wire [6:0] lru_addr;$/;"	n	module:dcache_top
@@ -4194,6 +4602,7 @@ m_STALL	riscv_platform.v	/^   wire m_STALL;$/;"	n	module:riscv_platform
 m_data	mem_hier.v	/^wire [255:0]       m_data;$/;"	n	module:mem_hier
 m_line_full	cachefsm.v	/^input[255:0] m_line_full;$/;"	p	module:cachefsm
 m_rdy_n	mem_hier.v	/^wire rd, wr,m_rdy_n;$/;"	n	module:mem_hier
+m_tlast	riscv_platform.v	/^   wire s_tlast,m_tlast;$/;"	n	module:riscv_platform
 marchid	defines.v	/^`define marchid      12'hf12$/;"	c
 mask	rv32_pmp_region.sv	/^        logic [RLEN-1:0] mask;$/;"	r	function:rv32_pmp_region.get_na4
 mask	rv32_pmp_region.sv	/^        logic [RLEN-1:0] mask;$/;"	r	function:rv32_pmp_region.get_napot
@@ -4217,6 +4626,18 @@ medeleg_default	defines.v	/^`define medeleg_default 32'h0   \/\/ this will chang
 mem	cam.v	/^    reg [(TLB_width - 1):0] mem[0:31];$/;"	r	module:Registers
 mem	dcache_top.v	/^reg [1:0] mem[0:255];$/;"	r	module:dcache_top
 mem	icam.v	/^    reg [(TLB_width - 1):0] mem[0:31];$/;"	r	module:iregisters
+memDone	ABSTRACT_COMMAND_DECODER.v	/^  output reg memDone,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+memDone	Debug_Module.v	/^  input memDone,$/;"	p	module:Debug_Module
+memDone	IF_ID_EX.v	/^    output memDone,$/;"	p	module:IF_ID_EX
+memDone	cpu.v	/^output memDone,$/;"	p	module:cpu
+memDone	fet_dec_ex_mem.v	/^output memDone,$/;"	p	module:fet_dec_ex_mem
+memDone	riscv_platform.v	/^   wire memDone;$/;"	n	module:riscv_platform
+mem_access_complete_o	DEBUG_CONTROLLER.v	/^  output mem_access_complete_o,$/;"	p	module:DEBUG_CONTROLLER
+mem_access_complete_o	Debug_Module.v	/^  input mem_access_complete_o,$/;"	p	module:Debug_Module
+mem_access_complete_o	IF_ID_EX.v	/^    output  command_complete_o,reg_access_complete_o,mem_access_complete_o,$/;"	p	module:IF_ID_EX
+mem_access_complete_o	cpu.v	/^output command_complete_o,reg_access_complete_o,mem_access_complete_o,$/;"	p	module:cpu
+mem_access_complete_o	fet_dec_ex_mem.v	/^output command_complete_o,reg_access_complete_o,mem_access_complete_o,$/;"	p	module:fet_dec_ex_mem
+mem_access_complete_o	riscv_platform.v	/^   wire mem_access_complete_o;$/;"	n	module:riscv_platform
 mem_addr	Interconnect.v	/^    output reg  [31:0]  mem_addr,         \/\/ Memory address$/;"	p	module:interconnect
 mem_bstrobe	Interconnect.v	/^    output reg  [3:0]   mem_bstrobe,$/;"	p	module:interconnect
 mem_burst	Interconnect.v	/^    output reg  [1:0]   mem_burst,$/;"	p	module:interconnect
@@ -4226,8 +4647,11 @@ mem_read_data	Interconnect.v	/^    input  wire [31:0]  mem_read_data,    \/\/ Me
 mem_ready	Interconnect.v	/^    input  wire         mem_ready         \/\/ Memory ready signal$/;"	p	module:interconnect
 mem_req	Interconnect.v	/^    output reg          mem_req,          \/\/ Memory request signal$/;"	p	module:interconnect
 mem_stall	Interconnect.v	/^    input  wire         mem_stall,$/;"	p	module:interconnect
+mem_tlast	Interconnect.v	/^    input  wire         mem_tlast,$/;"	p	module:interconnect
 mem_write	Interconnect.v	/^    output reg          mem_write,        \/\/ Memory write enable$/;"	p	module:interconnect
 mem_write_data	Interconnect.v	/^    output reg  [31:0]  mem_write_data,   \/\/ Memory write data$/;"	p	module:interconnect
+memory_addr_dbg	ABSTRACT_COMMAND_DECODER.v	/^  output reg [31:0] memory_addr_dbg,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+memory_addr_dbg	IF_ID_EX.v	/^wire [31:0] memory_addr_dbg,data_write_dbg,data_read_dbg;$/;"	n	module:IF_ID_EX
 mepc	EXCEPTION_UNIT.v	/^    reg [`XLEN-1:0]  mepc;$/;"	r	module:EXCEPTION_UNIT
 mepc	INST_FETCH.v	/^    input [31:0] mepc,$/;"	p	module:INST_FETCH
 mepc	defines.v	/^`define mepc        12'h341$/;"	c
@@ -4235,6 +4659,7 @@ mepc_shadow	defines.v	/^`define mepc_shadow 12'h7c2$/;"	c
 mepc_wr	EXCEPTION_UNIT.v	/^    reg              mepc_wr;$/;"	r	module:EXCEPTION_UNIT
 mepc_wr	csr.v	/^wire mepc_wr;$/;"	n	module:csr
 mepc_wr_done	EXCEPTION_UNIT.v	/^   reg mepc_wr_done; $/;"	r	module:EXCEPTION_UNIT
+meta	rv32_2dffsync.v	/^    reg meta;$/;"	r	module:rv32_2dffsync
 mh	fet_dec_ex_mem.v	/^mem_hier mh($/;"	i	module:fet_dec_ex_mem
 mhartid	defines.v	/^`define mhartid      12'hf14$/;"	c
 mideleg	defines.v	/^`define mideleg      12'hf14$/;"	c
@@ -4263,6 +4688,7 @@ miss	ITLB.v	/^wire miss;$/;"	n	module:ITLB
 miss	cam.v	/^    output reg miss;$/;"	p	module:Registers
 miss	icam.v	/^    output reg miss;$/;"	p	module:iregisters
 miss_counter	cam.v	/^    reg [31:0] miss_counter;$/;"	r	module:Registers
+mprven	csr.v	/^reg mprven,nmip,step;$/;"	r	module:csr
 mpu_off	rv32_mpu.sv	/^    logic                     mpu_off;$/;"	r	module:rv32_mpu
 mret	DECODE.v	/^    output reg mret,               $/;"	p	module:DECODE
 mret	csr.v	/^    input mret,$/;"	p	module:csr
@@ -4278,7 +4704,10 @@ mstatus_wr	csr.v	/^wire mstatus_wr;$/;"	n	module:csr
 mtie	IF_ID_EX.v	/^wire mtie;$/;"	n	module:IF_ID_EX
 mtie	csr.v	/^    output mtie,$/;"	p	module:csr
 mtime	defines.v	/^`define mtime       12'hb01$/;"	c
+mtime	rv32_clint.sv	/^    logic [64   -1:0] mtime;$/;"	r	module:rv32_clint
+mtime_en	rv32_clint.sv	/^    logic             mtime_en;$/;"	r	module:rv32_clint
 mtimecmp	defines.v	/^`define mtimecmp    12'h7c0$/;"	c
+mtimecmp	rv32_clint.sv	/^    logic [64   -1:0] mtimecmp;$/;"	r	module:rv32_clint
 mtimecmph	defines.v	/^`define mtimecmph   12'h7c1$/;"	c
 mtimeh	defines.v	/^`define mtimeh      12'hb81$/;"	c
 mtval	EXCEPTION_UNIT.v	/^    reg [`XLEN-1:0]  mtval;$/;"	r	module:EXCEPTION_UNIT
@@ -4303,8 +4732,24 @@ mul_rst	EXECUTE.v	/^reg mul_rst;$/;"	r	module:EXECUTE
 muldiv_rs1	EXECUTE.v	/^wire [31:0] muldiv_rs1;$/;"	n	module:EXECUTE
 muldiv_rs2	EXECUTE.v	/^wire [31:0] muldiv_rs2;$/;"	n	module:EXECUTE
 mvendorid	defines.v	/^`define mvendorid      12'hf11$/;"	c
+ndmreset	DEBUG_CONTROLLER.v	/^  input ndmreset,$/;"	p	module:DEBUG_CONTROLLER
+ndmreset	Debug_Module.v	/^  output ndmreset,$/;"	p	module:Debug_Module
+ndmreset	IF_ID_EX.v	/^    input   ndmreset,cmd_not_supported_i,new_cmd_flag_i,$/;"	p	module:IF_ID_EX
+ndmreset	cpu.v	/^input ndmreset,cmd_not_supported_i,new_cmd_flag_i,$/;"	p	module:cpu
+ndmreset	fet_dec_ex_mem.v	/^input ndmreset,cmd_not_supported_i,new_cmd_flag_i,$/;"	p	module:fet_dec_ex_mem
+ndmreset	riscv_platform.v	/^   wire ndmreset;$/;"	n	module:riscv_platform
 negative_quo	or1200_fpu_div.v	/^   reg           negative_quo;$/;"	r	module:divider
 negative_rem	or1200_fpu_div.v	/^   reg           negative_rem;$/;"	r	module:divider
+new_cmd_flag	Debug_Module.v	/^reg new_cmd_flag;$/;"	r	module:Debug_Module
+new_cmd_flag_i	DEBUG_CONTROLLER.v	/^  input new_cmd_flag_i,$/;"	p	module:DEBUG_CONTROLLER
+new_cmd_flag_i	Debug_Module.v	/^  output new_cmd_flag_i,$/;"	p	module:Debug_Module
+new_cmd_flag_i	IF_ID_EX.v	/^    input   ndmreset,cmd_not_supported_i,new_cmd_flag_i,$/;"	p	module:IF_ID_EX
+new_cmd_flag_i	cpu.v	/^input ndmreset,cmd_not_supported_i,new_cmd_flag_i,$/;"	p	module:cpu
+new_cmd_flag_i	fet_dec_ex_mem.v	/^input ndmreset,cmd_not_supported_i,new_cmd_flag_i,$/;"	p	module:fet_dec_ex_mem
+new_cmd_flag_i	riscv_platform.v	/^   wire new_cmd_flag_i;$/;"	n	module:riscv_platform
+new_cmd_flag_pulse	DEBUG_CONTROLLER.v	/^wire pbuffer_execution_pulse,new_cmd_flag_pulse;$/;"	n	module:DEBUG_CONTROLLER
+new_cmd_flag_reg	DEBUG_CONTROLLER.v	/^reg pbuffer_execution_reg,new_cmd_flag_reg;$/;"	r	module:DEBUG_CONTROLLER
+new_pbuff_flag	Debug_Module.v	/^reg new_pbuff_flag;$/;"	r	module:Debug_Module
 nextState	cachefsm.v	/^reg[1:0] nextState;$/;"	r	module:cachefsm
 nextState	dcache_ram_fsm.v	/^reg [2:0] state,nextState,prev_state;$/;"	r	module:dcache_ram_fsm
 nextState	dcache_top.v	/^reg [2:0] state,nextState;$/;"	r	module:dcache_top
@@ -4312,12 +4757,16 @@ next_addr	DTLB.v	/^reg [31:0] next_addr, addr_pte;$/;"	r	module:DTLB
 next_addr	ITLB.v	/^reg [31:0] next_addr, addr_pte;$/;"	r	module:ITLB
 next_pte	DTLB.v	/^wire next_pte;$/;"	n	module:DTLB
 next_pte	ITLB.v	/^wire next_pte;$/;"	n	module:ITLB
+next_state	DEBUG_CONTROLLER.v	/^reg [2:0] state, next_state;$/;"	r	module:DEBUG_CONTROLLER
 next_state	DTLB.v	/^reg [1:0] next_state;$/;"	r	module:DTLB
 next_state	EXECUTE.v	/^reg [1:0] next_state;$/;"	r	module:EXECUTE
 next_state	interface_router.v	/^  reg [1:0] next_state;$/;"	r	module:interface_router
 next_state_PTW	DTLB.v	/^reg [3:0] state_PTW,next_state_PTW;$/;"	r	module:DTLB
 next_state_PTW	ITLB.v	/^reg [3:0] next_state_PTW;$/;"	r	module:ITLB
 nextstate_we	icache.v	/^reg[1:0] nextstate_we;$/;"	r	module:icache
+nmip	csr.v	/^reg mprven,nmip,step;$/;"	r	module:csr
+ns_dbg	DEBUG_CONTROLLER.v	/^reg [1:0] state_dbg,ns_dbg;$/;"	r	module:DEBUG_CONTROLLER
+o_bus_data	MEMORY_REQUEST_MODULE.v	/^   output  [255:0]       			o_bus_data,     \/\/Give data back to processor Memory unit (ld) $/;"	p	module:MEMORY_REQUEST_MODULE
 o_bus_data	dcache_biu.v	/^wire [255:0] o_bus_data;$/;"	n	module:dcache_biu
 o_bus_data	dcache_ram_fsm.v	/^    output [255:0] o_bus_data,$/;"	p	module:dcache_ram_fsm
 o_bus_data	interface_router.v	/^   output  [255:0]       			o_bus_data,     \/\/Give data back to processor Memory unit (ld) $/;"	p	module:interface_router
@@ -4366,9 +4815,19 @@ output_data_int	icam.v	/^    reg [((PPN_high - PPN_low) + 1 + 4 ): 0 ] output_da
 p1	dcache_top.v	/^reg p1;$/;"	r	module:dcache_top
 page_fault	DTLB.v	/^  output page_fault,$/;"	p	module:DTLB
 page_fault	ITLB.v	/^wire page_fault;$/;"	n	module:ITLB
-page_fault_processor	ITLB.v	/^  output reg page_fault_processor,$/;"	p	module:ITLB
+page_fault_instruction	ITLB.v	/^wire page_fault_instruction;$/;"	n	module:ITLB
+page_fault_processor	ITLB.v	/^  output page_fault_processor,$/;"	p	module:ITLB
 page_offset_last	mem_hier.v	/^parameter page_offset_last = 11;$/;"	c	module:mem_hier
 page_offset_start	mem_hier.v	/^parameter page_offset_start = 0;$/;"	c	module:mem_hier
+pbuffer_execution	DEBUG_CONTROLLER.v	/^  input pbuffer_execution,$/;"	p	module:DEBUG_CONTROLLER
+pbuffer_execution	Debug_Module.v	/^  output pbuffer_execution,$/;"	p	module:Debug_Module
+pbuffer_execution	IF_ID_EX.v	/^    input   pbuffer_execution,$/;"	p	module:IF_ID_EX
+pbuffer_execution	cpu.v	/^input pbuffer_execution,$/;"	p	module:cpu
+pbuffer_execution	fet_dec_ex_mem.v	/^input pbuffer_execution,$/;"	p	module:fet_dec_ex_mem
+pbuffer_execution	riscv_platform.v	/^   wire pbuffer_execution;$/;"	n	module:riscv_platform
+pbuffer_execution_pulse	DEBUG_CONTROLLER.v	/^wire pbuffer_execution_pulse,new_cmd_flag_pulse;$/;"	n	module:DEBUG_CONTROLLER
+pbuffer_execution_reg	DEBUG_CONTROLLER.v	/^reg pbuffer_execution_reg,new_cmd_flag_reg;$/;"	r	module:DEBUG_CONTROLLER
+pbuffer_req	Debug_Module.v	/^wire pbuffer_req;$/;"	n	module:Debug_Module
 pc	INST_FETCH.v	/^    output  [31:0] pc,$/;"	p	module:INST_FETCH
 pc4	INST_FETCH.v	/^wire [31:0] pc4;$/;"	n	module:INST_FETCH
 pc_cache	IF_ID_EX.v	/^    output [31:0] pc_cache,                             \/\/send pc to data-cache$/;"	p	module:IF_ID_EX
@@ -4382,18 +4841,40 @@ pc_ctrl_ecall	INST_FETCH.v	/^    input pc_ctrl_ecall,$/;"	p	module:INST_FETCH
 pc_ctrl_mret	EXCEPTION_UNIT.v	/^    output reg pc_ctrl_mret,$/;"	p	module:EXCEPTION_UNIT
 pc_ctrl_mret	IF_ID_EX.v	/^wire pc_ctrl_ecall,pc_ctrl_mret,pc_ctrl_ebreak;$/;"	n	module:IF_ID_EX
 pc_ctrl_mret	INST_FETCH.v	/^    input pc_ctrl_mret,$/;"	p	module:INST_FETCH
+pc_dbg	DEBUG_CONTROLLER.v	/^reg [31:0] pc_dbg, pc_dpc, pc_step;$/;"	r	module:DEBUG_CONTROLLER
+pc_dbg	IF_ID_EX.v	/^wire [31:0] pc_dbg;$/;"	n	module:IF_ID_EX
+pc_dbg	INST_FETCH.v	/^    input [31:0] pc_dbg,$/;"	p	module:INST_FETCH
+pc_dbg_ebreak	DEBUG_CONTROLLER.v	/^reg [31:0] pc_dbg_ebreak;$/;"	r	module:DEBUG_CONTROLLER
+pc_dbg_valid	DEBUG_CONTROLLER.v	/^reg pc_dbg_valid,dbg_ack;$/;"	r	module:DEBUG_CONTROLLER
+pc_dbg_valid_ebreak	DEBUG_CONTROLLER.v	/^reg pc_dbg_valid_ebreak;$/;"	r	module:DEBUG_CONTROLLER
+pc_dpc	DEBUG_CONTROLLER.v	/^reg [31:0] pc_dbg, pc_dpc, pc_step;$/;"	r	module:DEBUG_CONTROLLER
+pc_ebreak_halted	DEBUG_CONTROLLER.v	/^reg pc_ebreak_halted;$/;"	r	module:DEBUG_CONTROLLER
+pc_ebreak_latch	DEBUG_CONTROLLER.v	/^reg [31:0] pc_ebreak_latch;$/;"	r	module:DEBUG_CONTROLLER
+pc_ex_mem	EXECUTE.v	/^    output [31:0] pc_ex_mem,$/;"	p	module:EXECUTE
+pc_ex_mem	IF_ID_EX.v	/^wire [31:0] pc_ex_mem;$/;"	n	module:IF_ID_EX
 pc_forw	DECODE.v	/^    output reg [31:0] pc_forw,                      \/\/program counter sent to execute stage   /;"	p	module:DECODE
 pc_forw	IF_ID_EX.v	/^wire [31:0] pc_forw;$/;"	n	module:IF_ID_EX
-pc_id_ex	EXECUTE.v	/^    input [31:0] pc_id_ex,                              \/\/                                    /;"	p	module:EXECUTE
+pc_id_ex	EXECUTE.v	/^    input [31:0] pc_id_ex,    \/\/                                                              /;"	p	module:EXECUTE
 pc_id_ex	IF_ID_EX.v	/^reg  [31:0] pc_id_ex;$/;"	r	module:IF_ID_EX
 pc_id_ex	csr.v	/^    input [31:0] pc_id_ex$/;"	p	module:csr
 pc_latch	EXCEPTION_UNIT.v	/^    reg [31:0] pc_latch;$/;"	r	module:EXCEPTION_UNIT
 pc_latch_cache_stall	EXCEPTION_UNIT.v	/^    reg pc_latch_cache_stall;$/;"	r	module:EXCEPTION_UNIT
 pc_latch_done	EXCEPTION_UNIT.v	/^    reg pc_latch_done;$/;"	r	module:EXCEPTION_UNIT
+pc_match_id_imem	DEBUG_CONTROLLER.v	/^reg pc_match_id_imem;$/;"	r	module:DEBUG_CONTROLLER
+pc_o	DEBUG_CONTROLLER.v	/^  output  [31:0] pc_o,$/;"	p	module:DEBUG_CONTROLLER
 pc_reg	INST_FETCH.v	/^reg [31:0] pc_reg;$/;"	r	module:INST_FETCH
 pc_reg_ID	EXCEPTION_UNIT.v	/^    wire [`XLEN-1:0] pc_reg_ID;$/;"	n	module:EXCEPTION_UNIT
 pc_reg_IF	EXCEPTION_UNIT.v	/^    wire [`XLEN-1:0] pc_reg_IF;$/;"	n	module:EXCEPTION_UNIT
+pc_step	DEBUG_CONTROLLER.v	/^reg [31:0] pc_dbg, pc_dpc, pc_step;$/;"	r	module:DEBUG_CONTROLLER
 pc_sync_interrupt	EXCEPTION_UNIT.v	/^    reg [XLEN-1:0] pc_sync_interrupt;$/;"	r	module:EXCEPTION_UNIT
+pc_valid_dbg	IF_ID_EX.v	/^wire pc_valid_dbg;$/;"	n	module:IF_ID_EX
+pc_valid_dbg	INST_FETCH.v	/^    input pc_valid_dbg,$/;"	p	module:INST_FETCH
+pc_valid_o	DEBUG_CONTROLLER.v	/^  output  pc_valid_o,$/;"	p	module:DEBUG_CONTROLLER
+pelp	csr.v	/^reg cetrig,pelp,ebreakvs,ebreakvu,ebreakm,ebreaks,ebreaku,stepie,stopcount,stoptime;$/;"	r	module:csr
+pending_async_dbg	DEBUG_CONTROLLER.v	/^wire async_dbg_allowed,pending_async_dbg;$/;"	n	module:DEBUG_CONTROLLER
+pending_single_step	DEBUG_CONTROLLER.v	/^wire pending_single_step;$/;"	n	module:DEBUG_CONTROLLER
+pending_sync_dbg	DEBUG_CONTROLLER.v	/^wire sync_dbg_allowed,pending_sync_dbg;$/;"	n	module:DEBUG_CONTROLLER
+peripheral_access	MEMORY_REQUEST_MODULE.v	/^   input                			peripheral_access, $/;"	p	module:MEMORY_REQUEST_MODULE
 peripheral_access	interface_router.v	/^   input                			peripheral_access, $/;"	p	module:interface_router
 physical_adr	mem_hier.v	/^reg [31:0]  physical_adr;$/;"	r	module:mem_hier
 physical_tag	icache.v	/^    output reg [tag_phy_last_bit : tag_phy_start_bit] physical_tag$/;"	p	module:icache
@@ -4475,6 +4956,7 @@ proc_rq_port2	dcache_dpram.v	/^wire proc_rq_port2;$/;"	n	module:dcache_dpram
 proc_rq_reg	dcache_ram_fsm.v	/^    output reg proc_rq_reg,$/;"	p	module:dcache_ram_fsm
 proc_rq_reg_1	dcache_top.v	/^wire proc_rq_reg_1;$/;"	n	module:dcache_top
 proc_rq_reg_2	dcache_top.v	/^wire proc_rq_reg_2;$/;"	n	module:dcache_top
+proc_rst	DEBUG_CONTROLLER.v	/^  input proc_rst,$/;"	p	module:DEBUG_CONTROLLER
 proc_rst	dcache_biu.v	/^  input proc_rst,$/;"	p	module:dcache_biu
 prp_acs	dcache_ram_fsm.v	/^    input prp_acs,                                  \/\/ Memory address is in peripheral address/;"	p	module:dcache_ram_fsm
 prp_acs0	dcache_top.v	/^    input prp_acs0,                         \/\/Peripheral access signal. The fsm should not cac/;"	p	module:dcache_top
@@ -4482,6 +4964,7 @@ prp_acs0_int	dcache_biu.v	/^wire prp_acs0_int;            \/\/Check if periphera
 prp_acs1	dcache_top.v	/^    input prp_acs1,                         \/\/$/;"	p	module:dcache_top
 prp_acs1_int	dcache_biu.v	/^wire prp_acs1_int;            \/\/Check if peripheral access is required$/;"	n	module:dcache_biu
 prp_acs_int	dcache_ram_fsm.v	/^reg prp_acs_int;$/;"	r	module:dcache_ram_fsm
+prv	csr.v	/^reg [1:0] prv;$/;"	r	module:csr
 pt_req	DATA_MEMORY_1.2.v	/^wire instruction_req, data_req, pt_req, clint_req;$/;"	n	module:DATA_MEMORY
 pulse	irq_pulser.v	/^        output reg      pulse$/;"	p	module:irq_pulser
 queue_addr_bus	dcache_ram_fsm.v	/^reg [31:0] queue_addr_bus;$/;"	r	module:dcache_ram_fsm
@@ -4525,12 +5008,29 @@ re	icam.v	/^    input re;$/;"	p	module:iregisters
 read_buff	dcache_ram_fsm.v	/^wire [255:0] read_buff;$/;"	n	module:dcache_ram_fsm
 read_cam	DTLB.v	/^reg  read_cam;$/;"	r	module:DTLB
 read_cam	ITLB.v	/^reg  read_cam;$/;"	r	module:ITLB
-read_exception_port1	dcache_dpram.v	/^wire read_exception_port1;$/;"	n	module:dcache_dpram
-read_exception_port2	dcache_dpram.v	/^wire read_exception_port2;$/;"	n	module:dcache_dpram
+read_exception_port	dcache_ram_fsm.v	/^    input read_exception_port,$/;"	p	module:dcache_ram_fsm
+read_exception_port1	dcache_dpram.v	/^    output read_exception_port1,$/;"	p	module:dcache_dpram
+read_exception_port1	dcache_top.v	/^wire read_exception_port1;$/;"	n	module:dcache_top
+read_exception_port2	dcache_dpram.v	/^    output read_exception_port2,$/;"	p	module:dcache_dpram
+read_exception_port2	dcache_top.v	/^wire read_exception_port2;$/;"	n	module:dcache_top
 real_count_int	Sys_counter.v	/^wire [63:0] real_count_int;$/;"	n	module:Sys_counter
 real_tick_en	Sys_counter.v	/^     output real_tick_en;$/;"	p	module:counter_real_clk
 real_tick_en	Sys_counter.v	/^    reg real_tick_en;$/;"	r	module:counter_real_clk
 real_tick_en	Sys_counter.v	/^wire real_tick_en;$/;"	n	module:Sys_counter
+regRW_done	ABSTRACT_COMMAND_DECODER.v	/^  output reg regRW_done,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+regRW_done	Debug_Module.v	/^  input regRW_done,$/;"	p	module:Debug_Module
+regRW_done	IF_ID_EX.v	/^    output regRW_done,$/;"	p	module:IF_ID_EX
+regRW_done	cpu.v	/^output regRW_done,$/;"	p	module:cpu
+regRW_done	fet_dec_ex_mem.v	/^input regRW_done,$/;"	p	module:fet_dec_ex_mem
+regRW_done	riscv_platform.v	/^   wire valid_abs_cmd,abs_cmd_ack,regRW_done;$/;"	n	module:riscv_platform
+reg_access_complete_o	DEBUG_CONTROLLER.v	/^  output reg_access_complete_o,$/;"	p	module:DEBUG_CONTROLLER
+reg_access_complete_o	Debug_Module.v	/^  input reg_access_complete_o,$/;"	p	module:Debug_Module
+reg_access_complete_o	IF_ID_EX.v	/^    output  command_complete_o,reg_access_complete_o,mem_access_complete_o,$/;"	p	module:IF_ID_EX
+reg_access_complete_o	cpu.v	/^output command_complete_o,reg_access_complete_o,mem_access_complete_o,$/;"	p	module:cpu
+reg_access_complete_o	fet_dec_ex_mem.v	/^output command_complete_o,reg_access_complete_o,mem_access_complete_o,$/;"	p	module:fet_dec_ex_mem
+reg_access_complete_o	riscv_platform.v	/^   wire reg_access_complete_o;$/;"	n	module:riscv_platform
+regno	ABSTRACT_COMMAND_DECODER.v	/^wire [15:0] regno;$/;"	n	module:ABSTRACT_COMMAND_DECODER
+regno	Debug_Module.v	/^wire [15:0] regno;$/;"	n	module:Debug_Module
 remainder	or1200_fpu_div.v	/^   reg [31:0] quotient, remainder;$/;"	r	module:divider
 req_next	interface_router.v	/^  reg req_next;$/;"	r	module:interface_router
 reservation_bit	dcache_biu.v	/^reg reservation_bit;        \/\/checks for reservation on the supplied address; gets set at pose/;"	r	module:dcache_biu
@@ -4539,7 +5039,9 @@ reserved_high	cam.v	/^    parameter reserved_high = 9;$/;"	c	module:Registers
 reserved_high	icam.v	/^    parameter reserved_high = 9;$/;"	c	module:iregisters
 reserved_low	cam.v	/^    parameter reserved_low = 8;$/;"	c	module:Registers
 reserved_low	icam.v	/^    parameter reserved_low = 8;$/;"	c	module:iregisters
+reset	Debug_Module.v	/^  input reset,$/;"	p	module:Debug_Module
 reset	Interconnect.v	/^    input  wire         reset,            \/\/ Reset signal$/;"	p	module:interconnect
+reset	MEMORY_REQUEST_MODULE.v	/^   input reset,$/;"	p	module:MEMORY_REQUEST_MODULE
 reset	Sys_counter.v	/^     input  clk, reset,freeze,wr_en,wr_en_h,rd_instret;$/;"	p	module:counter_instr_clk
 reset	Sys_counter.v	/^     input  clk, reset,wr_en ,wr_en_h,rd_cycle;$/;"	p	module:counter_proc_clk
 reset	Sys_counter.v	/^     input  clk, reset,wr_en ,wr_en_h,wr_tcmp_en,rd_time;$/;"	p	module:counter_real_clk
@@ -4548,6 +5050,12 @@ reset	cachefsm.v	/^input clk,freeze, freeze_in, reset, i_hit, i_acc, wb_ack_i;$/
 reset	icache.v	/^    input clk\/*,clk_x2*\/,reset,freeze,freeze_in,$/;"	p	module:icache
 reset	interface_router.v	/^   input reset,$/;"	p	module:interface_router
 reset	mem_hier.v	/^      input clk\/*,clk_x2*\/, reset,$/;"	p	module:mem_hier
+resethaltreq_i	DEBUG_CONTROLLER.v	/^  input   resethaltreq_i,$/;"	p	module:DEBUG_CONTROLLER
+resethaltreq_i	Debug_Module.v	/^  output   resethaltreq_i,$/;"	p	module:Debug_Module
+resethaltreq_i	IF_ID_EX.v	/^    input   resethaltreq_i,$/;"	p	module:IF_ID_EX
+resethaltreq_i	cpu.v	/^input resethaltreq_i,$/;"	p	module:cpu
+resethaltreq_i	fet_dec_ex_mem.v	/^input resethaltreq_i,$/;"	p	module:fet_dec_ex_mem
+resethaltreq_i	riscv_platform.v	/^   wire   resethaltreq_i;$/;"	n	module:riscv_platform
 result	or1200_fpu_div.v	/^   output reg [31:0] result;$/;"	p	module:divider
 result_int	EXECUTE.v	/^reg [31:0] result_int;$/;"	r	module:EXECUTE
 result_mul	or1200_amultp2_32x32.v	/^output reg [31:0] result_mul;$/;"	p	module:or1200_amultp2_32x32
@@ -4555,6 +5063,18 @@ resultslt	EXECUTE.v	/^wire[31:0] resultslt;$/;"	n	module:EXECUTE
 resultslti	EXECUTE.v	/^wire[31:0] resultslti ;$/;"	n	module:EXECUTE
 resultsltiu	EXECUTE.v	/^wire[31:0] resultsltiu;$/;"	n	module:EXECUTE
 resultsltu	EXECUTE.v	/^wire[31:0] resultsltu;$/;"	n	module:EXECUTE
+resumereq_i	DEBUG_CONTROLLER.v	/^  input   resumereq_i,$/;"	p	module:DEBUG_CONTROLLER
+resumereq_i	Debug_Module.v	/^  output   resumereq_i,$/;"	p	module:Debug_Module
+resumereq_i	IF_ID_EX.v	/^    input   resumereq_i,$/;"	p	module:IF_ID_EX
+resumereq_i	cpu.v	/^input resumereq_i,$/;"	p	module:cpu
+resumereq_i	fet_dec_ex_mem.v	/^input resumereq_i,$/;"	p	module:fet_dec_ex_mem
+resumereq_i	riscv_platform.v	/^   wire   resumereq_i;$/;"	n	module:riscv_platform
+return_pc	DEBUG_CONTROLLER.v	/^  output reg [31:0] return_pc,$/;"	p	module:DEBUG_CONTROLLER
+return_pc	IF_ID_EX.v	/^wire [31:0] return_pc;$/;"	n	module:IF_ID_EX
+return_pc	INST_FETCH.v	/^    input [31:0] return_pc,$/;"	p	module:INST_FETCH
+return_pc_valid	DEBUG_CONTROLLER.v	/^  output reg return_pc_valid,$/;"	p	module:DEBUG_CONTROLLER
+return_pc_valid	IF_ID_EX.v	/^wire return_pc_valid;$/;"	n	module:IF_ID_EX
+return_pc_valid	INST_FETCH.v	/^    input return_pc_valid,$/;"	p	module:INST_FETCH
 riscv_platform	riscv_platform.v	/^module riscv_platform ($/;"	m
 rs1	DECODE.v	/^wire [4:0] rs1;               \/\/rs1 id$/;"	n	module:DECODE
 rs1_mem	DECODE.v	/^wire rs1_mem;$/;"	n	module:DECODE
@@ -4569,25 +5089,38 @@ rst	DTLB.v	/^  input                       clk, rst, \/\/clk_x2,$/;"	p	module:DT
 rst	ITLB.v	/^  input clk, rst\/*,clk_x2*\/,$/;"	p	module:ITLB
 rst	Sys_counter.v	/^    input rst,$/;"	p	module:Sys_counter
 rst	cam.v	/^    input rst;$/;"	p	module:Registers
-rst	cpu.v	/^input rst;$/;"	p	module:cpu
 rst	csr.v	/^    input rst,$/;"	p	module:csr
 rst	dcache_dpram.v	/^    input rst,$/;"	p	module:dcache_dpram
 rst	dcache_ram_fsm.v	/^    input rst,$/;"	p	module:dcache_ram_fsm
 rst	dcache_top.v	/^    input rst,$/;"	p	module:dcache_top
-rst	fet_dec_ex_mem.v	/^input rst,$/;"	p	module:fet_dec_ex_mem
 rst	icam.v	/^    input rst;$/;"	p	module:iregisters
 rst	ilru.v	/^    input rst;$/;"	p	module:ilru
 rst	lru.v	/^    input rst;$/;"	p	module:lru
 rst	or1200_fpu_div.v	/^   input         rst;$/;"	p	module:divider
 rst	riscv_platform.v	/^  input rst,$/;"	p	module:riscv_platform
+rst	rv32_2dffsync.v	/^    input rst,$/;"	p	module:rv32_2dffsync
 rsta	MEMORY_MACRO.v	/^    input   rsta,$/;"	p	module:MEMORY_MACRO
 rsta	dual_port_RAM.v	/^    input wire rsta,            \/\/ Reset for Port A$/;"	p	module:dual_port_RAM
 rstb	dual_port_RAM.v	/^    input wire rstb,            \/\/ Reset for Port B$/;"	p	module:dual_port_RAM
+rtc	rv32_clint.sv	/^        input  wire                   rtc,$/;"	p	module:rv32_clint
+rtc_sync	rv32_clint.sv	/^    logic             rtc_sync;$/;"	r	module:rv32_clint
+rtc_synchronizer	rv32_clint.sv	/^    rv32_2dffsync rtc_synchronizer$/;"	i	module:rv32_clint
+rv32_2dffsync	rv32_2dffsync.v	/^module rv32_2dffsync ($/;"	m
+rv32_clint	rv32_clint.sv	/^module rv32_clint$/;"	m
 rv32_mpu	rv32_mpu.sv	/^module rv32_mpu$/;"	m
 rv32_pmp_region	rv32_pmp_region.sv	/^module rv32_pmp_region$/;"	m
 s_ACK	riscv_platform.v	/^   wire s_ACK;$/;"	n	module:riscv_platform
 s_RDATA	riscv_platform.v	/^   wire [31:0] s_RDATA;$/;"	n	module:riscv_platform
 s_STALL	riscv_platform.v	/^   wire s_STALL;$/;"	n	module:riscv_platform
+s_addr	rv32_clint.sv	/^        input  wire  [ADDRW     -1:0] s_addr,$/;"	p	module:rv32_clint
+s_en	rv32_clint.sv	/^        input  wire                   s_en,$/;"	p	module:rv32_clint
+s_rdata	rv32_clint.sv	/^        output logic [XLEN      -1:0] s_rdata,$/;"	p	module:rv32_clint
+s_ready	rv32_clint.sv	/^        output logic                  s_ready,$/;"	p	module:rv32_clint
+s_strb	rv32_clint.sv	/^        input  wire  [XLEN\/8    -1:0] s_strb,$/;"	p	module:rv32_clint
+s_tlast	riscv_platform.v	/^   wire s_tlast,m_tlast;$/;"	n	module:riscv_platform
+s_tlast	rv32_clint.sv	/^        output logic                  s_tlast,$/;"	p	module:rv32_clint
+s_wdata	rv32_clint.sv	/^        input  wire  [XLEN      -1:0] s_wdata,$/;"	p	module:rv32_clint
+s_wr	rv32_clint.sv	/^        input  wire                   s_wr,$/;"	p	module:rv32_clint
 satp	defines.v	/^`define satp 12'h180$/;"	c
 satp_default	defines.v	/^`define satp_default 32'd0$/;"	c
 sb_csr	EXCEPTION_UNIT.v	/^    output [SB_LENGTH-1:0]  sb_csr$/;"	p	module:EXCEPTION_UNIT
@@ -4617,6 +5150,8 @@ shamt_int	EXECUTE.v	/^integer shamt_int;$/;"	r	module:EXECUTE
 sign	or1200_fpu_div.v	/^   input         sign;$/;"	p	module:divider
 signadd	or1200_amultp2_32x32.v	/^reg [63:0] signadd;$/;"	r	module:or1200_amultp2_32x32
 signal_div_kill	EXECUTE.v	/^reg signal_div_kill;$/;"	r	module:EXECUTE
+single_step_halt_if_n	DEBUG_CONTROLLER.v	/^reg single_step_halt_if_q, single_step_halt_if_n;$/;"	r	module:DEBUG_CONTROLLER
+single_step_halt_if_q	DEBUG_CONTROLLER.v	/^reg single_step_halt_if_q, single_step_halt_if_n;$/;"	r	module:DEBUG_CONTROLLER
 sirq_pulse	csr.v	/^irq_pulser sirq_pulse $/;"	i	module:csr
 size	rv32_pmp_region.sv	/^        logic [XLEN-1:0] size;$/;"	r	function:rv32_pmp_region.get_na4
 size	rv32_pmp_region.sv	/^        logic [XLEN-1:0] size;$/;"	r	function:rv32_pmp_region.get_napot
@@ -4647,6 +5182,7 @@ stall_mul	fet_dec_ex_mem.v	/^wire stall_mul;$/;"	n	module:fet_dec_ex_mem
 stall_out	mem_hier.v	/^      output stall_out$/;"	p	module:mem_hier
 start	DATA_MEMORY_1.2.v	/^reg start;$/;"	r	module:DATA_MEMORY
 start	or1200_fpu_div.v	/^   input         start;$/;"	p	module:divider
+state	DEBUG_CONTROLLER.v	/^reg [2:0] state, next_state;$/;"	r	module:DEBUG_CONTROLLER
 state	DTLB.v	/^reg [1:0] state;$/;"	r	module:DTLB
 state	EXECUTE.v	/^reg [1:0] state;$/;"	r	module:EXECUTE
 state	cachefsm.v	/^output reg[1:0] state;$/;"	p	module:cachefsm
@@ -4655,23 +5191,40 @@ state	dcache_top.v	/^reg [2:0] state,nextState;$/;"	r	module:dcache_top
 state	mem_hier.v	/^wire [1:0] state;$/;"	n	module:mem_hier
 state_PTW	DTLB.v	/^reg [3:0] state_PTW,next_state_PTW;$/;"	r	module:DTLB
 state_PTW	ITLB.v	/^reg [3:0] state_PTW;$/;"	r	module:ITLB
+state_dbg	DEBUG_CONTROLLER.v	/^reg [1:0] state_dbg,ns_dbg;$/;"	r	module:DEBUG_CONTROLLER
 state_fsm	icache.v	/^    input [1:0] state_fsm,$/;"	p	module:icache
 state_we	icache.v	/^reg [1:0] state_we;$/;"	r	module:icache
 state_we0	icache.v	/^localparam state_we0 = 2'b01;$/;"	c	module:icache
 state_we1	icache.v	/^localparam state_we1 = 2'b10;$/;"	c	module:icache
 stay	EXECUTE.v	/^parameter stay = 2'b10;$/;"	c	module:EXECUTE
+step	csr.v	/^reg mprven,nmip,step;$/;"	r	module:csr
+stepie	csr.v	/^reg cetrig,pelp,ebreakvs,ebreakvu,ebreakm,ebreaks,ebreaku,stepie,stopcount,stoptime;$/;"	r	module:csr
+stopcount	csr.v	/^reg cetrig,pelp,ebreakvs,ebreakvu,ebreakm,ebreaks,ebreaku,stepie,stopcount,stoptime;$/;"	r	module:csr
+stoptime	csr.v	/^reg cetrig,pelp,ebreakvs,ebreakvu,ebreakm,ebreaks,ebreaku,stepie,stopcount,stoptime;$/;"	r	module:csr
 store_access_fault	EXCEPTION_UNIT.v	/^    wire store_access_fault;   $/;"	n	module:EXCEPTION_UNIT
+store_access_fault	IF_ID_EX.v	/^    input store_access_fault,$/;"	p	module:IF_ID_EX
 store_access_fault	IF_ID_EX.v	/^wire inst_addr_misaligned, inst_access_fault, illegal_instruction, load_misaligned, load_access_/;"	n	module:IF_ID_EX
+store_access_fault	dcache_biu.v	/^  output store_access_fault,$/;"	p	module:dcache_biu
+store_access_fault	dcache_dpram.v	/^    output store_access_fault,$/;"	p	module:dcache_dpram
+store_access_fault	dcache_ram_fsm.v	/^    input store_access_fault,$/;"	p	module:dcache_ram_fsm
+store_access_fault	dcache_top.v	/^    output store_access_fault,$/;"	p	module:dcache_top
+store_access_fault	fet_dec_ex_mem.v	/^wire load_access_fault,store_access_fault;$/;"	n	module:fet_dec_ex_mem
 store_data_int	fet_dec_ex_mem.v	/^wire [31:0] store_data_int;$/;"	n	module:fet_dec_ex_mem
 store_map	dcache_ram_fsm.v	/^wire [31:0] store_map[0:3];$/;"	n	module:dcache_ram_fsm
 store_mask	dcache_ram_fsm.v	/^wire [63:0] store_mask[0:3];$/;"	n	module:dcache_ram_fsm
 store_misaligned	EXCEPTION_UNIT.v	/^    wire store_misaligned;$/;"	n	module:EXCEPTION_UNIT
 store_misaligned	IF_ID_EX.v	/^wire inst_addr_misaligned, inst_access_fault, illegal_instruction, load_misaligned, load_access_/;"	n	module:IF_ID_EX
-sw_irq	IF_ID_EX.v	/^    input sw_irq,$/;"	p	module:IF_ID_EX
-sw_irq	cpu.v	/^input  wire                    sw_irq;$/;"	p	module:cpu
+store_page_fault	EXCEPTION_UNIT.v	/^    wire store_page_fault;    $/;"	n	module:EXCEPTION_UNIT
+store_page_fault	IF_ID_EX.v	/^    input store_page_fault,$/;"	p	module:IF_ID_EX
+store_page_fault	dcache_biu.v	/^  output store_page_fault);$/;"	p	module:dcache_biu
+store_page_fault	dcache_dpram.v	/^    output store_page_fault,$/;"	p	module:dcache_dpram
+store_page_fault	dcache_ram_fsm.v	/^    input store_page_fault,$/;"	p	module:dcache_ram_fsm
+store_page_fault	dcache_top.v	/^    output store_page_fault,$/;"	p	module:dcache_top
+store_page_fault	fet_dec_ex_mem.v	/^wire load_page_fault,store_page_fault;$/;"	n	module:fet_dec_ex_mem
+sw_irq	IF_ID_EX.v	/^wire sw_irq;$/;"	n	module:IF_ID_EX
 sw_irq	csr.v	/^    input  wire                    sw_irq,$/;"	p	module:csr
-sw_irq	fet_dec_ex_mem.v	/^input sw_irq,$/;"	p	module:fet_dec_ex_mem
 sw_irq	riscv_platform.v	/^   wire sw_irq;$/;"	n	module:riscv_platform
+sw_irq	rv32_clint.sv	/^        output logic                  sw_irq,$/;"	p	module:rv32_clint
 sw_irq_pulse	csr.v	/^wire sw_irq_pulse;$/;"	n	module:csr
 sw_irq_sync	csr.v	/^wire sw_irq_sync;$/;"	n	module:csr
 sw_irq_sync_neg	csr.v	/^reg sw_irq_sync_neg;$/;"	r	module:csr
@@ -4680,8 +5233,12 @@ sw_irq_synchro	csr.v	/^    sw_irq_synchro$/;"	i	module:csr
 swap_o1	EXECUTE.v	/^wire [31:0] swap_o1;        \/\/signals after performing swapping operations$/;"	n	module:EXECUTE
 swap_o2	EXECUTE.v	/^wire [31:0] swap_o2;        \/\/signals after performing swapping operations$/;"	n	module:EXECUTE
 sync	irq_bit_sync.v	/^    reg [DEPTH-1:0] sync;$/;"	r	module:irq_bit_sync
+sync	rv32_2dffsync.v	/^    reg sync;$/;"	r	module:rv32_2dffsync
+sync_dbg_allowed	DEBUG_CONTROLLER.v	/^wire sync_dbg_allowed,pending_sync_dbg;$/;"	n	module:DEBUG_CONTROLLER
+sync_debug_cause	DEBUG_CONTROLLER.v	/^wire [2:0] sync_debug_cause;$/;"	n	module:DEBUG_CONTROLLER
 sync_exceptions	EXCEPTION_UNIT.v	/^    input [63:0] sync_exceptions,$/;"	p	module:EXCEPTION_UNIT
 sync_trap_occuring	EXCEPTION_UNIT.v	/^    wire sync_trap_occuring;$/;"	n	module:EXCEPTION_UNIT
+sys	DEBUG_CONTROLLER.v	/^  input [5:0] sys,$/;"	p	module:DEBUG_CONTROLLER
 sys	EXCEPTION_UNIT.v	/^    input [6-1:0] sys,$/;"	p	module:EXCEPTION_UNIT
 sys	defines.v	/^`define sys 7'b1110011$/;"	c
 sys_ID_EX	IF_ID_EX.v	/^reg [5:0] sys_ID_EX;$/;"	r	module:IF_ID_EX
@@ -4808,18 +5365,17 @@ tick_en	IF_ID_EX.v	/^    output tick_en,$/;"	p	module:IF_ID_EX
 tick_en	Sys_counter.v	/^     output tick_en;$/;"	p	module:counter_tick
 tick_en	Sys_counter.v	/^    output tick_en$/;"	p	module:Sys_counter
 tick_en	Sys_counter.v	/^    reg tick_en;$/;"	r	module:counter_tick
-tick_en	cpu.v	/^output tick_en;$/;"	p	module:cpu
+tick_en	cpu.v	/^output tick_en,$/;"	p	module:cpu
 tick_en	fet_dec_ex_mem.v	/^output tick_en,$/;"	p	module:fet_dec_ex_mem
 tick_en	riscv_platform.v	/^  output tick_en,$/;"	p	module:riscv_platform
 tick_en_int	IF_ID_EX.v	/^wire tick_en_int;$/;"	n	module:IF_ID_EX
 timecmp	Sys_counter.v	/^    output [63:0] timecmp;$/;"	p	module:counter_real_clk
 timecmp	Sys_counter.v	/^    reg [63:0] timecmp;$/;"	r	module:counter_real_clk
 timecmp_int	Sys_counter.v	/^wire [63:0] timecmp_int;$/;"	n	module:Sys_counter
-timer_irq	IF_ID_EX.v	/^    input timer_irq,$/;"	p	module:IF_ID_EX
-timer_irq	cpu.v	/^input  wire                    timer_irq;$/;"	p	module:cpu
+timer_irq	IF_ID_EX.v	/^wire timer_irq;$/;"	n	module:IF_ID_EX
 timer_irq	csr.v	/^    input  wire                    timer_irq,$/;"	p	module:csr
-timer_irq	fet_dec_ex_mem.v	/^input timer_irq,$/;"	p	module:fet_dec_ex_mem
 timer_irq	riscv_platform.v	/^   wire timer_irq;$/;"	n	module:riscv_platform
+timer_irq	rv32_clint.sv	/^        output logic                  timer_irq$/;"	p	module:rv32_clint
 timer_irq_pulse	csr.v	/^wire timer_irq_pulse;$/;"	n	module:csr
 timer_irq_sync	csr.v	/^wire timer_irq_sync;$/;"	n	module:csr
 timer_irq_synchro	csr.v	/^    timer_irq_synchro$/;"	i	module:csr
@@ -4836,18 +5392,29 @@ tlb_trans_off	icam.v	/^    input tlb_trans_off;$/;"	p	module:iregisters
 tlb_trans_off	mem_hier.v	/^,input tlb_trans_off$/;"	p	module:mem_hier
 tlru	DTLB.v	/^lru tlru( .clk(clk), .rst(rst),$/;"	i	module:DTLB
 tlru	ITLB.v	/^ilru tlru( .clk(clk), .rst(rst),$/;"	i	module:ITLB
+transfer	ABSTRACT_COMMAND_DECODER.v	/^wire transfer;$/;"	n	module:ABSTRACT_COMMAND_DECODER
+transfer	Debug_Module.v	/^wire transfer,write;$/;"	n	module:Debug_Module
 trap_en	EXECUTE.v	/^    output trap_en,$/;"	p	module:EXECUTE
 trap_en	IF_ID_EX.v	/^wire  trap_en;$/;"	n	module:IF_ID_EX
 trap_en	csr.v	/^    input trap_en,$/;"	p	module:csr
 trap_occuring	EXCEPTION_UNIT.v	/^    wire trap_occuring;$/;"	n	module:EXCEPTION_UNIT
+trigger_in_id	DEBUG_CONTROLLER.v	/^wire trigger_in_id;$/;"	n	module:DEBUG_CONTROLLER
 uint	or1200_amultp2_32x32.v	/^reg [63:0] uint;$/;"	r	module:or1200_amultp2_32x32
 uret	DECODE.v	/^reg uret;$/;"	r	module:DECODE
 us	or1200_amultp2_32x32.v	/^wire us;$/;"	n	module:or1200_amultp2_32x32
 uu	or1200_amultp2_32x32.v	/^wire uu;$/;"	n	module:or1200_amultp2_32x32
 uu_int	or1200_amultp2_32x32.v	/^reg uu_int;$/;"	r	module:or1200_amultp2_32x32
 uu_int2	or1200_amultp2_32x32.v	/^reg uu_int2;$/;"	r	module:or1200_amultp2_32x32
+v	csr.v	/^reg v;$/;"	r	module:csr
 valid	cam.v	/^    parameter valid = 0;$/;"	c	module:Registers
 valid	icam.v	/^    parameter valid = 0;$/;"	c	module:iregisters
+valid_abs_cmd	ABSTRACT_COMMAND_DECODER.v	/^  input valid_abs_cmd,$/;"	p	module:ABSTRACT_COMMAND_DECODER
+valid_abs_cmd	Debug_Module.v	/^  output valid_abs_cmd,$/;"	p	module:Debug_Module
+valid_abs_cmd	IF_ID_EX.v	/^    input valid_abs_cmd,$/;"	p	module:IF_ID_EX
+valid_abs_cmd	cpu.v	/^input valid_abs_cmd,$/;"	p	module:cpu
+valid_abs_cmd	fet_dec_ex_mem.v	/^input valid_abs_cmd,$/;"	p	module:fet_dec_ex_mem
+valid_abs_cmd	riscv_platform.v	/^   wire valid_abs_cmd,abs_cmd_ack,regRW_done;$/;"	n	module:riscv_platform
+valid_abs_cmd_q	Debug_Module.v	/^ reg valid_abs_cmd_q;$/;"	r	module:Debug_Module
 valid_data	DTLB.v	/^wire valid_data;$/;"	n	module:DTLB
 valid_data	ITLB.v	/^wire valid_data;$/;"	n	module:ITLB
 valid_data	cam.v	/^    output reg valid_data;$/;"	p	module:Registers
@@ -4868,7 +5435,7 @@ vpn_int	ITLB.v	/^reg [vpn_width-1:0] vpn_int;$/;"	r	module:ITLB
 vpn_to_ppn_req	DTLB.v	/^wire vpn_to_ppn_req;$/;"	n	module:DTLB
 vpn_to_ppn_req	IF_ID_EX.v	/^    output vpn_to_ppn_req$/;"	p	module:IF_ID_EX
 vpn_to_ppn_req	ITLB.v	/^  input vpn_to_ppn_req,$/;"	p	module:ITLB
-vpn_to_ppn_req	cpu.v	/^output vpn_to_ppn_req;$/;"	p	module:cpu
+vpn_to_ppn_req	cpu.v	/^output vpn_to_ppn_req,$/;"	p	module:cpu
 vpn_to_ppn_req	fet_dec_ex_mem.v	/^output vpn_to_ppn_req,$/;"	p	module:fet_dec_ex_mem
 vpn_to_ppn_req	icache.v	/^    input vpn_to_ppn_req,$/;"	p	module:icache
 vpn_to_ppn_req	riscv_platform.v	/^  ,output vpn_to_ppn_req$/;"	p	module:riscv_platform
@@ -4988,6 +5555,8 @@ wr_sel	IF_ID_EX.v	/^reg [3:0] wr_sel;$/;"	r	module:IF_ID_EX
 wr_sel	Sys_counter.v	/^    input [3:0] wr_sel,$/;"	p	module:Sys_counter
 wr_tcmp_en	Sys_counter.v	/^     input  clk, reset,wr_en ,wr_en_h,wr_tcmp_en,rd_time;$/;"	p	module:counter_real_clk
 wrb_next	interface_router.v	/^  reg wrb_next;$/;"	r	module:interface_router
+write	ABSTRACT_COMMAND_DECODER.v	/^wire write;$/;"	n	module:ABSTRACT_COMMAND_DECODER
+write	Debug_Module.v	/^wire transfer,write;$/;"	n	module:Debug_Module
 write_addr	DTLB.v	/^wire [4:0] write_addr;$/;"	n	module:DTLB
 write_addr	ITLB.v	/^wire [4:0] write_addr;$/;"	n	module:ITLB
 write_addr	cam.v	/^    input[4:0] write_addr;$/;"	p	module:Registers
@@ -4997,13 +5566,18 @@ write_addr_MEM	FP_DECODE.v	/^reg [4:0] write_addr_MEM;$/;"	r	module:FP_DECODE
 write_addr_WB	FP_DECODE.v	/^reg [4:0] write_addr_WB;$/;"	r	module:FP_DECODE
 write_buff	dcache_ram_fsm.v	/^wire [255:0] write_buff;$/;"	n	module:dcache_ram_fsm
 write_buff_int	dcache_ram_fsm.v	/^reg [255:0] write_buff_int;$/;"	r	module:dcache_ram_fsm
+write_counter	MEMORY_REQUEST_MODULE.v	/^reg [2:0] write_counter;$/;"	r	module:MEMORY_REQUEST_MODULE
 write_counter	interface_router.v	/^  reg [2:0] write_counter;$/;"	r	module:interface_router
 write_data	DTLB.v	/^wire [51:0] write_data;$/;"	n	module:DTLB
+write_data	Debug_Module.v	/^wire [31:0] write_data;$/;"	n	module:Debug_Module
 write_data	ITLB.v	/^wire [51:0] write_data;$/;"	n	module:ITLB
 write_data	cam.v	/^    input[(TLB_width - 1) :0] write_data;$/;"	p	module:Registers
 write_data	icam.v	/^    input[(TLB_width - 1) :0] write_data;$/;"	p	module:iregisters
-write_exception_port1	dcache_dpram.v	/^wire write_exception_port1;$/;"	n	module:dcache_dpram
-write_exception_port2	dcache_dpram.v	/^wire write_exception_port2;$/;"	n	module:dcache_dpram
+write_exception_port	dcache_ram_fsm.v	/^    input write_exception_port,$/;"	p	module:dcache_ram_fsm
+write_exception_port1	dcache_dpram.v	/^    output write_exception_port1,$/;"	p	module:dcache_dpram
+write_exception_port1	dcache_top.v	/^wire write_exception_port1;$/;"	n	module:dcache_top
+write_exception_port2	dcache_dpram.v	/^    output write_exception_port2$/;"	p	module:dcache_dpram
+write_exception_port2	dcache_top.v	/^wire write_exception_port2;$/;"	n	module:dcache_top
 write_id_priority	defines.v	/^`define write_id_priority 3  $/;"	c
 x	icache.v	/^wire [255:0] x,y;$/;"	n	module:icache
 x_freeze	mem_hier.v	/^wire x_freeze;$/;"	n	module:mem_hier

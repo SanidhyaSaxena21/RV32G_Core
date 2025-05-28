@@ -240,7 +240,7 @@ assign load_page_fault = ((lsu_op_port1_int == 2'b01) & data_page_fault) || ((ls
 assign store_page_fault = ((lsu_op_port1_int == 2'b10) & data_page_fault) || ((lsu_op_port2_int == 2'b10) & data_page_fault) || write_exception_port1 || write_exception_port2;
 
 assign load_access_fault = ((lsu_op_port1_int == 2'b01) & ~dmem_porta_permissions[0] & tag_hit_tlb_port1) || ((lsu_op_port2_int == 2'b01) & ~dmem_portb_permissions[0] & tag_hit_tlb_port2);
-assign store_access_fault = ((lsu_op_port1_int == 2'b10) & ~dmem_porta_allow * tag_hit_tlb_port1) || ((lsu_op_port2_int == 2'b10) & ~dmem_portb_allow & tag_hit_tlb_port2);
+assign store_access_fault = ((lsu_op_port1_int == 2'b10) & ~dmem_porta_allow & tag_hit_tlb_port1) || ((lsu_op_port2_int == 2'b10) & ~dmem_portb_allow & tag_hit_tlb_port2);
 
 
 assign addr_exception_port1 =  read_exception_port1 || write_exception_port1 || badaddr_data || load_page_fault || store_page_fault || load_access_fault ||  store_access_fault;
@@ -781,9 +781,29 @@ endgenerate
 //-------PMP Check -----------------
 
 
-  assign dmem_porta_allow = (dmem_porta_permissions == 4'd3);
-  assign dmem_portb_allow = (dmem_portb_permissions == 4'd3);
-    rv32_mpu #(.MMU_SUPPORT(0)) IMEM_MPU (
+  //assign dmem_porta_permissions = 4'd3;
+  //assign dmem_portb_permissions = 4'd3;
+  /*wire dmem_porta_allow_n,dmem_portb_allow_n;
+  reg dmem_porta_allow_q,dmem_portb_allow_q;
+
+
+  always @(posedge clk) begin
+    if(rst) begin
+      dmem_porta_allow_q <= 1'b0;
+      dmem_portb_allow_q <= 1'b0;
+    end
+    else begin
+      dmem_porta_allow_q <= dmem_porta_allow_n;
+      dmem_portb_allow_q <= dmem_portb_allow_n;
+    end
+  end*/
+
+  //assign dmem_porta_allow_n = (dmem_porta_permissions[1:0] == 2'd3);
+  assign dmem_porta_allow = (dmem_porta_permissions[1:0] == 2'd3);
+  //assign dmem_portb_allow_n = (dmem_portb_permissions[1:0] == 2'd3);
+  assign dmem_portb_allow = (dmem_portb_permissions[1:0] == 2'd3);
+
+    rv32_mpu #(.MMU_SUPPORT(0),.MPU_SUPPORT(0)) IMEM_MPU (
      .aclk(clk),
      .aresetn(~rst),
      .imem_addr({tag_out_tlb_port1[tag_tlb_last_bit:tag_tlb_start_bit],addr_in_a[index_last_bit:offset_start_bit]}),

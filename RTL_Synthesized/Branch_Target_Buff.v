@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-(* keep_hierarchy = "yes" *)
+//(* keep_hierarchy = "yes" *)
 module Branch_Target_Buff
 (
     input CLK,

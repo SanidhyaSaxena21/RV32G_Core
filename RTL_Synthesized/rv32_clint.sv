@@ -54,6 +54,7 @@ module rv32_clint
         output logic [XLEN      -1:0] s_rdata,
         output logic                  s_ready,
         output logic                  s_tlast,
+        output logic                  s_stall,
         // real-time clock, shared across the harts
         input  wire                   rtc,
         // software interrupt 
@@ -69,6 +70,7 @@ module rv32_clint
 
     assign mtime_en = |mtimecmp;
 
+    assign s_stall = 1'b0;
     // Synchronize the real-time clock tick into the peripheral clock domain
     rv32_2dffsync rtc_synchronizer
     (

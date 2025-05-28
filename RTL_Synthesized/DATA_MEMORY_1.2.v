@@ -77,7 +77,8 @@ assign ADDR_REDUCED = ADDR[ADDR_WIDTH-1:0];
    .douta(DRDATA) // output [31 : 0] douta
  );*/
  
- /* Instruction_Memory Instruction_Memory(
+ 
+  Instruction_Memory Instruction_Memory(
    .clka(clk), // input clka
    .rsta(rst),      // reset
    .wea((BSTROBE & {4{WRB}})),
@@ -85,8 +86,9 @@ assign ADDR_REDUCED = ADDR[ADDR_WIDTH-1:0];
    .addra(ADDR_INSTR[11:2] & 10'h3ff), // input [31 : 0] addra
    .dina(WDATA), // input [31 : 0] dina
    .douta(IRDATA) // output [31 : 0] douta
- );*/
+ );
  
+ /*
   MEMORY_MACRO #(.ADDR_WIDTH(ADDR_WIDTH),.DATA_WIDTH(DATA_WIDTH),.INPUT_FILE(INSTR_INPUT_FILE)) Instruction_Memory(
    .clka(clk), // input clka
    .rsta(rst),      // reset
@@ -96,7 +98,7 @@ assign ADDR_REDUCED = ADDR[ADDR_WIDTH-1:0];
    .addra(ADDR_INSTR & 32'h00003fff), // input [31 : 0] addra
    .dina(WDATA), // input [31 : 0] dina
    .douta(IRDATA) // output [31 : 0] douta
- );
+ );*/
  
  
   Page_Table Page_Table_memory(

@@ -7,6 +7,8 @@ module DECODE
     input CLK,
     input RST,
     input IF_ID_Freeze,
+
+    //Debug Mode signals
     input debug_mode,
 
     output reg active_instruction_id,
@@ -163,13 +165,22 @@ wire amo;
 reg uret;
 assign eret = mret;
 
-//assign inst = irq_ctrl ? inst_inj : Instruction__IF_ID;
-assign inst = Instruction__IF_ID;
+(* DONT_TOUCH = "true" *) wire [31:0] Instruction__IF_ID_buf1,Instruction__IF_ID_buf2,Instruction__IF_ID_buf3;
+
+(* KEEP = "true" *) assign Instruction__IF_ID_buf1 = Instruction__IF_ID;
+(* KEEP = "true" *) assign Instruction__IF_ID_buf2 = Instruction__IF_ID_buf1;
+(* KEEP = "true" *) assign Instruction__IF_ID_buf3 = Instruction__IF_ID_buf2;
+
+
+
+assign inst = (debug_mode) ? 32'd0 : Instruction__IF_ID_buf3;
 assign inst_out = inst;
 assign PC_ID = pc_forw; 
-assign rs1_read_op = ((inst[6:0] == `jalr) | (inst[6:0] == `op32_branch) | (inst[6:0] == `op32_loadop) | (inst[6:0] == `op32_storeop) | (inst[6:0] == `op32_fp_loadop) | (inst[6:0] == `op32_fp_storeop) | (inst[6:0] == `op32_imm_alu) |    
-                     (inst[6:0] == `op32_alu) | (inst[6:0] == `op64_imm_alu) | (inst[6:0] == `op64_alu) | (inst[6:0] == `amo)  | ((inst[6:0] == `sys) && (inst[14] == 1'b0))) ? 1'b1 :   
-                     (((inst[6:0] == `op_lui) | (inst[6:0] == `op_auipc) | (inst[6:0] == `jal)) ? 1'b0 : 1'b0); // whether rs1 has to be read or not
+assign rs1_read_op =  ((inst[6:0] == `jalr) | (inst[6:0] == `op32_branch) | (inst[6:0] == `op32_loadop) | (inst[6:0] == `op32_storeop) | 
+                      (inst[6:0] == `op32_fp_loadop) | (inst[6:0] == `op32_fp_storeop) | (inst[6:0] == `op32_imm_alu) |    
+                      (inst[6:0] == `op32_alu) | (inst[6:0] == `op64_imm_alu) | (inst[6:0] == `op64_alu) | (inst[6:0] == `amo)  | 
+                      ((inst[6:0] == `sys) && (inst[14] == 1'b0))) ? 1'b1 :   
+                      (((inst[6:0] == `op_lui) | (inst[6:0] == `op_auipc) | (inst[6:0] == `jal)) ? 1'b0 : 1'b0); // whether rs1 has to be read or not
                      
 assign rs2_read_op = ((inst[6:0] == `op32_branch) | (inst[6:0] == `op32_storeop) | (inst[6:0] == `op32_alu) | (inst[6:0] == `op64_alu) | amo) ? 1'b1 : 1'b0; 
                                                                      //whether rs2 has to be read or not 

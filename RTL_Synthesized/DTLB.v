@@ -195,7 +195,7 @@ always @(posedge clk) begin
 end 
 
 always @(posedge clk) begin
-  if(rst) addr_pte <= {csr_satp[19:0],12'd0};
+  if(rst) addr_pte <= 32'd0;
   else if(~freeze_tlb)  addr_pte <= next_addr;
 end 
 
@@ -223,6 +223,7 @@ begin
     read_cam    = 1'b0;
     compare     = 1'b0;
     next_state_PTW = state_PTW;
+    next_addr   = addr_pte;
     case (state_PTW)
         IDLE:   begin
                 REQ    =  1'b0;

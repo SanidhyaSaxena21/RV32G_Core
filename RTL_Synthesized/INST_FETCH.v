@@ -86,7 +86,7 @@ always @(posedge CLK) begin
         else if(Branch_Taken__EX_MEM) begin
             PC__IF_ID <= Branch_Target_Addr__EX_MEM;
         end
-        else if(~IF_ID_Freeze) begin
+        else if(~IF_ID_Freeze & ~halt_if) begin
             PC__IF_ID <= pc; 
         end
 

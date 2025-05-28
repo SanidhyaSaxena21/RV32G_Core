@@ -1,9 +1,9 @@
 `timescale 1ns / 1ps
 
-`define BPU_ENABLE
-//`undef BPU_ENABLE
+//`define BPU_ENABLE
+`undef BPU_ENABLE
 
-(* keep_hierarchy = "yes" *)
+//(* keep_hierarchy = "yes" *)
 module Branch_Prediction_Unit
 (
     input CLK,
@@ -12,8 +12,8 @@ module Branch_Prediction_Unit
     
     input BPU__Stall,
     
-    output reg Branch_Taken,
-    output reg [31:0] Branch_Target_Addr,
+    output Branch_Taken_n,
+    output [31:0] Branch_Target_Addr_n,
     output BTB_Hit,
     
     output [10:0] PHT_Read_Index, 
@@ -45,9 +45,15 @@ wire [31:0] Branch_Target_Addr__RAS;
 wire RET_Inst__RAS;
 wire RET_Addr_Valid__RAS;
 
+reg Branch_Taken;
+reg [31:0] Branch_Target_Addr;
+
 assign RET_Inst__RAS = (Branch_Target_Addr__BTB[1:0] == 2'b11) ? 1'b1 : 1'b0;
 
 `ifdef BPU_ENABLE
+
+  assign Branch_Taken_n = Branch_Taken;
+  assign Branch_Target_Addr_n = Branch_Target_Addr;
 always @(*) begin
     /*if (RST) begin
         Branch_Taken = 1'b0;
@@ -81,20 +87,12 @@ always @(*) begin
     //end
 end
 `else
-//Removing RESET from Combo Logic
-always @(*) begin
-    /*if (RST) begin
-        Branch_Taken = 1'b0;
-        Branch_Target_Addr = 32'b0;
-    end
-    else begin*/
-        Branch_Taken = 1'b0;
-        Branch_Target_Addr = 32'b0;
-    //end
-end
+
+  assign Branch_Taken_n = 1'b0;
+  assign Branch_Target_Addr_n = 32'd0;
 `endif
 
-(* keep_hierarchy = "yes" *)
+//(* keep_hierarchy = "yes" *)
 Direction_Predictor DP( .CLK(CLK),                           
                         .RST(RST),                           
                         .PC(PC), 
@@ -109,7 +107,7 @@ Direction_Predictor DP( .CLK(CLK),
                         .GHR_Write_En(GHR_Write_En));   
                         
                         
-(* keep_hierarchy = "yes" *)                        
+//(* keep_hierarchy = "yes" *)                        
 Branch_Target_Buff BTB( .CLK(CLK),                        
                         .RST(RST),    
                         .BPU__Stall(BPU__Stall),                       
@@ -120,7 +118,7 @@ Branch_Target_Buff BTB( .CLK(CLK),
                         .BTB_Write_Data(BTB_Write_Data),    
                         .BTB_Write_En(BTB_Write_En)); 
                                      
-(* keep_hierarchy = "yes" *)
+//(* keep_hierarchy = "yes" *)
 Return_Addr_Stack RAS( .CLK(CLK),
                        .RST(RST), 
                        .BPU__Stall(BPU__Stall),

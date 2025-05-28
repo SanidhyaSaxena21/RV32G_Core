@@ -27,6 +27,7 @@ module mem_hier(
       input [31:0]  i_addr,
       input freeze_in,
       input stall_load,
+      input core_resumeack_i,
       /*
       input				wb_clk_i,	// clock input
       input				wb_rst_i,	// reset input
@@ -273,7 +274,7 @@ always @( posedge clk)
     begin
     if(reset)
         virtual_addr <= 32'd0;
-    else if(~(stall || freeze_in))
+    else if(~((stall & ~core_resumeack_i) || freeze_in))
         virtual_addr <= stall_load ? (i_addr -32'd4) : i_addr;
     end
 always @(posedge clk)

@@ -880,7 +880,7 @@ always @(posedge CLK) begin
         csr_adr <= 12'b0;
         eret <= 1'b0;
     end
-    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || Double_Load_Store__Stall || PC_HALT_BREAK || halt_id_ie)) begin
+    else if(~(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || Double_Load_Store__Stall || PC_HALT_BREAK)) begin
         pc_id_ex <= pc_forw;
         //irq_ctrl_int2 <= irq_ctrl_int;
         //irq_ctrl_o <= irq_ctrl_int2;                                //Output of decode_execute stage
@@ -964,7 +964,7 @@ INST_FETCH IF( .CLK(CLK),
                .BPU__Branch_Target_Addr__IF_ID(BPU__Branch_Target_Addr__IF_ID),
                .CSR_mtvec(mtvec_addr),
                .Load__Stall(Load__Stall),
-               .IF_ID_Freeze(PC_Freeze_IRQ || /*IF_ID_Freeze__irq ||*/ Data_Cache__Stall || (Inst_Cache__Stall & ~core_resumeack_o) || Mult_Div_unit__Stall || FPU__Stall || Double_Load_Store__Stall || PC_HALT_BREAK),
+               .IF_ID_Freeze(PC_Freeze_IRQ || /*IF_ID_Freeze__irq ||*/ Data_Cache__Stall || Inst_Cache__Stall || Mult_Div_unit__Stall || FPU__Stall || Double_Load_Store__Stall || PC_HALT_BREAK),
                .PC_Control__IRQ(PC_Control__IRQ),
                .pc_ctrl_ecall(pc_ctrl_ecall),
                .pc_ctrl_mret(pc_ctrl_mret),

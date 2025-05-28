@@ -446,7 +446,7 @@ end
 assign dcache_data_int = ((Store_Buffer_Valid__reg == 1'b1) && (Store_Addr__Buffer == MEM_Addr__reg)) ? Store_Data__Buffer : (DCache_Read_Word >> (k__store << 3));
 
 always @(*) begin  
-    
+   //Load_Data = 32'd0; 
     if (addr_exception) begin
         Load_Data = 32'b0;
     end

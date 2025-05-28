@@ -6,6 +6,7 @@
 
 
 (* keep_hierarchy = "yes" *)
+//(* DONT_TOUCH = "yes" *)
 module csr #( parameter XLEN = 32,
               parameter SB_LENGTH = 4*(XLEN+1)+1)
 (
@@ -55,6 +56,7 @@ module csr #( parameter XLEN = 32,
     input [31:0] csr_dbg_dscratch1,
     output [31:0] dcsr,
     output reg [31:0] dpc,
+    input clr_step,
 
     // SATP Register
     output reg [31:0] csr_satp,
@@ -508,6 +510,9 @@ always @(posedge clk) begin
   end
   else if(csr_dbg_wr) begin
     cause <= csr_dbg_cause;
+    if(step) begin
+      step <= ~clr_step;
+    end
   end
 end
 

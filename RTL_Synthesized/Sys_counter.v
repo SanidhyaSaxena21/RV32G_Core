@@ -20,6 +20,7 @@ module Sys_counter
     output tick_en
 );
 
+wire tick_en;
 wire [63:0] proc_count_int;
 wire [63:0] instr_count_int;  //include when 1Hz timer implemented    
 wire [63:0] real_count_int;

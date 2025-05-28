@@ -58,6 +58,11 @@ module interconnect (
         if (reset) begin
             current_access <= 1'b0;
             mem_req        <= 1'b0;
+            mem_addr        <= 32'd0;
+            mem_write       <= 32'd0;
+            mem_write_data  <= 32'd0;
+            mem_burst       <= 2'd0;
+            mem_bstrobe     <= 4'd0;
         end else begin
                 // Grant access based on priority: Data bus > instruction bus
                 if (data_req) begin

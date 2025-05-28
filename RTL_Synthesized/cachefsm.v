@@ -195,13 +195,34 @@ always @(posedge clk)
         end    
     end
 
+//Need to add buffer for hold analysis 
+
+(* DONT_TOUCH = "true" *) wire vpn_to_ppn_req3_buf1;
+(* DONT_TOUCH = "true" *) wire vpn_to_ppn_req3_buf2;
+(* DONT_TOUCH = "true" *) wire vpn_to_ppn_req3_buf3;
+
+(* KEEP = "true" *) assign vpn_to_ppn_req3_buf1 = vpn_to_ppn_req3;
+(* KEEP = "true" *) assign vpn_to_ppn_req3_buf2 = vpn_to_ppn_req3_buf1;
+(* KEEP = "true" *) assign vpn_to_ppn_req3_buf3 = vpn_to_ppn_req3_buf2;
+/*LUT1 #(.INIT(2'b10)) buffer_inst1 (
+  .O(vpn_to_ppn_req3),
+  .I(vpn_to_ppn_req3_buf1)
+);
+LUT1 #(.INIT(2'b10)) buffer_inst2 (
+  .O(vpn_to_ppn_req3_buf1),
+  .I(vpn_to_ppn_req3_buf2)
+);
+LUT1 #(.INIT(2'b10)) buffer_inst3 (
+  .O(vpn_to_ppn_req3_buf2),
+  .I(vpn_to_ppn_req3_buf3)
+);*/
 
 always @(posedge clk)
     begin
     if(reset)
     vpn_to_ppn_req4 <=0;
     else 
-    vpn_to_ppn_req4 <= vpn_to_ppn_req3;
+    vpn_to_ppn_req4 <= vpn_to_ppn_req3_buf3;
     end
 
 
