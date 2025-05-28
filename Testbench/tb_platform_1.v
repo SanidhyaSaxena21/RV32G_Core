@@ -68,9 +68,8 @@ module tb_platform(
 
     reg SYSCLK_P,SYSCLK_N;
   riscv_platform riscv_platform(
-  .SYSCLK_P(SYSCLK_P),
-  .SYSCLK_N(SYSCLK_N),
-  .RESET_BUTTON(rst));
+   .clk_int(clk_int),
+  .rst(rst));
   
   //.RTC_CLOCK(RTC_CLOCK),
 
@@ -88,7 +87,7 @@ module tb_platform(
   //`ifdef TEST
   //,.block_instr_int(block_instr_int)
   //`endif );
-//`define FUNCTIONAL
+`define FUNCTIONAL
   integer logfile;
 	initial begin
   	logfile = $fopen("/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RV32G_Debug/tb_result.log", "w");

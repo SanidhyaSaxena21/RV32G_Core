@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 02/05/2025 12:03:02 AM
+// Create Date: 05/15/2025 03:34:05 PM
 // Design Name: 
-// Module Name: tb_platform
+// Module Name: tb_core_jtag
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,11 +20,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module tb_platform(
+module tb_core_jtag(
 
     );
     
-  reg clk_int;
+      reg clk_int;
   reg clk_x2;
   reg rst;
 
@@ -65,30 +65,21 @@ module tb_platform(
   
   wire pipeline_stall,cache_flush;
   wire [2:0] state_dcache;
+  
+  reg TDI,TMS,TCK;
+  wire TDO;
 
     reg SYSCLK_P,SYSCLK_N;
   riscv_platform riscv_platform(
   .SYSCLK_P(SYSCLK_P),
   .SYSCLK_N(SYSCLK_N),
-  .RESET_BUTTON(rst));
+  .RESET_BUTTON(rst),
+  .TDI(TDI),
+  .TDO(TDO),
+  .TMS(TMS),
+  .TCK(TCK));
   
-  //.RTC_CLOCK(RTC_CLOCK),
-
-  //.ext_irq(ext_irq),
-
-  //.cache_en_int(cache_en_int)
-
-  //.tick_en(tick_en),
-  //.addr_exception(addr_exception),
-  //.interrupt(interrupt)
-  //`ifdef itlb_def
-  //,.vpn_to_ppn_req(vpn_to_ppn_req)
-  //`endif 
-  
-  //`ifdef TEST
-  //,.block_instr_int(block_instr_int)
-  //`endif );
-//`define FUNCTIONAL
+`define FUNCTIONAL
   integer logfile;
 	initial begin
   	logfile = $fopen("/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RV32G_Debug/tb_result.log", "w");
@@ -103,6 +94,7 @@ module tb_platform(
          //STALL <= 1'b0;
          interrupt = 32'd0; //Drive Alssl interrupts to 0
          ext_irq <= 1'b0; RTC_CLOCK <= 1'b0;
+         TDI <= 0; TMS <= 0; TCK <=0;
          
          #1000 rst <= 1'b0;
          
@@ -138,17 +130,17 @@ module tb_platform(
 
 `ifdef FUNCTIONAL
       //---------------SELF TESTING LOGIC ------------------
-      assign rf_mem_17 = tb_platform.riscv_platform.cpu1.fdem.Pipeline.RF.MEM[17] ;
-      assign rf_mem_10 = tb_platform.riscv_platform.cpu1.fdem.Pipeline.RF.MEM[10] ; 
+      assign rf_mem_17 = tb_core_jtag.riscv_platform.u_core_top.u_riscv_core.fdem.Pipeline.RF.MEM[17] ;
+      assign rf_mem_10 = tb_core_jtag.riscv_platform.u_core_top.u_riscv_core.fdem.Pipeline.RF.MEM[10] ; 
 
       wire ebreak_in_id; 
       reg detect_ebreak;
       reg [31:0] pc_ebreak_detect;
       wire [31:0] pc_ebreak;
 
-      assign ebreak_in_id = tb_platform.riscv_platform.cpu1.fdem.Pipeline.debug_Controller.ebreak_in_id;
-      assign ebreak_in_wb = tb_platform.riscv_platform.cpu1.fdem.Pipeline.debug_Controller.ebreak_in_wb;
-      assign pc_ebreak    = tb_platform.riscv_platform.cpu1.fdem.Pipeline.ID.PC_ID;
+      assign ebreak_in_id = tb_core_jtag.riscv_platform.u_core_top.u_riscv_core.fdem.Pipeline.debug_Controller.ebreak_in_id;
+      assign ebreak_in_wb = tb_core_jtag.riscv_platform.u_core_top.u_riscv_core.fdem.Pipeline.debug_Controller.ebreak_in_wb;
+      assign pc_ebreak    = tb_core_jtag.riscv_platform.u_core_top.u_riscv_core.fdem.Pipeline.ID.PC_ID;
 
       always @(posedge clk_int or posedge rst) begin
 	       if(rst) begin 
@@ -272,9 +264,9 @@ module tb_platform(
 
 
 
-assign pipeline_stall = tb_platform.riscv_platform.cpu1.fdem.Pipeline.ID.IF_ID_Freeze;
-assign state_dcache = tb_platform.riscv_platform.cpu1.fdem.db1.dt1.drf0.state;
-assign cache_flush = tb_platform.riscv_platform.cpu1.fdem.db1.dt1.drf0.cache_flush;
+assign pipeline_stall = tb_core_jtag.riscv_platform.u_core_top.u_riscv_core.fdem.Pipeline.ID.IF_ID_Freeze;
+assign state_dcache = tb_core_jtag.riscv_platform.u_core_top.u_riscv_core.fdem.db1.dt1.drf0.state;
+assign cache_flush = tb_core_jtag.riscv_platform.u_core_top.u_riscv_core.fdem.db1.dt1.drf0.cache_flush;
 
 
 always @(posedge clk_int or posedge rst) begin
