@@ -1,0 +1,26 @@
+
+{signal: [
+  {name: 'clk', wave: 'p...'},
+  {name: 'proc_addr', wave: '232.', data: ['0x0', 'PPN', '0x0']},
+  {name: 'lsu_op', wave: '232.', data: ['0x0', '0xa', '0x0']},
+  {name: 'Store_Data', wave: '2...', data: ['0x0', '0x12345678', '0x0']},
+  {name: 'Load_Data', wave: '.23x', data: ['0x12345678', '0x12345678', '0x0']},
+  {name: 'Load_store_req', wave: '010.'},
+  {name: 'tag_hit', wave: '.010'},
+  {name: 'tag_out_tlb', wave: '.232', data: ['PPN', '0x0', '0x0']},
+  {name: 'hit', wave: '0.10'},
+  {name: 'miss', wave: '1.01'},
+  {name: 'freeze', wave: '0...'},
+  {name: 'state', wave: '2.42', data: ['start', 'WT_HIT', 'START', 'REPLACE','start']},
+
+  {name: 'Instr_ID', wave: '2456', data: ['LW','add','sub','CSR']}, 
+  {name: 'PC_ID', wave: '4567', data: ['PC1','PC2','PC3','PC4']}, 
+  
+
+],
+  config:{hscale:5
+  
+  }}
+
+
+  
