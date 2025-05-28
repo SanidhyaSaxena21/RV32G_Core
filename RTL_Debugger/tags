@@ -1,0 +1,1326 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/rclab/FINAL_PROJECT/RV32G_Core/RV32G_Core/RTL_Debugger/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+ACTIVE_REG	defines.v	/^`define ACTIVE_REG          12'h7d1$/;"	c
+ADC_REG	defines.v	/^`define ADC_REG 32'h5F100804$/;"	c
+AM_aampostincrement	command.v	/^    output reg         AM_aampostincrement,     \/\/should go to data registers (data1) should b/;"	p	module:command
+AM_aamsize	command.v	/^    output reg [2:0]   AM_aamsize,              \/\/ arg1 should be incremented by this when aam/;"	p	module:command
+AM_aamvirtual	command.v	/^    reg AM_aamvirtual;$/;"	r	module:command
+AM_target_specific	command.v	/^    reg [1:0] AM_target_specific;$/;"	r	module:command
+AM_write	command.v	/^    output reg         AM_write,                \/\/ Access Memory: Write flag$/;"	p	module:command
+AR_aarpostincrement	command.v	/^    output reg         AR_aarpostincrement,$/;"	p	module:command
+AR_aarsize	command.v	/^    reg [2:0] AR_aarsize;$/;"	r	module:command
+AR_postexec	command.v	/^    reg AR_postexec;$/;"	r	module:command
+AR_regno	command.v	/^    reg [15:0] AR_regno;$/;"	r	module:command
+AR_transfer	command.v	/^    output reg         AR_transfer,             \/\/ Access Register: Transfer flag$/;"	p	module:command
+AR_write	command.v	/^    output reg         AR_write,                \/\/ Access Register: Write flag$/;"	p	module:command
+AUTHBUSY	dmstatus.v	/^    localparam AUTHBUSY = 1'b0;               \/\/ Authentication busy status$/;"	c	module:dmstatus
+AUTHENTICATED	dmstatus.v	/^    localparam AUTHENTICATED = 1'b1;          \/\/ Authentication is not required$/;"	c	module:dmstatus
+AW	defines.v	/^`define AW 32$/;"	c
+Access_mem_command	TOP_JTAG_TB.v	/^    task automatic Access_mem_command(input write, input [2:0] aamsize, input [31:0] ptr, input /;"	t	module:TOP_JTAG_TB
+Access_reg_command	TOP_JTAG_TB.v	/^    task automatic Access_reg_command(input write, input transfer, input [15:0] regno, input [31/;"	t	module:TOP_JTAG_TB
+Anode_Activate	Display.v	/^        output reg [3:0] Anode_Activate, \/\/ anode signals of the 7-segment LED display$/;"	p	module:Display
+Anode_Activate	FTDI_connections.v	/^    output wire [3:0] Anode_Activate, \/\/ anode signals of the 7-segment LED display$/;"	p	module:FTDI_connections
+BUZZER_REG	defines.v	/^`define BUZZER_REG 32'h5F100810$/;"	c
+BYPASS_INSTR	JTAG_IR.v	/^           BYPASS_INSTR     = 5'd1;$/;"	c	module:JTAG_IR
+BYPASS_OP	jtaglet.v	/^    localparam BYPASS_OP = {IR_LEN{1'b1}};\/\/ e.g. b1111 (required bit pattern per spec)$/;"	c	module:jtaglet
+Bypass_Reg	Bypass_Reg.v	/^module Bypass_Reg($/;"	m
+Bypass_out	Debug_Module.v	/^    input wire Bypass_out,            \/\/ Bypass Register output$/;"	p	module:Debug_Module
+Bypass_out	JTAG.v	/^    output wire Bypass_out,            \/\/ Bypass Register output$/;"	p	module:JTAG
+Bypass_out	Top_JTAG.v	/^    wire Bypass_out;            \/\/ Bypass Register output$/;"	n	module:Top_CPU_JTAG
+CACHE_FLUSH_TEST	defines.v	/^`define CACHE_FLUSH_TEST$/;"	c
+CAPTURE_DR	Bypass_Reg.v	/^    localparam CAPTURE_DR       = 4'd3;$/;"	c	module:Bypass_Reg
+CAPTURE_DR	Debug_Module.v	/^               CAPTURE_DR       = 4'd3,$/;"	c	module:Debug_Module
+CAPTURE_DR	JTAG.v	/^               CAPTURE_DR       = 4'd3,$/;"	c	module:JTAG
+CAPTURE_DR	JTAG_IR.v	/^           CAPTURE_DR       = 4'd3,$/;"	c	module:JTAG_IR
+CAPTURE_DR	TAP_Controller.v	/^               CAPTURE_DR       = 4'd3,$/;"	c	module:TAP_Controller
+CAPTURE_DR	TAP_Controller_with_BSCANE2.v	/^               CAPTURE_DR       = 4'd3,$/;"	c	module:TAP_Controller_with_BSCANE2
+CAPTURE_DR	abstractcs.v	/^               CAPTURE_DR       = 4'd3,$/;"	c	module:abstractcs
+CAPTURE_DR	data0.v	/^               CAPTURE_DR       = 4'd3,$/;"	c	module:data0
+CAPTURE_DR	data1.v	/^               CAPTURE_DR       = 4'd3,$/;"	c	module:data1
+CAPTURE_DR	jtag_state_machine.v	/^    localparam CAPTURE_DR       = 4'h3;$/;"	c	module:jtag_state_machine
+CAPTURE_IR	Debug_Module.v	/^               CAPTURE_IR       = 4'd10,$/;"	c	module:Debug_Module
+CAPTURE_IR	JTAG.v	/^               CAPTURE_IR       = 4'd10,$/;"	c	module:JTAG
+CAPTURE_IR	JTAG_IR.v	/^           CAPTURE_IR       = 4'd10,$/;"	c	module:JTAG_IR
+CAPTURE_IR	TAP_Controller.v	/^               CAPTURE_IR       = 4'd10,$/;"	c	module:TAP_Controller
+CAPTURE_IR	TAP_Controller_with_BSCANE2.v	/^               CAPTURE_IR       = 4'd10,$/;"	c	module:TAP_Controller_with_BSCANE2
+CAPTURE_IR	abstractcs.v	/^               CAPTURE_IR       = 4'd10,$/;"	c	module:abstractcs
+CAPTURE_IR	data0.v	/^               CAPTURE_IR       = 4'd10,$/;"	c	module:data0
+CAPTURE_IR	data1.v	/^               CAPTURE_IR       = 4'd10,$/;"	c	module:data1
+CAPTURE_IR	jtag_state_machine.v	/^    localparam CAPTURE_IR       = 4'hA;$/;"	c	module:jtag_state_machine
+CLOCK_PERIOD	TOP_JTAG_TB.v	/^  parameter CLOCK_PERIOD = 100; \/\/100ns$/;"	c	module:TOP_JTAG_TB
+CONFSTRPTRVALID	dmstatus.v	/^    localparam CONFSTRPTRVALID = 1'b0;        \/\/ No confstrptr implemented$/;"	c	module:dmstatus
+COUNT	TOP_JTAG_TB.v	/^  parameter COUNT = (TIMEOUT \/ CLOCK_PERIOD);$/;"	c	module:TOP_JTAG_TB
+CSR_SB_PMPADDR0	defines.v	/^`define CSR_SB_PMPADDR0     `CSR_SB_PMPCFG3 + `XLEN$/;"	c
+CSR_SB_PMPADDR1	defines.v	/^`define CSR_SB_PMPADDR1     `CSR_SB_PMPADDR0 + `XLEN$/;"	c
+CSR_SB_PMPADDR10	defines.v	/^`define CSR_SB_PMPADDR10    `CSR_SB_PMPADDR9 + `XLEN$/;"	c
+CSR_SB_PMPADDR11	defines.v	/^`define CSR_SB_PMPADDR11    `CSR_SB_PMPADDR10 + `XLEN$/;"	c
+CSR_SB_PMPADDR12	defines.v	/^`define CSR_SB_PMPADDR12    `CSR_SB_PMPADDR11 + `XLEN$/;"	c
+CSR_SB_PMPADDR13	defines.v	/^`define CSR_SB_PMPADDR13    `CSR_SB_PMPADDR12 + `XLEN$/;"	c
+CSR_SB_PMPADDR14	defines.v	/^`define CSR_SB_PMPADDR14    `CSR_SB_PMPADDR13 + `XLEN$/;"	c
+CSR_SB_PMPADDR15	defines.v	/^`define CSR_SB_PMPADDR15    `CSR_SB_PMPADDR14 + `XLEN$/;"	c
+CSR_SB_PMPADDR2	defines.v	/^`define CSR_SB_PMPADDR2     `CSR_SB_PMPADDR1 + `XLEN$/;"	c
+CSR_SB_PMPADDR3	defines.v	/^`define CSR_SB_PMPADDR3     `CSR_SB_PMPADDR2 + `XLEN$/;"	c
+CSR_SB_PMPADDR4	defines.v	/^`define CSR_SB_PMPADDR4     `CSR_SB_PMPADDR3 + `XLEN$/;"	c
+CSR_SB_PMPADDR5	defines.v	/^`define CSR_SB_PMPADDR5     `CSR_SB_PMPADDR4 + `XLEN$/;"	c
+CSR_SB_PMPADDR6	defines.v	/^`define CSR_SB_PMPADDR6     `CSR_SB_PMPADDR5 + `XLEN$/;"	c
+CSR_SB_PMPADDR7	defines.v	/^`define CSR_SB_PMPADDR7     `CSR_SB_PMPADDR6 + `XLEN$/;"	c
+CSR_SB_PMPADDR8	defines.v	/^`define CSR_SB_PMPADDR8     `CSR_SB_PMPADDR7 + `XLEN$/;"	c
+CSR_SB_PMPADDR9	defines.v	/^`define CSR_SB_PMPADDR9     `CSR_SB_PMPADDR8 + `XLEN$/;"	c
+CSR_SB_PMPCFG0	defines.v	/^`define CSR_SB_PMPCFG0      0$/;"	c
+CSR_SB_PMPCFG1	defines.v	/^`define CSR_SB_PMPCFG1      `CSR_SB_PMPCFG0 + `XLEN$/;"	c
+CSR_SB_PMPCFG2	defines.v	/^`define CSR_SB_PMPCFG2      `CSR_SB_PMPCFG1 + `XLEN$/;"	c
+CSR_SB_PMPCFG3	defines.v	/^`define CSR_SB_PMPCFG3      `CSR_SB_PMPCFG2 + `XLEN$/;"	c
+CSR_SB_W	defines.v	/^`define CSR_SB_W `CSR_SB_PMPADDR15 + 1 + `XLEN$/;"	c
+CSR_data	RISCV_Core.v	/^    wire [31:0] CSR_data = (csr_addr == 12'h7b0) ? dcsr :$/;"	n	module:RISCV_Core
+Clock_DR	Bypass_Reg.v	/^        input wire Clock_DR,$/;"	p	module:Bypass_Reg
+Clock_DR	ID_Reg.v	/^        input wire Clock_DR,$/;"	p	module:ID_Reg
+Clock_DR	JTAG.v	/^    wire Clock_DR, Shift_DR, Update_DR;$/;"	n	module:JTAG
+Clock_DR	TAP_Controller.v	/^        output wire Clock_DR,$/;"	p	module:TAP_Controller
+Clock_IR	JTAG.v	/^    wire Clock_IR, Shift_IR, Update_IR;$/;"	n	module:JTAG
+Clock_IR	JTAG_IR.v	/^    input wire Clock_IR,$/;"	p	module:JTAG_IR
+Clock_IR	TAP_Controller.v	/^        output wire Clock_IR,$/;"	p	module:TAP_Controller
+Custom0	Custom0.v	/^module Custom0($/;"	m
+Custom1	Custom1.v	/^module Custom1($/;"	m
+Custom2	Custom2.v	/^module Custom2($/;"	m
+Custom3	Custom3.v	/^module Custom3($/;"	m
+Custom4	Custom4.v	/^module Custom4($/;"	m
+Custom5	Custom5.v	/^module Custom5($/;"	m
+Custom6	Custom6.v	/^module Custom6($/;"	m
+DACK	Top_JTAG.v	/^    input              DACK,$/;"	p	module:Top_CPU_JTAG
+DADDR	Top_JTAG.v	/^    output  [31:0]  DADDR,$/;"	p	module:Top_CPU_JTAG
+DATAACCESS	hartinfo.v	/^    localparam          DATAACCESS  = 4'd0;     \/\/ $/;"	c	module:hartinfo
+DATAADDR	hartinfo.v	/^    localparam [11:0]   DATAADDR    = 12'd12;$/;"	c	module:hartinfo
+DATAREG_COUNT	abstractcs.v	/^    parameter DATAREG_COUNT = 5'd2      \/\/ 2 data registers: data0 and data1$/;"	c	module:abstractcs
+DATASIZE	hartinfo.v	/^    localparam [3:0]    DATASIZE    = 4'd2;$/;"	c	module:hartinfo
+DBG_CSR_Write	RISCV_Core.v	/^    wire DBG_CSR_Write;$/;"	n	module:RISCV_Core
+DBG_GPR_Write	RISCV_Core.v	/^    wire DBG_GPR_Write;$/;"	n	module:RISCV_Core
+DBG_MEM_Write	RISCV_Core.v	/^    wire        DBG_MEM_Write;$/;"	n	module:RISCV_Core
+DBG_MEM_Write_data	RISCV_Core.v	/^    wire [31:0] DBG_MEM_Write_data;$/;"	n	module:RISCV_Core
+DBG_Reg_Write_Data	RISCV_Core.v	/^    wire [31:0] DBG_Reg_Write_Data;$/;"	n	module:RISCV_Core
+DBG_W_Addr_3	RISCV_Core.v	/^    wire [4:0] DBG_W_Addr_3;$/;"	n	module:RISCV_Core
+DBG_aamsize	RISCV_Core.v	/^    wire [2:0] DBG_aamsize;$/;"	n	module:RISCV_Core
+DBSTROBE	Top_JTAG.v	/^    output  [3:0]   DBSTROBE,$/;"	p	module:Top_CPU_JTAG
+DBURST	Top_JTAG.v	/^    output  [1:0]   DBURST, \/\/00-Normal, 01-INCR, 10-WRAP, 11-Reserved$/;"	p	module:Top_CPU_JTAG
+DEBUG_JTAG	FTDI_connections.v	/^`define DEBUG_JTAG$/;"	c
+DM_BASE_ADDR	Debug_Module.v	/^module Debug_Module #(parameter DM_BASE_ADDR = 0) ($/;"	c	module:Debug_Module
+DR	TAP_Controller_with_BSCANE2.v	/^    reg [31:0] DR; \/\/ Data Register$/;"	r	module:TAP_Controller_with_BSCANE2
+DRDATA	Top_JTAG.v	/^    input      [31:0]  DRDATA,$/;"	p	module:Top_CPU_JTAG
+DREQ	Top_JTAG.v	/^    output          DREQ,$/;"	p	module:Top_CPU_JTAG
+DR_LEN	jtag_reg.v	/^        parameter DR_LEN = 1,$/;"	c	module:jtag_reg
+DR_data	TOP_JTAG_TB.v	/^    task automatic Read_Reg(input [31:0] IR_data, input [31:0] DR_data, output [31:0] DR_receive/;"	p	task:TOP_JTAG_TB.Read_Reg
+DR_data	TOP_JTAG_TB.v	/^    task automatic Update_Reg(input [31:0] IR_data, input [31:0] DR_data);$/;"	p	task:TOP_JTAG_TB.Update_Reg
+DR_received	TOP_JTAG_TB.v	/^    task automatic Read_Reg(input [31:0] IR_data, input [31:0] DR_data, output [31:0] DR_receive/;"	p	task:TOP_JTAG_TB.Read_Reg
+DSTALL	Top_JTAG.v	/^    input              DSTALL,$/;"	p	module:Top_CPU_JTAG
+DTLAST	Top_JTAG.v	/^    input              DTLAST,$/;"	p	module:Top_CPU_JTAG
+DW	defines.v	/^`define DW 32$/;"	c
+DWDATA	Top_JTAG.v	/^    output  [31:0]  DWDATA,$/;"	p	module:Top_CPU_JTAG
+DWRB	Top_JTAG.v	/^    output          DWRB,$/;"	p	module:Top_CPU_JTAG
+Data_in	Bypass_Reg.v	/^        input wire Data_in,$/;"	p	module:Bypass_Reg
+Data_in	ID_Reg.v	/^        input wire Data_in,$/;"	p	module:ID_Reg
+Data_out	Bypass_Reg.v	/^        output reg Data_out $/;"	p	module:Bypass_Reg
+Data_out	ID_Reg.v	/^        output wire Data_out $/;"	p	module:ID_Reg
+Debug_Module	Debug_Module.v	/^module Debug_Module #(parameter DM_BASE_ADDR = 0) ($/;"	m
+Demo_En	defines.v	/^`define Demo_En 1$/;"	c
+Display	Display.v	/^module Display($/;"	m
+EBREAKM	defines.v	/^`define EBREAKM 15$/;"	c
+ENABLE_REG	defines.v	/^`define ENABLE_REG          12'h7d0$/;"	c
+EXIT1_DR	Debug_Module.v	/^               EXIT1_DR         = 4'd5,$/;"	c	module:Debug_Module
+EXIT1_DR	JTAG.v	/^               EXIT1_DR         = 4'd5,$/;"	c	module:JTAG
+EXIT1_DR	JTAG_IR.v	/^           EXIT1_DR         = 4'd5,$/;"	c	module:JTAG_IR
+EXIT1_DR	TAP_Controller.v	/^               EXIT1_DR         = 4'd5,$/;"	c	module:TAP_Controller
+EXIT1_DR	TAP_Controller_with_BSCANE2.v	/^               EXIT1_DR         = 4'd5,$/;"	c	module:TAP_Controller_with_BSCANE2
+EXIT1_DR	abstractcs.v	/^               EXIT1_DR         = 4'd5,$/;"	c	module:abstractcs
+EXIT1_DR	data0.v	/^               EXIT1_DR         = 4'd5,$/;"	c	module:data0
+EXIT1_DR	data1.v	/^               EXIT1_DR         = 4'd5,$/;"	c	module:data1
+EXIT1_DR	jtag_state_machine.v	/^    localparam EXIT1_DR         = 4'h5;$/;"	c	module:jtag_state_machine
+EXIT1_IR	Debug_Module.v	/^               EXIT1_IR         = 4'd12,$/;"	c	module:Debug_Module
+EXIT1_IR	JTAG.v	/^               EXIT1_IR         = 4'd12,$/;"	c	module:JTAG
+EXIT1_IR	JTAG_IR.v	/^           EXIT1_IR         = 4'd12,$/;"	c	module:JTAG_IR
+EXIT1_IR	TAP_Controller.v	/^               EXIT1_IR         = 4'd12,$/;"	c	module:TAP_Controller
+EXIT1_IR	TAP_Controller_with_BSCANE2.v	/^               EXIT1_IR         = 4'd12,$/;"	c	module:TAP_Controller_with_BSCANE2
+EXIT1_IR	abstractcs.v	/^               EXIT1_IR         = 4'd12,$/;"	c	module:abstractcs
+EXIT1_IR	data0.v	/^               EXIT1_IR         = 4'd12,$/;"	c	module:data0
+EXIT1_IR	data1.v	/^               EXIT1_IR         = 4'd12,$/;"	c	module:data1
+EXIT1_IR	jtag_state_machine.v	/^    localparam EXIT1_IR         = 4'hC;$/;"	c	module:jtag_state_machine
+EXIT2_DR	Debug_Module.v	/^               EXIT2_DR         = 4'd7,$/;"	c	module:Debug_Module
+EXIT2_DR	JTAG.v	/^               EXIT2_DR         = 4'd7,$/;"	c	module:JTAG
+EXIT2_DR	JTAG_IR.v	/^           EXIT2_DR         = 4'd7,$/;"	c	module:JTAG_IR
+EXIT2_DR	TAP_Controller.v	/^               EXIT2_DR         = 4'd7,$/;"	c	module:TAP_Controller
+EXIT2_DR	TAP_Controller_with_BSCANE2.v	/^               EXIT2_DR         = 4'd7,$/;"	c	module:TAP_Controller_with_BSCANE2
+EXIT2_DR	abstractcs.v	/^               EXIT2_DR         = 4'd7,$/;"	c	module:abstractcs
+EXIT2_DR	data0.v	/^               EXIT2_DR         = 4'd7,$/;"	c	module:data0
+EXIT2_DR	data1.v	/^               EXIT2_DR         = 4'd7,$/;"	c	module:data1
+EXIT2_DR	jtag_state_machine.v	/^    localparam EXIT2_DR         = 4'h7;$/;"	c	module:jtag_state_machine
+EXIT2_IR	Debug_Module.v	/^               EXIT2_IR         = 4'd14,$/;"	c	module:Debug_Module
+EXIT2_IR	JTAG.v	/^               EXIT2_IR         = 4'd14,$/;"	c	module:JTAG
+EXIT2_IR	JTAG_IR.v	/^           EXIT2_IR         = 4'd14,$/;"	c	module:JTAG_IR
+EXIT2_IR	TAP_Controller.v	/^               EXIT2_IR         = 4'd14,$/;"	c	module:TAP_Controller
+EXIT2_IR	TAP_Controller_with_BSCANE2.v	/^               EXIT2_IR         = 4'd14,$/;"	c	module:TAP_Controller_with_BSCANE2
+EXIT2_IR	abstractcs.v	/^               EXIT2_IR         = 4'd14,$/;"	c	module:abstractcs
+EXIT2_IR	data0.v	/^               EXIT2_IR         = 4'd14,$/;"	c	module:data0
+EXIT2_IR	data1.v	/^               EXIT2_IR         = 4'd14,$/;"	c	module:data1
+EXIT2_IR	jtag_state_machine.v	/^    localparam EXIT2_IR         = 4'hE;$/;"	c	module:jtag_state_machine
+EX_MEM_PC	RISCV_Core.v	/^    wire [31:0] EX_MEM_PC;$/;"	n	module:RISCV_Core
+Enable	JTAG.v	/^    wire Reset_n, Select, Enable;$/;"	n	module:JTAG
+Enable	TAP_Controller.v	/^        output wire Enable,$/;"	p	module:TAP_Controller
+FAST_TEST	defines.v	/^`define FAST_TEST   1           \/\/ 64\/1024 packets are sent$/;"	c
+FTDI_connections	FTDI_connections.v	/^module FTDI_connections($/;"	m
+FUNCTIONAL	TOP_JTAG_TB.v	/^  `define FUNCTIONAL      $/;"	c	module:TOP_JTAG_TB
+HARTSELLEN	dmcontrol.v	/^`define HARTSELLEN 1 \/\/can be anything between 0 and 20 (inc. both 0 and 20)$/;"	c
+HARTSELLEN	dmstatus.v	/^    parameter HARTSELLEN = 1 \/\/ Width of hartsel input for selecting a hart$/;"	c	module:dmstatus
+HASRESETHALTREQ	dmstatus.v	/^    localparam HASRESETHALTREQ = 1'b1;        \/\/ reset-halt request is supported$/;"	c	module:dmstatus
+IACK	Top_JTAG.v	/^    input              IACK,$/;"	p	module:Top_CPU_JTAG
+IADDR	Top_JTAG.v	/^    output  [31:0]  IADDR,$/;"	p	module:Top_CPU_JTAG
+IBSTROBE	Top_JTAG.v	/^    output  [3:0]   IBSTROBE,$/;"	p	module:Top_CPU_JTAG
+IBURST	Top_JTAG.v	/^    output  [1:0]   IBURST, \/\/00-Normal, 01-INCR, 10-WRAP, 11-Reserved$/;"	p	module:Top_CPU_JTAG
+IDCODE	ID_Reg.v	/^    localparam IDCODE = 32'h1234567F; \/\/ Artix-7 IDCODE$/;"	c	module:ID_Reg
+IDCODE	TAP_Controller_with_BSCANE2.v	/^    reg [31:0] IDCODE = 32'h03722093; \/\/ Artix-7 IDCODE$/;"	r	module:TAP_Controller_with_BSCANE2
+IDCODE_OP	jtaglet.v	/^    localparam IDCODE_OP = {{(IR_LEN-1){1'b1}},1'b0}; \/\/e.g. b1110$/;"	c	module:jtaglet
+ID_CODE_INSTR	JTAG_IR.v	/^localparam ID_CODE_INSTR    = 5'd2,$/;"	c	module:JTAG_IR
+ID_MANF	jtaglet.v	/^    parameter ID_MANF = 11'h000,$/;"	c	module:jtaglet
+ID_PARTNUM	jtaglet.v	/^    parameter ID_PARTNUM = 16'h0000,$/;"	c	module:jtaglet
+ID_PARTVER	jtaglet.v	/^    parameter ID_PARTVER = 4'h0,$/;"	c	module:jtaglet
+ID_Reg	ID_Reg.v	/^module ID_Reg($/;"	m
+ID_out	Debug_Module.v	/^    input wire ID_out,                \/\/ ID Register output$/;"	p	module:Debug_Module
+ID_out	JTAG.v	/^    output wire ID_out,                \/\/ ID Register output$/;"	p	module:JTAG
+ID_out	Top_JTAG.v	/^    wire ID_out;                \/\/ ID Register output$/;"	n	module:Top_CPU_JTAG
+ID_reg	ID_Reg.v	/^    reg [31:0] ID_reg = 32'h1;            \/\/ 0th bit should be hardwired to 1$/;"	r	module:ID_Reg
+IMPEBREAK	dmstatus.v	/^    localparam IMPEBREAK = 1'b1;              \/\/ Implicit ebreak support is present$/;"	c	module:dmstatus
+IR	TAP_Controller_with_BSCANE2.v	/^    reg [4:0] IR; \/\/ 5-bit instruction register$/;"	r	module:TAP_Controller_with_BSCANE2
+IRDATA	Top_JTAG.v	/^    input      [31:0]  IRDATA,$/;"	p	module:Top_CPU_JTAG
+IREQ	Top_JTAG.v	/^    output          IREQ,$/;"	p	module:Top_CPU_JTAG
+IR_LEN	jtag_reg.v	/^        parameter IR_LEN = 4,$/;"	c	module:jtag_reg
+IR_LEN	jtaglet.v	/^    parameter IR_LEN = 4,$/;"	c	module:jtaglet
+IR_OPCODE	jtag_reg.v	/^        parameter IR_OPCODE = 4'b0$/;"	c	module:jtag_reg
+IR_data	TOP_JTAG_TB.v	/^    task automatic Read_Reg(input [31:0] IR_data, input [31:0] DR_data, output [31:0] DR_receive/;"	p	task:TOP_JTAG_TB.Read_Reg
+IR_data	TOP_JTAG_TB.v	/^    task automatic Update_IR(input [31:0] IR_data);$/;"	p	task:TOP_JTAG_TB.Update_IR
+IR_data	TOP_JTAG_TB.v	/^    task automatic Update_Reg(input [31:0] IR_data, input [31:0] DR_data);$/;"	p	task:TOP_JTAG_TB.Update_Reg
+IR_parallel_out	JTAG_IR.v	/^    output wire [WIDTH-1:0] IR_parallel_out$/;"	p	module:JTAG_IR
+IR_shift_in	JTAG_IR.v	/^    input wire IR_shift_in,$/;"	p	module:JTAG_IR
+IR_shift_out	Debug_Module.v	/^    input wire IR_shift_out,          \/\/ IR shift output$/;"	p	module:Debug_Module
+IR_shift_out	JTAG.v	/^    output wire IR_shift_out,          \/\/ IR shift output$/;"	p	module:JTAG
+IR_shift_out	JTAG_IR.v	/^    output reg IR_shift_out,$/;"	p	module:JTAG_IR
+IR_shift_out	Top_JTAG.v	/^    wire IR_shift_out;          \/\/ IR shift output$/;"	n	module:Top_CPU_JTAG
+ISR_ADDRESS	defines.v	/^`define ISR_ADDRESS 32'd800     \/\/ ISR address made 800 instead 400 not to clash with PTE when/;"	c
+ISTALL	Top_JTAG.v	/^    input              ISTALL,$/;"	p	module:Top_CPU_JTAG
+IS_CSR	defines.v	/^`define IS_CSR    2$/;"	c
+IS_EBREAK	defines.v	/^`define IS_EBREAK 1$/;"	c
+IS_ECALL	defines.v	/^`define IS_ECALL  0$/;"	c
+IS_MRET	defines.v	/^`define IS_MRET   3$/;"	c
+IS_SRET	defines.v	/^`define IS_SRET   4$/;"	c
+IS_WFI	defines.v	/^`define IS_WFI    5$/;"	c
+ITLAST	Top_JTAG.v	/^    input              ITLAST,$/;"	p	module:Top_CPU_JTAG
+IWDATA	Top_JTAG.v	/^    output  [31:0]  IWDATA,$/;"	p	module:Top_CPU_JTAG
+IWRB	Top_JTAG.v	/^    output          IWRB,$/;"	p	module:Top_CPU_JTAG
+Instr	FTDI_connections.v	/^    output wire [5:0] Instr   \/\/Instr$/;"	p	module:FTDI_connections
+Instr	JTAG.v	/^    wire [WIDTH-1:0] Instr;     \/\/ IR width$/;"	n	module:JTAG
+Instr	JTAG_TB.v	/^    wire [5:0] Instr;$/;"	n	module:JTAG_TB
+Instr	TOP_JTAG_TB.v	/^    wire [5:0] Instr;$/;"	n	module:TOP_JTAG_TB
+Instr	Top_JTAG.v	/^    wire [WIDTH-1:0] Instr;             \/\/Instr$/;"	n	module:Top_CPU_JTAG
+JTAG	JTAG.v	/^module JTAG #($/;"	m
+JTAG_CLK_HALF_PERIOD_NS	TOP_JTAG_TB.v	/^    parameter JTAG_CLK_HALF_PERIOD_NS = 500;$/;"	c	module:TOP_JTAG_TB
+JTAG_IR	JTAG_IR.v	/^module JTAG_IR #($/;"	m
+JTAG_TB	JTAG_TB.v	/^module JTAG_TB($/;"	m
+LCD_REG	defines.v	/^`define LCD_REG 32'h5F10080C$/;"	c
+LED_BCD	Display.v	/^    reg [3:0] LED_BCD;$/;"	r	module:Display
+LED_activating_counter	Display.v	/^    wire [1:0] LED_activating_counter; $/;"	n	module:Display
+LED_out	Display.v	/^        output reg [6:0] LED_out\/\/ cathode patterns of the 7-segment LED display$/;"	p	module:Display
+LED_out	FTDI_connections.v	/^    output wire [6:0] LED_out,\/\/ cathode patterns of the 7-segment LED display$/;"	p	module:FTDI_connections
+MAIN_CLK_HALF_PERIOD_NS	TOP_JTAG_TB.v	/^    parameter MAIN_CLK_HALF_PERIOD_NS = 5;$/;"	c	module:TOP_JTAG_TB
+MEM_data	RISCV_Core.v	/^    wire [31:0] MEM_data; $/;"	n	module:RISCV_Core
+MIE_MEIE	defines.v	/^`define MIE_MEIE 11$/;"	c
+MIE_MSIE	defines.v	/^`define MIE_MSIE 3$/;"	c
+MIE_MTIE	defines.v	/^`define MIE_MTIE 7$/;"	c
+MIP_MEIP	defines.v	/^`define MIP_MEIP 11$/;"	c
+MIP_MSIP	defines.v	/^`define MIP_MSIP 3$/;"	c
+MIP_MTIP	defines.v	/^`define MIP_MTIP 7$/;"	c
+MM_adrBase	defines.v	/^`define MM_adrBase 32'h5f100000$/;"	c
+MM_adrMask	defines.v	/^`define MM_adrMask 32'hfffff000$/;"	c
+MSTATUS_MIE	defines.v	/^`define MSTATUS_MIE 3$/;"	c
+MUX_UNLOCK_VALUE	Debug_Module.v	/^    localparam MUX_UNLOCK_VALUE = 32'h12345678;$/;"	c	module:Debug_Module
+NSCRATCH	hartinfo.v	/^    localparam [3:0]    NSCRATCH    = 4'd0;     \/\/ no scratch registers available$/;"	c	module:hartinfo
+NUM_MASTER	defines.v	/^`define NUM_MASTER 2$/;"	c
+NUM_SLAVES	defines.v	/^`define NUM_SLAVES 4$/;"	c
+Num_tick	defines.v	/^`define Num_tick 12'h7c4$/;"	c
+OR1200_ASIC_MULTP2_32X32	defines.v	/^`define OR1200_ASIC_MULTP2_32X32$/;"	c
+PAUSE_DR	Debug_Module.v	/^               PAUSE_DR         = 4'd6,$/;"	c	module:Debug_Module
+PAUSE_DR	JTAG.v	/^               PAUSE_DR         = 4'd6,$/;"	c	module:JTAG
+PAUSE_DR	JTAG_IR.v	/^           PAUSE_DR         = 4'd6,$/;"	c	module:JTAG_IR
+PAUSE_DR	TAP_Controller.v	/^               PAUSE_DR         = 4'd6,$/;"	c	module:TAP_Controller
+PAUSE_DR	TAP_Controller_with_BSCANE2.v	/^               PAUSE_DR         = 4'd6,$/;"	c	module:TAP_Controller_with_BSCANE2
+PAUSE_DR	abstractcs.v	/^               PAUSE_DR         = 4'd6,$/;"	c	module:abstractcs
+PAUSE_DR	data0.v	/^               PAUSE_DR         = 4'd6,$/;"	c	module:data0
+PAUSE_DR	data1.v	/^               PAUSE_DR         = 4'd6,$/;"	c	module:data1
+PAUSE_DR	jtag_state_machine.v	/^    localparam PAUSE_DR         = 4'h6;$/;"	c	module:jtag_state_machine
+PAUSE_IR	Debug_Module.v	/^               PAUSE_IR         = 4'd13,$/;"	c	module:Debug_Module
+PAUSE_IR	JTAG.v	/^               PAUSE_IR         = 4'd13,$/;"	c	module:JTAG
+PAUSE_IR	JTAG_IR.v	/^           PAUSE_IR         = 4'd13,$/;"	c	module:JTAG_IR
+PAUSE_IR	TAP_Controller.v	/^               PAUSE_IR         = 4'd13,$/;"	c	module:TAP_Controller
+PAUSE_IR	TAP_Controller_with_BSCANE2.v	/^               PAUSE_IR        = 4'd13,$/;"	c	module:TAP_Controller_with_BSCANE2
+PAUSE_IR	abstractcs.v	/^               PAUSE_IR         = 4'd13,$/;"	c	module:abstractcs
+PAUSE_IR	data0.v	/^               PAUSE_IR         = 4'd13,$/;"	c	module:data0
+PAUSE_IR	data1.v	/^               PAUSE_IR         = 4'd13,$/;"	c	module:data1
+PAUSE_IR	jtag_state_machine.v	/^    localparam PAUSE_IR         = 4'hD;$/;"	c	module:jtag_state_machine
+PC_debug	RISCV_Core.v	/^    output wire [7:0]   PC_debug,$/;"	p	module:RISCV_Core
+PC_debug_db	Debug_Module.v	/^    wire [7:0]  PC_debug_db;$/;"	n	module:Debug_Module
+PC_debug_db	RISC_V_Bypass_signal_Gen.v	/^        output reg [7:0]   PC_debug_db$/;"	p	module:RISC_V_Bypass_signal_Gen
+PENDING_REG	defines.v	/^`define PENDING_REG         12'h7d2$/;"	c
+PERIPH_BASE	defines.v	/^`define PERIPH_BASE 8'h5f$/;"	c
+PMA_A	defines.v	/^`define PMA_A 3 \/\/ 4:3$/;"	c
+PMA_L	defines.v	/^`define PMA_L 7$/;"	c
+PMA_R	defines.v	/^`define PMA_R 0$/;"	c
+PMA_W	defines.v	/^`define PMA_W 1$/;"	c
+PMA_X	defines.v	/^`define PMA_X 2$/;"	c
+PMPADDR0	command.v	/^`define PMPADDR0        16'h3B0$/;"	c
+PMPADDR0	defines.v	/^`define PMPADDR0      12'h3B0$/;"	c
+PMPADDR1	command.v	/^`define PMPADDR1        16'h3B1$/;"	c
+PMPADDR1	defines.v	/^`define PMPADDR1      12'h3B1$/;"	c
+PMPADDR10	command.v	/^`define PMPADDR10       16'h3BA$/;"	c
+PMPADDR10	defines.v	/^`define PMPADDR10     12'h3BA$/;"	c
+PMPADDR11	command.v	/^`define PMPADDR11       16'h3BB$/;"	c
+PMPADDR11	defines.v	/^`define PMPADDR11     12'h3BB$/;"	c
+PMPADDR12	command.v	/^`define PMPADDR12       16'h3BC$/;"	c
+PMPADDR12	defines.v	/^`define PMPADDR12     12'h3BC$/;"	c
+PMPADDR13	command.v	/^`define PMPADDR13       16'h3BD$/;"	c
+PMPADDR13	defines.v	/^`define PMPADDR13     12'h3BD$/;"	c
+PMPADDR14	command.v	/^`define PMPADDR14       16'h3BE$/;"	c
+PMPADDR14	defines.v	/^`define PMPADDR14     12'h3BE$/;"	c
+PMPADDR15	command.v	/^`define PMPADDR15       16'h3BF$/;"	c
+PMPADDR15	defines.v	/^`define PMPADDR15     12'h3BF$/;"	c
+PMPADDR2	command.v	/^`define PMPADDR2        16'h3B2$/;"	c
+PMPADDR2	defines.v	/^`define PMPADDR2      12'h3B2$/;"	c
+PMPADDR3	command.v	/^`define PMPADDR3        16'h3B3$/;"	c
+PMPADDR3	defines.v	/^`define PMPADDR3      12'h3B3$/;"	c
+PMPADDR4	command.v	/^`define PMPADDR4        16'h3B4$/;"	c
+PMPADDR4	defines.v	/^`define PMPADDR4      12'h3B4$/;"	c
+PMPADDR5	command.v	/^`define PMPADDR5        16'h3B5$/;"	c
+PMPADDR5	defines.v	/^`define PMPADDR5      12'h3B5$/;"	c
+PMPADDR6	command.v	/^`define PMPADDR6        16'h3B6$/;"	c
+PMPADDR6	defines.v	/^`define PMPADDR6      12'h3B6$/;"	c
+PMPADDR7	command.v	/^`define PMPADDR7        16'h3B7$/;"	c
+PMPADDR7	defines.v	/^`define PMPADDR7      12'h3B7$/;"	c
+PMPADDR8	command.v	/^`define PMPADDR8        16'h3B8$/;"	c
+PMPADDR8	defines.v	/^`define PMPADDR8      12'h3B8$/;"	c
+PMPADDR9	command.v	/^`define PMPADDR9        16'h3B9$/;"	c
+PMPADDR9	defines.v	/^`define PMPADDR9      12'h3B9$/;"	c
+PMPCFG0	command.v	/^`define PMPCFG0         16'h3A0$/;"	c
+PMPCFG0	defines.v	/^`define PMPCFG0       12'h3A0$/;"	c
+PMPCFG1	command.v	/^`define PMPCFG1         16'h3A1$/;"	c
+PMPCFG1	defines.v	/^`define PMPCFG1       12'h3A1$/;"	c
+PMPCFG2	command.v	/^`define PMPCFG2         16'h3A2$/;"	c
+PMPCFG2	defines.v	/^`define PMPCFG2       12'h3A2$/;"	c
+PMPCFG3	command.v	/^`define PMPCFG3         16'h3A3$/;"	c
+PMPCFG3	defines.v	/^`define PMPCFG3       12'h3A3$/;"	c
+PRIORITY_REG0	defines.v	/^`define PRIORITY_REG0       12'h7d3$/;"	c
+PRIORITY_REG1	defines.v	/^`define PRIORITY_REG1       12'h7d4$/;"	c
+PRIORITY_REG2	defines.v	/^`define PRIORITY_REG2       12'h7d5$/;"	c
+PRIORITY_REG3	defines.v	/^`define PRIORITY_REG3       12'h7d6$/;"	c
+PROBE_DR	TAP_Controller_with_BSCANE2.v	/^               PROBE_DR         = 2'd1,$/;"	c	module:TAP_Controller_with_BSCANE2
+PROBE_IR	TAP_Controller_with_BSCANE2.v	/^    localparam PROBE_IR         = 2'd0,$/;"	c	module:TAP_Controller_with_BSCANE2
+PROBE_TDO	TAP_Controller_with_BSCANE2.v	/^               PROBE_TDO        = 2'd2;$/;"	c	module:TAP_Controller_with_BSCANE2
+PROGBUF_SIZE	abstractcs.v	/^    parameter PROGBUF_SIZE  = 5'd0,     \/\/ Max program buffer size (in 32-bit words)$/;"	c	module:abstractcs
+PTC_RPTC_CNTR	defines.v	/^`define PTC_RPTC_CNTR 32'h100005F0$/;"	c
+PTC_RPTC_CTRL	defines.v	/^`define PTC_RPTC_CTRL 32'h100005FC$/;"	c
+PTC_RPTC_CTRL_CAPTE	defines.v	/^`define PTC_RPTC_CTRL_CAPTE 8$/;"	c
+PTC_RPTC_CTRL_CNTRRST	defines.v	/^`define PTC_RPTC_CTRL_CNTRRST 7$/;"	c
+PTC_RPTC_CTRL_ECLK	defines.v	/^`define PTC_RPTC_CTRL_ECLK 1$/;"	c
+PTC_RPTC_CTRL_EN	defines.v	/^`define PTC_RPTC_CTRL_EN 0 $/;"	c
+PTC_RPTC_CTRL_INT	defines.v	/^`define PTC_RPTC_CTRL_INT 6$/;"	c
+PTC_RPTC_CTRL_INTE	defines.v	/^`define PTC_RPTC_CTRL_INTE 5$/;"	c
+PTC_RPTC_CTRL_NEC	defines.v	/^`define PTC_RPTC_CTRL_NEC 2$/;"	c
+PTC_RPTC_CTRL_OE	defines.v	/^`define PTC_RPTC_CTRL_OE 3$/;"	c
+PTC_RPTC_CTRL_SINGLE	defines.v	/^`define PTC_RPTC_CTRL_SINGLE 4$/;"	c
+PTC_RPTC_HRC	defines.v	/^`define PTC_RPTC_HRC 32'h100005F4$/;"	c
+PTC_RPTC_LRC	defines.v	/^`define PTC_RPTC_LRC 32'h100005F8$/;"	c
+PWM_DC_REG	defines.v	/^`define PWM_DC_REG 32'h5F100800$/;"	c
+R4	RISCV_Core.v	/^    output wire [31:0] R4  $/;"	p	module:RISCV_Core
+R4	TOP_JTAG_TB.v	/^    wire [15:0] R4;$/;"	n	module:TOP_JTAG_TB
+REG_data	RISCV_Core.v	/^    wire [31:0] REG_data;$/;"	n	module:RISCV_Core
+RESET_BUTTON	TOP_JTAG_TB.v	/^    reg RESET_BUTTON;$/;"	r	module:TOP_JTAG_TB
+RESET_BUTTON	Top_JTAG.v	/^    input RESET_BUTTON, \/\/Active High$/;"	p	module:Top_CPU_JTAG
+RISCV_Core	RISCV_Core.v	/^module RISCV_Core($/;"	m
+RISC_V_Bypass_signal_Gen	RISC_V_Bypass_signal_Gen.v	/^module RISC_V_Bypass_signal_Gen($/;"	m
+RUN_TEST_IDLE	Debug_Module.v	/^               RUN_TEST_IDLE    = 4'd1,$/;"	c	module:Debug_Module
+RUN_TEST_IDLE	JTAG.v	/^               RUN_TEST_IDLE    = 4'd1,$/;"	c	module:JTAG
+RUN_TEST_IDLE	JTAG_IR.v	/^           RUN_TEST_IDLE    = 4'd1,$/;"	c	module:JTAG_IR
+RUN_TEST_IDLE	TAP_Controller.v	/^               RUN_TEST_IDLE    = 4'd1,$/;"	c	module:TAP_Controller
+RUN_TEST_IDLE	TAP_Controller_with_BSCANE2.v	/^               RUN_TEST_IDLE    = 4'd1,$/;"	c	module:TAP_Controller_with_BSCANE2
+RUN_TEST_IDLE	abstractcs.v	/^               RUN_TEST_IDLE    = 4'd1,$/;"	c	module:abstractcs
+RUN_TEST_IDLE	data0.v	/^               RUN_TEST_IDLE    = 4'd1,$/;"	c	module:data0
+RUN_TEST_IDLE	data1.v	/^               RUN_TEST_IDLE    = 4'd1,$/;"	c	module:data1
+RUN_TEST_IDLE	jtag_state_machine.v	/^    localparam RUN_TEST_IDLE    = 4'h1;$/;"	c	module:jtag_state_machine
+Read_Reg	TOP_JTAG_TB.v	/^    task automatic Read_Reg(input [31:0] IR_data, input [31:0] DR_data, output [31:0] DR_receive/;"	t	module:TOP_JTAG_TB
+Reset_n	JTAG.v	/^    wire Reset_n, Select, Enable;$/;"	n	module:JTAG
+Reset_n	TAP_Controller.v	/^        output wire Reset_n,$/;"	p	module:TAP_Controller
+SECDED_ADDRESS_REG	defines.v	/^`define SECDED_ADDRESS_REG 32'h100006F0$/;"	c
+SECDED_DATA_REG	defines.v	/^`define SECDED_DATA_REG 32'h100006F4$/;"	c
+SECDED_ENABLE_REG	defines.v	/^`define SECDED_ENABLE_REG 32'h100006F8$/;"	c
+SEL	TAP_Controller_with_BSCANE2.v	/^    output wire SEL,$/;"	p	module:TAP_Controller_with_BSCANE2
+SELECT_DR	jtag_state_machine.v	/^    localparam SELECT_DR        = 4'h2;$/;"	c	module:jtag_state_machine
+SELECT_DR_SCAN	Debug_Module.v	/^               SELECT_DR_SCAN   = 4'd2,$/;"	c	module:Debug_Module
+SELECT_DR_SCAN	JTAG.v	/^               SELECT_DR_SCAN   = 4'd2,$/;"	c	module:JTAG
+SELECT_DR_SCAN	JTAG_IR.v	/^           SELECT_DR_SCAN   = 4'd2,$/;"	c	module:JTAG_IR
+SELECT_DR_SCAN	TAP_Controller.v	/^               SELECT_DR_SCAN   = 4'd2,$/;"	c	module:TAP_Controller
+SELECT_DR_SCAN	TAP_Controller_with_BSCANE2.v	/^               SELECT_DR_SCAN   = 4'd2,$/;"	c	module:TAP_Controller_with_BSCANE2
+SELECT_DR_SCAN	abstractcs.v	/^               SELECT_DR_SCAN   = 4'd2,$/;"	c	module:abstractcs
+SELECT_DR_SCAN	data0.v	/^               SELECT_DR_SCAN   = 4'd2,$/;"	c	module:data0
+SELECT_DR_SCAN	data1.v	/^               SELECT_DR_SCAN   = 4'd2,$/;"	c	module:data1
+SELECT_IR	jtag_state_machine.v	/^    localparam SELECT_IR        = 4'h9;$/;"	c	module:jtag_state_machine
+SELECT_IR_SCAN	Debug_Module.v	/^               SELECT_IR_SCAN   = 4'd9,$/;"	c	module:Debug_Module
+SELECT_IR_SCAN	JTAG.v	/^               SELECT_IR_SCAN   = 4'd9,$/;"	c	module:JTAG
+SELECT_IR_SCAN	JTAG_IR.v	/^           SELECT_IR_SCAN   = 4'd9,$/;"	c	module:JTAG_IR
+SELECT_IR_SCAN	TAP_Controller.v	/^               SELECT_IR_SCAN   = 4'd9,$/;"	c	module:TAP_Controller
+SELECT_IR_SCAN	TAP_Controller_with_BSCANE2.v	/^               SELECT_IR_SCAN   = 4'd9,$/;"	c	module:TAP_Controller_with_BSCANE2
+SELECT_IR_SCAN	abstractcs.v	/^               SELECT_IR_SCAN   = 4'd9,$/;"	c	module:abstractcs
+SELECT_IR_SCAN	data0.v	/^               SELECT_IR_SCAN   = 4'd9,$/;"	c	module:data0
+SELECT_IR_SCAN	data1.v	/^               SELECT_IR_SCAN   = 4'd9,$/;"	c	module:data1
+SEL_db	Debug_Module.v	/^    wire        SEL_db;$/;"	n	module:Debug_Module
+SHIFT_DR	Debug_Module.v	/^               SHIFT_DR         = 4'd4,$/;"	c	module:Debug_Module
+SHIFT_DR	JTAG.v	/^               SHIFT_DR         = 4'd4,$/;"	c	module:JTAG
+SHIFT_DR	JTAG_IR.v	/^           SHIFT_DR         = 4'd4,$/;"	c	module:JTAG_IR
+SHIFT_DR	TAP_Controller.v	/^               SHIFT_DR         = 4'd4,$/;"	c	module:TAP_Controller
+SHIFT_DR	TAP_Controller_with_BSCANE2.v	/^               SHIFT_DR         = 4'd4,$/;"	c	module:TAP_Controller_with_BSCANE2
+SHIFT_DR	abstractcs.v	/^               SHIFT_DR         = 4'd4,$/;"	c	module:abstractcs
+SHIFT_DR	data0.v	/^               SHIFT_DR         = 4'd4,$/;"	c	module:data0
+SHIFT_DR	data1.v	/^               SHIFT_DR         = 4'd4,$/;"	c	module:data1
+SHIFT_DR	jtag_state_machine.v	/^    localparam SHIFT_DR         = 4'h4;$/;"	c	module:jtag_state_machine
+SHIFT_IR	Debug_Module.v	/^               SHIFT_IR         = 4'd11,$/;"	c	module:Debug_Module
+SHIFT_IR	JTAG.v	/^               SHIFT_IR         = 4'd11,$/;"	c	module:JTAG
+SHIFT_IR	JTAG_IR.v	/^           SHIFT_IR         = 4'd11,$/;"	c	module:JTAG_IR
+SHIFT_IR	TAP_Controller.v	/^               SHIFT_IR         = 4'd11,$/;"	c	module:TAP_Controller
+SHIFT_IR	TAP_Controller_with_BSCANE2.v	/^               SHIFT_IR         = 4'd11,$/;"	c	module:TAP_Controller_with_BSCANE2
+SHIFT_IR	abstractcs.v	/^               SHIFT_IR         = 4'd11,$/;"	c	module:abstractcs
+SHIFT_IR	data0.v	/^               SHIFT_IR         = 4'd11,$/;"	c	module:data0
+SHIFT_IR	data1.v	/^               SHIFT_IR         = 4'd11,$/;"	c	module:data1
+SHIFT_IR	jtag_state_machine.v	/^    localparam SHIFT_IR         = 4'hB;$/;"	c	module:jtag_state_machine
+STACK_SAVE_REG	defines.v	/^`define STACK_SAVE_REG      12'h7d7$/;"	c
+STACK_SAVE_REG_S	defines.v	/^`define STACK_SAVE_REG_S    12'h7d8  \/\/ shadow register for STACK_SAVE_REG $/;"	c
+STEP	defines.v	/^`define STEP 2$/;"	c
+STICKY_UNAVAIL	dmstatus.v	/^    localparam STICKY_UNAVAIL = 1'b0;         $/;"	c	module:dmstatus
+SYSCLK_N	TOP_JTAG_TB.v	/^    reg SYSCLK_P, SYSCLK_N;$/;"	r	module:TOP_JTAG_TB
+SYSCLK_N	tb_toggle_pins.v	/^    reg SYSCLK_N;$/;"	r	module:tb_toggle_pins
+SYSCLK_N	toggle_pins.v	/^    input  wire SYSCLK_N,$/;"	p	module:toggle_pins
+SYSCLK_P	TOP_JTAG_TB.v	/^    reg SYSCLK_P, SYSCLK_N;$/;"	r	module:TOP_JTAG_TB
+SYSCLK_P	tb_toggle_pins.v	/^    reg SYSCLK_P;$/;"	r	module:tb_toggle_pins
+SYSCLK_P	toggle_pins.v	/^    input  wire SYSCLK_P,$/;"	p	module:toggle_pins
+Select	JTAG.v	/^    wire Reset_n, Select, Enable;$/;"	n	module:JTAG
+Select	TAP_Controller.v	/^        output wire Select,$/;"	p	module:TAP_Controller
+Shift_DR	Bypass_Reg.v	/^        input wire Shift_DR,$/;"	p	module:Bypass_Reg
+Shift_DR	ID_Reg.v	/^        input wire Shift_DR,$/;"	p	module:ID_Reg
+Shift_DR	JTAG.v	/^    wire Clock_DR, Shift_DR, Update_DR;$/;"	n	module:JTAG
+Shift_DR	TAP_Controller.v	/^        output wire Shift_DR,$/;"	p	module:TAP_Controller
+Shift_IR	JTAG.v	/^    wire Clock_IR, Shift_IR, Update_IR;$/;"	n	module:JTAG
+Shift_IR	JTAG_IR.v	/^    input wire Shift_IR,$/;"	p	module:JTAG_IR
+Shift_IR	TAP_Controller.v	/^        output wire Shift_IR,$/;"	p	module:TAP_Controller
+TAP_Controller	TAP_Controller.v	/^module TAP_Controller($/;"	m
+TAP_Controller_TB	TAP_Controller_TB.v	/^module TAP_Controller_TB($/;"	m
+TAP_Controller_with_BSCANE2	TAP_Controller_with_BSCANE2.v	/^module TAP_Controller_with_BSCANE2 ($/;"	m
+TAP_State	JTAG_TB.v	/^    wire [3:0] TAP_State;$/;"	n	module:JTAG_TB
+TAP_State	TOP_JTAG_TB.v	/^    wire [3:0] TAP_State;$/;"	n	module:TOP_JTAG_TB
+TAP_state	Bypass_Reg.v	/^        input wire [3:0] TAP_state,$/;"	p	module:Bypass_Reg
+TAP_state	Debug_Module.v	/^    input wire [3:0] TAP_state,$/;"	p	module:Debug_Module
+TAP_state	JTAG.v	/^    wire [3:0] TAP_state;$/;"	n	module:JTAG
+TAP_state	JTAG_IR.v	/^    input wire [3:0] TAP_state,$/;"	p	module:JTAG_IR
+TAP_state	abstractcs.v	/^    input wire [3:0] TAP_state,$/;"	p	module:abstractcs
+TAP_state	data0.v	/^        input wire [3:0]    TAP_state,$/;"	p	module:data0
+TAP_state	data1.v	/^        input wire [3:0]    TAP_state,$/;"	p	module:data1
+TCK	Bypass_Reg.v	/^        input wire TCK,$/;"	p	module:Bypass_Reg
+TCK	FTDI_connections.v	/^        input wire TCK,$/;"	p	module:FTDI_connections
+TCK	FTDI_connections.v	/^        output wire TCK,$/;"	p	module:FTDI_connections
+TCK	ID_Reg.v	/^        input wire TCK,$/;"	p	module:ID_Reg
+TCK	JTAG.v	/^    input wire TCK,$/;"	p	module:JTAG
+TCK	JTAG_IR.v	/^    input wire TCK,$/;"	p	module:JTAG_IR
+TCK	JTAG_TB.v	/^    reg TDI, TMS, TCK;$/;"	r	module:JTAG_TB
+TCK	TAP_Controller.v	/^        input wire TCK,$/;"	p	module:TAP_Controller
+TCK	TAP_Controller_TB.v	/^    reg TCK, TMS;$/;"	r	module:TAP_Controller_TB
+TCK	TAP_Controller_with_BSCANE2.v	/^    output wire TCK,$/;"	p	module:TAP_Controller_with_BSCANE2
+TCK	TOP_JTAG_TB.v	/^    reg TDI, TMS, TCK;$/;"	r	module:TOP_JTAG_TB
+TCK	Top_JTAG.v	/^    input wire TCK,$/;"	p	module:Top_CPU_JTAG
+TCK	tb_toggle_pins.v	/^    wire TCK;$/;"	n	module:tb_toggle_pins
+TCK	toggle_pins.v	/^    output reg TCK          \/\/ Output pin 3$/;"	p	module:toggle_pins
+TCK	top.v	/^    output wire TCK,$/;"	p	module:top
+TCK_internal	FTDI_connections.v	/^    wire TDO_internal, TDI_internal, TMS_internal, TCK_internal;$/;"	n	module:FTDI_connections
+TCK_sync	Top_JTAG.v	/^    wire TCK_sync; $/;"	n	module:Top_CPU_JTAG
+TD0	tb_toggle_pins.v	/^    wire TD0;$/;"	n	module:tb_toggle_pins
+TD0	toggle_pins.v	/^    output reg TD0,         \/\/ Output pin 1$/;"	p	module:toggle_pins
+TDI	Debug_Module.v	/^    input wire TDI,$/;"	p	module:Debug_Module
+TDI	FTDI_connections.v	/^        input wire TDI,$/;"	p	module:FTDI_connections
+TDI	FTDI_connections.v	/^        output wire TDI,$/;"	p	module:FTDI_connections
+TDI	JTAG.v	/^    input wire TDI,$/;"	p	module:JTAG
+TDI	JTAG_TB.v	/^    reg TDI, TMS, TCK;$/;"	r	module:JTAG_TB
+TDI	TAP_Controller_with_BSCANE2.v	/^    output wire TDI,$/;"	p	module:TAP_Controller_with_BSCANE2
+TDI	TOP_JTAG_TB.v	/^    reg TDI, TMS, TCK;$/;"	r	module:TOP_JTAG_TB
+TDI	Top_JTAG.v	/^    input wire TDI,$/;"	p	module:Top_CPU_JTAG
+TDI	tb_toggle_pins.v	/^    wire TDI;$/;"	n	module:tb_toggle_pins
+TDI	toggle_pins.v	/^    output reg TDI,         \/\/ Output pin 0$/;"	p	module:toggle_pins
+TDI	top.v	/^    output wire TDI,$/;"	p	module:top
+TDI_Transfer	TOP_JTAG_TB.v	/^    task automatic TDI_Transfer(input [31:0] send_data, input integer bit_length, output reg [31/;"	t	module:TOP_JTAG_TB
+TDI_internal	FTDI_connections.v	/^    wire TDO_internal, TDI_internal, TMS_internal, TCK_internal;$/;"	n	module:FTDI_connections
+TDI_length	TOP_JTAG_TB.v	/^    integer TDI_length=0, j=0;$/;"	r	module:TOP_JTAG_TB
+TDI_reg	TOP_JTAG_TB.v	/^    reg [31:0] TDI_reg;$/;"	r	module:TOP_JTAG_TB
+TDO	Debug_Module.v	/^    output reg TDO,$/;"	p	module:Debug_Module
+TDO	FTDI_connections.v	/^        output wire TDO,$/;"	p	module:FTDI_connections
+TDO	JTAG_TB.v	/^    wire TDO;$/;"	n	module:JTAG_TB
+TDO	TAP_Controller_with_BSCANE2.v	/^    output wire TDO,$/;"	p	module:TAP_Controller_with_BSCANE2
+TDO	TOP_JTAG_TB.v	/^    wire TDO;$/;"	n	module:TOP_JTAG_TB
+TDO	Top_JTAG.v	/^    output wire TDO,$/;"	p	module:Top_CPU_JTAG
+TDO	top.v	/^    output wire TDO$/;"	p	module:top
+TDO_internal	FTDI_connections.v	/^    wire TDO_internal, TDI_internal, TMS_internal, TCK_internal;$/;"	n	module:FTDI_connections
+TDO_reg	TAP_Controller_with_BSCANE2.v	/^    reg TDO_reg;$/;"	r	module:TAP_Controller_with_BSCANE2
+TDO_temp	Debug_Module.v	/^    reg         TDO_temp;$/;"	r	module:Debug_Module
+TEMP_REG	defines.v	/^`define TEMP_REG 32'h5F100808$/;"	c
+TESTING	defines.v	/^`define TESTING 1$/;"	c
+TEST_LOGIC_RESET	Debug_Module.v	/^    localparam TEST_LOGIC_RESET = 4'd0,$/;"	c	module:Debug_Module
+TEST_LOGIC_RESET	JTAG.v	/^    localparam TEST_LOGIC_RESET = 4'd0,$/;"	c	module:JTAG
+TEST_LOGIC_RESET	JTAG_IR.v	/^localparam TEST_LOGIC_RESET = 4'd0,$/;"	c	module:JTAG_IR
+TEST_LOGIC_RESET	TAP_Controller.v	/^    localparam TEST_LOGIC_RESET = 4'd0,$/;"	c	module:TAP_Controller
+TEST_LOGIC_RESET	TAP_Controller_with_BSCANE2.v	/^    localparam TEST_LOGIC_RESET = 4'd0,$/;"	c	module:TAP_Controller_with_BSCANE2
+TEST_LOGIC_RESET	abstractcs.v	/^    localparam TEST_LOGIC_RESET = 4'd0,$/;"	c	module:abstractcs
+TEST_LOGIC_RESET	data0.v	/^    localparam TEST_LOGIC_RESET = 4'd0,$/;"	c	module:data0
+TEST_LOGIC_RESET	data1.v	/^    localparam TEST_LOGIC_RESET = 4'd0,$/;"	c	module:data1
+TEST_LOGIC_RESET	jtag_state_machine.v	/^    localparam TEST_LOGIC_RESET = 4'h0;$/;"	c	module:jtag_state_machine
+TIMEOUT	TOP_JTAG_TB.v	/^  parameter TIMEOUT = 3000000; \/\/200us$/;"	c	module:TOP_JTAG_TB
+TMS	FTDI_connections.v	/^        input wire TMS,$/;"	p	module:FTDI_connections
+TMS	FTDI_connections.v	/^        output wire TMS,$/;"	p	module:FTDI_connections
+TMS	JTAG.v	/^    input wire TMS,$/;"	p	module:JTAG
+TMS	JTAG_TB.v	/^    reg TDI, TMS, TCK;$/;"	r	module:JTAG_TB
+TMS	TAP_Controller.v	/^        input wire TMS$/;"	p	module:TAP_Controller
+TMS	TAP_Controller_TB.v	/^    reg TCK, TMS;$/;"	r	module:TAP_Controller_TB
+TMS	TAP_Controller_with_BSCANE2.v	/^    output wire TMS,$/;"	p	module:TAP_Controller_with_BSCANE2
+TMS	TOP_JTAG_TB.v	/^    reg TDI, TMS, TCK;$/;"	r	module:TOP_JTAG_TB
+TMS	Top_JTAG.v	/^    input wire TMS,$/;"	p	module:Top_CPU_JTAG
+TMS	tb_toggle_pins.v	/^    wire TMS;$/;"	n	module:tb_toggle_pins
+TMS	toggle_pins.v	/^    output reg TMS,         \/\/ Output pin 2$/;"	p	module:toggle_pins
+TMS	top.v	/^    output wire TMS,$/;"	p	module:top
+TMS_Sequence	TOP_JTAG_TB.v	/^    task automatic TMS_Sequence(input [7:0] pattern, input integer length);$/;"	t	module:TOP_JTAG_TB
+TMS_internal	FTDI_connections.v	/^    wire TDO_internal, TDI_internal, TMS_internal, TCK_internal;$/;"	n	module:FTDI_connections
+TMS_length	TOP_JTAG_TB.v	/^    integer TMS_length=0, i;$/;"	r	module:TOP_JTAG_TB
+TMS_reg	TOP_JTAG_TB.v	/^    reg [7:0] TMS_reg;$/;"	r	module:TOP_JTAG_TB
+TOP_JTAG_TB	TOP_JTAG_TB.v	/^module TOP_JTAG_TB($/;"	m
+TSMC_RAM_EN	defines.v	/^`define TSMC_RAM_EN 0$/;"	c
+Top_CPU_JTAG	Top_JTAG.v	/^module Top_CPU_JTAG#($/;"	m
+UART_ADDR_WIDTH	defines.v	/^ `define UART_ADDR_WIDTH 3$/;"	c
+UART_ADDR_WIDTH	defines.v	/^ `define UART_ADDR_WIDTH 32$/;"	c
+UART_DATA_WIDTH	defines.v	/^ `define UART_DATA_WIDTH 32$/;"	c
+UART_DATA_WIDTH	defines.v	/^ `define UART_DATA_WIDTH 8$/;"	c
+UART_FC_1	defines.v	/^`define UART_FC_1		2'b00$/;"	c
+UART_FC_14	defines.v	/^`define UART_FC_14	2'b11$/;"	c
+UART_FC_4	defines.v	/^`define UART_FC_4		2'b01$/;"	c
+UART_FC_8	defines.v	/^`define UART_FC_8		2'b10$/;"	c
+UART_FC_TL	defines.v	/^`define UART_FC_TL	1:0	\/\/ Trigger level$/;"	c
+UART_FIFO_COUNTER_W	defines.v	/^`define UART_FIFO_COUNTER_W	5$/;"	c
+UART_FIFO_DEPTH	defines.v	/^`define UART_FIFO_DEPTH	16$/;"	c
+UART_FIFO_POINTER_W	defines.v	/^`define UART_FIFO_POINTER_W	4$/;"	c
+UART_FIFO_REC_WIDTH	defines.v	/^`define UART_FIFO_REC_WIDTH  11$/;"	c
+UART_FIFO_WIDTH	defines.v	/^`define UART_FIFO_WIDTH	8$/;"	c
+UART_IE_MS	defines.v	/^`define UART_IE_MS	3	\/\/ Modem Status Interrupt$/;"	c
+UART_IE_RDA	defines.v	/^`define UART_IE_RDA	0	\/\/ Received Data available interrupt$/;"	c
+UART_IE_RLS	defines.v	/^`define UART_IE_RLS	2	\/\/ Receiver Line Status Interrupt$/;"	c
+UART_IE_THRE	defines.v	/^`define UART_IE_THRE	1	\/\/ Transmitter Holding Register empty interrupt$/;"	c
+UART_II_II	defines.v	/^`define UART_II_II	3:1	\/\/ Interrupt identification$/;"	c
+UART_II_IP	defines.v	/^`define UART_II_IP	0	\/\/ Interrupt pending when 0$/;"	c
+UART_II_MS	defines.v	/^`define UART_II_MS	3'b000	\/\/ Modem Status$/;"	c
+UART_II_RDA	defines.v	/^`define UART_II_RDA	3'b010	\/\/ Receiver Data available$/;"	c
+UART_II_RLS	defines.v	/^`define UART_II_RLS	3'b011	\/\/ Receiver Line Status$/;"	c
+UART_II_THRE	defines.v	/^`define UART_II_THRE	3'b001	\/\/ Transmitter Holding Register empty$/;"	c
+UART_II_TI	defines.v	/^`define UART_II_TI	3'b110	\/\/ Timeout Indication$/;"	c
+UART_IMPL_PER	defines.v	/^`define UART_IMPL_PER 1     \/\/Changed from UART_IMPL to UART_IMPL_PER on 27-09-2016$/;"	c
+UART_LC_BC	defines.v	/^`define UART_LC_BC	6	\/\/ Break control$/;"	c
+UART_LC_BITS	defines.v	/^`define UART_LC_BITS	1:0	\/\/ bits in character$/;"	c
+UART_LC_DL	defines.v	/^`define UART_LC_DL	7	\/\/ Divisor Latch access bit$/;"	c
+UART_LC_EP	defines.v	/^`define UART_LC_EP	4	\/\/ even parity$/;"	c
+UART_LC_PE	defines.v	/^`define UART_LC_PE	3	\/\/ parity enable$/;"	c
+UART_LC_SB	defines.v	/^`define UART_LC_SB	2	\/\/ stop bits$/;"	c
+UART_LC_SP	defines.v	/^`define UART_LC_SP	5	\/\/ stick parity$/;"	c
+UART_LS_BI	defines.v	/^`define UART_LS_BI	4	\/\/ Break interrupt$/;"	c
+UART_LS_DR	defines.v	/^`define UART_LS_DR	0	\/\/ Data ready$/;"	c
+UART_LS_EI	defines.v	/^`define UART_LS_EI	7	\/\/ display indicator$/;"	c
+UART_LS_FE	defines.v	/^`define UART_LS_FE	3	\/\/ Framing display$/;"	c
+UART_LS_OE	defines.v	/^`define UART_LS_OE	1	\/\/ Overrun display$/;"	c
+UART_LS_PE	defines.v	/^`define UART_LS_PE	2	\/\/ Parity display$/;"	c
+UART_LS_TE	defines.v	/^`define UART_LS_TE	6	\/\/ Transmitter Empty indicator$/;"	c
+UART_LS_TFE	defines.v	/^`define UART_LS_TFE	5	\/\/ Transmit FIFO is empty$/;"	c
+UART_MC_DTR	defines.v	/^`define UART_MC_DTR	0$/;"	c
+UART_MC_LB	defines.v	/^`define UART_MC_LB	4	\/\/ Loopback mode$/;"	c
+UART_MC_OUT1	defines.v	/^`define UART_MC_OUT1	2$/;"	c
+UART_MC_OUT2	defines.v	/^`define UART_MC_OUT2	3$/;"	c
+UART_MC_RTS	defines.v	/^`define UART_MC_RTS	1$/;"	c
+UART_MS_CCTS	defines.v	/^`define UART_MS_CCTS	4	\/\/ Complement signals$/;"	c
+UART_MS_CDCD	defines.v	/^`define UART_MS_CDCD	7$/;"	c
+UART_MS_CDSR	defines.v	/^`define UART_MS_CDSR	5$/;"	c
+UART_MS_CRI	defines.v	/^`define UART_MS_CRI	6$/;"	c
+UART_MS_DCTS	defines.v	/^`define UART_MS_DCTS	0	\/\/ Delta signals$/;"	c
+UART_MS_DDCD	defines.v	/^`define UART_MS_DDCD	3$/;"	c
+UART_MS_DDSR	defines.v	/^`define UART_MS_DDSR	1$/;"	c
+UART_MS_TERI	defines.v	/^`define UART_MS_TERI	2$/;"	c
+UART_REG_DL1	defines.v	/^`define UART_REG_DL1 32'h5F1006F0\/\/`UART_ADDR_WIDTH'd0	\/\/ Divisor latch bytes (1-2)$/;"	c
+UART_REG_DL2	defines.v	/^`define UART_REG_DL2 32'h5F1006F1\/\/`UART_ADDR_WIDTH'd1$/;"	c
+UART_REG_FC	defines.v	/^`define UART_REG_FC  32'h5F1006F3\/\/`UART_ADDR_WIDTH'd2	\/\/ FIFO control$/;"	c
+UART_REG_IE	defines.v	/^`define UART_REG_IE	 32'h5F1006F1\/\/`UART_ADDR_WIDTH'd1	\/\/ Interrupt enable$/;"	c
+UART_REG_II	defines.v	/^`define UART_REG_II  32'h5F1006F2\/\/`UART_ADDR_WIDTH'd2	\/\/ Interrupt identification$/;"	c
+UART_REG_LC	defines.v	/^`define UART_REG_LC	 32'h5F1006F4\/\/`UART_ADDR_WIDTH'd3	\/\/ Line Control$/;"	c
+UART_REG_LS	defines.v	/^`define UART_REG_LS  32'h5F1006F6\/\/`UART_ADDR_WIDTH'd5	\/\/ Line status$/;"	c
+UART_REG_MC	defines.v	/^`define UART_REG_MC	 32'h5F1006F5\/\/`UART_ADDR_WIDTH'd4	\/\/ Modem control$/;"	c
+UART_REG_MS	defines.v	/^`define UART_REG_MS  32'h5F1006F7\/\/`UART_ADDR_WIDTH'd6	\/\/ Modem status$/;"	c
+UART_REG_RB	defines.v	/^`define UART_REG_RB	 32'h5F1006F0\/\/`UART_ADDR_WIDTH'd0	\/\/ receiver buffer$/;"	c
+UART_REG_SR	defines.v	/^`define UART_REG_SR  32'h5F1006F8\/\/`UART_ADDR_WIDTH'd7	\/\/ Scratch register$/;"	c
+UART_REG_TR	defines.v	/^`define UART_REG_TR  32'h5F1006F0\/\/`UART_ADDR_WIDTH'd0	\/\/ transmitter$/;"	c
+UPDATE_DR	Debug_Module.v	/^               UPDATE_DR        = 4'd8,$/;"	c	module:Debug_Module
+UPDATE_DR	JTAG.v	/^               UPDATE_DR        = 4'd8,$/;"	c	module:JTAG
+UPDATE_DR	JTAG_IR.v	/^           UPDATE_DR        = 4'd8,$/;"	c	module:JTAG_IR
+UPDATE_DR	TAP_Controller.v	/^               UPDATE_DR        = 4'd8,$/;"	c	module:TAP_Controller
+UPDATE_DR	TAP_Controller_with_BSCANE2.v	/^               UPDATE_DR        = 4'd8,$/;"	c	module:TAP_Controller_with_BSCANE2
+UPDATE_DR	abstractcs.v	/^               UPDATE_DR        = 4'd8,$/;"	c	module:abstractcs
+UPDATE_DR	data0.v	/^               UPDATE_DR        = 4'd8,$/;"	c	module:data0
+UPDATE_DR	data1.v	/^               UPDATE_DR        = 4'd8,$/;"	c	module:data1
+UPDATE_DR	jtag_state_machine.v	/^    localparam UPDATE_DR        = 4'h8;$/;"	c	module:jtag_state_machine
+UPDATE_IR	Debug_Module.v	/^               UPDATE_IR        = 4'd15;$/;"	c	module:Debug_Module
+UPDATE_IR	JTAG.v	/^               UPDATE_IR        = 4'd15;$/;"	c	module:JTAG
+UPDATE_IR	JTAG_IR.v	/^           UPDATE_IR        = 4'd15;$/;"	c	module:JTAG_IR
+UPDATE_IR	TAP_Controller.v	/^               UPDATE_IR        = 4'd15;$/;"	c	module:TAP_Controller
+UPDATE_IR	TAP_Controller_with_BSCANE2.v	/^               UPDATE_IR        = 4'd15;$/;"	c	module:TAP_Controller_with_BSCANE2
+UPDATE_IR	abstractcs.v	/^               UPDATE_IR        = 4'd15;$/;"	c	module:abstractcs
+UPDATE_IR	data0.v	/^               UPDATE_IR        = 4'd15;$/;"	c	module:data0
+UPDATE_IR	data1.v	/^               UPDATE_IR        = 4'd15;$/;"	c	module:data1
+UPDATE_IR	jtag_state_machine.v	/^    localparam UPDATE_IR        = 4'hF;$/;"	c	module:jtag_state_machine
+USERDATA_LEN	jtaglet.v	/^    parameter USERDATA_LEN = 32,$/;"	c	module:jtaglet
+USERDATA_OP	jtaglet.v	/^    localparam USERDATA_OP = 4'b1000;$/;"	c	module:jtaglet
+USEROP_LEN	jtaglet.v	/^    parameter USEROP_LEN = 8$/;"	c	module:jtaglet
+USEROP_OP	jtaglet.v	/^    localparam USEROP_OP = 4'b1001;$/;"	c	module:jtaglet
+Update_DR	JTAG.v	/^    wire Clock_DR, Shift_DR, Update_DR;$/;"	n	module:JTAG
+Update_DR	TAP_Controller.v	/^        output wire Update_DR,$/;"	p	module:TAP_Controller
+Update_IR	JTAG.v	/^    wire Clock_IR, Shift_IR, Update_IR;$/;"	n	module:JTAG
+Update_IR	JTAG_IR.v	/^    input wire Update_IR,$/;"	p	module:JTAG_IR
+Update_IR	TAP_Controller.v	/^        output wire Update_IR,$/;"	p	module:TAP_Controller
+Update_IR	TOP_JTAG_TB.v	/^    task automatic Update_IR(input [31:0] IR_data);$/;"	t	module:TOP_JTAG_TB
+Update_Reg	TOP_JTAG_TB.v	/^    task automatic Update_Reg(input [31:0] IR_data, input [31:0] DR_data);$/;"	t	module:TOP_JTAG_TB
+VERBOSE_LINE_STATUS	defines.v	/^`define VERBOSE_LINE_STATUS 0   \/\/ Details about the lsr (line status register)$/;"	c
+VERBOSE_WB	defines.v	/^`define VERBOSE_WB  0           \/\/ All activity on the WISHBONE is recorded$/;"	c
+VERSION	dmstatus.v	/^    localparam [3:0] VERSION = 4'd3;          \/\/ Version of Debug Spec$/;"	c	module:dmstatus
+WALL_CLOCK_COMP_VAL	defines.v	/^`define WALL_CLOCK_COMP_VAL 27'd100000000$/;"	c
+WIDTH	JTAG.v	/^    parameter WIDTH = 8 \/\/ IR width$/;"	c	module:JTAG
+WIDTH	JTAG_IR.v	/^    parameter WIDTH = 8 \/\/ IR width$/;"	c	module:JTAG_IR
+WIDTH	Top_JTAG.v	/^    parameter WIDTH = 8                 \/\/ IR width$/;"	c	module:Top_CPU_JTAG
+XADC_BASE	defines.v	/^`define XADC_BASE 16'h06 $/;"	c
+XLEN	defines.v	/^`define XLEN 32$/;"	c
+aamsize	TOP_JTAG_TB.v	/^    task automatic Access_mem_command(input write, input [2:0] aamsize, input [31:0] ptr, input /;"	p	task:TOP_JTAG_TB.Access_mem_command
+aamsize	data1.v	/^        input wire [2:0]    aamsize,        $/;"	p	module:data1
+abcs_busy	Debug_Module.v	/^    wire        abcs_busy;$/;"	n	module:Debug_Module
+abcs_cmderr	Debug_Module.v	/^    wire [2:0]  abcs_cmderr;$/;"	n	module:Debug_Module
+abstract_auto_reg_written	abstractcs.v	/^    input  wire abstract_auto_reg_written,        \/\/ Auto-execution configuration was written$/;"	p	module:abstractcs
+abstract_cmd_bus_error	RISCV_Core.v	/^    output wire         abstract_cmd_bus_error,$/;"	p	module:RISCV_Core
+abstract_cmd_bus_error	abstractcs.v	/^    input  wire abstract_cmd_bus_error,           \/\/ Error: bus access failed$/;"	p	module:abstractcs
+abstract_cmd_bus_error_db	Debug_Module.v	/^    wire        abstract_cmd_bus_error_db;$/;"	n	module:Debug_Module
+abstract_cmd_bus_error_db	RISC_V_Bypass_signal_Gen.v	/^        output reg         abstract_cmd_bus_error_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+abstract_cmd_complete	abstractcs.v	/^    input  wire abstract_cmd_complete,            \/\/ Indicates command execution has completed$/;"	p	module:abstractcs
+abstract_cmd_exception	RISCV_Core.v	/^    output wire         abstract_cmd_exception,$/;"	p	module:RISCV_Core
+abstract_cmd_exception	abstractcs.v	/^    input  wire abstract_cmd_exception,           \/\/ Error: exception during command execution$/;"	p	module:abstractcs
+abstract_cmd_exception_db	Debug_Module.v	/^    wire        abstract_cmd_exception_db;$/;"	n	module:Debug_Module
+abstract_cmd_exception_db	RISC_V_Bypass_signal_Gen.v	/^        output reg         abstract_cmd_exception_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+abstract_cmd_failed	RISCV_Core.v	/^    output wire         abstract_cmd_failed,$/;"	p	module:RISCV_Core
+abstract_cmd_failed	abstractcs.v	/^    input  wire abstract_cmd_failed,              \/\/ Error: unspecified command failure$/;"	p	module:abstractcs
+abstract_cmd_failed_db	Debug_Module.v	/^    wire        abstract_cmd_failed_db;$/;"	n	module:Debug_Module
+abstract_cmd_failed_db	RISC_V_Bypass_signal_Gen.v	/^        output reg         abstract_cmd_failed_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+abstract_cmd_not_supported	abstractcs.v	/^    input  wire abstract_cmd_not_supported,       \/\/ Error: unsupported abstract command$/;"	p	module:abstractcs
+abstract_cmd_reg_written	abstractcs.v	/^    input  wire abstract_cmd_reg_written,         \/\/ Abstract command register was written$/;"	p	module:abstractcs
+abstract_cmd_reg_written_floped	abstractcs.v	/^    reg abstract_cmd_reg_written_floped;$/;"	r	module:abstractcs
+abstract_cmd_wrong_hart_state	RISCV_Core.v	/^    output wire         abstract_cmd_wrong_hart_state,$/;"	p	module:RISCV_Core
+abstract_cmd_wrong_hart_state	abstractcs.v	/^    input  wire abstract_cmd_wrong_hart_state,    \/\/ Error: hart in wrong state for command$/;"	p	module:abstractcs
+abstract_cmd_wrong_hart_state_db	Debug_Module.v	/^    wire        abstract_cmd_wrong_hart_state_db;$/;"	n	module:Debug_Module
+abstract_cmd_wrong_hart_state_db	RISC_V_Bypass_signal_Gen.v	/^        output reg         abstract_cmd_wrong_hart_state_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+abstractcs	abstractcs.v	/^module abstractcs #($/;"	m
+abstractcs_out	abstractcs.v	/^    output reg [31:0] abstractcs_out,             \/\/ Composite output register$/;"	p	module:abstractcs
+abstractcs_value	Debug_Module.v	/^    wire [31:0] abstractcs_value;$/;"	n	module:Debug_Module
+abstracts_busy	command.v	/^    input  wire        abstracts_busy,\/\/ 'busy' bit from abstractcs (command execution status)$/;"	p	module:command
+ackhavereset	Debug_Module.v	/^    wire        ackhavereset; $/;"	n	module:Debug_Module
+ackhavereset	RISCV_Core.v	/^    input  wire         ackhavereset,$/;"	p	module:RISCV_Core
+ackhavereset	dmcontrol.v	/^    output reg ackhavereset,$/;"	p	module:dmcontrol
+ackhavereset	dmstatus.v	/^    wire ackhavereset = dmcontrol_q[28];  \/\/ Clear havereset bits when set$/;"	n	module:dmstatus
+ackunavail	Debug_Module.v	/^    wire        ackunavail; $/;"	n	module:Debug_Module
+ackunavail	RISCV_Core.v	/^    input  wire         ackunavail,$/;"	p	module:RISCV_Core
+ackunavail	dmcontrol.v	/^    output reg ackunavail,$/;"	p	module:dmcontrol
+ackunavail	dmstatus.v	/^    wire ackunavail   = dmcontrol_q[27];  \/\/ Clear stickyunavail when set$/;"	n	module:dmstatus
+addr	Debug_Module.v	/^    input wire [7:0] addr,$/;"	p	module:Debug_Module
+addr	abstractcs.v	/^    input wire [7:0] addr,$/;"	p	module:abstractcs
+addr	data0.v	/^        input wire [7:0]    addr,$/;"	p	module:data0
+addr	data1.v	/^        input wire [7:0]    addr,$/;"	p	module:data1
+allhalted	dmstatus.v	/^    reg anyhalted, allhalted;           \/\/ Reflect halt status of hart$/;"	r	module:dmstatus
+allhavereset	dmstatus.v	/^    reg anyhavereset, allhavereset;     \/\/ Reflect havereset status$/;"	r	module:dmstatus
+allnonexistent	dmstatus.v	/^    reg anynonexistent, allnonexistent; \/\/ Reflect non-existent harts (should be 0 in single-h/;"	r	module:dmstatus
+allresumeack	dmstatus.v	/^    reg anyresumeack, allresumeack;     \/\/ Reflect resume acknowledgment$/;"	r	module:dmstatus
+allrunning	dmstatus.v	/^    reg anyrunning, allrunning;         \/\/ Reflect running status of hart$/;"	r	module:dmstatus
+allunavail	dmstatus.v	/^    reg allunavail;         \/\/ Reflect unavailability status$/;"	r	module:dmstatus
+alu_addsub	defines.v	/^`define alu_addsub 3'b000$/;"	c
+alu_and	defines.v	/^`define alu_and 3'b111$/;"	c
+alu_or	defines.v	/^`define alu_or 3'b110$/;"	c
+alu_sll	defines.v	/^`define alu_sll 3'b001$/;"	c
+alu_slt	defines.v	/^`define alu_slt 3'b010$/;"	c
+alu_sltu	defines.v	/^`define alu_sltu 3'b011$/;"	c
+alu_srlsra	defines.v	/^`define alu_srlsra 3'b101$/;"	c
+alu_xor	defines.v	/^`define alu_xor 3'b100$/;"	c
+amo	defines.v	/^`define amo 7'b0101111$/;"	c
+any_hart_unavail	Debug_Module.v	/^    wire        any_hart_unavail;$/;"	n	module:Debug_Module
+anyhalted	dmstatus.v	/^    reg anyhalted, allhalted;           \/\/ Reflect halt status of hart$/;"	r	module:dmstatus
+anyhavereset	dmstatus.v	/^    reg anyhavereset, allhavereset;     \/\/ Reflect havereset status$/;"	r	module:dmstatus
+anynonexistent	dmstatus.v	/^    reg anynonexistent, allnonexistent; \/\/ Reflect non-existent harts (should be 0 in single-h/;"	r	module:dmstatus
+anyresumeack	dmstatus.v	/^    reg anyresumeack, allresumeack;     \/\/ Reflect resume acknowledgment$/;"	r	module:dmstatus
+anyrunning	dmstatus.v	/^    reg anyrunning, allrunning;         \/\/ Reflect running status of hart$/;"	r	module:dmstatus
+anyunavail	dmstatus.v	/^    output reg anyunavail,$/;"	p	module:dmstatus
+async_in	synchronizer.v	/^    input  wire async_in,   \/\/ Asynchronous input signal$/;"	p	module:synchronizer
+bit_length	TOP_JTAG_TB.v	/^    task automatic TDI_Transfer(input [31:0] send_data, input integer bit_length, output reg [31/;"	p	task:TOP_JTAG_TB.TDI_Transfer
+bscane2_inst	FTDI_connections.v	/^        BSCANE2 #(.JTAG_CHAIN(2)) bscane2_inst ($/;"	i	module:FTDI_connections
+bscane2_inst	TAP_Controller_with_BSCANE2.v	/^    BSCANE2 #(.JTAG_CHAIN(1)) bscane2_inst ($/;"	i	module:TAP_Controller_with_BSCANE2
+bscane2_inst	top.v	/^    ) bscane2_inst ($/;"	i	module:top
+busy	abstractcs.v	/^    output reg busy                               \/\/ Busy flag: command in progress [26]$/;"	p	module:abstractcs
+bypass_reg	jtaglet.v	/^    jtag_reg #(.IR_LEN(IR_LEN), .DR_LEN(1), .IR_OPCODE(BYPASS_OP)) bypass_reg$/;"	i	module:jtaglet
+bypass_tdo	jtaglet.v	/^    wire bypass_tdo;$/;"	n	module:jtaglet
+cache_en	Top_JTAG.v	/^    input cache_en,$/;"	p	module:Top_CPU_JTAG
+cache_flush	TOP_JTAG_TB.v	/^  wire pipeline_stall,cache_flush;$/;"	n	module:TOP_JTAG_TB
+cache_flush	command.v	/^`define cache_flush     16'h400$/;"	c
+cache_flush	defines.v	/^`define cache_flush     12'h400$/;"	c
+cache_flush_mask	defines.v	/^`define cache_flush_mask 32'h00000001$/;"	c
+clear_cmderr	TOP_JTAG_TB.v	/^    task automatic clear_cmderr();$/;"	t	module:TOP_JTAG_TB
+clear_new_cmd_flag	command.v	/^    input  wire        clear_new_cmd_flag,    \/\/ Clears the new_cmd_flag when busy gets set$/;"	p	module:command
+clear_pend_act_stackrestore	defines.v	/^`define clear_pend_act_stackrestore 2$/;"	c
+clk	Custom0.v	/^        input wire clk,$/;"	p	module:Custom0
+clk	Custom1.v	/^        input wire clk,$/;"	p	module:Custom1
+clk	Custom2.v	/^        input wire clk,$/;"	p	module:Custom2
+clk	Custom3.v	/^        input wire clk,$/;"	p	module:Custom3
+clk	Custom4.v	/^        input wire clk,$/;"	p	module:Custom4
+clk	Custom5.v	/^        input wire clk,$/;"	p	module:Custom5
+clk	Custom6.v	/^        input wire clk,$/;"	p	module:Custom6
+clk	Debug_Module.v	/^    input wire clk,$/;"	p	module:Debug_Module
+clk	RISCV_Core.v	/^    input  wire clk,$/;"	p	module:RISCV_Core
+clk	RISC_V_Bypass_signal_Gen.v	/^        input wire clk,$/;"	p	module:RISC_V_Bypass_signal_Gen
+clk	TAP_Controller_with_BSCANE2.v	/^    input wire clk,$/;"	p	module:TAP_Controller_with_BSCANE2
+clk	abstractcs.v	/^    input wire clk,                          \/\/ Clock signal$/;"	p	module:abstractcs
+clk	command.v	/^    input  wire        clk,           \/\/ Clock input$/;"	p	module:command
+clk	data0.v	/^        input wire clk,$/;"	p	module:data0
+clk	data1.v	/^        input wire clk,$/;"	p	module:data1
+clk	dmcontrol.v	/^    input wire clk,$/;"	p	module:dmcontrol
+clk	dmstatus.v	/^    input wire clk,                      \/\/ Clock signal$/;"	p	module:dmstatus
+clk	synchronizer.v	/^    input  wire clk,        \/\/ Destination clock domain$/;"	p	module:synchronizer
+clk	toggle_pins.v	/^    wire clk;$/;"	n	module:toggle_pins
+clk_gen	toggle_pins.v	/^   clk_wiz_0 clk_gen$/;"	i	module:toggle_pins
+clk_int	TOP_JTAG_TB.v	/^  reg clk_int;$/;"	r	module:TOP_JTAG_TB
+clk_jtag	Debug_Module.v	/^    input wire clk_jtag,$/;"	p	module:Debug_Module
+clk_x2	TOP_JTAG_TB.v	/^  reg clk_x2;$/;"	r	module:TOP_JTAG_TB
+clock_100Mhz	Display.v	/^        input clock_100Mhz, \/\/ 100 Mhz clock source on Basys 3 FPGA$/;"	p	module:Display
+clock_100Mhz	FTDI_connections.v	/^    input clock_100Mhz, \/\/ 100 Mhz clock source on Basys 3 FPGA$/;"	p	module:FTDI_connections
+clock_100Mhz	TOP_JTAG_TB.v	/^    reg clock_100Mhz;$/;"	r	module:TOP_JTAG_TB
+clrkeepalive	dmcontrol.v	/^    reg clrkeepalive;     \/\/ [4]        W1   - Optional: Clear keepalive on selected harts.$/;"	r	module:dmcontrol
+clrresethaltreq	Debug_Module.v	/^    wire        clrresethaltreq;$/;"	n	module:Debug_Module
+clrresethaltreq	dmcontrol.v	/^    output reg clrresethaltreq,$/;"	p	module:dmcontrol
+cmd	Debug_Module.v	/^    wire [31:0] cmd;$/;"	n	module:Debug_Module
+cmd	TOP_JTAG_TB.v	/^    reg [31:0] cmd;$/;"	r	module:TOP_JTAG_TB
+cmd_AM_aampostincrement	Debug_Module.v	/^    wire        cmd_AM_aampostincrement;$/;"	n	module:Debug_Module
+cmd_AM_aamsize	Debug_Module.v	/^    wire [2:0]  cmd_AM_aamsize;$/;"	n	module:Debug_Module
+cmd_AM_write	Debug_Module.v	/^    wire        cmd_AM_write;$/;"	n	module:Debug_Module
+cmd_AR_aarpostincrement	Debug_Module.v	/^    wire        cmd_AR_aarpostincrement;$/;"	n	module:Debug_Module
+cmd_AR_transfer	Debug_Module.v	/^    wire        cmd_AR_transfer;$/;"	n	module:Debug_Module
+cmd_AR_write	Debug_Module.v	/^    wire        cmd_AR_write;$/;"	n	module:Debug_Module
+cmd_cmd_not_supported	Debug_Module.v	/^    wire        cmd_cmd_not_supported;$/;"	n	module:Debug_Module
+cmd_cmdtype	Debug_Module.v	/^    wire [7:0]  cmd_cmdtype;$/;"	n	module:Debug_Module
+cmd_command_read	Debug_Module.v	/^    wire [31:0] cmd_command_read;$/;"	n	module:Debug_Module
+cmd_exec_progbuf	Debug_Module.v	/^    wire        cmd_exec_progbuf;$/;"	n	module:Debug_Module
+cmd_new_cmd_flag	Debug_Module.v	/^    wire        cmd_new_cmd_flag;$/;"	n	module:Debug_Module
+cmd_not_supported	RISCV_Core.v	/^    input  wire         cmd_not_supported,$/;"	p	module:RISCV_Core
+cmd_not_supported	command.v	/^    output reg         cmd_not_supported,       \/\/ Set high for unrecognized regno or cmdtype$/;"	p	module:command
+cmd_unsupported_aarsize	Debug_Module.v	/^    wire        cmd_unsupported_aarsize;$/;"	n	module:Debug_Module
+cmderr	abstractcs.v	/^    output reg [2:0] cmderr,                      \/\/ Command error code field [24:22]$/;"	p	module:abstractcs
+cmderr	command.v	/^    input  wire [2:0]  cmderr,        \/\/ Current abstract command error status$/;"	p	module:command
+cmdtype	command.v	/^    output reg [7:0]  cmdtype,                 \/\/ Extracted cmdtype for external use$/;"	p	module:command
+cmdtype	data0.v	/^        input wire [7:0]    cmdtype,$/;"	p	module:data0
+command	command.v	/^    output reg [31:0]  command$/;"	p	module:command
+command	command.v	/^module command ($/;"	m
+command_complete	RISCV_Core.v	/^    output wire         command_complete,$/;"	p	module:RISCV_Core
+command_complete_db	Debug_Module.v	/^    wire        command_complete_db;$/;"	n	module:Debug_Module
+command_complete_db	RISC_V_Bypass_signal_Gen.v	/^        output reg         command_complete_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+command_read	command.v	/^    output wire [31:0] command_read,          \/\/ Always returns zero (WARZ behavior)$/;"	p	module:command
+command_reg_written_edge	abstractcs.v	/^    wire command_reg_written_edge = !abstract_cmd_reg_written_floped && abstract_cmd_reg_written/;"	n	module:abstractcs
+command_wr_en	abstractcs.v	/^    input wire command_wr_en,$/;"	p	module:abstractcs
+control	command.v	/^    reg [23:0] control;$/;"	r	module:command
+core_PC_debug	Debug_Module.v	/^    reg [7:0]  core_PC_debug;    $/;"	r	module:Debug_Module
+core_PC_debug_riscv	Debug_Module.v	/^    input wire [7:0]  core_PC_debug_riscv,  $/;"	p	module:Debug_Module
+core_PC_debug_riscv	Top_JTAG.v	/^    wire [31:0]  core_PC_debug_riscv;  $/;"	n	module:Top_CPU_JTAG
+core_abstract_cmd_bus_error	Debug_Module.v	/^    reg        core_abstract_cmd_bus_error;    $/;"	r	module:Debug_Module
+core_abstract_cmd_bus_error_riscv	Debug_Module.v	/^    input wire        core_abstract_cmd_bus_error_riscv,    $/;"	p	module:Debug_Module
+core_abstract_cmd_bus_error_riscv	Top_JTAG.v	/^    wire        core_abstract_cmd_bus_error_riscv;    $/;"	n	module:Top_CPU_JTAG
+core_abstract_cmd_exception	Debug_Module.v	/^    reg        core_abstract_cmd_exception;    $/;"	r	module:Debug_Module
+core_abstract_cmd_exception_riscv	Debug_Module.v	/^    input wire        core_abstract_cmd_exception_riscv,    $/;"	p	module:Debug_Module
+core_abstract_cmd_exception_riscv	Top_JTAG.v	/^    wire        core_abstract_cmd_exception_riscv;    $/;"	n	module:Top_CPU_JTAG
+core_abstract_cmd_failed	Debug_Module.v	/^    reg        core_abstract_cmd_failed;    $/;"	r	module:Debug_Module
+core_abstract_cmd_failed_riscv	Debug_Module.v	/^    input wire        core_abstract_cmd_failed_riscv,    $/;"	p	module:Debug_Module
+core_abstract_cmd_failed_riscv	Top_JTAG.v	/^    wire        core_abstract_cmd_failed_riscv;    $/;"	n	module:Top_CPU_JTAG
+core_abstract_cmd_wrong_hart_state	Debug_Module.v	/^    reg        core_abstract_cmd_wrong_hart_state;    $/;"	r	module:Debug_Module
+core_abstract_cmd_wrong_hart_state_riscv	Debug_Module.v	/^    input wire        core_abstract_cmd_wrong_hart_state_riscv,    $/;"	p	module:Debug_Module
+core_abstract_cmd_wrong_hart_state_riscv	Top_JTAG.v	/^    wire        core_abstract_cmd_wrong_hart_state_riscv;    $/;"	n	module:Top_CPU_JTAG
+core_command_complete	Debug_Module.v	/^    reg        core_command_complete;    $/;"	r	module:Debug_Module
+core_command_complete_riscv	Debug_Module.v	/^    input wire        core_command_complete_riscv,    $/;"	p	module:Debug_Module
+core_command_complete_riscv	Top_JTAG.v	/^    wire        core_command_complete_riscv;    $/;"	n	module:Top_CPU_JTAG
+core_exist	Debug_Module.v	/^    reg        core_exist;    $/;"	r	module:Debug_Module
+core_exist	RISCV_Core.v	/^    output wire         core_exist,$/;"	p	module:RISCV_Core
+core_exist_riscv	Debug_Module.v	/^    input wire        core_exist_riscv,    $/;"	p	module:Debug_Module
+core_exist_riscv	Top_JTAG.v	/^    wire        core_exist_riscv;    $/;"	n	module:Top_CPU_JTAG
+core_halt	TOP_JTAG_TB.v	/^    task automatic core_halt();$/;"	t	module:TOP_JTAG_TB
+core_halted	Debug_Module.v	/^    reg        core_halted;    $/;"	r	module:Debug_Module
+core_halted	RISCV_Core.v	/^    output reg          core_halted,$/;"	p	module:RISCV_Core
+core_halted_riscv	Debug_Module.v	/^    input wire        core_halted_riscv,    $/;"	p	module:Debug_Module
+core_halted_riscv	Top_JTAG.v	/^    wire        core_halted_riscv;    $/;"	n	module:Top_CPU_JTAG
+core_havereset	Debug_Module.v	/^    reg        core_havereset;    $/;"	r	module:Debug_Module
+core_havereset	RISCV_Core.v	/^    output wire         core_havereset,$/;"	p	module:RISCV_Core
+core_havereset_riscv	Debug_Module.v	/^    input wire        core_havereset_riscv,    $/;"	p	module:Debug_Module
+core_havereset_riscv	Top_JTAG.v	/^    wire        core_havereset_riscv;    $/;"	n	module:Top_CPU_JTAG
+core_mem_access_complete	Debug_Module.v	/^    reg        core_mem_access_complete;    $/;"	r	module:Debug_Module
+core_mem_access_complete_riscv	Debug_Module.v	/^    input wire        core_mem_access_complete_riscv,    $/;"	p	module:Debug_Module
+core_mem_access_complete_riscv	Top_JTAG.v	/^    wire        core_mem_access_complete_riscv;    $/;"	n	module:Top_CPU_JTAG
+core_reg_access_complete	Debug_Module.v	/^    reg        core_reg_access_complete;    $/;"	r	module:Debug_Module
+core_reg_access_complete_riscv	Debug_Module.v	/^    input wire        core_reg_access_complete_riscv,    $/;"	p	module:Debug_Module
+core_reg_access_complete_riscv	Top_JTAG.v	/^    wire        core_reg_access_complete_riscv;    $/;"	n	module:Top_CPU_JTAG
+core_reset_halt	TOP_JTAG_TB.v	/^    task automatic core_reset_halt();$/;"	t	module:TOP_JTAG_TB
+core_resume	TOP_JTAG_TB.v	/^    task automatic core_resume();$/;"	t	module:TOP_JTAG_TB
+core_resumeack	Debug_Module.v	/^    reg        core_resumeack;    $/;"	r	module:Debug_Module
+core_resumeack	RISCV_Core.v	/^    output wire         core_resumeack,$/;"	p	module:RISCV_Core
+core_resumeack_riscv	Debug_Module.v	/^    input wire        core_resumeack_riscv,    $/;"	p	module:Debug_Module
+core_resumeack_riscv	Top_JTAG.v	/^    wire        core_resumeack_riscv;    $/;"	n	module:Top_CPU_JTAG
+core_rst_n	RISCV_Core.v	/^    reg core_rst_n;$/;"	r	module:RISCV_Core
+core_running	Debug_Module.v	/^    reg        core_running;    $/;"	r	module:Debug_Module
+core_running	RISCV_Core.v	/^    output wire         core_running,$/;"	p	module:RISCV_Core
+core_running_riscv	Debug_Module.v	/^    input wire        core_running_riscv,    $/;"	p	module:Debug_Module
+core_running_riscv	Top_JTAG.v	/^    wire        core_running_riscv;    $/;"	n	module:Top_CPU_JTAG
+core_unavail	Debug_Module.v	/^    reg        core_unavail;    $/;"	r	module:Debug_Module
+core_unavail	RISCV_Core.v	/^    output wire         core_unavail,$/;"	p	module:RISCV_Core
+core_unavail_riscv	Debug_Module.v	/^    input wire        core_unavail_riscv,    $/;"	p	module:Debug_Module
+core_unavail_riscv	Top_JTAG.v	/^    wire        core_unavail_riscv;    $/;"	n	module:Top_CPU_JTAG
+coreexist_db	Debug_Module.v	/^    wire        coreexist_db;$/;"	n	module:Debug_Module
+coreexist_db	RISC_V_Bypass_signal_Gen.v	/^        output reg         coreexist_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+corehalted_db	Debug_Module.v	/^    wire        corehalted_db;$/;"	n	module:Debug_Module
+corehalted_db	RISC_V_Bypass_signal_Gen.v	/^        output reg         corehalted_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+corehavereset_db	Debug_Module.v	/^    wire        corehavereset_db;$/;"	n	module:Debug_Module
+corehavereset_db	RISC_V_Bypass_signal_Gen.v	/^        output reg         corehavereset_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+coreresumeack_db	Debug_Module.v	/^    wire        coreresumeack_db;$/;"	n	module:Debug_Module
+coreresumeack_db	RISC_V_Bypass_signal_Gen.v	/^        output reg         coreresumeack_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+corerunning_db	Debug_Module.v	/^    wire        corerunning_db;$/;"	n	module:Debug_Module
+corerunning_db	RISC_V_Bypass_signal_Gen.v	/^        output reg         corerunning_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+coreunavail_db	Debug_Module.v	/^    wire        coreunavail_db;$/;"	n	module:Debug_Module
+coreunavail_db	RISC_V_Bypass_signal_Gen.v	/^        output reg         coreunavail_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+counter	TOP_JTAG_TB.v	/^      reg [31:0] counter;$/;"	r	module:TOP_JTAG_TB
+counter	toggle_pins.v	/^    reg [8:0] counter; \/\/ For TDI, divide clock by 2^24$/;"	r	module:toggle_pins
+counttick	defines.v	/^`define counttick 12'h7c3$/;"	c
+cpu_clock	Top_JTAG.v	/^    input cpu_clock,$/;"	p	module:Top_CPU_JTAG
+csr_addr	RISCV_Core.v	/^    wire [11:0] csr_addr;$/;"	n	module:RISCV_Core
+csr_pmp_sb	Top_JTAG.v	/^    output [`CSR_SB_W-1:0] csr_pmp_sb,$/;"	p	module:Top_CPU_JTAG
+data0	Debug_Module.v	/^    wire [31:0] data0;$/;"	n	module:Debug_Module
+data0	RISCV_Core.v	/^    input  wire [31:0]  data0,$/;"	p	module:RISCV_Core
+data0	TOP_JTAG_TB.v	/^    wire [31:0] data0, data1;$/;"	n	module:TOP_JTAG_TB
+data0	data0.v	/^module data0($/;"	m
+data0_out	data0.v	/^        output reg [31:0]   data0_out,$/;"	p	module:data0
+data0_selector	data0.v	/^    reg [1:0] data0_selector;$/;"	r	module:data0
+data0_written	Debug_Module.v	/^    wire        data0_written;$/;"	n	module:Debug_Module
+data0_written	data0.v	/^        output wire          data0_written$/;"	p	module:data0
+data1	Debug_Module.v	/^    wire [31:0] data1;$/;"	n	module:Debug_Module
+data1	RISCV_Core.v	/^    input  wire [31:0]  data1,$/;"	p	module:RISCV_Core
+data1	TOP_JTAG_TB.v	/^    wire [31:0] data0, data1;$/;"	n	module:TOP_JTAG_TB
+data1	data1.v	/^module data1($/;"	m
+data1_data	data0.v	/^        input wire [31:0]   data1_data,          \/\/data from the memory pointed by data1$/;"	p	module:data0
+data1_inc	data1.v	/^    wire [31:0] data1_inc;$/;"	n	module:data1
+data1_out	data1.v	/^        output reg [31:0]   data1_out,$/;"	p	module:data1
+data1_selector	data1.v	/^    reg data1_selector;$/;"	r	module:data1
+data1_written	Debug_Module.v	/^    wire        data1_written;$/;"	n	module:Debug_Module
+data1_written	data1.v	/^        output reg          data1_written$/;"	p	module:data1
+data_0_probe	Debug_Module.v	/^    output wire [31:0]  data_0_probe,$/;"	p	module:Debug_Module
+data_display	Debug_Module.v	/^    output wire [15:0]  data_display$/;"	p	module:Debug_Module
+data_display	Top_JTAG.v	/^    wire [15:0]  data_display;$/;"	n	module:Top_CPU_JTAG
+data_reg_read_written	abstractcs.v	/^    wire data_reg_read_written = ((addr == 8'h04) || (addr == 8'h05)) && ((TAP_state==UPDATE_DR)/;"	n	module:abstractcs
+data_reg_written	Debug_Module.v	/^    wire        data_reg_written;$/;"	n	module:Debug_Module
+data_reg_written	abstractcs.v	/^    input wire data_reg_written,                  \/\/ Data register was written$/;"	p	module:abstractcs
+data_reg_written_floped	abstractcs.v	/^    reg data_reg_written_floped;$/;"	r	module:abstractcs
+datacount	abstractcs.v	/^    reg [3:0] datacount = DATAREG_COUNT;          \/\/ Number of data registers [20:17]$/;"	r	module:abstractcs
+dcsr	RISCV_Core.v	/^    wire [31:0] dcsr;$/;"	n	module:RISCV_Core
+debug_core_ctrl_inst	RISCV_Core.v	/^    Debug_Core_Controller debug_core_ctrl_inst ($/;"	i	module:RISCV_Core
+debug_dcsr	defines.v	/^`define debug_dcsr      12'h7b0$/;"	c
+debug_dpc	defines.v	/^`define debug_dpc       12'h7b1$/;"	c
+debug_dscratch0	defines.v	/^`define debug_dscratch0 12'h7b2$/;"	c
+debug_dscratch1	defines.v	/^`define debug_dscratch1 12'h7b3$/;"	c
+debug_module_inst	Top_JTAG.v	/^    ) debug_module_inst ($/;"	i	module:Top_CPU_JTAG
+detect_ebreak	TOP_JTAG_TB.v	/^  reg detect_ebreak;$/;"	r	module:TOP_JTAG_TB
+display_inst	FTDI_connections.v	/^    Display display_inst ($/;"	i	module:FTDI_connections
+displayed_number	Display.v	/^    reg [15:0] displayed_number; \/\/ counting number to be displayed$/;"	r	module:Display
+dmactive	dmcontrol.v	/^    output wire dmactive$/;"	p	module:dmcontrol
+dmcontrol	dmcontrol.v	/^module dmcontrol ($/;"	m
+dmcontrol	dmstatus.v	/^    input wire [31:0] dmcontrol,        \/\/ Debug Module control register$/;"	p	module:dmstatus
+dmcontrol_out	Debug_Module.v	/^    wire [31:0] dmcontrol_out;$/;"	n	module:Debug_Module
+dmcontrol_out	dmcontrol.v	/^    output reg [31:0] dmcontrol_out,$/;"	p	module:dmcontrol
+dmcontrol_q	dmstatus.v	/^    reg [31:0] dmcontrol_q;$/;"	r	module:dmstatus
+dmstatus	dmstatus.v	/^module dmstatus#($/;"	m
+dmstatus_out	Debug_Module.v	/^    wire [31:0] dmstatus_out;$/;"	n	module:Debug_Module
+dmstatus_out	dmstatus.v	/^    output reg [31:0] dmstatus_out      \/\/ Output: the dmstatus register value$/;"	p	module:dmstatus
+done	TOP_JTAG_TB.v	/^  reg done;$/;"	r	module:TOP_JTAG_TB
+dpc	RISCV_Core.v	/^    output wire [31:0] dpc,$/;"	p	module:RISCV_Core
+dpc	TOP_JTAG_TB.v	/^    wire [31:0] dpc;$/;"	n	module:TOP_JTAG_TB
+dr_dataIn	jtag_reg.v	/^        input[DR_LEN-1:0] dr_dataIn,$/;"	p	module:jtag_reg
+dr_dataOut	jtag_reg.v	/^        output reg[DR_LEN-1:0] dr_dataOut,$/;"	p	module:jtag_reg
+dr_dataOutReady	jtag_reg.v	/^        output reg dr_dataOutReady$/;"	p	module:jtag_reg
+dr_reg	jtag_reg.v	/^    reg[DR_LEN-1:0] dr_reg;$/;"	r	module:jtag_reg
+dut	tb_toggle_pins.v	/^    toggle_pins dut ($/;"	i	module:tb_toggle_pins
+ebreak_in_id	TOP_JTAG_TB.v	/^  wire ebreak_in_id; $/;"	n	module:TOP_JTAG_TB
+ebreak_in_wb	TOP_JTAG_TB.v	/^  wire ebreak_in_wb;$/;"	n	module:TOP_JTAG_TB
+exec_progbuf	command.v	/^    output wire        exec_progbuf,         \/\/ Execute program buffer exactly once if this fl/;"	p	module:command
+fail	TOP_JTAG_TB.v	/^  reg fail;$/;"	r	module:TOP_JTAG_TB
+fcsr	defines.v	/^`define fcsr   12'h003$/;"	c
+fcsr_default	defines.v	/^`define fcsr_default 32'h00000000$/;"	c
+ffcsr_mask	defines.v	/^`define ffcsr_mask   32'h000000FF$/;"	c
+fflags	defines.v	/^`define fflags 12'h001$/;"	c
+fflags_mask	defines.v	/^`define fflags_mask  32'h0000001F$/;"	c
+find_max	defines.v	/^`define find_max 6$/;"	c
+frm	defines.v	/^`define frm    12'h002$/;"	c
+frm_mask	defines.v	/^`define frm_mask     32'h000000E0$/;"	c
+func_add	defines.v	/^`define func_add 7'b0000000$/;"	c
+func_beq	defines.v	/^`define func_beq 3'b000$/;"	c
+func_bge	defines.v	/^`define func_bge 3'b101$/;"	c
+func_bgeu	defines.v	/^`define func_bgeu 3'b111$/;"	c
+func_blt	defines.v	/^`define func_blt 3'b100$/;"	c
+func_bltu	defines.v	/^`define func_bltu 3'b110$/;"	c
+func_bne	defines.v	/^`define func_bne 3'b001$/;"	c
+func_div	defines.v	/^`define func_div 3'b100$/;"	c
+func_divu	defines.v	/^`define func_divu 3'b101$/;"	c
+func_lb	defines.v	/^`define func_lb 3'b000$/;"	c
+func_lbu	defines.v	/^`define func_lbu 3'b100$/;"	c
+func_ld	defines.v	/^`define func_ld 3'b011$/;"	c
+func_lh	defines.v	/^`define func_lh 3'b001$/;"	c
+func_lhu	defines.v	/^`define func_lhu 3'b101$/;"	c
+func_lw	defines.v	/^`define func_lw 3'b010$/;"	c
+func_lwu	defines.v	/^`define func_lwu 3'b110$/;"	c
+func_mul	defines.v	/^`define func_mul 3'b000$/;"	c
+func_muldiv	defines.v	/^`define func_muldiv 7'b0000001$/;"	c
+func_mulh	defines.v	/^`define func_mulh 3'b001$/;"	c
+func_mulhsu	defines.v	/^`define func_mulhsu 3'b010$/;"	c
+func_mulhu	defines.v	/^`define func_mulhu 3'b011$/;"	c
+func_rem	defines.v	/^`define func_rem 3'b110$/;"	c
+func_remu	defines.v	/^`define func_remu 3'b111$/;"	c
+func_sb	defines.v	/^`define func_sb 3'b000$/;"	c
+func_sd	defines.v	/^`define func_sd 3'b011$/;"	c
+func_sh	defines.v	/^`define func_sh 3'b001$/;"	c
+func_sra	defines.v	/^`define func_sra 7'b0100000$/;"	c
+func_srl	defines.v	/^`define func_srl 7'b0000000$/;"	c
+func_sub	defines.v	/^`define func_sub 7'b0100000$/;"	c
+func_sw	defines.v	/^`define func_sw 3'b010$/;"	c
+halted	Top_JTAG.v	/^      output wire halted$/;"	p	module:Top_CPU_JTAG
+haltreq	Debug_Module.v	/^    wire        haltreq; $/;"	n	module:Debug_Module
+haltreq	RISCV_Core.v	/^    input  wire         haltreq,$/;"	p	module:RISCV_Core
+haltreq	dmcontrol.v	/^    output reg haltreq,$/;"	p	module:dmcontrol
+hardware_test	defines.v	/^`define hardware_test 1'b0$/;"	c
+hart_exist	dmstatus.v	/^    input wire hart_exist,              \/\/ Indicates if the selected hart exists (always 1'b1 /;"	p	module:dmstatus
+hart_halted	dmstatus.v	/^    input wire hart_halted,             \/\/ Indicates if the selected hart is halted$/;"	p	module:dmstatus
+hart_havereset	dmstatus.v	/^    input wire hart_havereset,          \/\/ Indicates if the selected hart has been reset since/;"	p	module:dmstatus
+hart_resumeack	dmstatus.v	/^    input wire hart_resumeack,          \/\/ Indicates if the selected hart acknowledged a resum/;"	p	module:dmstatus
+hart_running	dmstatus.v	/^    input wire hart_running,            \/\/ Indicates if the selected hart is running$/;"	p	module:dmstatus
+hart_unavail	dmstatus.v	/^    input wire hart_unavail,            \/\/ Indicates if the selected hart is unavailable (e.g./;"	p	module:dmstatus
+hart_unavailable	abstractcs.v	/^    input  wire hart_unavailable,$/;"	p	module:abstractcs
+hartinfo	hartinfo.v	/^module hartinfo ($/;"	m
+hartinfo_out	hartinfo.v	/^    output wire [31:0] hartinfo_out$/;"	p	module:hartinfo
+hartinfo_value	Debug_Module.v	/^    wire [31:0] hartinfo_value;$/;"	n	module:Debug_Module
+hartreset	Debug_Module.v	/^    wire        hartreset; $/;"	n	module:Debug_Module
+hartreset	RISCV_Core.v	/^    input  wire         hartreset,$/;"	p	module:RISCV_Core
+hartreset	dmcontrol.v	/^    output reg hartreset,$/;"	p	module:dmcontrol
+hartsel	dmcontrol.v	/^    wire [`HARTSELLEN-1:0] hartsel = 0;$/;"	n	module:dmcontrol
+hartsel	dmstatus.v	/^    input wire [HARTSELLEN-1:0] hartsel,\/\/ Hart select signal (not used in single-hart system)$/;"	p	module:dmstatus
+hartselhi	dmcontrol.v	/^    reg [9:0] hartselhi;  \/\/ [15:6]     WARL - High bits of hartsel index (DM-specific). Alway/;"	r	module:dmcontrol
+hartsello	dmcontrol.v	/^    reg [9:0] hartsello;  \/\/ [25:16]    WARL - Low bits of hartsel index (DM-specific). Always/;"	r	module:dmcontrol
+hasel	dmcontrol.v	/^    reg hasel;            \/\/ [26]       WARL - 0: Select single hart via hartsel. 1: Select mu/;"	r	module:dmcontrol
+hold_reg	JTAG_IR.v	/^reg [WIDTH-1:0] hold_reg;$/;"	r	module:JTAG_IR
+i	TOP_JTAG_TB.v	/^    integer TMS_length=0, i;$/;"	r	module:TOP_JTAG_TB
+idcode	jtaglet.v	/^    wire[31:0] idcode = {ID_PARTVER, ID_PARTNUM, ID_MANF, 1'b1};$/;"	n	module:jtaglet
+idcode_reg	jtaglet.v	/^    jtag_reg #(.IR_LEN(IR_LEN), .DR_LEN(32), .IR_OPCODE(IDCODE_OP)) idcode_reg$/;"	i	module:jtaglet
+idcode_tdo	jtaglet.v	/^    wire idcode_tdo;$/;"	n	module:jtaglet
+inc_regno	Debug_Module.v	/^    wire        inc_regno;$/;"	n	module:Debug_Module
+inc_regno	command.v	/^    input  wire        inc_regno,             \/\/ Increment regno$/;"	p	module:command
+instr_bus	Debug_Module.v	/^    wire [31:0] instr_bus;$/;"	n	module:Debug_Module
+instr_bus	RISCV_Core.v	/^    input  wire [31:0]  instr_bus,$/;"	p	module:RISCV_Core
+internal_reset_n	Debug_Module.v	/^    wire        internal_reset_n;$/;"	n	module:Debug_Module
+interrupt_active	defines.v	/^`define interrupt_active 2$/;"	c
+interrupt_inactive	defines.v	/^`define interrupt_inactive 0$/;"	c
+interrupt_pending	defines.v	/^`define interrupt_pending 1$/;"	c
+ir_reg	jtag_reg.v	/^        input[IR_LEN-1:0] ir_reg,$/;"	p	module:jtag_reg
+ir_reg	jtaglet.v	/^    reg[IR_LEN-1:0] ir_reg;$/;"	r	module:jtaglet
+ir_tdo	jtaglet.v	/^    wire ir_tdo;$/;"	n	module:jtaglet
+irq_i	Top_JTAG.v	/^    input [31:0] irq_i,$/;"	p	module:Top_CPU_JTAG
+itlb_def	defines.v	/^`define itlb_def 1'b1$/;"	c
+j	TOP_JTAG_TB.v	/^    integer TDI_length=0, j=0;$/;"	r	module:TOP_JTAG_TB
+jal	defines.v	/^`define jal 7'b1101111$/;"	c
+jalr	defines.v	/^`define jalr 7'b1100111$/;"	c
+jsm	jtaglet.v	/^    jtag_state_machine jsm(.tck(tck), .tms(tms), .trst(trst), .state_tlr(state_tlr),$/;"	i	module:jtaglet
+jtag_inst	FTDI_connections.v	/^    ) jtag_inst ($/;"	i	module:FTDI_connections
+jtag_inst	Top_JTAG.v	/^    ) jtag_inst ($/;"	i	module:Top_CPU_JTAG
+jtag_reg	jtag_reg.v	/^module jtag_reg #($/;"	m
+jtag_state_machine	jtag_state_machine.v	/^module jtag_state_machine($/;"	m
+jtaglet	jtaglet.v	/^module jtaglet #($/;"	m
+jtaglet_inst	top.v	/^    ) jtaglet_inst ($/;"	i	module:top
+k	TOP_JTAG_TB.v	/^        integer k;$/;"	r	task:TOP_JTAG_TB.TMS_Sequence
+kill	RISCV_Core.v	/^    reg kill;$/;"	r	module:RISCV_Core
+led_addr	defines.v	/^`define led_addr 32'h5F100814$/;"	c
+length	TOP_JTAG_TB.v	/^    task automatic TMS_Sequence(input [7:0] pattern, input integer length);$/;"	p	task:TOP_JTAG_TB.TMS_Sequence
+logfile	TOP_JTAG_TB.v	/^    integer logfile;$/;"	r	module:TOP_JTAG_TB
+m	TOP_JTAG_TB.v	/^        integer m;$/;"	r	task:TOP_JTAG_TB.Read_Reg
+m	TOP_JTAG_TB.v	/^        integer m;$/;"	r	task:TOP_JTAG_TB.Update_IR
+m	TOP_JTAG_TB.v	/^        integer m;$/;"	r	task:TOP_JTAG_TB.Update_Reg
+m	TOP_JTAG_TB.v	/^    integer m;$/;"	r	module:TOP_JTAG_TB
+marchid	defines.v	/^`define marchid      12'hf12$/;"	c
+mbadaddr	defines.v	/^`define mbadaddr      12'h343$/;"	c
+mbadaddr_default	defines.v	/^`define mbadaddr_default 32'h0   $/;"	c
+mcause	command.v	/^`define mcause          16'h342$/;"	c
+mcause	defines.v	/^`define mcause      12'h342$/;"	c
+mcause_default	defines.v	/^`define mcause_default 32'h80000008$/;"	c
+mcycle	command.v	/^`define mcycle          16'hb00$/;"	c
+mcycle	defines.v	/^`define mcycle      12'hb00$/;"	c
+mcycleh	command.v	/^`define mcycleh         16'hb80$/;"	c
+mcycleh	defines.v	/^`define mcycleh     12'hb80$/;"	c
+medeleg	defines.v	/^`define medeleg      12'hf14$/;"	c
+medeleg_default	defines.v	/^`define medeleg_default 32'h0   \/\/ this will change as other modes will be implemented $/;"	c
+mem_access_complete	RISCV_Core.v	/^    output wire         mem_access_complete,$/;"	p	module:RISCV_Core
+mem_access_complete	command.v	/^    input  wire        mem_access_complete,   \/\/ Indicates memory access was successful and co/;"	p	module:command
+mem_access_complete_db	Debug_Module.v	/^    wire        mem_access_complete_db;$/;"	n	module:Debug_Module
+mem_access_complete_db	RISC_V_Bypass_signal_Gen.v	/^        output reg         mem_access_complete_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+mem_addr	RISCV_Core.v	/^    wire [31:0] mem_addr;$/;"	n	module:RISCV_Core
+mepc	command.v	/^`define mepc            16'h341$/;"	c
+mepc	defines.v	/^`define mepc        12'h341$/;"	c
+mepc_shadow	defines.v	/^`define mepc_shadow 12'h7c2$/;"	c
+mhartid	defines.v	/^`define mhartid      12'hf14$/;"	c
+mideleg	defines.v	/^`define mideleg      12'hf14$/;"	c
+mideleg_default	defines.v	/^`define mideleg_default 32'h0   \/\/ this will change as other modes will be implemented $/;"	c
+mie	command.v	/^`define mie             16'h304$/;"	c
+mie	defines.v	/^`define mie         12'h304$/;"	c
+mie_default	defines.v	/^`define mie_default 32'h00000888$/;"	c
+mie_mask	defines.v	/^`define mie_mask 32'hFFFFF888$/;"	c
+mimpid	defines.v	/^`define mimpid      12'hf13$/;"	c
+minstret	command.v	/^`define minstret        16'hb02$/;"	c
+minstret	defines.v	/^`define minstret    12'hb02$/;"	c
+minstreth	command.v	/^`define minstreth       16'hb82$/;"	c
+minstreth	defines.v	/^`define minstreth   12'hb82$/;"	c
+mip	command.v	/^`define mip             16'h344$/;"	c
+mip	defines.v	/^`define mip         12'h344$/;"	c
+mip_default	defines.v	/^`define mip_default 32'h00000000$/;"	c
+mip_mask	defines.v	/^`define mip_mask 32'hFFFFF888$/;"	c
+misa	command.v	/^`define misa            16'h301$/;"	c
+misa	defines.v	/^`define misa      12'h301$/;"	c
+misa_default	defines.v	/^`define misa_default 32'h40001101   \/\/ this will change as features will increase in processor$/;"	c
+misa_mask	defines.v	/^`define misa_mask 32'h40001101   \/\/ this will change as features will increase in processor$/;"	c
+mstatus	command.v	/^`define mstatus         16'h300$/;"	c
+mstatus	defines.v	/^`define mstatus     12'h300$/;"	c
+mstatus_default	defines.v	/^`define mstatus_default 32'h00001888        \/\/ this will change as other modes will be impleme/;"	c
+mtime	command.v	/^`define mtime           16'hb01$/;"	c
+mtime	defines.v	/^`define mtime       12'hb01$/;"	c
+mtimecmp	defines.v	/^`define mtimecmp    12'h7c0$/;"	c
+mtimecmph	defines.v	/^`define mtimecmph   12'h7c1$/;"	c
+mtimeh	command.v	/^`define mtimeh          16'hb81$/;"	c
+mtimeh	defines.v	/^`define mtimeh      12'hb81$/;"	c
+mtval	command.v	/^`define mtval           16'h343$/;"	c
+mtval	defines.v	/^`define mtval       12'h343$/;"	c
+mtval_default	defines.v	/^`define mtval_default 32'h80000008$/;"	c
+mtvec	command.v	/^`define mtvec           16'h305$/;"	c
+mtvec	defines.v	/^`define mtvec       12'h305$/;"	c
+mtvec_default	defines.v	/^`define mtvec_default 32'd200$/;"	c
+mux_lock	Custom3.v	/^        output reg [31:0]   mux_lock$/;"	p	module:Custom3
+mux_lock_custom3	Debug_Module.v	/^    wire [31:0] mux_lock_custom3;$/;"	n	module:Debug_Module
+mvendorid	defines.v	/^`define mvendorid      12'hf11$/;"	c
+ndmreset	Debug_Module.v	/^    wire        ndmreset;$/;"	n	module:Debug_Module
+ndmreset	RISCV_Core.v	/^    input  wire         ndmreset,$/;"	p	module:RISCV_Core
+ndmreset	dmcontrol.v	/^    output reg ndmreset,$/;"	p	module:dmcontrol
+ndmreset	dmstatus.v	/^    wire ndmreset     = dmcontrol_q[1];   \/\/ Non-debug module reset request$/;"	n	module:dmstatus
+ndmresetpending	dmstatus.v	/^    reg ndmresetpending;                \/\/ Set when ndmreset is issued (for edge-detection)$/;"	r	module:dmstatus
+new_cmd_flag	RISCV_Core.v	/^    input  wire         new_cmd_flag,$/;"	p	module:RISCV_Core
+new_cmd_flag	command.v	/^    output reg         new_cmd_flag,            \/\/ Set high when a new command is accepted$/;"	p	module:command
+num_inst	TOP_JTAG_TB.v	/^  reg [31:0] total_cycle_count, num_inst;$/;"	r	module:TOP_JTAG_TB
+op32_alu	defines.v	/^`define op32_alu 7'b0110011$/;"	c
+op32_branch	defines.v	/^`define op32_branch 7'b1100011$/;"	c
+op32_fp_loadop	defines.v	/^`define op32_fp_loadop 7'b0000111$/;"	c
+op32_fp_storeop	defines.v	/^`define op32_fp_storeop 7'b0100111$/;"	c
+op32_imm_alu	defines.v	/^`define op32_imm_alu 7'b0010011$/;"	c
+op32_loadop	defines.v	/^`define op32_loadop 7'b0000011$/;"	c
+op32_muldiv	defines.v	/^`define op32_muldiv 7'b0110011$/;"	c
+op32_storeop	defines.v	/^`define op32_storeop 7'b0100011$/;"	c
+op64_alu	defines.v	/^`define op64_alu 7'b0111011$/;"	c
+op64_imm_alu	defines.v	/^`define op64_imm_alu 7'b0011011$/;"	c
+op_auipc	defines.v	/^`define op_auipc 7'b0010111$/;"	c
+op_lui	defines.v	/^`define op_lui 7'b0110111$/;"	c
+other_signals	Debug_Module.v	/^    wire [31:0] other_signals;$/;"	n	module:Debug_Module
+p_other_signals	Custom6.v	/^        output reg [31:0]   p_other_signals$/;"	p	module:Custom6
+p_other_signals	Debug_Module.v	/^    wire [31:0] p_other_signals;$/;"	n	module:Debug_Module
+p_ptr_data1_data	Custom5.v	/^        output reg [31:0]   p_ptr_data1_data$/;"	p	module:Custom5
+p_ptr_data1_data	Debug_Module.v	/^    wire [31:0] p_ptr_data1_data;$/;"	n	module:Debug_Module
+p_ptr_regno_data	Custom4.v	/^        output reg [31:0]   p_ptr_regno_data$/;"	p	module:Custom4
+p_ptr_regno_data	Debug_Module.v	/^    wire [31:0] p_ptr_regno_data;$/;"	n	module:Debug_Module
+pass	TOP_JTAG_TB.v	/^  reg pass;$/;"	r	module:TOP_JTAG_TB
+pattern	TOP_JTAG_TB.v	/^    task automatic TMS_Sequence(input [7:0] pattern, input integer length);$/;"	p	task:TOP_JTAG_TB.TMS_Sequence
+pc_ebreak	TOP_JTAG_TB.v	/^  wire [31:0] pc_ebreak;$/;"	n	module:TOP_JTAG_TB
+pc_ebreak_detect	TOP_JTAG_TB.v	/^  reg [31:0] pc_ebreak_detect;$/;"	r	module:TOP_JTAG_TB
+pipeline_stall	TOP_JTAG_TB.v	/^  wire pipeline_stall,cache_flush;$/;"	n	module:TOP_JTAG_TB
+priority_compare	defines.v	/^`define priority_compare 4$/;"	c
+probing	TAP_Controller_with_BSCANE2.v	/^    reg [2:0] probing;$/;"	r	module:TAP_Controller_with_BSCANE2
+probing_out	JTAG.v	/^    output wire [WIDTH-1:0] probing_out  \/\/TDI$/;"	p	module:JTAG
+probing_out	TAP_Controller_with_BSCANE2.v	/^    output wire [2:0] probing_out,$/;"	p	module:TAP_Controller_with_BSCANE2
+progbuf_reg_written	abstractcs.v	/^    input wire progbuf_reg_written,               \/\/ Program buffer register was written$/;"	p	module:abstractcs
+progbufsize	abstractcs.v	/^    reg [4:0] progbufsize = PROGBUF_SIZE;         \/\/ Program buffer size field [31:27]$/;"	r	module:abstractcs
+ptr	TOP_JTAG_TB.v	/^    task automatic Access_mem_command(input write, input [2:0] aamsize, input [31:0] ptr, input /;"	p	task:TOP_JTAG_TB.Access_mem_command
+ptr_data1_data	Custom1.v	/^        output reg [31:0]   ptr_data1_data$/;"	p	module:Custom1
+ptr_data1_data	Debug_Module.v	/^    reg [31:0] ptr_data1_data;    $/;"	r	module:Debug_Module
+ptr_data1_data	RISCV_Core.v	/^    output wire [31:0]  ptr_data1_data,$/;"	p	module:RISCV_Core
+ptr_data1_data_custom1	Debug_Module.v	/^    wire [31:0] ptr_data1_data_custom1;$/;"	n	module:Debug_Module
+ptr_data1_data_custom1	RISC_V_Bypass_signal_Gen.v	/^        input wire [31:0]  ptr_data1_data_custom1,$/;"	p	module:RISC_V_Bypass_signal_Gen
+ptr_data1_data_db	Debug_Module.v	/^    wire [31:0] ptr_data1_data_db;$/;"	n	module:Debug_Module
+ptr_data1_data_db	RISC_V_Bypass_signal_Gen.v	/^        output reg [31:0]  ptr_data1_data_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+ptr_data1_data_riscv	Debug_Module.v	/^    input wire [31:0] ptr_data1_data_riscv,    $/;"	p	module:Debug_Module
+ptr_data1_data_riscv	Top_JTAG.v	/^    wire [31:0] ptr_data1_data_riscv;    $/;"	n	module:Top_CPU_JTAG
+ptr_regno_data	Custom0.v	/^        output reg [31:0]   ptr_regno_data$/;"	p	module:Custom0
+ptr_regno_data	Debug_Module.v	/^    reg [31:0] ptr_regno_data;    $/;"	r	module:Debug_Module
+ptr_regno_data	RISCV_Core.v	/^    output wire [31:0]  ptr_regno_data,$/;"	p	module:RISCV_Core
+ptr_regno_data_custom0	Debug_Module.v	/^    wire [31:0] ptr_regno_data_custom0;$/;"	n	module:Debug_Module
+ptr_regno_data_custom0	RISC_V_Bypass_signal_Gen.v	/^        input wire [31:0]  ptr_regno_data_custom0,$/;"	p	module:RISC_V_Bypass_signal_Gen
+ptr_regno_data_db	Debug_Module.v	/^    wire [31:0] ptr_regno_data_db;$/;"	n	module:Debug_Module
+ptr_regno_data_db	RISC_V_Bypass_signal_Gen.v	/^        output reg [31:0]  ptr_regno_data_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+ptr_regno_data_riscv	Debug_Module.v	/^    input wire [31:0] ptr_regno_data_riscv,    $/;"	p	module:Debug_Module
+ptr_regno_data_riscv	Top_JTAG.v	/^    wire [31:0] ptr_regno_data_riscv;    $/;"	n	module:Top_CPU_JTAG
+rcvd_data_reg	TOP_JTAG_TB.v	/^    reg [31:0] rcvd_data_reg;$/;"	r	module:TOP_JTAG_TB
+rcvd_data_reg_2	TOP_JTAG_TB.v	/^    reg [7:0] rcvd_data_reg_2;$/;"	r	module:TOP_JTAG_TB
+rdcyc	defines.v	/^`define rdcyc 12'b110000000000$/;"	c
+rdcych	defines.v	/^`define rdcych 12'b110010000000$/;"	c
+rdist	defines.v	/^`define rdist 12'b110000000010$/;"	c
+rdisth	defines.v	/^`define rdisth 12'b110010000010$/;"	c
+rdtim	defines.v	/^`define rdtim 12'b110000000001$/;"	c
+rdtimh	defines.v	/^`define rdtimh 12'b110010000001$/;"	c
+read_data0	TOP_JTAG_TB.v	/^    reg [31:0] read_data0;$/;"	r	module:TOP_JTAG_TB
+received_data	TOP_JTAG_TB.v	/^    task automatic TDI_Transfer(input [31:0] send_data, input integer bit_length, output reg [31/;"	p	task:TOP_JTAG_TB.TDI_Transfer
+refresh_counter	Display.v	/^    reg [19:0] refresh_counter; \/\/ 20-bit for creating 10.5ms refresh period or 380Hz refresh /;"	r	module:Display
+reg_access_complete	RISCV_Core.v	/^    output wire         reg_access_complete,$/;"	p	module:RISCV_Core
+reg_access_complete	command.v	/^    input  wire        reg_access_complete,   \/\/ Indicates register access was successful and /;"	p	module:command
+reg_access_complete_db	Debug_Module.v	/^    wire        reg_access_complete_db;$/;"	n	module:Debug_Module
+reg_access_complete_db	RISC_V_Bypass_signal_Gen.v	/^        output reg         reg_access_complete_db,$/;"	p	module:RISC_V_Bypass_signal_Gen
+reg_addr	RISCV_Core.v	/^    wire [4:0]  reg_addr;$/;"	n	module:RISCV_Core
+regno	TOP_JTAG_TB.v	/^    task automatic Access_reg_command(input write, input transfer, input [15:0] regno, input [31/;"	p	task:TOP_JTAG_TB.Access_reg_command
+regno_data	data0.v	/^        input wire [31:0]   regno_data,         \/\/data from the memory pointed by regno$/;"	p	module:data0
+relaxedpriv	abstractcs.v	/^    reg       relaxedpriv;                        \/\/ Relaxed privilege checking [25]$/;"	r	module:abstractcs
+reset	Display.v	/^        input reset, \/\/ reset$/;"	p	module:Display
+reset	FTDI_connections.v	/^    input reset, \/\/ reset$/;"	p	module:FTDI_connections
+resethaltreq	RISCV_Core.v	/^    input  wire         resethaltreq,$/;"	p	module:RISCV_Core
+resethaltreq_reg	Debug_Module.v	/^    reg         resethaltreq_reg;$/;"	r	module:Debug_Module
+resumereq	Debug_Module.v	/^    wire        resumereq; $/;"	n	module:Debug_Module
+resumereq	RISCV_Core.v	/^    input  wire         resumereq,$/;"	p	module:RISCV_Core
+resumereq	dmcontrol.v	/^    output reg resumereq,$/;"	p	module:dmcontrol
+rf_mem_10	TOP_JTAG_TB.v	/^  wire [31:0] rf_mem_10;$/;"	n	module:TOP_JTAG_TB
+rf_mem_17	TOP_JTAG_TB.v	/^  wire [31:0] rf_mem_17;$/;"	n	module:TOP_JTAG_TB
+riscv_platform	TOP_JTAG_TB.v	/^      riscv_platform riscv_platform($/;"	i	module:TOP_JTAG_TB
+rst	TOP_JTAG_TB.v	/^  reg rst;$/;"	r	module:TOP_JTAG_TB
+rst	top.v	/^    wire rst, tck_int, tms_int, tdi_int, tdo_int;$/;"	n	module:top
+rst_n	Bypass_Reg.v	/^        input wire rst_n,$/;"	p	module:Bypass_Reg
+rst_n	Custom0.v	/^        input wire rst_n,$/;"	p	module:Custom0
+rst_n	Custom1.v	/^        input wire rst_n,$/;"	p	module:Custom1
+rst_n	Custom2.v	/^        input wire rst_n,$/;"	p	module:Custom2
+rst_n	Custom3.v	/^        input wire rst_n,$/;"	p	module:Custom3
+rst_n	Custom4.v	/^        input wire rst_n,$/;"	p	module:Custom4
+rst_n	Custom5.v	/^        input wire rst_n,$/;"	p	module:Custom5
+rst_n	Custom6.v	/^        input wire rst_n,$/;"	p	module:Custom6
+rst_n	Debug_Module.v	/^    wire        rst_n;$/;"	n	module:Debug_Module
+rst_n	JTAG_IR.v	/^    input wire rst_n,$/;"	p	module:JTAG_IR
+rst_n	RISCV_Core.v	/^    input  wire rst_n,$/;"	p	module:RISCV_Core
+rst_n	TOP_JTAG_TB.v	/^    reg rst_n;$/;"	r	module:TOP_JTAG_TB
+rst_n	abstractcs.v	/^    input wire rst_n,                        \/\/ Active-low reset$/;"	p	module:abstractcs
+rst_n	command.v	/^    input  wire        rst_n,         \/\/ Active-low synchronous reset$/;"	p	module:command
+rst_n	data0.v	/^        input wire rst_n,$/;"	p	module:data0
+rst_n	data1.v	/^        input wire rst_n,$/;"	p	module:data1
+rst_n	dmcontrol.v	/^    input wire rst_n,$/;"	p	module:dmcontrol
+rst_n	dmstatus.v	/^    input wire rst_n,                    \/\/ Active-low reset$/;"	p	module:dmstatus
+rst_n_1	dmcontrol.v	/^    reg rst_n_1, rst_n_2;$/;"	r	module:dmcontrol
+rst_n_2	dmcontrol.v	/^    reg rst_n_1, rst_n_2;$/;"	r	module:dmcontrol
+rst_n_switch	Debug_Module.v	/^    input wire rst_n_switch,$/;"	p	module:Debug_Module
+rst_out	FTDI_connections.v	/^    output wire rst_out,$/;"	p	module:FTDI_connections
+rst_out	JTAG.v	/^    output wire rst_out,$/;"	p	module:JTAG
+rst_out	JTAG_TB.v	/^    wire rst_out;$/;"	n	module:JTAG_TB
+rst_out	TAP_Controller_with_BSCANE2.v	/^    output wire rst_out,$/;"	p	module:TAP_Controller_with_BSCANE2
+rst_out	TOP_JTAG_TB.v	/^    wire rst_out;$/;"	n	module:TOP_JTAG_TB
+rst_out	Top_JTAG.v	/^    wire rst_out;$/;"	n	module:Top_CPU_JTAG
+satp	command.v	/^`define satp            16'h180$/;"	c
+satp	defines.v	/^`define satp 12'h180$/;"	c
+satp_default	defines.v	/^`define satp_default 32'd0$/;"	c
+scan_reg	JTAG_IR.v	/^reg [WIDTH-1:0] scan_reg;$/;"	r	module:JTAG_IR
+send_data	TOP_JTAG_TB.v	/^    task automatic TDI_Transfer(input [31:0] send_data, input integer bit_length, output reg [31/;"	p	task:TOP_JTAG_TB.TDI_Transfer
+set_active	defines.v	/^`define set_active 7$/;"	c
+set_pend_act_stacksave	defines.v	/^`define set_pend_act_stacksave 1$/;"	c
+set_pending	defines.v	/^`define set_pending 5$/;"	c
+setkeepalive	dmcontrol.v	/^    reg setkeepalive;     \/\/ [5]        W1   - Optional: Set keepalive on selected harts (unle/;"	r	module:dmcontrol
+setresethaltreq	Debug_Module.v	/^    wire        setresethaltreq;$/;"	n	module:Debug_Module
+setresethaltreq	dmcontrol.v	/^    output reg setresethaltreq,$/;"	p	module:dmcontrol
+seven_seg_data	FTDI_connections.v	/^    reg [15:0] seven_seg_data;$/;"	r	module:FTDI_connections
+seven_seg_data	Top_JTAG.v	/^    reg [15:0] seven_seg_data;$/;"	r	module:Top_CPU_JTAG
+signals	Custom2.v	/^        output reg [31:0]   signals$/;"	p	module:Custom2
+signals_custom2	Debug_Module.v	/^    wire [31:0] signals_custom2;$/;"	n	module:Debug_Module
+signals_custom2	RISC_V_Bypass_signal_Gen.v	/^        input wire [31:0]  signals_custom2,$/;"	p	module:RISC_V_Bypass_signal_Gen
+state	TAP_Controller.v	/^        output reg [3:0] state,$/;"	p	module:TAP_Controller
+state	TAP_Controller_TB.v	/^    wire [3:0] state;$/;"	n	module:TAP_Controller_TB
+state	TAP_Controller_with_BSCANE2.v	/^    reg [3:0] state;$/;"	r	module:TAP_Controller_with_BSCANE2
+state	jtag_state_machine.v	/^    reg[3:0] state;$/;"	r	module:jtag_state_machine
+state_capturedr	jtag_reg.v	/^        input state_capturedr,$/;"	p	module:jtag_reg
+state_capturedr	jtag_state_machine.v	/^        output state_capturedr,$/;"	p	module:jtag_state_machine
+state_capturedr	jtaglet.v	/^    wire state_tlr, state_capturedr, state_captureir, state_shiftdr, state_shiftir,$/;"	n	module:jtaglet
+state_captureir	jtag_state_machine.v	/^        output state_captureir,$/;"	p	module:jtag_state_machine
+state_captureir	jtaglet.v	/^    wire state_tlr, state_capturedr, state_captureir, state_shiftdr, state_shiftir,$/;"	n	module:jtaglet
+state_dcache	TOP_JTAG_TB.v	/^  wire [2:0] state_dcache;$/;"	n	module:TOP_JTAG_TB
+state_out	FTDI_connections.v	/^    output wire [3:0] state_out, \/\/ TAP state$/;"	p	module:FTDI_connections
+state_out	JTAG.v	/^    output wire [3:0] state_out,$/;"	p	module:JTAG
+state_out	TAP_Controller_with_BSCANE2.v	/^    output wire [3:0] state_out,$/;"	p	module:TAP_Controller_with_BSCANE2
+state_out	Top_JTAG.v	/^    wire [3:0] state_out;        \/\/ TAP state$/;"	n	module:Top_CPU_JTAG
+state_shiftdr	jtag_reg.v	/^        input state_shiftdr,$/;"	p	module:jtag_reg
+state_shiftdr	jtag_state_machine.v	/^        output state_shiftdr,$/;"	p	module:jtag_state_machine
+state_shiftdr	jtaglet.v	/^    wire state_tlr, state_capturedr, state_captureir, state_shiftdr, state_shiftir,$/;"	n	module:jtaglet
+state_shiftir	jtag_state_machine.v	/^        output state_shiftir,$/;"	p	module:jtag_state_machine
+state_shiftir	jtaglet.v	/^    wire state_tlr, state_capturedr, state_captureir, state_shiftdr, state_shiftir,$/;"	n	module:jtaglet
+state_tlr	jtag_reg.v	/^        input state_tlr,$/;"	p	module:jtag_reg
+state_tlr	jtag_state_machine.v	/^        output state_tlr,$/;"	p	module:jtag_state_machine
+state_tlr	jtaglet.v	/^    wire state_tlr, state_capturedr, state_captureir, state_shiftdr, state_shiftir,$/;"	n	module:jtaglet
+state_updatedr	jtag_reg.v	/^        input state_updatedr,$/;"	p	module:jtag_reg
+state_updatedr	jtag_state_machine.v	/^        output state_updatedr,$/;"	p	module:jtag_state_machine
+state_updatedr	jtaglet.v	/^        state_updatedr, state_updateir;$/;"	n	module:jtaglet
+state_updateir	jtag_state_machine.v	/^        output state_updateir$/;"	p	module:jtag_state_machine
+state_updateir	jtaglet.v	/^        state_updatedr, state_updateir;$/;"	n	module:jtaglet
+step	RISCV_Core.v	/^    wire step;$/;"	n	module:RISCV_Core
+step	TOP_JTAG_TB.v	/^    task automatic step();$/;"	t	module:TOP_JTAG_TB
+stickyunavail	dmstatus.v	/^    reg stickyunavail;                  \/\/ Sticky bit set when hart becomes unavailable$/;"	r	module:dmstatus
+sw	Display.v	/^        input [15:0] sw,$/;"	p	module:Display
+switch	FTDI_connections.v	/^    input [3:0] switch,     \/\/ to control what to print on seven segment$/;"	p	module:FTDI_connections
+switch	TOP_JTAG_TB.v	/^    reg [3:0] switch;$/;"	r	module:TOP_JTAG_TB
+sync_ff1	synchronizer.v	/^    reg sync_ff1 = 0;$/;"	r	module:synchronizer
+sync_ff2	synchronizer.v	/^    reg sync_ff2 = 0;$/;"	r	module:synchronizer
+sync_out	synchronizer.v	/^    output wire sync_out    \/\/ Synchronized output$/;"	p	module:synchronizer
+synchronizer	synchronizer.v	/^module synchronizer($/;"	m
+sys	defines.v	/^`define sys 7'b1110011$/;"	c
+tb_toggle_pins	tb_toggle_pins.v	/^module tb_toggle_pins;$/;"	m
+tck	jtag_reg.v	/^        input tck,$/;"	p	module:jtag_reg
+tck	jtag_state_machine.v	/^        input tck,$/;"	p	module:jtag_state_machine
+tck	jtaglet.v	/^    input tck,$/;"	p	module:jtaglet
+tck_int	top.v	/^    wire rst, tck_int, tms_int, tdi_int, tdo_int;$/;"	n	module:top
+tdi	jtag_reg.v	/^        input tdi,$/;"	p	module:jtag_reg
+tdi	jtaglet.v	/^    input tdi,$/;"	p	module:jtaglet
+tdi_int	top.v	/^    wire rst, tck_int, tms_int, tdi_int, tdo_int;$/;"	n	module:top
+tdo	jtag_reg.v	/^        output tdo,$/;"	p	module:jtag_reg
+tdo	jtaglet.v	/^    output reg tdo,$/;"	p	module:jtaglet
+tdo_int	top.v	/^    wire rst, tck_int, tms_int, tdi_int, tdo_int;$/;"	n	module:top
+tdo_pre	jtaglet.v	/^    reg tdo_pre;$/;"	r	module:jtaglet
+temp	Debug_Module.v	/^    reg [31:0]  temp;$/;"	r	module:Debug_Module
+temp	TOP_JTAG_TB.v	/^    reg [31:0] temp;$/;"	r	module:TOP_JTAG_TB
+temp	data0.v	/^        input wire [31:0]   temp,$/;"	p	module:data0
+temp	data1.v	/^        input wire [31:0]   temp,$/;"	p	module:data1
+test_tlb	defines.v	/^`define test_tlb 1'b1$/;"	c
+timeout	TOP_JTAG_TB.v	/^  reg timeout;$/;"	r	module:TOP_JTAG_TB
+tms	jtag_state_machine.v	/^        input tms,$/;"	p	module:jtag_state_machine
+tms	jtaglet.v	/^    input tms,$/;"	p	module:jtaglet
+tms_int	top.v	/^    wire rst, tck_int, tms_int, tdi_int, tdo_int;$/;"	n	module:top
+to_core_ackhavereset	Debug_Module.v	/^    output wire         to_core_ackhavereset,$/;"	p	module:Debug_Module
+to_core_ackhavereset	Top_JTAG.v	/^    wire         to_core_ackhavereset;$/;"	n	module:Top_CPU_JTAG
+to_core_ackunavail	Debug_Module.v	/^    output wire         to_core_ackunavail,$/;"	p	module:Debug_Module
+to_core_ackunavail	Top_JTAG.v	/^    wire         to_core_ackunavail;$/;"	n	module:Top_CPU_JTAG
+to_core_cmd_not_supported	Debug_Module.v	/^    output wire         to_core_cmd_not_supported,$/;"	p	module:Debug_Module
+to_core_cmd_not_supported	Top_JTAG.v	/^    wire         to_core_cmd_not_supported;$/;"	n	module:Top_CPU_JTAG
+to_core_data0	Debug_Module.v	/^    output wire [31:0]  to_core_data0,$/;"	p	module:Debug_Module
+to_core_data0	Top_JTAG.v	/^    wire [31:0]  to_core_data0;$/;"	n	module:Top_CPU_JTAG
+to_core_data1	Debug_Module.v	/^    output wire [31:0]  to_core_data1,$/;"	p	module:Debug_Module
+to_core_data1	Top_JTAG.v	/^    wire [31:0]  to_core_data1;$/;"	n	module:Top_CPU_JTAG
+to_core_haltreq	Debug_Module.v	/^    output wire         to_core_haltreq,$/;"	p	module:Debug_Module
+to_core_haltreq	Top_JTAG.v	/^    wire         to_core_haltreq;$/;"	n	module:Top_CPU_JTAG
+to_core_hartreset	Debug_Module.v	/^    output wire         to_core_hartreset,$/;"	p	module:Debug_Module
+to_core_hartreset	Top_JTAG.v	/^    wire         to_core_hartreset;$/;"	n	module:Top_CPU_JTAG
+to_core_instr_bus	Debug_Module.v	/^    output wire [31:0]  to_core_instr_bus,$/;"	p	module:Debug_Module
+to_core_instr_bus	Top_JTAG.v	/^    wire [31:0]  to_core_instr_bus;$/;"	n	module:Top_CPU_JTAG
+to_core_ndmreset	Debug_Module.v	/^    output wire         to_core_ndmreset,$/;"	p	module:Debug_Module
+to_core_ndmreset	Top_JTAG.v	/^    wire         to_core_ndmreset;$/;"	n	module:Top_CPU_JTAG
+to_core_new_cmd_flag	Debug_Module.v	/^    output wire         to_core_new_cmd_flag,$/;"	p	module:Debug_Module
+to_core_new_cmd_flag	Top_JTAG.v	/^    wire         to_core_new_cmd_flag;$/;"	n	module:Top_CPU_JTAG
+to_core_resethaltreq_reg	Debug_Module.v	/^    output wire         to_core_resethaltreq_reg,$/;"	p	module:Debug_Module
+to_core_resethaltreq_reg	Top_JTAG.v	/^    wire         to_core_resethaltreq_reg;$/;"	n	module:Top_CPU_JTAG
+to_core_resumereq	Debug_Module.v	/^    output wire         to_core_resumereq,$/;"	p	module:Debug_Module
+to_core_resumereq	Top_JTAG.v	/^    wire         to_core_resumereq;$/;"	n	module:Top_CPU_JTAG
+toggle_pins	toggle_pins.v	/^module toggle_pins ($/;"	m
+top	top.v	/^module top($/;"	m
+total_cycle_count	TOP_JTAG_TB.v	/^  reg [31:0] total_cycle_count, num_inst;$/;"	r	module:TOP_JTAG_TB
+transfer	TOP_JTAG_TB.v	/^    task automatic Access_reg_command(input write, input transfer, input [15:0] regno, input [31/;"	p	task:TOP_JTAG_TB.Access_reg_command
+trst	jtag_reg.v	/^        input trst,$/;"	p	module:jtag_reg
+trst	jtag_state_machine.v	/^        input trst,$/;"	p	module:jtag_state_machine
+trst	jtaglet.v	/^    input trst,$/;"	p	module:jtaglet
+u_Bypass_Reg	JTAG.v	/^    Bypass_Reg u_Bypass_Reg ($/;"	i	module:JTAG
+u_Command_Engine	RISCV_Core.v	/^    Command_Engine u_Command_Engine ($/;"	i	module:RISCV_Core
+u_Custom0	Debug_Module.v	/^    Custom0 u_Custom0 ($/;"	i	module:Debug_Module
+u_Custom1	Debug_Module.v	/^    Custom1 u_Custom1 ($/;"	i	module:Debug_Module
+u_Custom2	Debug_Module.v	/^    Custom2 u_Custom2 ($/;"	i	module:Debug_Module
+u_Custom3	Debug_Module.v	/^    Custom3 u_Custom3 ($/;"	i	module:Debug_Module
+u_Custom4	Debug_Module.v	/^    Custom4 u_Custom4 ($/;"	i	module:Debug_Module
+u_Custom5	Debug_Module.v	/^    Custom5 u_Custom5 ($/;"	i	module:Debug_Module
+u_Custom6	Debug_Module.v	/^    Custom6 u_Custom6 ($/;"	i	module:Debug_Module
+u_ID_Reg	JTAG.v	/^    ID_Reg u_ID_Reg ($/;"	i	module:JTAG
+u_JTAG_IR	JTAG.v	/^    JTAG_IR #(.WIDTH(WIDTH)) u_JTAG_IR ($/;"	i	module:JTAG
+u_RISC_V_Bypass_signal_Gen	Debug_Module.v	/^    RISC_V_Bypass_signal_Gen u_RISC_V_Bypass_signal_Gen ($/;"	i	module:Debug_Module
+u_TAP_Controller	JTAG.v	/^    TAP_Controller u_TAP_Controller ($/;"	i	module:JTAG
+u_abstractcs	Debug_Module.v	/^    ) u_abstractcs ($/;"	i	module:Debug_Module
+u_command	Debug_Module.v	/^    command u_command ($/;"	i	module:Debug_Module
+u_data0	Debug_Module.v	/^    data0 u_data0 ($/;"	i	module:Debug_Module
+u_data1	Debug_Module.v	/^    data1 u_data1 ($/;"	i	module:Debug_Module
+u_dmcontrol	Debug_Module.v	/^    dmcontrol u_dmcontrol ($/;"	i	module:Debug_Module
+u_dmstatus	Debug_Module.v	/^    ) u_dmstatus ($/;"	i	module:Debug_Module
+u_hartinfo	Debug_Module.v	/^    hartinfo u_hartinfo ($/;"	i	module:Debug_Module
+u_riscv	RISCV_Core.v	/^    RISC_V_Pipelined u_riscv ($/;"	i	module:RISCV_Core
+u_riscv_core	Top_JTAG.v	/^    cpu u_riscv_core ($/;"	i	module:Top_CPU_JTAG
+u_sync	Top_JTAG.v	/^    synchronizer u_sync ($/;"	i	module:Top_CPU_JTAG
+unsupported_aarsize	command.v	/^    output reg         unsupported_aarsize,     \/\/ Flag if requested aarsize is larger than su/;"	p	module:command
+update_abstractcs	Debug_Module.v	/^    wire        update_abstractcs;$/;"	n	module:Debug_Module
+update_command	Debug_Module.v	/^    wire        update_command;$/;"	n	module:Debug_Module
+update_command_flopped	Debug_Module.v	/^    reg update_command_flopped;$/;"	r	module:Debug_Module
+update_data0	Debug_Module.v	/^    wire        update_data0;$/;"	n	module:Debug_Module
+update_data1	Debug_Module.v	/^    wire        update_data1;$/;"	n	module:Debug_Module
+update_dmcontrol	Debug_Module.v	/^    wire        update_dmcontrol;$/;"	n	module:Debug_Module
+userData_in	jtaglet.v	/^    input[USERDATA_LEN-1:0] userData_in,$/;"	p	module:jtaglet
+userData_out	jtaglet.v	/^    output[USERDATA_LEN-1:0] userData_out,$/;"	p	module:jtaglet
+userData_reg	jtaglet.v	/^    jtag_reg #(.IR_LEN(IR_LEN), .DR_LEN(USERDATA_LEN), .IR_OPCODE(USERDATA_OP)) userData_reg$/;"	i	module:jtaglet
+userData_tdo	jtaglet.v	/^    wire userData_tdo;$/;"	n	module:jtaglet
+userOp	jtaglet.v	/^    output[USEROP_LEN-1:0] userOp,$/;"	p	module:jtaglet
+userOp_ready	jtaglet.v	/^    output userOp_ready$/;"	p	module:jtaglet
+userOp_reg	jtaglet.v	/^    jtag_reg #(.IR_LEN(IR_LEN), .DR_LEN(USEROP_LEN), .IR_OPCODE(USEROP_OP)) userOp_reg$/;"	i	module:jtaglet
+userOp_tdo	jtaglet.v	/^    wire userOp_tdo;$/;"	n	module:jtaglet
+uut	JTAG_TB.v	/^    FTDI_connections uut ($/;"	i	module:JTAG_TB
+uut	TAP_Controller_TB.v	/^    TAP_Controller uut ($/;"	i	module:TAP_Controller_TB
+vpn_to_ppn_req	Top_JTAG.v	/^    output vpn_to_ppn_req,$/;"	p	module:Top_CPU_JTAG
+wdata	Custom0.v	/^        input wire [31:0]   wdata,$/;"	p	module:Custom0
+wdata	Custom1.v	/^        input wire [31:0]   wdata,$/;"	p	module:Custom1
+wdata	Custom2.v	/^        input wire [31:0]   wdata,$/;"	p	module:Custom2
+wdata	Custom3.v	/^        input wire [31:0]   wdata,$/;"	p	module:Custom3
+wdata	Custom4.v	/^        input wire [31:0]   wdata,$/;"	p	module:Custom4
+wdata	Custom5.v	/^        input wire [31:0]   wdata,$/;"	p	module:Custom5
+wdata	Custom6.v	/^        input wire [31:0]   wdata,$/;"	p	module:Custom6
+wdata	abstractcs.v	/^    input wire [31:0] wdata,                      \/\/ Data to be written to abstractcs fields$/;"	p	module:abstractcs
+wdata	command.v	/^    input  wire [31:0] wdata,         \/\/ Incoming write data to command register$/;"	p	module:command
+wdata	data0.v	/^    wire [31:0] wdata;$/;"	n	module:data0
+wdata	data1.v	/^    wire [31:0] wdata;$/;"	n	module:data1
+wdata	dmcontrol.v	/^    input wire [31:0] wdata,$/;"	p	module:dmcontrol
+which_probe	TAP_Controller_with_BSCANE2.v	/^    reg [2:0] which_probe;$/;"	r	module:TAP_Controller_with_BSCANE2
+which_probe_out	TAP_Controller_with_BSCANE2.v	/^    output wire [2:0] which_probe_out$/;"	p	module:TAP_Controller_with_BSCANE2
+wr_en	Custom0.v	/^        input wire          wr_en,$/;"	p	module:Custom0
+wr_en	Custom1.v	/^        input wire          wr_en,$/;"	p	module:Custom1
+wr_en	Custom2.v	/^        input wire          wr_en,$/;"	p	module:Custom2
+wr_en	Custom3.v	/^        input wire          wr_en,$/;"	p	module:Custom3
+wr_en	abstractcs.v	/^    input wire wr_en,$/;"	p	module:abstractcs
+wr_en	command.v	/^    input  wire        wr_en,         \/\/ Write enable signal for command register$/;"	p	module:command
+wr_en	data0.v	/^        input wire          wr_en,$/;"	p	module:data0
+wr_en	data1.v	/^        input wire          wr_en,$/;"	p	module:data1
+wr_en	dmcontrol.v	/^    input wire wr_en,$/;"	p	module:dmcontrol
+wr_en_flopped	data0.v	/^    reg wr_en_flopped;$/;"	r	module:data0
+write	TOP_JTAG_TB.v	/^    task automatic Access_mem_command(input write, input [2:0] aamsize, input [31:0] ptr, input /;"	p	task:TOP_JTAG_TB.Access_mem_command
+write	TOP_JTAG_TB.v	/^    task automatic Access_reg_command(input write, input transfer, input [15:0] regno, input [31/;"	p	task:TOP_JTAG_TB.Access_reg_command
+write_cmderr	abstractcs.v	/^    wire [2:0] write_cmderr = wdata[10:8];        \/\/ Write input for cmderr field$/;"	n	module:abstractcs
+write_data	TOP_JTAG_TB.v	/^    task automatic Access_mem_command(input write, input [2:0] aamsize, input [31:0] ptr, input /;"	p	task:TOP_JTAG_TB.Access_mem_command
+write_data	TOP_JTAG_TB.v	/^    task automatic Access_reg_command(input write, input transfer, input [15:0] regno, input [31/;"	p	task:TOP_JTAG_TB.Access_reg_command
+write_id_priority	defines.v	/^`define write_id_priority 3  $/;"	c
