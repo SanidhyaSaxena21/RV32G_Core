@@ -1,0 +1,152 @@
+
+./mem_files_sorting/fibonacci.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00000013          	nop
+   4:	00000093          	li	ra,0
+   8:	00000113          	li	sp,0
+   c:	00000193          	li	gp,0
+  10:	00000213          	li	tp,0
+  14:	00000293          	li	t0,0
+  18:	00000313          	li	t1,0
+  1c:	00000393          	li	t2,0
+  20:	00000413          	li	s0,0
+  24:	00000493          	li	s1,0
+  28:	00000513          	li	a0,0
+  2c:	00000593          	li	a1,0
+  30:	00000613          	li	a2,0
+  34:	00000693          	li	a3,0
+  38:	00000713          	li	a4,0
+  3c:	00000793          	li	a5,0
+  40:	00000813          	li	a6,0
+  44:	00000893          	li	a7,0
+  48:	00000913          	li	s2,0
+  4c:	00000993          	li	s3,0
+  50:	00000a13          	li	s4,0
+  54:	00000a93          	li	s5,0
+  58:	00000b13          	li	s6,0
+  5c:	00000b93          	li	s7,0
+  60:	00000c13          	li	s8,0
+  64:	00000c93          	li	s9,0
+  68:	00000d13          	li	s10,0
+  6c:	00000d93          	li	s11,0
+  70:	00000e13          	li	t3,0
+  74:	00000e93          	li	t4,0
+  78:	00000f13          	li	t5,0
+  7c:	00000f93          	li	t6,0
+  80:	20004117          	auipc	sp,0x20004
+  84:	f7c10113          	addi	sp,sp,-132 # 20003ffc <__stack_pointer>
+  88:	00018193          	mv	gp,gp
+  8c:	30501073          	csrw	mtvec,zero
+  90:	30401073          	csrw	mie,zero
+  94:	30001073          	csrw	mstatus,zero
+  98:	34401073          	csrw	mip,zero
+  9c:	000042b7          	lui	t0,0x4
+  a0:	0022d293          	srli	t0,t0,0x2
+  a4:	3b029073          	csrw	pmpaddr0,t0
+  a8:	200002b7          	lui	t0,0x20000
+  ac:	0022d293          	srli	t0,t0,0x2
+  b0:	3b129073          	csrw	pmpaddr1,t0
+  b4:	200042b7          	lui	t0,0x20004
+  b8:	0022d293          	srli	t0,t0,0x2
+  bc:	3b229073          	csrw	pmpaddr2,t0
+  c0:	5f0002b7          	lui	t0,0x5f000
+  c4:	0022d293          	srli	t0,t0,0x2
+  c8:	3b329073          	csrw	pmpaddr3,t0
+  cc:	5f0042b7          	lui	t0,0x5f004
+  d0:	0022d293          	srli	t0,t0,0x2
+  d4:	3b429073          	csrw	pmpaddr4,t0
+  d8:	fff00293          	li	t0,-1
+  dc:	0022d293          	srli	t0,t0,0x2
+  e0:	3b529073          	csrw	pmpaddr5,t0
+  e4:	070b02b7          	lui	t0,0x70b0
+  e8:	70d28293          	addi	t0,t0,1805 # 70b070d <__rom_end+0x70ac70d>
+  ec:	3a029073          	csrw	pmpcfg0,t0
+  f0:	070702b7          	lui	t0,0x7070
+  f4:	70b28293          	addi	t0,t0,1803 # 707070b <__rom_end+0x706c70b>
+  f8:	3a129073          	csrw	pmpcfg1,t0
+  fc:	20000717          	auipc	a4,0x20000
+ 100:	f0470713          	addi	a4,a4,-252 # 20000000 <__DATA_BEGIN__>
+ 104:	20000797          	auipc	a5,0x20000
+ 108:	efc78793          	addi	a5,a5,-260 # 20000000 <__DATA_BEGIN__>
+
+0000010c <clear_bss_loop>:
+ 10c:	00f75863          	bge	a4,a5,11c <clear_bss_end>
+ 110:	00072023          	sw	zero,0(a4)
+ 114:	00470713          	addi	a4,a4,4
+ 118:	ff5ff06f          	j	10c <clear_bss_loop>
+
+0000011c <clear_bss_end>:
+ 11c:	010000ef          	jal	ra,12c <main>
+ 120:	00000513          	li	a0,0
+ 124:	05d00893          	li	a7,93
+ 128:	00100073          	ebreak
+
+0000012c <main>:
+ 12c:	00a00513          	li	a0,10
+ 130:	20000597          	auipc	a1,0x20000
+ 134:	ed058593          	addi	a1,a1,-304 # 20000000 <__DATA_BEGIN__>
+ 138:	06400613          	li	a2,100
+ 13c:	008000ef          	jal	ra,144 <FIB_MEMO>
+ 140:	07c000ef          	jal	ra,1bc <EXIT>
+
+00000144 <FIB_MEMO>:
+ 144:	ff010113          	addi	sp,sp,-16
+ 148:	00112623          	sw	ra,12(sp)
+ 14c:	01212423          	sw	s2,8(sp)
+ 150:	00912223          	sw	s1,4(sp)
+ 154:	00812023          	sw	s0,0(sp)
+ 158:	00050413          	mv	s0,a0
+ 15c:	00241293          	slli	t0,s0,0x2
+ 160:	00b28933          	add	s2,t0,a1
+ 164:	00a64663          	blt	a2,a0,170 <SKIP>
+ 168:	00092503          	lw	a0,0(s2)
+ 16c:	02051c63          	bnez	a0,1a4 <RET>
+
+00000170 <SKIP>:
+ 170:	00040513          	mv	a0,s0
+ 174:	02050863          	beqz	a0,1a4 <RET>
+ 178:	00100313          	li	t1,1
+ 17c:	02650463          	beq	a0,t1,1a4 <RET>
+ 180:	ffe50513          	addi	a0,a0,-2
+ 184:	fc1ff0ef          	jal	ra,144 <FIB_MEMO>
+ 188:	00050493          	mv	s1,a0
+ 18c:	00040513          	mv	a0,s0
+ 190:	fff50513          	addi	a0,a0,-1
+ 194:	fb1ff0ef          	jal	ra,144 <FIB_MEMO>
+ 198:	00950533          	add	a0,a0,s1
+ 19c:	00864463          	blt	a2,s0,1a4 <RET>
+ 1a0:	00a92023          	sw	a0,0(s2)
+
+000001a4 <RET>:
+ 1a4:	00012403          	lw	s0,0(sp)
+ 1a8:	00412483          	lw	s1,4(sp)
+ 1ac:	00812903          	lw	s2,8(sp)
+ 1b0:	00c12083          	lw	ra,12(sp)
+ 1b4:	01010113          	addi	sp,sp,16
+ 1b8:	00008067          	ret
+
+000001bc <EXIT>:
+ 1bc:	00100513          	li	a0,1
+ 1c0:	40051073          	csrw	0x400,a0
+ 1c4:	00100073          	ebreak
+
+Disassembly of section .riscv.attributes:
+
+00000000 <.riscv.attributes>:
+   0:	1d41                	addi	s10,s10,-16
+   2:	0000                	unimp
+   4:	7200                	flw	fs0,32(a2)
+   6:	7369                	lui	t1,0xffffa
+   8:	01007663          	bgeu	zero,a6,14 <__rom_start+0x14>
+   c:	00000013          	nop
+  10:	7205                	lui	tp,0xfffe1
+  12:	3376                	fld	ft6,376(sp)
+  14:	6932                	flw	fs2,12(sp)
+  16:	7032                	flw	ft0,44(sp)
+  18:	0030                	addi	a2,sp,8
+  1a:	0108                	addi	a0,sp,128
+  1c:	0b0a                	slli	s6,s6,0x2

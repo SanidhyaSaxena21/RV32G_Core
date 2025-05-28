@@ -19,8 +19,10 @@ shift # Remove first argument from list
 START_ASM="$@"
 
 
-TEST_DIR=./extra
-MEM_DIR=./mem_files
+#TEST_DIR=./extra
+TEST_DIR=./Sorting_testcases
+#MEM_DIR=./mem_files
+MEM_DIR=./mem_files_sorting
 mkdir -p $MEM_DIR
 
 for file in $TEST_DIR/*.s; do

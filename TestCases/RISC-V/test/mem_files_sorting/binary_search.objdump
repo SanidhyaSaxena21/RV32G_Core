@@ -1,0 +1,168 @@
+
+./mem_files_sorting/binary_search.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00000013          	nop
+   4:	00000093          	li	ra,0
+   8:	00000113          	li	sp,0
+   c:	00000193          	li	gp,0
+  10:	00000213          	li	tp,0
+  14:	00000293          	li	t0,0
+  18:	00000313          	li	t1,0
+  1c:	00000393          	li	t2,0
+  20:	00000413          	li	s0,0
+  24:	00000493          	li	s1,0
+  28:	00000513          	li	a0,0
+  2c:	00000593          	li	a1,0
+  30:	00000613          	li	a2,0
+  34:	00000693          	li	a3,0
+  38:	00000713          	li	a4,0
+  3c:	00000793          	li	a5,0
+  40:	00000813          	li	a6,0
+  44:	00000893          	li	a7,0
+  48:	00000913          	li	s2,0
+  4c:	00000993          	li	s3,0
+  50:	00000a13          	li	s4,0
+  54:	00000a93          	li	s5,0
+  58:	00000b13          	li	s6,0
+  5c:	00000b93          	li	s7,0
+  60:	00000c13          	li	s8,0
+  64:	00000c93          	li	s9,0
+  68:	00000d13          	li	s10,0
+  6c:	00000d93          	li	s11,0
+  70:	00000e13          	li	t3,0
+  74:	00000e93          	li	t4,0
+  78:	00000f13          	li	t5,0
+  7c:	00000f93          	li	t6,0
+  80:	20004117          	auipc	sp,0x20004
+  84:	f7c10113          	addi	sp,sp,-132 # 20003ffc <__stack_pointer>
+  88:	00018193          	mv	gp,gp
+  8c:	30501073          	csrw	mtvec,zero
+  90:	30401073          	csrw	mie,zero
+  94:	30001073          	csrw	mstatus,zero
+  98:	34401073          	csrw	mip,zero
+  9c:	000042b7          	lui	t0,0x4
+  a0:	0022d293          	srli	t0,t0,0x2
+  a4:	3b029073          	csrw	pmpaddr0,t0
+  a8:	200002b7          	lui	t0,0x20000
+  ac:	0022d293          	srli	t0,t0,0x2
+  b0:	3b129073          	csrw	pmpaddr1,t0
+  b4:	200042b7          	lui	t0,0x20004
+  b8:	0022d293          	srli	t0,t0,0x2
+  bc:	3b229073          	csrw	pmpaddr2,t0
+  c0:	5f0002b7          	lui	t0,0x5f000
+  c4:	0022d293          	srli	t0,t0,0x2
+  c8:	3b329073          	csrw	pmpaddr3,t0
+  cc:	5f0042b7          	lui	t0,0x5f004
+  d0:	0022d293          	srli	t0,t0,0x2
+  d4:	3b429073          	csrw	pmpaddr4,t0
+  d8:	fff00293          	li	t0,-1
+  dc:	0022d293          	srli	t0,t0,0x2
+  e0:	3b529073          	csrw	pmpaddr5,t0
+  e4:	070b02b7          	lui	t0,0x70b0
+  e8:	70d28293          	addi	t0,t0,1805 # 70b070d <__rom_end+0x70ac70d>
+  ec:	3a029073          	csrw	pmpcfg0,t0
+  f0:	070702b7          	lui	t0,0x7070
+  f4:	70b28293          	addi	t0,t0,1803 # 707070b <__rom_end+0x706c70b>
+  f8:	3a129073          	csrw	pmpcfg1,t0
+  fc:	20000717          	auipc	a4,0x20000
+ 100:	f0470713          	addi	a4,a4,-252 # 20000000 <__DATA_BEGIN__>
+ 104:	20000797          	auipc	a5,0x20000
+ 108:	efc78793          	addi	a5,a5,-260 # 20000000 <__DATA_BEGIN__>
+
+0000010c <clear_bss_loop>:
+ 10c:	00f75863          	bge	a4,a5,11c <clear_bss_end>
+ 110:	00072023          	sw	zero,0(a4)
+ 114:	00470713          	addi	a4,a4,4
+ 118:	ff5ff06f          	j	10c <clear_bss_loop>
+
+0000011c <clear_bss_end>:
+ 11c:	010000ef          	jal	ra,12c <main>
+ 120:	00000513          	li	a0,0
+ 124:	05d00893          	li	a7,93
+ 128:	00100073          	ebreak
+
+0000012c <main>:
+ 12c:	20000517          	auipc	a0,0x20000
+ 130:	ed450513          	addi	a0,a0,-300 # 20000000 <__DATA_BEGIN__>
+ 134:	00000593          	li	a1,0
+ 138:	00600613          	li	a2,6
+ 13c:	02800693          	li	a3,40
+ 140:	00200293          	li	t0,2
+ 144:	00552023          	sw	t0,0(a0)
+ 148:	00300293          	li	t0,3
+ 14c:	00552223          	sw	t0,4(a0)
+ 150:	00400293          	li	t0,4
+ 154:	00552423          	sw	t0,8(a0)
+ 158:	00a00293          	li	t0,10
+ 15c:	00552623          	sw	t0,12(a0)
+ 160:	02800293          	li	t0,40
+ 164:	00552823          	sw	t0,16(a0)
+ 168:	03200293          	li	t0,50
+ 16c:	00552a23          	sw	t0,20(a0)
+ 170:	3e800293          	li	t0,1000
+ 174:	00552c23          	sw	t0,24(a0)
+ 178:	008000ef          	jal	ra,180 <BIN_SEARCH>
+ 17c:	070000ef          	jal	ra,1ec <EXIT>
+
+00000180 <BIN_SEARCH>:
+ 180:	ffc10113          	addi	sp,sp,-4
+ 184:	00112023          	sw	ra,0(sp)
+ 188:	00d29663          	bne	t0,a3,194 <NOT_FOUND>
+ 18c:	00700533          	add	a0,zero,t2
+ 190:	00008067          	ret
+
+00000194 <NOT_FOUND>:
+ 194:	04b64463          	blt	a2,a1,1dc <INCORRECT_BOUNDS>
+ 198:	40b602b3          	sub	t0,a2,a1
+ 19c:	4012d313          	srai	t1,t0,0x1
+ 1a0:	00b303b3          	add	t2,t1,a1
+ 1a4:	00239e13          	slli	t3,t2,0x2
+ 1a8:	00ae0e33          	add	t3,t3,a0
+ 1ac:	000e2283          	lw	t0,0(t3)
+ 1b0:	00d29663          	bne	t0,a3,1bc <NOT_EQ>
+ 1b4:	00700533          	add	a0,zero,t2
+ 1b8:	00008067          	ret
+
+000001bc <NOT_EQ>:
+ 1bc:	0056d663          	bge	a3,t0,1c8 <GREATER_THAN>
+ 1c0:	fff38613          	addi	a2,t2,-1
+ 1c4:	fbdff0ef          	jal	ra,180 <BIN_SEARCH>
+
+000001c8 <GREATER_THAN>:
+ 1c8:	00138593          	addi	a1,t2,1
+ 1cc:	fb5ff0ef          	jal	ra,180 <BIN_SEARCH>
+
+000001d0 <RET>:
+ 1d0:	00012083          	lw	ra,0(sp)
+ 1d4:	00410113          	addi	sp,sp,4
+ 1d8:	00008067          	ret
+
+000001dc <INCORRECT_BOUNDS>:
+ 1dc:	fff00513          	li	a0,-1
+ 1e0:	00012083          	lw	ra,0(sp)
+ 1e4:	00410113          	addi	sp,sp,4
+ 1e8:	00008067          	ret
+
+000001ec <EXIT>:
+ 1ec:	00100073          	ebreak
+
+Disassembly of section .riscv.attributes:
+
+00000000 <.riscv.attributes>:
+   0:	1d41                	addi	s10,s10,-16
+   2:	0000                	unimp
+   4:	7200                	flw	fs0,32(a2)
+   6:	7369                	lui	t1,0xffffa
+   8:	01007663          	bgeu	zero,a6,14 <__rom_start+0x14>
+   c:	00000013          	nop
+  10:	7205                	lui	tp,0xfffe1
+  12:	3376                	fld	ft6,376(sp)
+  14:	6932                	flw	fs2,12(sp)
+  16:	7032                	flw	ft0,44(sp)
+  18:	0030                	addi	a2,sp,8
+  1a:	0108                	addi	a0,sp,128
+  1c:	0b0a                	slli	s6,s6,0x2
