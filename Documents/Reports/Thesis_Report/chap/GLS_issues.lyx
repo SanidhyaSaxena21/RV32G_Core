@@ -1,0 +1,657 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass docbook-book
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Part
+ASIC Design
+\end_layout
+
+\begin_layout Section
+GLS Issues
+\end_layout
+
+\begin_layout Standard
+1.
+ 
+\series bold
+Hit issue during CACHE miss for the 1st time
+\end_layout
+
+\begin_layout Standard
+CURRENT WAVEFORM 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Graphics
+	filename hit_x_issue.png
+	lyxscale 40
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Current Waveform
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+EXPECTED WAVEFORMS
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Graphics
+	filename hit_expected.png
+	lyxscale 40
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Expected Waveforms
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For the moment, I have initialised all the Memory output of dout1_mem[20:0]
+\end_layout
+
+\begin_layout Standard
+force tb_platform.riscv_platform.cpu1.fdem.mh.icache1.dout1_mem = 21'h1fffff;
+ force tb_platform.riscv_platform.cpu1.fdem.mh.icache1.dout2_mem = 21'h1fffff;
+ xcelium> force tb_platform.riscv_platform.cpu1.fdem.mh.icache1.dout1_mem = 21'h1fffff
+; force tb_platform.riscv_platform.cpu1.fdem.mh.icache1.dout2_mem = 21'h1fffff;
+\end_layout
+
+\begin_layout Standard
+After that, hit goes fine.
+ 
+\end_layout
+
+\begin_layout Standard
+Then we have the issue at the Address line of the ICACHE (fdem.mh.interface_router.
+ADDR).
+ 
+\end_layout
+
+\begin_layout Standard
+Lower 2 bits of the address is going 
+\begin_inset Quotes eld
+\end_inset
+
+Z
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Graphics
+	filename Address_Lower_2_bits.png
+	lyxscale 40
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Address lower bits
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+0000ns:
+\series default
+ >> At 0ns, put the force on both dout1_mem and dout2_mem, run till 
+\series bold
+2800ns
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2800ns:
+\series default
+ >> At 2800ns, Release the force on dout1, and run the simulations for 
+\series bold
+400ns
+\series default
+ more 
+\end_layout
+
+\begin_layout Standard
+3200ns: >> At 3200ns, Again force the dout1_mem to 21'h1fffff, and run the
+ simulations for 200ns
+\end_layout
+
+\begin_layout Standard
+3400ns: >> At 3400ns, Release the force on dout1_mem
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Graphics
+	filename Force_mem_outputs.png
+	lyxscale 50
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Force Mem output
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+SOLUTION
+\series default
+: All the memories will be initialised to X in the GLS.
+ Hence the RTL code needs to be designed in such a way that it doesnt read
+ the memory before it writes something on to it.
+ Hence we designed the tag_valid register which holds the value 1'b1, if
+ that cache line is valid.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename RTL_fix_icache.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+RTL fix
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here when the tag_hit is 1'b1, and tag_valid_w1_read is 1'b0, it doesnt
+ matter what the dout values are and the hit will remain to 1'b0 cleanly.
+\end_layout
+
+\begin_layout Standard
+2.
+ 
+\series bold
+Delay Loops inside the designs:
+\series default
+ Designs contain many paths with sequential elements, which have no clock
+ to q delay.
+ All the # delays will be removed out from the design once the synthesis
+ is done.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Clint_rq_ack_issue.png
+	lyxscale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+CLINT Req-Ack issue
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the above case, 
+\emph on
+s_en, 
+\emph default
+comes along with the address 
+\emph on
+s_addr.
+ 
+\emph default
+The s_ready has to be 1'b1 in the next clock cycle, but in functional it
+ works fine since we have given # delay to the flops, but doesnt work in
+ zero delay or unit delay simulations.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename RTl_Clint_issue.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+RTL code
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+SOLUTION: 
+\series default
+add the 
+\series bold
+\emph on
+-seq_udp_delay 200ps
+\series default
+\emph default
+ to the script to make the output of all the flops to come after a delay
+ of 200ps to model the tcq for correct functionality.
+ 
+\end_layout
+
+\begin_layout Section
+ICACHE Design 
+\end_layout
+
+\begin_layout Standard
+The processor boots from the address 32'h0000_0000, which is the base address
+ of the instruction memory (BOOT ROM) in our case.
+ 
+\end_layout
+
+\begin_layout Standard
+When the first time processor sends the BASE_ADDRESS, we'll have a icache
+ miss.
+ Then the virtual address is given to the TLB block and physical address
+ is given out with a tag_valid signal.
+ In our case, since we have disabled the translation for ease of use, we'll
+ have physical address = virtual address.
+ When the tag_hit is 1'b1 and hit_out is 1'b0, then the state machine inside
+ the 
+\series bold
+cachefsm
+\series default
+ block goes to the service miss state(2'b01).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Graphics
+	filename initial_cache_miss.png
+	lyxscale 40
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Initial icache miss
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the state SERVICE_MISS, the physical address is given to the instruction
+ memory for fetching the instruction in burst.
+ We have a cache line of 256bits, that is 8 words (32-bits).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Address_burst_to_fetch_instr.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Address burst to fetch instruction
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When the whole cache line is fetched, the cachefsm signals we to the icache
+ controller for writing the cache line in to the memory.
+ Physical tag along with the tag_valid is also written to the tag array
+ memory.
+ When 
+\emph on
+we 
+\emph default
+comes from the cachefsm, the FSM inside the icache controller state 
+\emph on
+state_we
+\emph default
+ goes to 2 (2'b10).
+ In state 2, it cache line and tag is written on to the ICACE SRAM, and
+ in next cycle it again comes to state 1.
+ 
+\end_layout
+
+\begin_layout Standard
+Parallely, states of cachefsm are also moving.
+ When the state of cachefsm is 2'b10, it raises the vpn_to_ppn_req_3 signal,
+ which goes to the icache controller and the state goes to 0.
+ 
+\end_layout
+
+\begin_layout Standard
+This vpn_to_ppn_req_3, is used to read the tag again from the TLB and compare
+ it with the tag coming from the TAG SRAM ARRAY.
+ It it matches, then it is a hit otherwise miss.
+\end_layout
+
+\begin_layout Standard
+When the cache hits, it sends the 
+\emph on
+instruction[31:0] 
+\emph default
+to the pipeline unit using block select counter.
+ 
+\end_layout
+
+\begin_layout Standard
+Now then the PC goes to 32'h0000_0020, the index increments and we encounter
+ a cache miss, since the tag from the TLB(physical) doesnt matches with
+ that from the memory.
+ So signal i_hit goes down.
+ Now the state in cachefsm again goes to SERVICE_MISS.
+ At this moment, the tag_valid[VA] for the next upcoming way is written
+ 1'b1 and cache again fetched the next line from the memory.
+ 
+\end_layout
+
+\end_body
+\end_document

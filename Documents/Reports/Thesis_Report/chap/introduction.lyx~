@@ -1,0 +1,698 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass desethesis
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Pre-study
+\end_layout
+
+\begin_layout Standard
+This report details the pre-study conducted to understand the design and
+ architecture of a RISC-V processor and its implementation using the Chisel
+ hardware construction language.
+ We embarked on a comprehensive exploration through:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Market Survey:
+\series default
+ We investigated existing RISC-V-based controllers to identify industry
+ trends, potential application areas, and current performance benchmarks.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Product Survey:
+\series default
+ We analyzed commercially available controllers (if applicable) to understand
+ their functionalities, resource utilization, and potential limitations.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Wish List Specification:
+\series default
+ Based on the market and product surveys, we formulated a detailed wish
+ list outlining the desired features and capabilities of our RISC-V controller.
+\end_layout
+
+\begin_layout Section
+Market Survey 
+\end_layout
+
+\begin_layout Standard
+RISC-V (RISC Five), an open-source instruction set architecture (ISA) is
+ rapidly transforming the computing landscape.
+ Unlike traditional proprietary ISAs, RISC-V offers a royalty-free and modular
+ standard.
+ This fosters a wave of innovation across diverse computing domains, including
+ the Internet of Things (IoT), edge computing, and Artificial Intelligence
+ (AI).
+ RISC-V's low-power consumption and inherent scalability make it ideal for
+ resource-constrained IoT devices.
+ Additionally, its flexible nature allows for customization to specific
+ processing needs encountered at the edge of computing networks, and its
+ modularity facilitates the development of specialized hardware accelerators
+ for AI applications.
+\end_layout
+
+\begin_layout Subsection
+Market Trends 
+\end_layout
+
+\begin_layout Standard
+The pre-study revealed a burgeoning market for RISC-V processors, driven
+ by several key trends:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Soaring Adoption
+\series default
+: Across diverse sectors, the open nature of RISC-V is fueling rapid adoption.
+ This openness allows for customization, reduces time to market, and provides
+ cost savings for developers.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Application Expansion
+\series default
+: Initially popular in embedded systems, RISC-V is now making inroads into
+ high-performance computing domains such as servers, networking equipment,
+ and even some mobile devices.
+ This diversification showcases its growing versatility.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Thriving Ecosystem
+\series default
+: The RISC-V ecosystem is flourishing with the development of essential
+ tools like software tools, compilers, operating systems, and hardware platforms.
+ This robust ecosystem fosters innovation and further adoption.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Industry Backing
+\series default
+: Major tech giants, including Google, NVIDIA, Western Digital, and Alibaba,
+ are lending their support to RISC-V.
+ This industry backing signifies its potential to become a mainstream architectu
+re in the future.
+\end_layout
+
+\begin_layout Subsection
+Growing Demand for Customization:
+\end_layout
+
+\begin_layout Standard
+RISC-V's open architecture is a key driver behind its growing adoption.
+ This openness unlocks a new level of customization for companies developing
+ Application-Specific Integrated Circuits (ASICs).
+ Beyond the traditional benefits of ASICs, RISC-V empowers a more granular
+ level of control, allowing for:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Tailored Solutions
+\series default
+: Traditional ASICs offer customization, but RISC-V's open architecture
+ unlocks a new level.
+ Companies can fine-tune their ASIC designs, optimizing performance, power
+ efficiency, and other critical metrics to their exact application requirements.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Industry-Specific Optimization
+\series default
+: Different industries have unique needs.
+ RISC-V empowers companies to develop bespoke solutions that meet the stringent
+ demands of sectors like IoT, automotive, aerospace, and telecommunications.
+ By incorporating RISC-V cores tailored to their specific needs, companies
+ can achieve significant performance and efficiency gains.
+\end_layout
+
+\begin_layout Subsection
+Booming Ecosystem Supports RISC-V ASIC Design
+\end_layout
+
+\begin_layout Standard
+RISC-V's open architecture fosters hardware customization and the development
+ of a comprehensive ecosystem.
+ This ecosystem plays a critical role in facilitating the broad adoption
+ of RISC-V within ASIC design by providing essential tools and resources
+ that streamline the development process.
+ An examination of the following elements reveals the key components of
+ this maturing ecosystem:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Comprehensive Development Tools
+\series default
+: A growing suite of development tools caters specifically to RISC-V-based
+ ASICs.
+ This includes tools for Register Transfer Level (RTL) design, verification,
+ synthesis, and physical design, ensuring a smooth workflow for ASIC designers.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Diverse IP Core Offerings
+\series default
+: Companies specializing in RISC-V IP cores are providing a rich set of
+ options for ASIC integration.
+ These offerings encompass various configurations of RISC-V cores, peripheral
+ IP (Intellectual Property) blocks, and interconnect IP.
+ This comprehensive library empowers ASIC designers to efficiently build
+ complex systems-on-chip (SoCs) tailored to their specific needs.
+\end_layout
+
+\begin_layout Subsection
+Prominent Players in the Maturing RISC-V Ecosystem
+\end_layout
+
+\begin_layout Standard
+The pre-study identified several prominent players shaping the maturing
+ RISC-V ecosystem:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+SiFive
+\series default
+: A leading provider of RISC-V IP cores, SiFive offers a comprehensive portfolio
+ of customizable processor designs catering to diverse application needs.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Andes Technology
+\series default
+: This company specializes in developing high-performance, low-power RISC-V
+ processor cores for a wide range of applications, including those in the
+ Internet of Things (IoT), automotive, and Artificial Intelligence (AI)
+ sectors.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+NVIDIA
+\series default
+: Following its acquisition of Arm, NVIDIA's growing interest in RISC-V
+ signifies its potential as a viable open-source architecture.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Microchip Technology
+\series default
+: Microchip contributes to the RISC-V ecosystem by offering microcontrollers
+ based on the RISC-V architecture, targeting applications in the IoT and
+ embedded systems domains.
+\end_layout
+
+\begin_layout Subsection
+Acceleration of Prototyping and Time-to-Market:
+\end_layout
+
+\begin_layout Standard
+RISC-V's open architecture offers significant advantages in terms of development
+ time and prototyping for ASIC design:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Streamlined Prototyping
+\series default
+: The open nature of RISC-V allows designers to experiment with various
+ configurations and architectural choices readily.
+ This flexibility fosters faster prototyping cycles, enabling rapid design
+ exploration and optimization.
+ As a result, companies can iterate on their designs quickly, accelerating
+ the product development process.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Agile Development Compatibility
+\series default
+: RISC-V aligns well with agile development methodologies.
+ Its open nature facilitates quick modifications and easier integration
+ of feedback from stakeholders during the design phases.
+ This iterative approach reduces the time needed to refine the design and
+ ultimately shortens the time-to-market for ASIC products.
+\end_layout
+
+\begin_layout Subsection
+Cost-Effectiveness and Scalability with RISC-V
+\end_layout
+
+\begin_layout Standard
+RISC-V presents compelling advantages for ASIC design in terms of both cost
+ and scalability:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Reduced Development Costs
+\series default
+: Unlike proprietary architectures that require licensing fees, RISC-V's
+ open-source nature eliminates these upfront costs, making it a more cost-effect
+ive option for developers.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Scalable Architecture
+\series default
+: RISC-V offers remarkable scalability.
+ The same core architecture can be adapted to create a wide range of solutions,
+ from resource-constrained, low-power designs ideal for IoT devices to high-perf
+ormance processors suitable for data centers.
+ This scalability allows ASIC designers to leverage a familiar architecture
+ while tailoring it to meet the specific needs of their application without
+ significant architectural overhauls.
+\end_layout
+
+\begin_layout Subsection
+Challenges and Considerations for RISC-V Adoption
+\end_layout
+
+\begin_layout Standard
+While RISC-V presents enticing opportunities, it's crucial to acknowledge
+ the challenges associated with its adoption in ASIC design:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Established Market Competitors
+\series default
+: The dominance of entrenched architectures like x86 and Arm in specific
+ markets presents a significant hurdle for RISC-V's widespread adoption.
+ Overcoming these established players and their mature ecosystems requires
+ ongoing innovation and industry support for RISC-V.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Intellectual Property Considerations
+\series default
+: Although RISC-V boasts an open-source core, challenges related to intellectual
+ property can still arise when integrating RISC-V cores into commercial
+ products.
+ Careful assessment and management of IP licensing terms associated with
+ specific RISC-V implementations are necessary.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Verification and Validation Complexity
+\series default
+: Verifying complex ASIC designs remains a significant challenge, regardless
+ of the chosen ISA.
+ Integrating RISC-V processors necessitates robust verification strategies
+ to ensure the design's correctness and reliability.
+ Designers need to invest in thorough verification methodologies for RISC-V-base
+d ASICs.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Evolving Ecosystem
+\series default
+: The RISC-V ecosystem, while rapidly maturing, lacks complete maturity
+ in certain areas.
+ Aspects like optimized libraries, established design flows, and comprehensive
+ tool support are still under development.
+ ASIC designers must carefully evaluate the maturity of the RISC-V ecosystem
+ in relation to their specific needs and project timelines.
+\end_layout
+
+\begin_layout Section
+Comparative Study
+\end_layout
+
+\begin_layout Standard
+In this comparative study of RISC-V microcontroller cores, we observe a
+ diverse design space optimizing for different trade-offs between power,
+ performance, and area.
+ The 
+\series bold
+VexRiscv core
+\series default
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-1"
+literal "false"
+
+\end_inset
+
+ offers exceptional area efficiency (~1.4k LUTs) and ultra-low power consumption,
+ making it ideal for FPGA-based designs.
+ Similarly, the 
+\series bold
+NEORV32
+\series default
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-2"
+literal "false"
+
+\end_inset
+
+ is optimized for low-power embedded systems with modest performance (0.28–0.77
+ CoreMark/MHz) and a configurable area footprint (3.5k–5k LUTs).
+ The Codasip L110 [3] strikes a balance between code density, performance,
+ and area, achieving 20% smaller code sizes and improved perf/Watt compared
+ to similar-class cores.
+ Meanwhile, SweRV EH1 [4] introduces a dual-issue, 9-stage pipeline that
+ delivers competitive performance (~4.9 CoreMark/MHz) with moderate area
+ usage (~10–20k LUTs), suiting high-throughput industrial workloads.
+ On the higher end, SiFive U84 [5] and P670 [6] target application-class
+ performance.
+ The U84 boosts IPC by 2.3× over its predecessor, while the P670 delivers
+ >12 CoreMark/MHz at up to 3.4 GHz, yet remains 50% smaller than ARM Cortex-A78
+ in area.
+ Most notably, Micro Magic’s RISC-V core [7] achieves an unprecedented 13,000
+ CoreMark at just 200 mW and 5 GHz, representing a cutting-edge balance
+ of speed and power.
+ Collectively, these cores demonstrate the flexibility and scalability of
+ RISC-V across embedded to high-performance domains.
+\end_layout
+
+\begin_layout Section
+Wish Specification
+\end_layout
+
+\begin_layout Standard
+This project focuses on developing a RISC-V core specifically designed for
+ embedded systems and custom hardware projects.
+ The core prioritizes achieving a balanced trade-off between three critical
+ factors: 
+\end_layout
+
+\begin_layout Standard
+• 
+\series bold
+Performance
+\series default
+: The core should deliver efficient processing capabilities.
+ 
+\end_layout
+
+\begin_layout Standard
+• 
+\series bold
+Power Consumption
+\series default
+: Low power consumption is crucial for battery-powered applications.
+\end_layout
+
+\begin_layout Standard
+• 
+\series bold
+Area Footprint
+\series default
+: Minimizing the core's physical size on a chip optimizes cost and resource
+ utilization.
+ 
+\end_layout
+
+\begin_layout Standard
+The RISC-V core will leverage a Harvard architecture to enable simultaneous
+ instruction and data memory accesses.
+ This approach enhances overall processing efficiency.
+ Additionally, an optimizing folded 6-stage pipeline will be implemented.
+ This pipeline maximizes overlap between execution stages and memory accesses,
+ reducing stalls and improving performance.
+ 
+\end_layout
+
+\begin_layout Standard
+Optional features include Branch Prediction, Instruction Cache, Data Cache,
+ Debug Unit and optional Multiplier/Divider Units.
+ Parameterized and configurable features include the instruction and data
+ interfaces, the branch-prediction-unit configuration, and the cache size,
+ associativity, replacement algorithms and multiplier latency.
+ Providing the user with trade offs between performance, power, and area
+ to optimize the core for the application.
+\end_layout
+
+\begin_layout Subsection
+Key Specifications:
+\end_layout
+
+\begin_layout Subsubsection
+High Performance 32-bit CPU design with Optional Extensions 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Parameterized 32/64bit data
+\series default
+: The core will be a high-performance 32-bit CPU design with the option
+ for parameterized 32/64-bit data handling.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Fast and Precise Interrupts
+\series default
+: The core prioritizes efficient interrupt handling, ensuring timely responses
+ to critical events within the system.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+5-Stage Pipeline
+\series default
+: This core implements an optimized folded 6-stage pipeline to maximize
+ overlap between instruction execution and memory access stages.
+ This approach minimizes stalls and improves overall processing efficiency.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Memory Protection Support
+\series default
+: The core will offer memory protection support for enhanced system security.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Optional/Parameterized Caches
+\series default
+: Instruction and data caches can be optionally integrated to reduce memory
+ access latency for performance-critical applications.
+ The size, associativity, and replacement algorithms of these caches will
+ be configurable.
+\end_layout
+
+\begin_layout Subsubsection
+Area and Power Efficiency
+\end_layout
+
+\begin_layout Standard
+The design will prioritizes both minimizing the core's physical footprint
+ (area) and reducing its power consumption:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Parameterized Data Width
+\series default
+: The datapath width can be configured, allowing users to optimize the balance
+ between performance and power consumption for their specific application.
+ Wider data paths can process more data per cycle but require more hardware
+ resources and consume more power.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Clock Gating Logic
+\series default
+: The core will employ clock gating logic to reduce dynamic power consumption.
+ This technique essentially shuts off the clock signal to inactive portions
+ of the core, minimizing unnecessary power usage.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Small Silicon Footprint
+\series default
+: The design prioritizes a compact layout to minimize the core's physical
+ size on the chip.
+ This not only reduces manufacturing costs but also allows for more efficient
+ integration with other components on the same die.
+\end_layout
+
+\begin_layout Subsubsection
+Instruction Set Architecture (ISA)
+\end_layout
+
+\begin_layout Standard
+The RISC-V core will support the base integer instruction set architecture
+ (ISA) defined by the RISC-V specification.
+ This core ISA provides a foundation for efficient execution of various
+ workloads.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Basic Integer Instructions
+\series default
+: The core will support fundamental instructions for arithmetic, logical,
+ data transfer, and control flow operations.
+ This includes essential instructions like branch, jump, and call instructions
+ for program branching and subroutine management.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Optional Branch Prediction
+\series default
+: A branch prediction algorithm can be optionally integrated to improve
+ the efficiency of branch instructions.
+ Branch prediction attempts to forecast the outcome of a conditional branch
+ instruction, potentially reducing pipeline stalls and improving overall
+ performance.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Custom ISA Extension Support (Optional)
+\series default
+: The design may offer the flexibility to incorporate user-defined RISC-V
+ instruction extensions.
+ These extensions can be tailored to specific application requirements,
+ potentially accelerating performance for specialized tasks.
+ However, the decision to include custom extensions requires careful considerati
+on of development complexity and potential compatibility limitations.
+\end_layout
+
+\end_body
+\end_document

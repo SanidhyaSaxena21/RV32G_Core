@@ -1,0 +1,294 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass desethesis
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Verification
+\end_layout
+
+\begin_layout Section
+Unit Testing
+\end_layout
+
+\begin_layout Standard
+Initially, a directed testbench approach was employed during RTL development
+ to inject instructions into the processor and observe its internal behavior.
+ This allowed us to validate the pipeline stages, control flow, data forwarding,
+ and exception handling in isolation before moving to full system-level
+ testing.
+ Behavioral logs and waveform analysis were critical during this phase,
+ enabling detailed tracking of signal transitions, register file updates,
+ memory transactions, and pipeline stalls, which facilitated quick debugging
+ and refinement of the RTL.
+ Following features were tested:
+\end_layout
+
+\begin_layout Enumerate
+Verification of machine Mode privilege level and CSR instruction handling.
+\end_layout
+
+\begin_layout Enumerate
+Verification of Memory Management Unit (MMU) with Page table walker and
+ TLB filling.
+\end_layout
+
+\begin_layout Enumerate
+I-Cache and D-Cache memory transactions
+\end_layout
+
+\begin_layout Enumerate
+Various internal exceptions such as load and store page faults, misaligned
+ memory accesses, and illegal instructions.
+ The core was observed for correct trap handling behavior, accurate CSR
+ updates (like mcause and mtval), and recovery via mret.
+\end_layout
+
+\begin_layout Enumerate
+The interrupt controller was tested using both asynchronous interrupt generation
+ and timer interrupts, verifying correct transition into and out of trap
+ handlers, proper CSR updates, and handling of nested or masked interrupts.
+\end_layout
+
+\begin_layout Enumerate
+Verification of processor debug module, with functionalities like halt,
+ resumte, single-step, breakpoint and verified the execution of abstract
+ command and program buffer.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Memory Protection Unit functionality was verified by configuring regions
+ using CSRs like pmpaddr and pmpcfg, and testing enforcement of access permissio
+ns across privilege boundaries.
+\end_layout
+
+\begin_layout Section
+Formal Verification
+\end_layout
+
+\begin_layout Standard
+Once the individual functionalities of the processor were thoroughly verified
+ through directed test cases, the next phase of verification focused on
+ evaluating the processor’s behavior during full instruction execution.
+ This involved testing how the core handles dynamic scenarios that arise
+ during real program execution, such as data hazards, control hazards, and
+ pipeline stalls caused by instruction dependencies or memory latency.
+ These conditions cannot be fully captured through isolated unit-level tests,
+ and therefore required system-level validation.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Documents/Testcase/Formal_Verification.pdf
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Formal Verificatio
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Formal-Verification-environment"
+
+\end_inset
+
+n environment.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To achieve this, we developed a comprehensive verification environment as
+ shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Formal-Verification-environment"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, combining a simulation testbench with the RISC-V GNU toolchain.
+ Using this setup, we compiled C programs into RISC-V binaries that reflect
+ realistic instruction mixes and execution patterns.
+ These binaries were loaded into the processor’s memory, and the core was
+ allowed to fetch, decode, and execute instructions autonomously.
+ 
+\end_layout
+
+\begin_layout Standard
+We took testcases from 
+\emph on
+risc_testcase 
+\emph default
+github repository which is used for benchmarking the processors and performance
+ measurements.
+ 
+\end_layout
+
+\begin_layout Standard
+Below figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Formal-Verification-Result"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the result of the formal verification of our processor.
+ It is passing all the test cases.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Documents/Testcase/Formal_Verification_testcase.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Formal Verificati
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Formal-Verification-Result"
+
+\end_inset
+
+on Result.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

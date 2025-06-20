@@ -1,0 +1,3946 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass desethesis
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Study
+\end_layout
+
+\begin_layout Section
+Processor Design
+\end_layout
+
+\begin_layout Standard
+Processors are essential parts of any computer system, playing a central
+ role in how instructions are processed and executed.
+ Computer architecture refers to the design and structure that connects
+ both hardware and software components to form a complete computing platform.
+ It defines how the system fetches, decodes, and executes instructions.
+ There are many different processor designs, each offering different trade-offs
+ in terms of power, performance, and area (PPA), making them suitable for
+ different types of applications.
+ At the core of any processor design is the Instruction Set Architecture
+ (ISA), which outlines the functions, data types, registers, and other elements
+ visible to programmers.
+ The ISA serves as the interface between hardware and software.
+\end_layout
+
+\begin_layout Section
+Instruction Set Architecture 
+\end_layout
+
+\begin_layout Standard
+The Instruction Set Architecture (ISA) defines the set of commands that
+ a processor understands and executes.
+ While multiple processors can implement the same ISA, their internal architectu
+res can vary significantly.
+ In this project, we are using the RISC-V ISA, which is emerging as a widely
+ adopted, open, and standardized architecture suitable for both academic
+ research and industrial development
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-5"
+literal "false"
+
+\end_inset
+
+.
+ Our focus will be on a 32-bit RISC-V design, although we also have access
+ to 64-bit versions.
+\end_layout
+
+\begin_layout Standard
+RISC-V has gained popularity primarily because it is a free and open standard,
+ enabling unrestricted innovation and development.
+ Its modular structure is another key advantage—it is built around a solid,
+ fixed base, while optional extensions can be added as needed.
+ This avoids the continual revision cycles seen in legacy ISAs like the
+ x86 family.
+\end_layout
+
+\begin_layout Standard
+A comparative analysis was conducted between RISC-V and other instruction
+ sets such as MIPS, ARM, Intel, and general RISC architectures 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-8"
+literal "false"
+
+\end_inset
+
+.
+ One of RISC-V’s major strengths lies in its open-source nature, which supports
+ a growing software ecosystem and allows the ISA to be used as a reusable
+ IP block for a wide range of applications.
+\end_layout
+
+\begin_layout Standard
+Despite the specific format used in the core we can identify four main subsets
+ of instructions: 
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Integer Arithmetic Instructions
+\emph default
+: These include operations such as addition (ADD, ADDI), subtraction (SUB),
+ shifts (SLL, SLLI, SRL, SRLI, SRA, SRAI), bitwise logic (AND, ANDI, OR,
+ ORI, XOR, XORI), and comparisons (SLT, SLTI, SLTU, SLTIU).
+ Register-to-register operations use the R-type format, while register-immediate
+ operations use the I-type format.
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Control Flow Instructions
+\emph default
+: These manage the execution flow by altering the program counter.
+ Instructions like Jump and Link (JAL) and Jump and Link Register (JALR)
+ support unconditional jumps and are encoded in UJ-type and I-type formats
+ respectively.
+ Conditional branches include BEQ, BNE, BLT, BLTU, BGE, and BGEU.
+ Additional conditional operations such as BGT, BGTU, BLE, and BLEU can
+ be achieved by swapping operands in the existing branch instructions.
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Load and Store Instructions
+\emph default
+: As a load-store architecture, RISC-V restricts memory interactions to
+ dedicated instructions.
+ The STORE family (SW, SH, SB) writes data from registers to memory, with
+ word (32-bit), half-word (16-bit), and byte (8-bit) support.
+ The LOAD family (LW, LH, LHU, LB, LBU) reads data from memory into registers,
+ with the "U" variants indicating zero-extension for smaller data types
+ instead of sign-extension.
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Control and Status Register (CSR) Instructions
+\emph default
+: These SYSTEM instructions, encoded in the I-type format, are used for
+ managing the processor’s internal state.
+ CSRRW allows atomic read/write operations between CSRs and registers.
+ CSRRS and CSRRC perform bitwise set and clear operations on CSRs.
+ Immediate versions—CSRRWI, CSRRSI, and CSRRCI—function similarly but use
+ an immediate value rather than a register operand.
+\end_layout
+
+\begin_layout Subsection
+Standard extensions
+\end_layout
+
+\begin_layout Standard
+The most important feature of RISC-V is the possibility to easily add other
+ custom instructions to enlarge the ISA and adapt it to specific objectives.
+ Despite these "non-standard" extensions, there are several other standard
+ ISA extensions that have been developed during years and can be added very
+ easily to our particular implementation making the final RISC-V a very
+ powerful core, and they are: 
+\end_layout
+
+\begin_layout Itemize
+"M" Standard Extension for Integer Multiplication and Division; 
+\end_layout
+
+\begin_layout Itemize
+"A" Standard Extension for Atomic Instructions; 
+\end_layout
+
+\begin_layout Itemize
+"F" Standard Extension for Single-Precision Floating-Point; 
+\end_layout
+
+\begin_layout Itemize
+"D" Standard Extension for Double-Precision Floating-Point; 
+\end_layout
+
+\begin_layout Itemize
+"Q" Standard Extension for Quad-Precision Floating-Point; 
+\end_layout
+
+\begin_layout Itemize
+"L" Standard Extension for Decimal Floating-Point; 
+\end_layout
+
+\begin_layout Itemize
+"C" Standard Extension for Compressed Instructions; 
+\end_layout
+
+\begin_layout Itemize
+"B" Standard Extension for Bit Manipulation; 
+\end_layout
+
+\begin_layout Itemize
+"J" Standard Extension for Dynamically Translated Languages;
+\end_layout
+
+\begin_layout Itemize
+"T" Standard Extension for Transactional Memory; 
+\end_layout
+
+\begin_layout Itemize
+"P" Standard Extension for Packed-SIMD Instructions; 
+\end_layout
+
+\begin_layout Itemize
+"V" Standard Extension for Vector Operations; 
+\end_layout
+
+\begin_layout Itemize
+"N" Standard Extension for User-Level Interrupts;
+\end_layout
+
+\begin_layout Section
+Single Cycle vs Pipeline design 
+\end_layout
+
+\begin_layout Standard
+Majority of the processor designs have two components
+\end_layout
+
+\begin_layout Enumerate
+Datapath 
+\end_layout
+
+\begin_layout Enumerate
+Control Path 
+\end_layout
+
+\begin_layout Standard
+Single cycle processor is a processor in which the instructions are fetched
+ from the memory, and then executed, and the results are further stored
+ in a single cycle, whereas in pipelined implementation, each step in execution
+ takes one clock cycle.
+ All the instructions take different time to complete depending upon their
+ type, and in single cycle the next instruction cannot be fetched before
+ the execution of previous instruction completes.
+ Hence, the maximum clock frequency will be less and concourrent execution
+ is not possible.
+ 
+\end_layout
+
+\begin_layout Standard
+Pipelined processor saves time by overlapping instruction substages.
+ Since, all RISC-V instructions are the same length, this makes it much
+ easier to fetch instructions in the first pipeline stage and to decode
+ them in the second stage.
+ The more pipeline stages a processor has, the more instructions it can
+ process at once and the less of a delay there is between completed instructions
+, but the overheads and stalling penalty will increase as the number of
+ stages will increase.
+ The below table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Comparision-between-Single"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the comparision between the two.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparision between S
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Comparision-between-Single"
+
+\end_inset
+
+ingle cycle vs Pipelined.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Single Cycle 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Pipelined Processor 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Hardware Required
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Less 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+More (Due to Registers)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CPI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+>=1 (Due to Stalls and Hazards)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T_{clk}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Baseline
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Less (Due to pipelining)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Throughput
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+>1 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The proposed architecture will be five stage pipelined so as to achieve
+ the benefit of maximum throughput and performance.
+ 
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+Instruction fetch
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+Intsrutcion Decode
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+Instruction Execute
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+Memory 
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+Write Back 
+\end_layout
+
+\begin_layout Section
+Other available designs 
+\end_layout
+
+\begin_layout Standard
+Numerous processors based on the RISC-V instruction set architecture (ISA)
+ have already been developed, with many more currently in progress.
+ RISC-V is an open-source ISA that fosters innovation through collaborative
+ development.
+ It provides a flexible framework for processor design, supporting both
+ 32-bit and 64-bit address spaces, along with a compressed ISA tailored
+ for application-specific extensions 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-9"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+One prominent example is Rocket 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-10"
+literal "false"
+
+\end_inset
+
+ an open-source processor featuring a six-stage pipeline architecture based
+ on the RV64G ISA.
+ The Rocket SoC generator can produce multiple SoC design variants from
+ a single base configuration.
+ The Rocket core itself is a 64-bit, five-stage, single-issue, in-order
+ scalar pipeline that fully supports the RISC-V ISA.
+\end_layout
+
+\begin_layout Standard
+Another notable development is the Shakti series of processors, created
+ by researchers at IIT Madras.
+ These processors are designed with applications in space and nuclear research
+ in mind.
+ Variants such as Shakti-C, Shakti-T, Shakti-I, and Shakti-E reflect different
+ computing core implementations tailored to specific use cases.
+\end_layout
+
+\begin_layout Standard
+In parallel, the ARM architecture—although not based on RISC-V—shares a
+ similar emphasis on simplicity and energy efficiency.
+ ARM is built on a load-store architecture and uses a mix of fixed 32-bit
+ and variable-length Thumb instructions.
+ It also includes a large set of general-purpose registers.
+ Advanced features such as hardware virtualization, superscalar pipelines,
+ and out-of-order execution are integral to many ARM cores 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-11"
+literal "false"
+
+\end_inset
+
+.
+ Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Application-core-comparitive"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the comparision of our design with other available RISC-V cores.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Application core
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Application-core-comparitive"
+
+\end_inset
+
+ comparitive study.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Rocket
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Shakti
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Current Design
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Bits
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+32/64-bit
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+32/64-bit
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+32-bits
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Stages
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Extension
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MAFD
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+IMAC
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MAFD
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Functional Units
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Frequency
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.3Ghz(28nm,FD-SOI)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+70Mhz (22nm,FinFet)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+52Mhz(65nm)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Previous RISC-V Architecture
+\end_layout
+
+\begin_layout Standard
+Previous design of RISC-V Architecture is shown below in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Previous-Architecture"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with five stages of pipeline viz.
+ Fetch, Decode, Execute, Memory and write back.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/images/RISCV_Architecture.jpg
+	lyxscale 30
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Previous Ar
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Previous-Architecture"
+
+\end_inset
+
+chitecture.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The baseline architecture, inherited from the previous batch, is a classic
+ 5-stage pipelined RISC-V processor design consisting of the stages: 
+\emph on
+Instruction Fetch (IF)
+\emph default
+, 
+\emph on
+Instruction Decode (ID)
+\emph default
+, 
+\emph on
+Execute (EX)
+\emph default
+, 
+\emph on
+Memory (MEM)
+\emph default
+, and 
+\emph on
+Write Back (WB)
+\emph default
+.
+ Notably, the architecture integrates several performance-enhancing features.
+ In the IF stage, it incorporates a 
+\emph on
+Branch Prediction Unit
+\emph default
+ to reduce branch misprediction penalties and a dedicated 
+\emph on
+Instruction Cache (ICache)
+\emph default
+ to accelerate instruction fetch latency.
+ During decoding, control signals are generated by Opcode and Operand Logic,
+ which interface with the Forwarding Unit in the EX stage to handle data
+ hazards.
+ The Execute stage features both an 
+\emph on
+Integer ALU and a Floating Point Unit (FPU)
+\emph default
+ for supporting mixed-type operations, reflecting floating-point support
+ across the pipeline.
+ The MEM stage includes a 
+\emph on
+Data Cache (DCache)
+\emph default
+ to reduce data memory access times, and a DCache Stall Removing Unit, which
+ aims to improve memory pipeline throughput by mitigating stalling due to
+ cache misses.
+ Finally, the WB stage supports both integer and floating-point register
+ files, highlighting the design's ability to execute and store results from
+ a wide range of computational instructions.
+ This architecture served as a strong foundation for further optimizations
+ and extensions in the current work.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+Instruction fetch
+\emph default
+:
+\series default
+ At the start of each cycle, the address is used to fetch instructions from
+ instruction memory.
+ Following that, a calculation is run to compute the next PC in the cycle.
+ It is decided either to use that as as its next value or, instead, the
+ outcome of the control transfer instruction based on branch prediction
+ logic.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+Instruction Decode
+\series default
+\emph default
+: The 32-bit instruction is parsed into its fields, and two registers pertaining
+ to the operands are fetched from the register file.
+ Instruction mux, Instruction decoder, Immediate generator, Register file,
+ and the write enable generator are the several blocks that make up the
+ instruction decode stage.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+Instruction Execute
+\series default
+\emph default
+: In the Execute step, the real computing takes place.
+ An ALU and a bit shifter are frequently included in this phase.
+ The bit shifter is in charge of shifts and rotation logic to be performed
+ on the operands.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+Memory Access
+\series default
+\emph default
+: At this point, the load/store instructions read and write memory operands
+ from and to the memory.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+Write-Back
+\series default
+\emph default
+: At this step, the instructions store their results to the respective register
+ file.
+ There will be a onset of data hazard since one of the input registers read
+ in decode could be the same as the destination register written in writeback.
+ The data forwarding technique is used to avoid this.
+\end_layout
+
+\begin_layout Subsection
+Hazard Detection and Correction block
+\end_layout
+
+\begin_layout Standard
+Due to data and control dependencies, in pipeline designs we have 2 major
+ hazards: 
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Data Hazard
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Control Hazard
+\end_layout
+
+\begin_layout Standard
+When an instruction in the pipeline is dependent on the outcomes of a preceding
+ instruction that has not yet entered the write back stage, it leads to
+ data dependence.
+ Control dependency occurs when control instructions are executed.
+ The choice to branch or not branch for these instructions is made during
+ the execution stage, after two consecutive instructions have entered the
+ pipeline’s fetch and decode stages.
+ If no branch is chosen, the execution continues uninterrupted.
+ However, if the branch is taken, the prior two instructions must be drained
+ out before the current branch instruction can be executed, resulting in
+ a control hazard.
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Data Forwarding to eliminate data hazard: 
+\emph default
+Ahead of the source instruction reaching write back stage, data is made
+ available to the ALU for dependent instructions, which is known as forwarding.
+ This data forwarding technique identifies the dependant instruction in
+ pipeline and forwards the data to the dependant instruction thus eliminating
+ data hazards in the pipeline.
+ 
+\emph on
+We'll be using both IE-IE and Mem-IE data forwarding.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Adaptive dymanic Branch prediction to eliminate control hazard: 
+\emph default
+It enhances the accuracy of prediction by taking into account the recent
+ behaviour of previous branches as well.
+ If the instruction is a branch instruction it uses Branch Target Address,
+ which is fetched during the Instruction fetch stage.
+ It also makes use of a Local Prediction Table, which contains two bits
+ that decide whether or not a branch is taken.
+ In comparison to a one bit branch predictor, the branch predictor state
+ changes only after two consecutive mispredictions, resulting in enhanced
+ accuracy.
+ 
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Bypass-Datapath"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the Fully bypassed datapath, which is used to bypass the result either
+ from the IE/MEM stage or from MEM/WB stage based on the next intruction
+ after decode stage.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Documents/CORE_PIPELINE/RV32I_Previous_Arch_Hazards.pdf
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Bypass D
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Bypass-Datapath"
+
+\end_inset
+
+atapath.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If the current instruction is a ALU and ALUi type then we only need bypass
+ and not stall.
+ But if we have LD, JAL, JALR as our current instruction, then we need to
+ stall the next instruction for 2 clock cycles.
+ After 2 clock cycle, these instructions will be in the WB stage and hence
+ we can then use the result of current instruction as an operand for the
+ next waiting instruction.
+ For the 2 cycle the stall signal will be asserted which will hold the instructi
+ons.
+ 
+\end_layout
+
+\begin_layout Subsection
+Branch Prediction Unit 
+\end_layout
+
+\begin_layout Standard
+When a program runs certain flow of instruction is fetched and executed
+ in pipeline.
+ However, when a branch instruction is fetched, it may change the flow of
+ the instructions.
+ The execution result of branch instructions determines whether to change
+ the flow in the execution stage, which is in the middle of the pipeline
+ stage.
+ If it changes its flow, the next instructions that are already being executed
+ by other hardware resources prior to the execution stage become useless,
+ which leads to a pipeline flush and degrades the processing speed.
+ Since the branch instructions take more than 20 % of all instructions when
+ running a program, this pipeline flush becomes a huge performance degradation
+ factor in processors.
+ 
+\end_layout
+
+\begin_layout Standard
+Branch prediction unit contains three different blocks as shows in the below
+ figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Branch-Prediction-Unit"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ : 
+\series bold
+\emph on
+branch direction predictor
+\series default
+, 
+\series bold
+branch target buffer (BTB
+\series default
+\emph default
+) and 
+\series bold
+\emph on
+Return Address Stack
+\series default
+\emph default
+.
+ When instruction is fetched, branch prediction unit will identify whether
+ it is branch instruction.
+ If the instruction is branch, the direction predictor will give the prediction
+ result (Taken / Not Taken).
+ If the branch is taken then the PC is updated by the target address obtained
+ from BTB.
+ The branch prediction unit is usually placed in instruction fetch stage.
+ So, when prediction is correct the next instruction fetched after the branch
+ instruction is from the correct instruction flow and pipeline can execute
+ these instruction without any pipeline flush.
+ But when prediction is wrong, the instruction executed after the branch
+ needs to be flushed.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Documents/CORE_PIPELINE/BPU.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Branch Predi
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Branch-Prediction-Unit"
+
+\end_inset
+
+ction Unit.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Branch Prediction Unit (BPU) in this architecture includes a Return
+ Address Stack (RAS), which is specifically used to predict the target of
+ function return instructions (ret).
+ The RAS stores the return addresses pushed during function calls (
+\emph on
+jal
+\emph default
+ or 
+\emph on
+jalr
+\emph default
+ to 
+\emph on
+ra
+\emph default
+) and pops them during returns, thereby improving prediction accuracy for
+ nested and recursive function calls.
+ This mechanism helps in maintaining pipeline flow and reducing control
+ hazards caused by subroutine returns, especially in deep call hierarchies.
+\end_layout
+
+\begin_layout Subsection
+ICACHE
+\end_layout
+
+\begin_layout Standard
+The instruction cache (ICache) implemented in this architecture is a 2-way
+ set-associative cache, designed to enhance instruction fetch performance
+ by reducing cache misses compared to a direct-mapped design.
+ This configuration divides the cache into multiple sets, with each set
+ containing two lines (or "ways"), allowing the processor to store multiple
+ blocks that map to the same index, thereby minimizing conflicts.
+ The use of a 2-way associative structure strikes a balance between hardware
+ complexity and hit rate efficiency, ensuring faster access to instructions
+ while maintaining manageable control logic.
+ This setup is particularly beneficial in pipelined processors where continuous
+ and rapid instruction supply is critical to maintain throughput and minimize
+ stalls.
+\end_layout
+
+\begin_layout Subsection
+DCACHE
+\end_layout
+
+\begin_layout Standard
+The data cache (DCache) used in this design is an 8KB, 2-way set-associative,
+ write-back cache, optimized for efficient memory access and reduced latency
+ in load/store operations.
+ The 2-way set-associative architecture divides the cache into sets with
+ two lines per set, offering a good compromise between simplicity and performanc
+e by reducing conflict misses when multiple memory blocks map to the same
+ index.
+ The write-back policy employed ensures that write operations are first
+ made to the cache, and only written back to main memory when a cache line
+ is replaced.
+ This reduces memory traffic and improves overall performance, especially
+ in programs with frequent data modifications.
+ The DCache is tightly integrated into the pipeline to support fast and
+ efficient data access, contributing significantly to the overall execution
+ speed of the processor.
+\end_layout
+
+\begin_layout Section
+Proposed architecture
+\end_layout
+
+\begin_layout Standard
+The earlier RISC-V processor architecture was designed with a fundamental
+ execution pipeline and support for the base IMA extensions—Integer, Multiplicat
+ion/Division, and Atomic operations.
+ While this core provided a functional and efficient execution platform,
+ it lacked several critical features necessary for full compliance with
+ the RISC-V privileged architecture specifications.
+ Notably, the previous design did not support CSR (Control and Status Registers)
+, exception and interrupt handling, debug infrastructure, memory protection
+ mechanisms (PMP), and address translation for virtual memory.
+ These missing components limit its practical deployment, especially in
+ real-world operating systems and secure embedded systems.
+\end_layout
+
+\begin_layout Standard
+To address these limitations, our proposed architecture introduces a fully
+ compliant RISC-V core with support for all major privileged functionalities.
+ The processor will be enhanced with modules for 
+\series bold
+CSR
+\series default
+ management, exception and 
+\series bold
+interrupt handling
+\series default
+, 
+\series bold
+debugging support
+\series default
+, TLB for virtual memory translation, and cache control features such as
+ flushing and invalidation.
+ We also aim to integrate Physical Memory Attributes (PMA) and 
+\series bold
+Physical Memory Protection (PMP)
+\series default
+ units for enforcing access control and memory policies.
+ The development of this architecture will 
+\series bold
+culminate in a custom ASIC implementation
+\series default
+, transitioning the design from FPGA prototyping to a silicon-based deployment
+ for performance and power optimization.
+\end_layout
+
+\begin_layout Subsection
+Control and Status Registers (CSR)
+\end_layout
+
+\begin_layout Standard
+CSR is an integral part of the RISC-V architecture that provides control
+ over various processor functionalities such as performance counters, trap
+ handling, privilege levels, and configuration registers.
+ In the new architecture, a dedicated CSR block is implemented to handle
+ both read and write operations in a single pipeline cycle.
+ The CSR module decodes instructions like 
+\emph on
+csrrw
+\emph default
+, 
+\emph on
+csrrs
+\emph default
+, and 
+\emph on
+csrrc
+\emph default
+ to interact with specific registers.
+ It interfaces closely with the exception/interrupt controller and privilege
+ management, enabling dynamic control of processor behavior across different
+ modes (User, Supervisor, Machine).
+ 
+\end_layout
+
+\begin_layout Subsection
+Exception and Interrupt Handling
+\end_layout
+
+\begin_layout Standard
+Robust exception and interrupt handling is critical for reliable system
+ behavior and compliance with operating system requirements.
+ The new design includes a centralized trap controller that supports synchronous
+ exceptions (e.g., illegal instruction, load/store faults) and asynchronous
+ interrupts (e.g., timer, external).
+ It manages control flow redirection using the 
+\emph on
+mepc
+\emph default
+, 
+\emph on
+mcause
+\emph default
+, and 
+\emph on
+mtval
+\emph default
+ CSRs and distinguishes between privilege levels for servicing each event.
+ The design ensures deterministic behavior through prioritization and vectored
+ interrupt support, enabling the processor to handle real-time tasks and
+ secure environments.
+ 
+\end_layout
+
+\begin_layout Subsection
+Debug Infrastructure
+\end_layout
+
+\begin_layout Standard
+The debug module introduces capabilities for runtime inspection, single-step
+ execution, breakpoints, and system halting.
+ This infrastructure is essential for embedded system developers and operating
+ system debugging.
+ The design will conform to the RISC-V Debug Specification, integrating
+ a Debug Module Interface (DMI) and halt/exception debug control.
+ Features include program buffer execution, abstract register access, and
+ interaction with external debug tools through JTAG or other interfaces.
+ The debug system operates independently of normal execution flow, allowing
+ inspection without altering program behavior.
+ 
+\end_layout
+
+\begin_layout Subsection
+Translation Lookaside Buffer (TLB) with Two-Level Page Table
+\end_layout
+
+\begin_layout Standard
+To support virtual memory and operating system-level address translation,
+ a Translation Lookaside Buffer (TLB) is introduced.
+ The TLB stores recent translations from virtual to physical addresses,
+ significantly accelerating memory access.
+ Our TLB design uses a two-level page table model compliant with the Sv32
+ and Sv39 schemes defined in RISC-V.
+ This allows efficient address translation for 32-bit and 64-bit systems,
+ with hardware page walkers to fetch entries from page tables on TLB misses.
+ The TLB is tightly integrated with memory management and privilege checking
+ to enforce access rights and improve performance.
+ 
+\end_layout
+
+\begin_layout Subsection
+Cache Flushing and Invalidation
+\end_layout
+
+\begin_layout Standard
+To maintain coherence and correctness in multi-threaded or I/O-intensive
+ applications, the architecture includes support for cache flushing and
+ invalidation.
+ These mechanisms are implemented through specialized CSR instructions (like
+ 
+\emph on
+fence.i
+\emph default
+, 
+\emph on
+custom flush
+\emph default
+, or 
+\emph on
+invalidate
+\emph default
+ commands) that target instruction and data caches.
+ Cache control is particularly important during context switches, self-modifying
+ code, or DMA transfers.
+ Our design ensures that cache operations are synchronized with pipeline
+ execution to avoid hazards and support safe memory sharing.
+ 
+\end_layout
+
+\begin_layout Subsection
+Physical Memory Attributes (PMA) and Physical Memory Protection (PMP)
+\end_layout
+
+\begin_layout Standard
+Security and memory access control are fundamental for modern embedded systems.
+ To this end, the architecture integrates PMA and PMP blocks.
+ PMP enables software to define access permissions for memory regions, specifyin
+g whether a range is readable, writable, executable, or inaccessible at
+ a given privilege level.
+ This forms the foundation for isolating processes and protecting critical
+ system resources.
+ PMA, on the other hand, defines hardware attributes of memory regions (e.g.,
+ cacheable, bufferable), allowing the processor to handle various types
+ of devices and memory-mapped I/O safely.
+ These mechanisms are configured via CSRs and tightly coupled with the MMU
+ and TLB.
+\end_layout
+
+\begin_layout Section
+ASIC Flow 
+\end_layout
+
+\begin_layout Standard
+ASIC (Application Specific Integrated Circuit) is a specialized type of
+ integrated circuit meticulously designed to perform a specific function
+ or set of functions within an electronic system.
+ ASICs are tailor-made for a particular application, offering unparalleled
+ efficiency and performance.
+ There are two primary methods of ASIC design:
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Gate Array (Semi Custom) design : 
+\emph default
+This type of ASIC uses predesigned logic cells called standard cells, such
+ as gates, multiplexers, and flip-flops.
+ Standard cells are made using full-custom design methodology and serve
+ as basic building blocks for ASIC design, ensuring the same performance
+ and flexibility but reducing time and risk.
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Full Custom design: 
+\emph default
+The full-custom method is more complex and costly, but it can do much more
+ than the gate array method.
+ The size of the ASIC decreases significantly as the design incorporates
+ only the necessary gates and electronics, and unused gates are deleted.
+ These ASICs are designed for a specific purpose and support a particular
+ function in the end product.
+\end_layout
+
+\begin_layout Subsection
+Chip Design flow 
+\end_layout
+
+\begin_layout Standard
+A typical design flow follows a structure shown below 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Chip-Design-Flow"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Some of these phases happens parallelly and some sequentially.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/images/design_flow.png
+	lyxscale 50
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Chip D
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Chip-Design-Flow"
+
+\end_inset
+
+esign Flow.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Architecture: 
+\series default
+The Architects based on the reuirement specifications and market need, comes
+ up with a system level view of how the chip should operate.
+ They will decide what components to use, on which frequency should the
+ chip run, what should be the footprint, operating voltages and estimate
+ the power numbers.
+ They also decide how will be the dataflow inside the chip 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Digital Design: 
+\series default
+Since the designs are complex nowdays, we cannot write RTL from scratch
+ and hence various IP's are taken and integrated into the design.
+ A behavioral description of the blocks are written in HDL and the design
+ is analyzed in terms of functionality, performance and other high level
+ issues.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Verification: 
+\series default
+Once the RTL is ready, it needs to be verified for functional correctness.
+ Various EDA tools like simvision and xcellium (from Cadence), Verdi (from
+ Synopsys) are used for verifying the RTL.
+ Currently, Verification has become an important part of chip designing
+ and is the most time consuming process in the lifecycle.
+ Various methodologies like UVM, OVM have been adopted for better verification
+ of the design and to reduce time to market
+\end_layout
+
+\begin_layout Standard
+To save time and reach functional closure, both the design and verification
+ teams operate in parallel where the designers 
+\begin_inset Quotes eld
+\end_inset
+
+release
+\begin_inset Quotes erd
+\end_inset
+
+ the RTL version, and the verification team develops the testbench enviroment
+ and test cases to test the functionality of the RTL Version.
+ A UVM scoreboard is shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:UVM-Scoreboard"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ below.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/images/uvm_scoreboard.png
+	lyxscale 50
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+UV
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:UVM-Scoreboard"
+
+\end_inset
+
+M Scoreboard.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Logic synthesis and Equivalance check: 
+\series default
+Once the design is ready and verified, we convert it into hardware schematic
+ with real elements like combinational gates, muxed, FlipFLops.
+ Logic synthesis tool like Genus (from Cadence), enable us to convert RTL
+ description into a gate level netlist.
+ Tool ensures the netlist meets the timing, area and performance.
+ We have the library files for each element in the netlist which we get
+ from foundaries as PDKs.
+ 
+\end_layout
+
+\begin_layout Standard
+The gate level netlist is checked for logical equivalence with the RTL and
+ GLS (Gate level Simulations) are required to ensure the synthesized design
+ still holds the same functionality.
+ Genus GUI is shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Genus-Tool-for"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ below.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/images/Genus_cadence.png
+	lyxscale 50
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Genus Tool for
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Genus-Tool-for"
+
+\end_inset
+
+ Synthesis.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Placement and Routing: 
+\series default
+The netlist is sourced into the physical design flow, where automatic place
+ and route (APR or PnR) is done with the help of EDA tools, Eg.
+ Cadence Innovus, Encounter and Synopsys IC compiler.
+ This will select and place standard cells into rows, define ball maps for
+ input-output, create different metal layers, and buffers to meet timing.
+ Once this process is done, the layout is send for fabrication.
+ Cadence Encounter GUI is shown in below figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cadence-Encounter"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/images/RoutingResult.gif
+	lyxscale 50
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Cade
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cadence-Encounter"
+
+\end_inset
+
+nce Encounter.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+JTAG (IEEE 1149.1)
+\end_layout
+
+\begin_layout Standard
+The Joint Test Action Group (JTAG), formalized as the IEEE 1149.1 standard,
+ provides a standardized serial boundary-scan architecture.
+ It is primarily intended for structural testing, in-system programming,
+ and embedded debugging of digital integrated circuits (ICs).
+ JTAG has evolved into an indispensable interface, especially within modern
+ System-on-Chip (SoC) and FPGA environments, enabling non-intrusive access
+ to internal logic and registers.
+ This capability facilitates design validation, post-silicon verification,
+ board bring-up, and runtime diagnostics, making JTAG a cornerstone in contempor
+ary digital design workflows.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report_final(1)/Thesis_Report_final/Thesis_Report/Debugger/IEEE_chip_architecture.png
+	lyxscale 10
+	scale 8
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:IEEE 1149.1 Chip Architecture-1"
+
+\end_inset
+
+IEEE 1149.1 Chip Architecture.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+JTAG Signal Description
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+TDI (Test Data In): 
+\series default
+\emph default
+A unidirectional serial input line through which instruction or test data
+ is injected into the target device.
+ In multi-device configurations, it typically connects to the 
+\emph on
+TDO
+\emph default
+ of the preceding device.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+TDO (Test Data Out):
+\series default
+\emph default
+ The serial output line that transmits the response data from the device.
+ It is chained to the 
+\emph on
+TDI
+\emph default
+ of the subsequent device.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+TCK (Test Clock): 
+\series default
+\emph default
+A dedicated clock signal for synchronizing all JTAG operations.
+ It is independent of the system clock, enabling asynchronous test access.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+TMS (Test Mode Select): 
+\series default
+\emph default
+Governs transitions within the TAP controller's state machine.
+ The state of 
+\emph on
+TMS
+\emph default
+ is sampled on the rising edge of 
+\emph on
+TCK
+\emph default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+TRST (Test Reset – optional)
+\series default
+\emph default
+: An asynchronous reset signal that forces the TAP controller into the Test-Logi
+c-Reset state without requiring 
+\emph on
+TCK
+\emph default
+ activity.
+\end_layout
+
+\begin_layout Subsection
+JTAG Timing Diagram
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+{signal: [
+\end_layout
+
+\begin_layout Plain Layout
+{name: 'TCK', wave: 'p..............'},
+\end_layout
+
+\begin_layout Plain Layout
+{name: 'TMS', wave: '0.1......0.....'},
+\end_layout
+
+\begin_layout Plain Layout
+{name: 'TDO', wave: '1..........====', data: ['Bit 1 shifted out', 'Bit 2 shifted
+ out', 'Bit 3 shifted out', 'Bit 4 shifted out']},
+\end_layout
+
+\begin_layout Plain Layout
+{name: 'TDI', wave: '1..........====', data: ['Bit 1 shifted in', 'Bit 2 shifted in',
+ 'Bit 3 shifted in', 'Bit 4 shifted in']},
+\end_layout
+
+\begin_layout Plain Layout
+{name: 'State', wave: 'x..====45678...', data: ['', '', '', '', 'Test-Logic-Reset',
+ 'Run-Test/Idle', 'Select-DR-Scan', 'Capture-DR', 'Shift-DR']}
+\end_layout
+
+\begin_layout Plain Layout
+],
+\end_layout
+
+\begin_layout Plain Layout
+config: { hscale: 3}
+\end_layout
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/Debugger/wavedrom.png
+	lyxscale 50
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:JTAG Timing Diagram-1"
+
+\end_inset
+
+JTAG Timing Diagram.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+JTAG timing diagrams (as illustrated in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:JTAG Timing Diagram-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) describe the temporal coordination between 
+\emph on
+TDI
+\emph default
+, 
+\emph on
+TDO
+\emph default
+, 
+\emph on
+TMS
+\emph default
+, and 
+\emph on
+TCK
+\emph default
+ during scan operations.
+ Key aspects include:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+Setup and Hold Requirements: 
+\series default
+\emph default
+Data inputs 
+\emph on
+TDI
+\emph default
+ and 
+\emph on
+TMS
+\emph default
+ must remain stable relative to the rising edge of 
+\emph on
+TCK
+\emph default
+ to ensure deterministic sampling.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+TDO Validity:
+\series default
+\emph default
+ Output data becomes valid on the falling edge of 
+\emph on
+TCK
+\emph default
+ and must be captured externally before the next transition.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+Data and Instruction Shifting:
+\series default
+\emph default
+ Precise clocking ensures successful bit-wise propagation through instruction
+ and data registers.
+\end_layout
+
+\begin_layout Standard
+Robust timing analysis becomes increasingly critical as scan chains grow
+ in length or operate at higher frequencies.
+\end_layout
+
+\begin_layout Subsection
+Test Access Port (TAP) Overview
+\end_layout
+
+\begin_layout Standard
+The Test Access Port (TAP) acts as the primary interface between external
+ JTAG tools and the internal infrastructure of the target integrated circuit.
+ It establishes a serial communication path that enables access to the 
+\emph on
+Instruction Register (IR)
+\emph default
+, various 
+\emph on
+Data Registers (DRs)
+\emph default
+, and the TAP Controller's state machine.
+ Through this interface, test patterns can be delivered, internal data can
+ be acquired, and control signals can be propagated—all without the need
+ for additional I/O resources.
+ Owing to its minimal pin requirements and standardized operation, the TAP
+ plays a critical role in facilitating embedded debugging, hardware validation,
+ and boundary scan operations within modern digital systems.
+\end_layout
+
+\begin_layout Subsection
+TAP Controller State Machine
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/Debugger/TAP_Controller_states.png
+	lyxscale 10
+	scale 10
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:TAP Controller State Machine-1-1"
+
+\end_inset
+
+TAP Controller State Machine.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At the heart of the JTAG interface lies a deterministic 16-state finite
+ state machine known as the Test Access Port (TAP) controller (see Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:TAP Controller State Machine-1-1"
+
+\end_inset
+
+).
+ This controller orchestrates the sequencing and execution of all JTAG operation
+s by controlling access to the internal instruction and data registers of
+ the target device.
+ The TAP controller is central to enabling flexible test and debug functionality
+ over a minimal pin interface.
+ Its primary states are outlined below z:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Test-Logic-Reset:
+\series default
+\emph default
+ This state asynchronously initializes all JTAG logic within the device,
+ ensuring that the system enters a well-defined, inactive configuration.
+ It is commonly used to recover from an unknown or unstable state before
+ initiating a test or debug session.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Run-Test/Idle:
+\series default
+\emph default
+ After reset, the TAP enters this state, which either maintains the system
+ in a passive idle condition or triggers the execution of specific test
+ operations, such as Built-In Self-Test (BIST) or continuous scan testing,
+ depending on the configuration of the active instruction.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Select-DR-Scan / Select-IR-Scan: 
+\series default
+\emph default
+These intermediate states determine the type of register path—
+\emph on
+Data Register (DR)
+\emph default
+ or 
+\emph on
+Instruction Register (IR)
+\emph default
+—that will be accessed next.
+ They serve as branch points for directing the TAP controller’s flow toward
+ the desired scan operation.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Capture, Shift, Pause, Update States:
+\series default
+\emph default
+ These sets of states exist for both 
+\emph on
+DR
+\emph default
+ and 
+\emph on
+IR
+\emph default
+ scan paths and are responsible for the detailed handling of serial data.
+ The Capture state samples current values into the respective shift register;
+ Shift allows for serial movement of bits through the register via 
+\emph on
+TDI
+\emph default
+ and 
+\emph on
+TDO
+\emph default
+; Pause temporarily halts shifting to allow external processes or decision-makin
+g; and Update writes the shifted data into the active register, committing
+ the operation.
+\end_layout
+
+\begin_layout Standard
+State transitions within the TAP controller are governed by the 
+\emph on
+Test Mode Select (TMS)
+\emph default
+ signal, which is evaluated on the rising edge of the 
+\emph on
+Test Clock (TCK)
+\emph default
+.
+ This serialized control scheme enables deterministic navigation through
+ the TAP state machine using a single control line, eliminating the need
+ for parallel signaling or complex external logic.
+ Such a mechanism ensures precise coordination of test operations and register
+ access.
+\end_layout
+
+\begin_layout Subsection
+Instruction Register
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+Instruction Register
+\emph default
+ (
+\emph on
+IR
+\emph default
+) defines the operational context of the JTAG interface by determining which
+ data register is accessible during a given operation.
+ Typically 5 bits wide, the 
+\emph on
+IR
+\emph default
+ is loaded serially via the Shift-IR and Update-IR states within the TAP
+ controller.
+ Standardized instructions include:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+EXTEST: 
+\series default
+\emph default
+Enables external pin-level testing through the boundary scan register.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+SAMPLE/PRELOAD: 
+\series default
+\emph default
+Captures the real-time state of selected signals or preloads values into
+ scan chains for subsequent operations.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+IDCODE (optional):
+\series default
+\emph default
+ Provides a static device identifier to facilitate device recognition and
+ configuration.
+ If the identification register is not implemented in hardware, the 
+\emph on
+IDCODE
+\emph default
+ instruction must be interpreted as a 
+\emph on
+BYPASS
+\emph default
+ instruction.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+BYPASS: 
+\series default
+\emph default
+Selects a minimal 1-bit data register, allowing the device to be bypassed
+ in a scan chain and enabling faster access to downstream devices.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+USER Instructions:
+\series default
+\emph default
+ Reserved opcodes that support vendor-defined or application-specific functional
+ity, enhancing the flexibility of the JTAG interface.
+\end_layout
+
+\begin_layout Standard
+The support for 
+\emph on
+USER
+\emph default
+ instructions significantly extends the utility of the 
+\emph on
+IR
+\emph default
+ by enabling custom debug features and facilitating proprietary extensions
+ within standardized test workflows.
+\end_layout
+
+\begin_layout Subsection
+Data Registers Overview
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Data Registers (DRs)
+\emph default
+ in the JTAG interface are used for data exchange between the external debugger
+ and the target device.
+ The active 
+\emph on
+DR
+\emph default
+ is determined by the current instruction loaded into the 
+\emph on
+Instruction Register
+\emph default
+ 
+\emph on
+(IR)
+\emph default
+, with different instructions providing access to various 
+\emph on
+DRs
+\emph default
+.
+ These registers allow operations such as reading and writing to internal
+ registers, configuring device state, and performing other test and debug
+ operations.
+\end_layout
+
+\begin_layout Standard
+Data is shifted serially through the 
+\emph on
+DRs
+\emph default
+ during scan operations, enabling external debuggers to interact with the
+ processor’s internal state.
+ This mechanism supports a range of tasks, including control, inspection,
+ and configuration, all facilitated by the JTAG scan protocol.
+ The ability to select different 
+\emph on
+DRs
+\emph default
+ based on the loaded instruction adds flexibility, enabling tailored debug
+ and testing functionality specific to the target device’s needs.
+\end_layout
+
+\begin_layout Subsubsection
+IDCODE Register
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report_final(1)/Thesis_Report_final/Thesis_Report/Debugger/IDCODE_Reg.png
+	lyxscale 30
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Device Identification Code Structure-1"
+
+\end_inset
+
+Device Identification Code Structure.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+IDCODE
+\emph default
+ register is a 32-bit read-only register that provides a standardized identifier
+ for the target device (see Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Device Identification Code Structure-1"
+
+\end_inset
+
+).
+ Its structure is as follows:
+\end_layout
+
+\begin_layout Itemize
+4 bits for Version Number
+\end_layout
+
+\begin_layout Itemize
+16 bits for Part Number
+\end_layout
+
+\begin_layout Itemize
+11 bits for Manufacturer ID
+\end_layout
+
+\begin_layout Itemize
+1-bit Stop Bit (logic high)
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+IDCODE
+\emph default
+ register plays a critical role in automated toolchains by enabling target
+ detection, configuration validation, and the provisioning of firmware.
+ It facilitates device identification and ensures compatibility between
+ the debugging tools and the target hardware, making it an essential component
+ for efficient debugging and system management.
+\end_layout
+
+\begin_layout Subsubsection
+BYPASS Register
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report_final(1)/Thesis_Report_final/Thesis_Report/Debugger/BYPASS_Reg.png
+	lyxscale 30
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Bypass Register Structure-1"
+
+\end_inset
+
+Bypass Register Structure.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+BYPASS
+\emph default
+ register is a one-bit shift register that serves to exclude a device from
+ the scan chain when it is not the target of a JTAG operation.
+ This functionality optimizes the scan chain by reducing latency and simplifying
+ data transfers in multi-device configurations.
+ When the device is in the bypass state, JTAG signals pass through it without
+ interacting with its internal logic, enhancing the efficiency of the test
+ and debug processes (see Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Bypass Register Structure-1"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsubsection
+Boundary Scan Register (optional)
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+Boundary Scan Register
+\emph default
+ (
+\emph on
+BSR
+\emph default
+) is an optional but highly valuable feature that enables access to the
+ device’s digital I/O pins through a shift register architecture.
+ It facilitates a range of critical functions:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Non-intrusive interconnect testing:
+\emph default
+ 
+\series default
+The 
+\emph on
+EXTEST
+\emph default
+ instruction utilizes the 
+\emph on
+BSR
+\emph default
+ to test the device's interconnects without the need for physical probing,
+ ensuring integrity without disrupting the system.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Real-time pin state capture:
+\series default
+\emph default
+ Through the 
+\emph on
+SAMPLE
+\emph default
+ instruction, the 
+\emph on
+BSR
+\emph default
+ allows for the real-time capture of I/O pin states, providing a reliable
+ method for observing device behavior during testing.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Controlled input driving:
+\series default
+\emph default
+ The 
+\emph on
+PRELOAD
+\emph default
+ instruction enables the controlled driving of input signals, which is essential
+ for performing diagnostics at the board level.
+\end_layout
+
+\begin_layout Standard
+Its inclusion significantly enhances the observability and controllability
+ of physical signal paths without requiring intrusive probing.
+\end_layout
+
+\begin_layout Subsubsection
+Implementation-Specific Data Registers
+\end_layout
+
+\begin_layout Standard
+In advanced system designs, custom data registers are often implemented
+ to support specialized functions tailored to the specific needs of the
+ device.
+ These registers may include:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Debug module communication:
+\series default
+\emph default
+ Registers designed to facilitate efficient communication with on-chip debug
+ modules, enabling detailed control and monitoring during the debugging
+ process.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Memory or CSR (Control and Status Register) access:
+\series default
+\emph default
+ Registers that provide direct access to memory regions or critical system
+ control registers, enhancing low-level interaction with the system’s internal
+ state.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Performance monitoring: 
+\series default
+\emph default
+Custom registers dedicated to tracking system performance metrics, providing
+ insights into operational efficiency, resource utilization, or bottlenecks.
+\end_layout
+
+\begin_layout Standard
+These user-defined data registers significantly enhance the flexibility
+ and functionality of the JTAG interface, particularly in FPGA or processor-cent
+ric systems, where seamless integration with on-chip resources is essential
+ for effective operation and debugging.
+\end_layout
+
+\begin_layout Subsection
+Supported JTAG Instructions
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Instruction
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Opcode
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BYPASS
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11111111
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+JTAG instructions with fixed binary values.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+JTAG-compliant devices implement a core subset of instructions as defined
+ by the IEEE 1149.1 specification.
+ These instructions govern the configuration of the scan path and determine
+ which data register is active during JTAG operations.
+ Some of the most common instructions include:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+BYPASS:
+\series default
+\emph default
+ Activates the 1-bit bypass register.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+IDCODE
+\series default
+\emph default
+: Enables the
+\emph on
+ ID Register
+\emph default
+ for device identification.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+EXTEST:
+\series default
+\emph default
+ Facilitates external connectivity testing.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+SAMPLE/PRELOAD:
+\series default
+\emph default
+ Provides mechanisms for input capture or pattern setup.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+USER Instructions: 
+\series default
+\emph default
+Enable access to implementation-specific logic.
+\end_layout
+
+\begin_layout Standard
+Instruction decoding and register mapping form the foundation of low-level
+ test and debug access in JTAG-based systems.
+ The flexibility to define and integrate custom instructions is a key feature
+ of the JTAG architecture, ensuring that it can be adapted to meet the requireme
+nts of a wide range of applications, from basic device testing to complex,
+ domain-specific debug scenarios.
+\end_layout
+
+\begin_layout Standard
+In summary, the JTAG interface is an essential tool for test, debug, and
+ in-system configuration in complex digital systems.
+ Its well-structured state machine, standardized signaling protocol, and
+ extensible register architecture make it a powerful mechanism for verification,
+ post-silicon debugging, production testing, and ongoing system maintenance.
+\end_layout
+
+\begin_layout Section
+RISC-V Compliant Debugger
+\end_layout
+
+\begin_layout Subsection
+Overview of RISC-V Debug Specification
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/Debugger/DEBUG_overview.png
+	lyxscale 4
+	scale 4
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+RISCV D
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:RISC-V Debug System Overview-1"
+
+\end_inset
+
+ebug System Overview.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The RISC-V Debug Specification defines a modular and transport-agnostic
+ framework for external debuggers to interface with RISC-V processors.
+ Its architecture separates the transport, control, and execution layers
+ to enable scalable and flexible debug support.
+ The primary components include the 
+\emph on
+Debug Transport Module (DTM)
+\emph default
+, the 
+\emph on
+Debug Module Interface (DMI)
+\emph default
+, and the 
+\emph on
+Debug Module (DM)
+\emph default
+—each fulfilling a distinct role in the debug pathway.
+\end_layout
+
+\begin_layout Standard
+Debug communication typically begins with a debugger host (e.g., 
+\emph on
+GDB
+\emph default
+) interfacing through a hardware driver (e.g., 
+\emph on
+OpenOCD
+\emph default
+), which communicates with the 
+\emph on
+DTM
+\emph default
+ using a physical transport such as JTAG or UART.
+ The 
+\emph on
+DTM
+\emph default
+ forwards these transactions to the 
+\emph on
+DM
+\emph default
+ via the 
+\emph on
+DMI
+\emph default
+, which exposes a set of control and status registers that allow register-level
+ interaction with the processor core (hart).
+ This architecture supports both single and multi-hart systems, enabling
+ robust and extensible debugging functionality (see Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:RISC-V Debug System Overview-1"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsection
+Debug System Components
+\end_layout
+
+\begin_layout Standard
+The RISC-V debug architecture is modular, consisting of three primary components
+: the 
+\emph on
+Debug Transport Module (DTM)
+\emph default
+, the 
+\emph on
+Debug Module Interface (DMI)
+\emph default
+, and the 
+\emph on
+Debug Module (DM)
+\emph default
+.
+ These components work in conjunction to facilitate interaction between
+ an external debugger and the internal state of one or more RISC-V harts.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Debug Transport Module (DTM
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "DTM"
+description "Debug Transport Module"
+literal "true"
+
+\end_inset
+
+):
+\series default
+ 
+\emph default
+Acts as the physical access point for an external debugger.
+ It implements a protocol-specific interface—typically JTAG or Serial Wire
+ Debug (SWD)—and forwards incoming debug transactions to the Debug Module
+ through the 
+\emph on
+DMI
+\emph default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Debug Module Interface (DMI
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "DMI"
+description "Debug Module Interface"
+literal "true"
+
+\end_inset
+
+):
+\emph default
+ 
+\series default
+Serves as a memory-mapped interface between the 
+\emph on
+DTM
+\emph default
+ and the 
+\emph on
+Debug Module
+\emph default
+.
+ It supports 32-bit read and write transactions to a defined address space,
+ enabling command and status exchange.
+ The interface is intentionally minimalistic to ensure lightweight integration
+ with transport mechanisms.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Debug Module (DM):
+\series default
+\emph default
+ Implements the primary debugging functionality.
+ It controls hart execution (
+\emph on
+halt
+\emph default
+, 
+\emph on
+resume
+\emph default
+), provides abstract access to memory and registers, and supports programmable
+ instruction execution using a program buffer.
+ A single 
+\emph on
+DM
+\emph default
+ typically serves all harts in a system, allowing fine-grained control via
+ internal hart selection mechanisms.
+\end_layout
+
+\begin_layout Standard
+Each hart (hardware thread) is associated with one 
+\emph on
+DM
+\emph default
+.
+ In multi-hart systems, a centralized 
+\emph on
+DM
+\emph default
+ facilitates debugging across all harts, simplifying design and reducing
+ overhead.
+\end_layout
+
+\begin_layout Subsection
+Debug Module Interface (DMI)
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+DMI
+\emph default
+ provides the communication pathway between the JTAG interface (via the
+ 
+\emph on
+DTM
+\emph default
+) and the internal 
+\emph on
+Debug Module
+\emph default
+.
+ It exposes a 32-bit addressable register space where debug operations can
+ be initiated or queried.
+ The interface is streamlined, requiring only address and data lines, enabling
+ efficient read/write access without additional control handshaking.
+ This simplicity supports both hardware and software implementations with
+ minimal complexity.
+\end_layout
+
+\begin_layout Subsection
+Debug Module Registers
+\end_layout
+
+\begin_layout Standard
+The Debug Module exposes several memory-mapped registers via 
+\emph on
+DMI
+\emph default
+ to configure, control, and monitor debugging operations.
+ Key registers include:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+dmcontrol (0x10): 
+\series default
+\emph default
+Enables the debug module, selects the target hart, and issues halt/resume
+ requests.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+dmstatus (0x11):
+\series default
+\emph default
+ Reflects the current status of all managed harts (e.g., 
+\emph on
+halted
+\emph default
+, 
+\emph on
+running
+\emph default
+, 
+\emph on
+unavailable
+\emph default
+).
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+abstractcs (0x16):
+\series default
+ 
+\emph default
+Indicates the availability and configuration of abstract command mechanisms,
+ such as the program buffer.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+command (0x17):
+\series default
+\emph default
+ Encodes abstract commands to be executed by the 
+\emph on
+DM
+\emph default
+ (e.g., register access).
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+abstractauto (0x18):
+\emph default
+ 
+\series default
+Automates execution of abstract commands and data access patterns.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+data0–dataN (0x04–0x0f):
+\emph default
+ 
+\series default
+Temporary storage registers for abstract command operands or results.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+progbuf0–N (0x20–0x2X):
+\emph default
+ 
+\series default
+Holds RISC-V instructions to be executed during debug mode using the program
+ buffer.
+\end_layout
+
+\begin_layout Standard
+Additional registers such as 
+\emph on
+hartinfo
+\emph default
+, 
+\emph on
+nextdm
+\emph default
+, 
+\emph on
+dmcs2
+\emph default
+, and implementation-specific extensions can be included to support more
+ advanced functionality or multicore management.
+\end_layout
+
+\begin_layout Subsection
+Abstract Commands and Program Buffer
+\end_layout
+
+\begin_layout Standard
+Abstract commands provide a flexible, implementation-independent method
+ for executing fundamental debug tasks.
+ The 
+\emph on
+DM
+\emph default
+ supports the following command types:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Access Register: 
+\series default
+\emph default
+Read or write general-purpose registers (
+\emph on
+GPRs
+\emph default
+) or control/status registers (
+\emph on
+CSRs
+\emph default
+).
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Quick Access:
+\series default
+\emph default
+ Perform a rapid sequence of halt, instruction execution, and resume for
+ common diagnostics.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Access Memory:
+\series default
+\emph default
+ Read or write system memory from the perspective of the target hart.
+\end_layout
+
+\begin_layout Standard
+For more complex operations, a 
+\emph on
+Program Buffer
+\emph default
+ allows execution of short RISC-V instruction sequences.
+ The buffer typically supports at least two instruction slots and must terminate
+ with an 
+\emph on
+ebreak
+\emph default
+ (or 
+\emph on
+c.ebreak
+\emph default
+) instruction.
+ This mechanism allows custom register transfers, 
+\emph on
+CSR
+\emph default
+ manipulation, and even limited branching within debug mode.
+\end_layout
+
+\begin_layout Subsection
+Hart Debug Control & CSRs
+\end_layout
+
+\begin_layout Standard
+Each hart features dedicated control and status registers for managing debug
+ state:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+dcsr (0x7b0): 
+\series default
+\emph default
+The 
+\emph on
+Debug Control and Status Register (dcsr)
+\emph default
+ includes fields indicating the cause of entry into debug mode, the current
+ privilege level, single-step enable, and other configuration bits.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+dpc (0x7b1):
+\series default
+\emph default
+ 
+\emph on
+Debug Program Counter
+\emph default
+ 
+\emph on
+(dpc)
+\emph default
+ stores the address at which the hart was halted.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+dscratch0, dscratch1 (0x7b2, 0x7b3):
+\series default
+ 
+\emph default
+General-purpose 
+\emph on
+scratch registers
+\emph default
+ available for temporary storage by the debugger during execution of abstract
+ commands or program buffer instructions.
+\end_layout
+
+\begin_layout Standard
+These 
+\emph on
+CSRs
+\emph default
+ ensure safe and controlled operation of the debugger and allow seamless
+ entry and exit from debug mode.
+\end_layout
+
+\begin_layout Subsection
+Debug Mode Operation
+\end_layout
+
+\begin_layout Standard
+A RISC-V hart enters Debug Mode when specific events or conditions occur
+ that indicate external or internal debug intervention.
+ These conditions include:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+External Halt Request:
+\series default
+\emph default
+ The debugger sets the 
+\emph on
+haltreq
+\emph default
+ bit in the 
+\emph on
+dmcontrol
+\emph default
+ register via the
+\emph on
+ Debug Module Interface (DMI)
+\emph default
+.
+ This signal requests that the hart halt at the next instruction boundary.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Trigger Events:
+\emph default
+ 
+\series default
+The hart is configured with hardware breakpoints or watchpoints (via trigger
+ modules).
+ Upon matching a trigger condition—such as a specific instruction fetch,
+ memory access, or address match—the hart automatically transitions to Debug
+ Mode.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Single-Step Execution:
+\series default
+\emph default
+ If the 
+\emph on
+step
+\emph default
+ bit is set in the 
+\emph on
+dcsr
+\emph default
+ 
+\emph on
+(Debug Control and Status Register)
+\emph default
+, the hart executes one instruction and then automatically halts and enters
+ Debug Mode.
+ This is useful for instruction-level stepping during software debugging.
+\end_layout
+
+\begin_layout Standard
+Once a hart enters Debug Mode, the following changes occur in its execution
+ environment:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Instruction Fetch Is Disabled:
+\series default
+\emph default
+ The hart's normal instruction execution pipeline is stalled.
+ It does not fetch or retire instructions from the normal program memory,
+ effectively freezing the program state.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Access to Debug Resources:
+\series default
+\emph default
+ While halted, the Debug Module gains exclusive access to the hart’s internal
+ state.
+ Abstract commands issued by writing to the 
+\emph on
+command register
+\emph default
+ allow the debugger to read or write general-purpose registers (
+\emph on
+GPRs
+\emph default
+), control and status registers (
+\emph on
+CSRs
+\emph default
+), or 
+\emph on
+memory
+\emph default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Execution via Program Buffer:
+\series default
+\emph default
+ A small, fixed-size instruction buffer (
+\emph on
+progbuf
+\emph default
+) inside the Debug Module allows the debugger to inject and execute RISC-V
+ instructions while the hart is halted.
+ The program buffer enables flexible, direct manipulation of the hart state
+ (e.g., loading registers from memory, executing computation, etc.).
+ For correct behavior, program buffer execution must end with an 
+\emph on
+ebreak
+\emph default
+ or 
+\emph on
+c.ebreak
+\emph default
+ instruction, which causes control to return to the Debug Module.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Preservation of Program State:
+\series default
+\emph default
+ Upon entering Debug Mode, the current value of the 
+\emph on
+Program Counter (PC)
+\emph default
+ is saved in the 
+\emph on
+dpc
+\emph default
+ register.
+ The cause of entry is recorded in 
+\emph on
+dcsr.cause
+\emph default
+, which can indicate external request, trigger match, single-step, or exception
+ during debug execution.
+ The 
+\emph on
+dcsr
+\emph default
+ also reflects the previous privilege level and various control bits such
+ as 
+\emph on
+step
+\emph default
+, 
+\emph on
+ebreakm
+\emph default
+, 
+\emph on
+ebreaks
+\emph default
+, and 
+\emph on
+ebreaku
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Exiting Debug Mode is initiated by the debugger through the 
+\emph on
+dmcontrol
+\emph default
+ register.
+ The debugger must clear the 
+\emph on
+haltreq
+\emph default
+ bit and set the 
+\emph on
+resumereq
+\emph default
+ bit.
+ Once the Debug Module confirms that the hart is ready (via 
+\emph on
+dmstatus
+\emph default
+), the hart resumes normal instruction execution from the address stored
+ in 
+\emph on
+dpc
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+If an invalid instruction is executed in the program buffer, or if an exception
+ occurs during abstract command execution, the hart remains in Debug Mode,
+ and the corresponding error code is updated in the 
+\emph on
+cmderr
+\emph default
+ field of the 
+\emph on
+abstractcs
+\emph default
+ register.
+ This ensures that faulty debug operations do not unintentionally resume
+ program execution or corrupt state.
+\end_layout
+
+\begin_layout Standard
+This robust mechanism for entering, managing, and exiting Debug Mode makes
+ the RISC-V debug architecture suitable for a wide range of use cases—from
+ deeply embedded systems requiring minimal overhead to complex multi-core
+ SoCs needing advanced debugging and trace capabilities.
+\end_layout
+
+\begin_layout Section
+Target Specification 
+\end_layout
+
+\begin_layout Standard
+Target specifications formulated for the design are: 
+\end_layout
+
+\begin_layout Itemize
+32-bit, 5 stage Pipelined Processor 
+\end_layout
+
+\begin_layout Itemize
+Supports RV32G (RV32IMAFD) instructions 
+\end_layout
+
+\begin_layout Itemize
+Integrated Floating Point Unit 
+\end_layout
+
+\begin_layout Itemize
+Split I and D (Instruction and Data) caches 
+\end_layout
+
+\begin_layout Itemize
+Virtual Memory 
+\end_layout
+
+\begin_layout Itemize
+Data and Instruction Translation Lookaside Buffers (DTLB & ITLB) 
+\end_layout
+
+\begin_layout Itemize
+Branch Prediction Unit 
+\end_layout
+
+\begin_layout Itemize
+System Counters 
+\end_layout
+
+\begin_layout Itemize
+Exception and Trap controller
+\end_layout
+
+\begin_layout Itemize
+CLINT Interrupt controller for timer and software interrupts 
+\end_layout
+
+\begin_layout Itemize
+ZiCSR extension support
+\end_layout
+
+\begin_layout Itemize
+Debug Support
+\end_layout
+
+\begin_layout Itemize
+PMP support for security applications
+\end_layout
+
+\begin_layout Section
+Conclusion
+\end_layout
+
+\begin_layout Standard
+In the above study, we have compared various industrial and academic RISC-V
+ designs.
+ The RISC-V ISA was thoroughly studied to understand the interaction between
+ software and hardware, allowing us to identify areas where hardware can
+ be enhanced to handle certain anomalies—such as hazards and stalls—more
+ efficiently, thereby reducing the compiler’s burden and accelerating the
+ software development process.
+ Building on the insights gained from literature and prior designs, we proposed
+ a new RISC-V architecture incorporating several critical design blocks
+ and features.
+ The inclusion of features such as CSR, exception and interrupt handling,
+ debug support, memory protection, TLB-based address translation, and cache
+ management will make this processor suitable for academic research and
+ low-power embedded control applications.
+ Furthermore, the design will progress toward an ASIC implementation, enabling
+ more efficient, compact, and power-optimized deployment in real-world embedded
+ systems.
+ 
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,1636 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass desethesis
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Debug Design
+\end_layout
+
+\begin_layout Section
+JTAG (IEEE 1149.1)
+\end_layout
+
+\begin_layout Standard
+The Joint Test Action Group (JTAG), formalized as the IEEE 1149.1 standard,
+ provides a standardized serial boundary-scan architecture.
+ It is primarily intended for structural testing, in-system programming,
+ and embedded debugging of digital integrated circuits (ICs).
+ JTAG has evolved into an indispensable interface, especially within modern
+ System-on-Chip (SoC) and FPGA environments, enabling non-intrusive access
+ to internal logic and registers.
+ This capability facilitates design validation, post-silicon verification,
+ board bring-up, and runtime diagnostics, making JTAG a cornerstone in contempor
+ary digital design workflows.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../Debugger/IEEE_chip_architecture.png
+	lyxscale 10
+	scale 8
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:IEEE 1149.1 Chip Architecture"
+
+\end_inset
+
+IEEE 1149.1 Chip Architecture
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+JTAG Signal Description
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+TDI (Test Data In): 
+\series default
+\emph default
+A unidirectional serial input line through which instruction or test data
+ is injected into the target device.
+ In multi-device configurations, it typically connects to the TDO of the
+ preceding device.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+TDO (Test Data Out):
+\series default
+\emph default
+ The serial output line that transmits the response data from the device.
+ It is chained to the TDI of the subsequent device.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+TCK (Test Clock): 
+\series default
+\emph default
+A dedicated clock signal for synchronizing all JTAG operations.
+ It is independent of the system clock, enabling asynchronous test access.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+TMS (Test Mode Select): 
+\series default
+\emph default
+Governs transitions within the TAP controller's state machine.
+ The state of TMS is sampled on the rising edge of TCK.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+TRST (Test Reset – optional)
+\series default
+\emph default
+: An asynchronous reset signal that forces the TAP controller into the Test-Logi
+c-Reset state without requiring TCK activity.
+\end_layout
+
+\begin_layout Subsection
+JTAG Timing Diagram
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+{signal: [
+\end_layout
+
+\begin_layout Plain Layout
+{name: 'TCK', wave: 'p..............'},
+\end_layout
+
+\begin_layout Plain Layout
+{name: 'TMS', wave: '0.1......0.....'},
+\end_layout
+
+\begin_layout Plain Layout
+{name: 'TDO', wave: '1..........====', data: ['Bit 1 shifted out', 'Bit 2 shifted
+ out', 'Bit 3 shifted out', 'Bit 4 shifted out']},
+\end_layout
+
+\begin_layout Plain Layout
+{name: 'TDI', wave: '1..........====', data: ['Bit 1 shifted in', 'Bit 2 shifted in',
+ 'Bit 3 shifted in', 'Bit 4 shifted in']},
+\end_layout
+
+\begin_layout Plain Layout
+{name: 'State', wave: 'x..====45678...', data: ['', '', '', '', 'Test-Logic-Reset',
+ 'Run-Test/Idle', 'Select-DR-Scan', 'Capture-DR', 'Shift-DR']}
+\end_layout
+
+\begin_layout Plain Layout
+],
+\end_layout
+
+\begin_layout Plain Layout
+config: { hscale: 3}
+\end_layout
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/Debugger/wavedrom.png
+	lyxscale 50
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:JTAG Timing Diagram"
+
+\end_inset
+
+JTAG Timing Diagram
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+JTAG timing diagrams describe the temporal coordination between TDI, TDO,
+ TMS, and TCK during scan operations.
+ Key aspects include:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+Setup and Hold Requirements: 
+\series default
+\emph default
+Data inputs TDI and TMS must remain stable relative to the rising edge of
+ TCK to ensure deterministic sampling.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+TDO Validity:
+\series default
+\emph default
+ Output data becomes valid on the falling edge of TCK and must be captured
+ externally before the next transition.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+Data and Instruction Shifting:
+\series default
+\emph default
+ Precise clocking ensures successful bit-wise propagation through instruction
+ and data registers.
+\end_layout
+
+\begin_layout Standard
+Robust timing analysis becomes increasingly critical as scan chains grow
+ in length or operate at higher frequencies.
+\end_layout
+
+\begin_layout Subsection
+Test Access Port (TAP) Overview
+\end_layout
+
+\begin_layout Standard
+The Test Access Port (TAP) acts as the primary interface between external
+ JTAG tools and the internal infrastructure of the target integrated circuit.
+ It establishes a serial communication path that enables access to the Instructi
+on Register (IR), various Data Registers (DRs), and the TAP Controller's
+ state machine.
+ Through this interface, test patterns can be delivered, internal data can
+ be acquired, and control signals can be propagated—all without the need
+ for additional I/O resources.
+ Owing to its minimal pin requirements and standardized operation, the TAP
+ plays a critical role in facilitating embedded debugging, hardware validation,
+ and boundary scan operations within modern digital systems.
+\end_layout
+
+\begin_layout Subsection
+TAP Controller State Machine
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/Debugger/TAP_Controller_states.png
+	lyxscale 10
+	scale 10
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:TAP Controller State Machine-1"
+
+\end_inset
+
+TAP Controller State Machine
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At the heart of the JTAG interface lies a deterministic 16-state finite
+ state machine known as the Test Access Port (TAP) controller.
+ This controller orchestrates the sequencing and execution of all JTAG operation
+s by controlling access to the internal instruction and data registers of
+ the target device.
+ The TAP controller is central to enabling flexible test and debug functionality
+ over a minimal pin interface.
+ Its primary states are outlined below:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Test-Logic-Reset:
+\series default
+\emph default
+ This state asynchronously initializes all JTAG logic within the device,
+ ensuring that the system enters a well-defined, inactive configuration.
+ It is commonly used to recover from an unknown or unstable state before
+ initiating a test or debug session.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Run-Test/Idle:
+\series default
+\emph default
+ After reset, the TAP enters this state, which either maintains the system
+ in a passive idle condition or triggers the execution of specific test
+ operations, such as Built-In Self-Test (BIST) or continuous scan testing,
+ depending on the configuration of the active instruction.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Select-DR-Scan / Select-IR-Scan: 
+\series default
+\emph default
+These intermediate states determine the type of register path—Data Register
+ (DR) or Instruction Register (IR)—that will be accessed next.
+ They serve as branch points for directing the TAP controller’s flow toward
+ the desired scan operation.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Capture, Shift, Pause, Update States:
+\series default
+\emph default
+ These sets of states exist for both DR and IR scan paths and are responsible
+ for the detailed handling of serial data.
+ The Capture state samples current values into the respective shift register;
+ Shift allows for serial movement of bits through the register via TDI and
+ TDO; Pause temporarily halts shifting to allow external processes or decision-m
+aking; and Update writes the shifted data into the active register, committing
+ the operation.
+\end_layout
+
+\begin_layout Standard
+State transitions within the TAP controller are governed by the Test Mode
+ Select (TMS) signal, which is evaluated on the rising edge of the Test
+ Clock (TCK).
+ This serialized control scheme enables deterministic navigation through
+ the TAP state machine using a single control line, eliminating the need
+ for parallel signaling or complex external logic.
+ Such a mechanism ensures precise coordination of test operations and register
+ access.
+\end_layout
+
+\begin_layout Subsection
+Instruction Register
+\end_layout
+
+\begin_layout Standard
+The Instruction Register (IR) defines the operational context of the JTAG
+ interface by determining which data register is accessible during a given
+ operation.
+ Typically 5 bits wide, the IR is loaded serially via the Shift-IR and Update-IR
+ states within the TAP controller.
+ Standardized instructions include:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+EXTEST: 
+\series default
+\emph default
+Enables external pin-level testing through the boundary scan register.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+SAMPLE/PRELOAD: 
+\series default
+\emph default
+Captures the real-time state of selected signals or preloads values into
+ scan chains for subsequent operations.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+IDCODE (optional):
+\series default
+\emph default
+ Provides a static device identifier to facilitate device recognition and
+ configuration.
+ If the identification register is not implemented in hardware, the IDCODE
+ instruction must be interpreted as a BYPASS instruction.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+BYPASS: 
+\series default
+\emph default
+Selects a minimal 1-bit data register, allowing the device to be bypassed
+ in a scan chain and enabling faster access to downstream devices.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+USER Instructions:
+\series default
+\emph default
+ Reserved opcodes that support vendor-defined or application-specific functional
+ity, enhancing the flexibility of the JTAG interface.
+\end_layout
+
+\begin_layout Standard
+The support for USER instructions significantly extends the utility of the
+ IR by enabling custom debug features and facilitating proprietary extensions
+ within standardized test workflows.
+\end_layout
+
+\begin_layout Subsection
+Data Registers Overview
+\end_layout
+
+\begin_layout Standard
+Data Registers (DRs) in the JTAG interface are used for data exchange between
+ the external debugger and the target device.
+ The active DR is determined by the current instruction loaded into the
+ Instruction Register (IR), with different instructions providing access
+ to various DRs.
+ These registers allow operations such as reading and writing to internal
+ registers, configuring device state, and performing other test and debug
+ operations.
+\end_layout
+
+\begin_layout Standard
+Data is shifted serially through the DRs during scan operations, enabling
+ external debuggers to interact with the processor’s internal state.
+ This mechanism supports a range of tasks, including control, inspection,
+ and configuration, all facilitated by the JTAG scan protocol.
+ The ability to select different DRs based on the loaded instruction adds
+ flexibility, enabling tailored debug and testing functionality specific
+ to the target device’s needs.
+\end_layout
+
+\begin_layout Subsubsection
+IDCODE Register
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../Debugger/IDCODE_Reg.png
+	lyxscale 30
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Device Identification Code Structure"
+
+\end_inset
+
+Device Identification Code Structure
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The IDCODE register is a 32-bit read-only register that provides a standardized
+ identifier for the target device.
+ Its structure is as follows:
+\end_layout
+
+\begin_layout Itemize
+4 bits for Version Number
+\end_layout
+
+\begin_layout Itemize
+16 bits for Part Number
+\end_layout
+
+\begin_layout Itemize
+11 bits for Manufacturer ID
+\end_layout
+
+\begin_layout Itemize
+1-bit Stop Bit (logic high)
+\end_layout
+
+\begin_layout Standard
+The IDCODE register plays a critical role in automated toolchains by enabling
+ target detection, configuration validation, and the provisioning of firmware.
+ It facilitates device identification and ensures compatibility between
+ the debugging tools and the target hardware, making it an essential component
+ for efficient debugging and system management.
+\end_layout
+
+\begin_layout Subsubsection
+BYPASS Register
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../Debugger/BYPASS_Reg.png
+	lyxscale 30
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Bypass Register Structure"
+
+\end_inset
+
+Bypass Register Structure
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The BYPASS register is a one-bit shift register that serves to exclude a
+ device from the scan chain when it is not the target of a JTAG operation.
+ This functionality optimizes the scan chain by reducing latency and simplifying
+ data transfers in multi-device configurations.
+ When the device is in the bypass state, JTAG signals pass through it without
+ interacting with its internal logic, enhancing the efficiency of the test
+ and debug processes.
+\end_layout
+
+\begin_layout Subsubsection
+Boundary Scan Register (optional)
+\end_layout
+
+\begin_layout Standard
+The Boundary Scan Register (BSR) is an optional but highly valuable feature
+ that enables access to the device’s digital I/O pins through a shift register
+ architecture.
+ It facilitates a range of critical functions:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Non-intrusive interconnect testing:
+\emph default
+ 
+\series default
+The EXTEST instruction utilizes the BSR to test the device's interconnects
+ without the need for physical probing, ensuring integrity without disrupting
+ the system.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Real-time pin state capture:
+\series default
+\emph default
+ Through the SAMPLE instruction, the BSR allows for the real-time capture
+ of I/O pin states, providing a reliable method for observing device behavior
+ during testing.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Controlled input driving:
+\series default
+\emph default
+ The PRELOAD instruction enables the controlled driving of input signals,
+ which is essential for performing diagnostics at the board level.
+\end_layout
+
+\begin_layout Standard
+Its inclusion significantly enhances the observability and controllability
+ of physical signal paths without requiring intrusive probing.
+\end_layout
+
+\begin_layout Subsubsection
+Implementation-Specific Data Registers
+\end_layout
+
+\begin_layout Standard
+In advanced system designs, custom data registers are often implemented
+ to support specialized functions tailored to the specific needs of the
+ device.
+ These registers may include:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Debug module communication:
+\series default
+\emph default
+ Registers designed to facilitate efficient communication with on-chip debug
+ modules, enabling detailed control and monitoring during the debugging
+ process.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Memory or CSR (Control and Status Register) access:
+\series default
+\emph default
+ Registers that provide direct access to memory regions or critical system
+ control registers, enhancing low-level interaction with the system’s internal
+ state.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Performance monitoring: 
+\series default
+\emph default
+Custom registers dedicated to tracking system performance metrics, providing
+ insights into operational efficiency, resource utilization, or bottlenecks.
+\end_layout
+
+\begin_layout Standard
+These user-defined data registers significantly enhance the flexibility
+ and functionality of the JTAG interface, particularly in FPGA or processor-cent
+ric systems, where seamless integration with on-chip resources is essential
+ for effective operation and debugging.
+\end_layout
+
+\begin_layout Subsection
+Supported JTAG Instructions
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Instruction
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Opcode
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BYPASS
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11111111
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+JTAG instructions with fixed binary values
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+JTAG-compliant devices implement a core subset of instructions as defined
+ by the IEEE 1149.1 specification.
+ These instructions govern the configuration of the scan path and determine
+ which data register is active during JTAG operations.
+ Some of the most common instructions include:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+BYPASS:
+\series default
+\emph default
+ Activates the 1-bit bypass register.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+IDCODE
+\series default
+\emph default
+: Enables the ID register for device identification.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+EXTEST:
+\series default
+\emph default
+ Facilitates external connectivity testing.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+SAMPLE/PRELOAD:
+\series default
+\emph default
+ Provides mechanisms for input capture or pattern setup.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+USER Instructions: 
+\series default
+\emph default
+Enable access to implementation-specific logic.
+\end_layout
+
+\begin_layout Standard
+Instruction decoding and register mapping form the foundation of low-level
+ test and debug access in JTAG-based systems.
+ The flexibility to define and integrate custom instructions is a key feature
+ of the JTAG architecture, ensuring that it can be adapted to meet the requireme
+nts of a wide range of applications, from basic device testing to complex,
+ domain-specific debug scenarios.
+\end_layout
+
+\begin_layout Standard
+In summary, the JTAG interface is an essential tool for test, debug, and
+ in-system configuration in complex digital systems.
+ Its well-structured state machine, standardized signaling protocol, and
+ extensible register architecture make it a powerful mechanism for verification,
+ post-silicon debugging, production testing, and ongoing system maintenance.
+\end_layout
+
+\begin_layout Section
+RISC-V Compliant Debugger
+\end_layout
+
+\begin_layout Subsection
+Overview of RISC-V Debug Specification
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/Debugger/DEBUG_overview.png
+	lyxscale 4
+	scale 1
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:RISC-V Debug System Overview"
+
+\end_inset
+
+ RISCV Debug System Overview
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The RISC-V Debug Specification defines a modular and transport-agnostic
+ framework for external debuggers to interact with RISC-V processors.
+ Its architecture separates transport, control, and execution layers to
+ provide scalable and flexible debug support.
+ The primary components include the Debug Transport Module (DTM), the Debug
+ Module Interface (DMI), and the Debug Module (DM), each fulfilling distinct
+ roles in the debug pathway.
+\end_layout
+
+\begin_layout Standard
+Debug communication typically begins with a debugger host (e.g., GDB) interfacing
+ with a hardware driver (e.g., OpenOCD), which interacts with the Debug Transport
+ Module (e.g., JTAG or UART).
+ The DTM then relays these instructions to the Debug Module via the DMI,
+ which exposes control/status registers and enables register-level operations
+ on the processor core (hart).
+ This architecture supports both single and multi-hart environments.
+\end_layout
+
+\begin_layout Subsection
+Debug System Components
+\end_layout
+
+\begin_layout Standard
+The RISC-V debug architecture is modular, consisting of three primary components
+: the Debug Transport Module (DTM), the Debug Module Interface (DMI), and
+ the Debug Module (DM).
+ These components work in conjunction to facilitate interaction between
+ an external debugger and the internal state of one or more RISC-V harts.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Debug Transport Module (DTM):
+\series default
+ 
+\emph default
+Acts as the physical access point for an external debugger.
+ It implements a protocol-specific interface—typically JTAG or Serial Wire
+ Debug (SWD)—and forwards incoming debug transactions to the Debug Module
+ through the DMI.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Debug Module Interface (DMI):
+\emph default
+ 
+\series default
+Serves as a memory-mapped interface between the DTM and the Debug Module.
+ It supports 32-bit read and write transactions to a defined address space,
+ enabling command and status exchange.
+ The interface is intentionally minimalistic to ensure lightweight integration
+ with transport mechanisms.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Debug Module (DM):
+\series default
+\emph default
+ Implements the primary debugging functionality.
+ It controls hart execution (halt, resume), provides abstract access to
+ memory and registers, and supports programmable instruction execution using
+ a program buffer.
+ A single DM typically serves all harts in a system, allowing fine-grained
+ control via internal hart selection mechanisms.
+\end_layout
+
+\begin_layout Standard
+Each hart (hardware thread) is associated with one DM.
+ In multi-hart systems, a centralized DM facilitates debugging across all
+ harts, simplifying design and reducing overhead.
+\end_layout
+
+\begin_layout Subsection
+Debug Module Interface (DMI)
+\end_layout
+
+\begin_layout Standard
+The DMI provides the communication pathway between the JTAG interface (via
+ the DTM) and the internal Debug Module.
+ It exposes a 32-bit addressable register space where debug operations can
+ be initiated or queried.
+ The interface is streamlined, requiring only address and data lines, enabling
+ efficient read/write access without additional control handshaking.
+ This simplicity supports both hardware and software implementations with
+ minimal complexity.
+\end_layout
+
+\begin_layout Subsection
+Debug Module Registers
+\end_layout
+
+\begin_layout Standard
+The Debug Module exposes several memory-mapped registers via DMI to configure,
+ control, and monitor debugging operations.
+ Key registers include:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+dmcontrol (0x10): 
+\series default
+\emph default
+Enables the debug module, selects the target hart, and issues halt/resume
+ requests.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+dmstatus (0x11):
+\series default
+\emph default
+ Reflects the current status of all managed harts (e.g., halted, running,
+ unavailable).
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+abstractcs (0x16):
+\series default
+ 
+\emph default
+Indicates the availability and configuration of abstract command mechanisms,
+ such as the program buffer.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+command (0x17):
+\series default
+\emph default
+ Encodes abstract commands to be executed by the DM (e.g., register access).
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+abstractauto (0x18):
+\emph default
+ 
+\series default
+Automates execution of abstract commands and data access patterns.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+data0–dataN (0x04–0x0f):
+\emph default
+ 
+\series default
+Temporary storage registers for abstract command operands or results.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+progbuf0–N (0x20–0x2X):
+\emph default
+ 
+\series default
+Holds RISC-V instructions to be executed during debug mode using the program
+ buffer.
+\end_layout
+
+\begin_layout Standard
+Additional registers such as hartinfo, nextdm, dmcs2, and implementation-specifi
+c extensions can be included to support more advanced functionality or multicore
+ management.
+\end_layout
+
+\begin_layout Subsection
+Abstract Commands and Program Buffer
+\end_layout
+
+\begin_layout Standard
+Abstract commands provide a flexible, implementation-independent method
+ for executing fundamental debug tasks.
+ The DM supports the following command types:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Access Register: 
+\series default
+\emph default
+Read or write general-purpose registers (GPRs) or control/status registers
+ (CSRs).
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Quick Access:
+\series default
+\emph default
+ Perform a rapid sequence of halt, instruction execution, and resume for
+ common diagnostics.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Access Memory:
+\series default
+\emph default
+ Read or write system memory from the perspective of the target hart.
+\end_layout
+
+\begin_layout Standard
+For more complex operations, a Program Buffer allows execution of short
+ RISC-V instruction sequences.
+ The buffer typically supports at least two instruction slots and must terminate
+ with an ebreak (or c.ebreak) instruction.
+ This mechanism allows custom register transfers, CSR manipulation, and
+ even limited branching within debug mode.
+\end_layout
+
+\begin_layout Subsection
+Hart Debug Control & CSRs
+\end_layout
+
+\begin_layout Standard
+Each hart features dedicated control and status registers for managing debug
+ state:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+dcsr (0x7b0): 
+\series default
+\emph default
+The Debug Control and Status Register includes fields indicating the cause
+ of entry into debug mode, the current privilege level, single-step enable,
+ and other configuration bits.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+dpc (0x7b1):
+\series default
+\emph default
+ Debug Program Counter stores the address at which the hart was halted.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+dscratch0, dscratch1 (0x7b2, 0x7b3):
+\series default
+ 
+\emph default
+General-purpose scratch registers available for temporary storage by the
+ debugger during execution of abstract commands or program buffer instructions.
+\end_layout
+
+\begin_layout Standard
+These CSRs ensure safe and controlled operation of the debugger and allow
+ seamless entry and exit from debug mode.
+\end_layout
+
+\begin_layout Subsection
+Debug Mode Operation
+\end_layout
+
+\begin_layout Standard
+A RISC-V hart enters Debug Mode when specific events or conditions occur
+ that indicate external or internal debug intervention.
+ These conditions include:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+External Halt Request:
+\series default
+\emph default
+ The debugger sets the haltreq bit in the dmcontrol register via the Debug
+ Module Interface (DMI).
+ This signal requests that the hart halt at the next instruction boundary.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Trigger Events:
+\emph default
+ 
+\series default
+The hart is configured with hardware breakpoints or watchpoints (via trigger
+ modules).
+ Upon matching a trigger condition—such as a specific instruction fetch,
+ memory access, or address match—the hart automatically transitions to Debug
+ Mode.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Single-Step Execution:
+\series default
+\emph default
+ If the step bit is set in the dcsr (Debug Control and Status Register),
+ the hart executes one instruction and then automatically halts and enters
+ Debug Mode.
+ This is useful for instruction-level stepping during software debugging.
+\end_layout
+
+\begin_layout Standard
+Once a hart enters Debug Mode, the following changes occur in its execution
+ environment:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Instruction Fetch Is Disabled:
+\series default
+\emph default
+ The hart's normal instruction execution pipeline is stalled.
+ It does not fetch or retire instructions from the normal program memory,
+ effectively freezing the program state.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Access to Debug Resources:
+\series default
+\emph default
+ While halted, the Debug Module gains exclusive access to the hart’s internal
+ state.
+ Abstract commands issued by writing to the command register allow the debugger
+ to read or write general-purpose registers (GPRs), control and status registers
+ (CSRs), or memory.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Execution via Program Buffer:
+\series default
+\emph default
+ A small, fixed-size instruction buffer (progbuf) inside the Debug Module
+ allows the debugger to inject and execute RISC-V instructions while the
+ hart is halted.
+ The program buffer enables flexible, direct manipulation of the hart state
+ (e.g., loading registers from memory, executing computation, etc.).
+ For correct behavior, program buffer execution must end with an ebreak
+ or c.ebreak instruction, which causes control to return to the Debug Module.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Preservation of Program State:
+\series default
+\emph default
+ Upon entering Debug Mode, the current value of the Program Counter (PC)
+ is saved in the dpc register.
+ The cause of entry is recorded in dcsr.cause, which can indicate external
+ request, trigger match, single-step, or exception during debug execution.
+ The dcsr also reflects the previous privilege level and various control
+ bits such as step, ebreakm, ebreaks, and ebreaku.
+\end_layout
+
+\begin_layout Standard
+Exiting Debug Mode is initiated by the debugger through the dmcontrol register.
+ The debugger must clear the haltreq bit and set the resumereq bit.
+ Once the Debug Module confirms that the hart is ready (via dmstatus), the
+ hart resumes normal instruction execution from the address stored in dpc.
+\end_layout
+
+\begin_layout Standard
+If an invalid instruction is executed in the program buffer, or if an exception
+ occurs during abstract command execution, the hart remains in Debug Mode,
+ and the corresponding error code is updated in the cmderr field of the
+ abstractcs register.
+ This ensures that faulty debug operations do not unintentionally resume
+ program execution or corrupt state.
+\end_layout
+
+\begin_layout Standard
+This robust mechanism for entering, managing, and exiting Debug Mode makes
+ the RISC-V debug architecture suitable for a wide range of use cases—from
+ deeply embedded systems requiring minimal overhead to complex multi-core
+ SoCs needing advanced debugging and trace capabilities.
+\end_layout
+
+\begin_layout Section
+Target Specification 
+\end_layout
+
+\begin_layout Subsection
+Core Target Specification
+\end_layout
+
+\begin_layout Standard
+Core Target specifications formulated for the design are: 
+\end_layout
+
+\begin_layout Itemize
+32-bit, 5 stage Pipelined Processor 
+\end_layout
+
+\begin_layout Itemize
+Supports RV32G (RV32IMAFD) instructions 
+\end_layout
+
+\begin_layout Itemize
+Integrated Floating Point Unit 
+\end_layout
+
+\begin_layout Itemize
+Split I and D (Instruction and Data) caches 
+\end_layout
+
+\begin_layout Itemize
+Virtual Memory 
+\end_layout
+
+\begin_layout Itemize
+Data and Instruction Translation Lookaside Buffers (DTLB & ITLB) 
+\end_layout
+
+\begin_layout Itemize
+Branch Prediction Unit 
+\end_layout
+
+\begin_layout Itemize
+System Counters 
+\end_layout
+
+\begin_layout Itemize
+Interrupt controller with four levels of pre-emptive priority 
+\end_layout
+
+\begin_layout Itemize
+Main Memory with Error Control Coding 
+\end_layout
+
+\begin_layout Itemize
+AXI Protocol for Memory and peripheral integration
+\end_layout
+
+\begin_layout Itemize
+2.11.1 Debugger Target Specification
+\end_layout
+
+\begin_layout Subsection
+Debugger Target Specification
+\end_layout
+
+\begin_layout Standard
+Debugger Target specifications formulated for the design are: 
+\end_layout
+
+\begin_layout Itemize
+Transport Layer:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+JTAG-based Debug Transport Module (DTM)
+\end_layout
+
+\begin_layout Itemize
+Compliant with IEEE 1149.1 TAP interface
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Control Layer:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Single Debug Module (DM) for single-hart debug
+\end_layout
+
+\begin_layout Itemize
+Full control via dmcontrol, dmstatus, command, and related registers
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Command Execution:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Abstract command engine with support for:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Access Register (GPR/CSR)
+\end_layout
+
+\begin_layout Itemize
+Access Memory
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+CSR and State Access:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Supports dcsr, dpc, dscratch0, dscratch1 access via abstract commands
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Debug Mode Support:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+External halt request (haltreq) and resume control (resumereq)
+\end_layout
+
+\begin_layout Itemize
+Single-step execution using dcsr.step
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Error Handling:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Exception trapping and error code reporting
+\end_layout
+
+\begin_layout Itemize
+Compliance with debug cause and status encoding as per spec
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Conclusion
+\end_layout
+
+\begin_layout Standard
+In the above study report we have compared various industrial and academic
+ RISC-V designs.
+ RISC-V ISA has been studied in order to understand the software-hardware
+ interaction and how hardware can be better designed to address anomalies
+ such as hazards and stalls at the hardware level, thereby reducing compiler
+ dependencies and accelerating software development.
+\end_layout
+
+\begin_layout Standard
+We then proposed our own RISC-V architecture, incorporating design blocks
+ and strategies informed by prior literature.
+ To address data hazards, our processor employs bypassing/forwarding techniques
+ and a 2-bit branch prediction mechanism, a commonly adopted method across
+ academic designs.
+ The processor was implemented in Chisel, enabling modular and efficient
+ development of components like memory and cache, which would have been
+ more laborious in Verilog.
+\end_layout
+
+\begin_layout Standard
+Additionally, we developed a RISC-V compliant debugger based on the official
+ debug specification.
+ The debugger integrates a JTAG-based Debug Transport Module (DTM), a Debug
+ Module Interface (DMI), and a Debug Module (DM), supporting core features
+ such as halt/resume, register and CSR access, and abstract command execution
+ via a program buffer.
+ This ensures real-time control and observability of the processor during
+ both simulation and hardware execution.
+\end_layout
+
+\begin_layout Standard
+Together, the processor and debugger form a complete platform that is well-suite
+d for educational use, research exploration, and embedded system prototyping.
+\end_layout
+
+\end_body
+\end_document

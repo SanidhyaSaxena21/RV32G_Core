@@ -1,0 +1,777 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass ../dese_latex_classes/desethesis
+\begin_preamble
+
+%Options for type of thesis
+% phd   - for PhD thesis at IISc
+% mtech - for MTech dissertation at IISc
+% me    - for ME dissertation at IISc
+
+%Options to disallow following preliminary pages if you intend to include it as a file in the mainmatter
+% noded  - dis-allows the Dedication page
+% noack  - dis-allows the Acknowledgements page
+% nosyn  - dis-allows the Synopsis page
+%------------------------------------------------------------------------------------------
+% Thesis details
+  \Year{2025}
+  \Month{May}
+  \Author{Sanidhya Saxena, Toms Jiji Varghese}
+  \Advisor{Kuruvilla Varghese}
+  \CoAdvisorA{}
+  \CoAdvisorB{}
+  \Title{Title: A 32-bit RISC-V ASIC implementation}
+  \Dedication{}
+  \Synopsis{}
+  \Keywords{}
+  \Acknowledgments{}
+ %------------------------------------------------------------------------------------- 
+ 
+\end_preamble
+\options mtech,noded,noack,nosyn
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding default
+\font_roman "times" "default"
+\font_sans "helvet" "default"
+\font_typewriter "courier" "default"
+\font_math "auto" "auto"
+\font_default_family rmdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command bibtex
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+frontmatter
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+makepreliminarypages
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+singlespace
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "chap/synopsis.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "chap/acknowledgement.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList figure
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList table
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomencl_print
+LatexCommand printnomenclature
+set_width "auto"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+clearemptydoublepage
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+doublespace
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+mainmatter
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+AIM:
+\end_layout
+
+\begin_layout Standard
+The primary aim of this project is to design and develop a 32-bit RISC-V
+ processor core targeted for ASIC implementation, incorporating essential
+ architectural features required for modern embedded and low-power applications.
+ The processor will support advanced functionalities such as Memory Protection
+ and Management (PMP/MMU), Control and Status Registers (CSRs), Interrupt
+ and Exception Handling, and Debug Support compliant with the RISC-V privilege
+ and debug specifications.
+ The goal is to build a standards-compliant, synthesizable core that can
+ be used as a soft IP for academic research or industrial integration into
+ SoCs, with a focus on scalability, verification, and ASIC readiness.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/RISC_1.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/RISC_2.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/SLVU_3.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Available designs at RC Lab
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Some of the RISC-V architecture based processor and SOC developed by the
+ Reconfigurable Computing lab are 64-bit 4-wide Out-of-Order processor core,
+ SOC based on Dual-core processor, 32-bit RISC-V prcoessor with additions
+ like Vector unit.
+ These architectures were made for FPGA and need to be re-designed for ASIC.
+ We will be designing a 32-bit RISC-V processor from ASIC development point
+ of view, and various parameterisation like Memory Size, Tunable cache parameter
+s will be added to the design.
+ These blocks can be re-used as an IP in future projects for RC Lab, as
+ well as can be integrated in the previous designs for hardware configuarbility.
+ These blocks will be individually synthesized and the final placement and
+ routing will be done for the complete design.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "./chap/introduction.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "chap/study.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "chap/design.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "chap/ASIC_Design.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "chap/Verification.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "chap/Results.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "chap/concluding_remarks.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "GLS_Design/GLS_issues.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+literal "false"
+
+\end_inset
+
+ RISC-V International: https://riscv.org/
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-2"
+
+\end_inset
+
+ BBC Research: https://www.bccresearch.com/market-research/semiconductor-manufactu
+ring/global-risc-v-technology-market.html
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-3"
+
+\end_inset
+
+ https://semico.com/content/risc-v-cpu-market-analysis-sip-socs-ai-and-design-sta
+rts
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-4"
+
+\end_inset
+
+https://riscv.org/technical/specifications/
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-5"
+
+\end_inset
+
+https://wiki.riscv.org/display/HOME/RISC-V+Technical+Specifications
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+C.
+ Boulet et al., “VexRiscv: A configurable and efficient RISC-V CPU for FPGAs,”
+ GitHub Repository, [Online].
+ Available: https://github.com/SpinalHDL/VexRiscv
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-2"
+
+\end_inset
+
+T.
+ Paravan, “NEORV32: An open-source, customizable RISC-V microcontroller,”
+ GitHub Repository, [Online].
+ Available: https://github.com/stnolting/neorv32
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-3"
+
+\end_inset
+
+Codasip, “Codasip L110 Core Datasheet,” Codasip, 2022.
+ [Online].
+ Available: https://www.codasip.com/product/l110/
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-4"
+
+\end_inset
+
+D.
+ Patterson et al., “SweRV Core EH1,” Western Digital, 2019.
+ [Online].
+ Available: https://github.com/chipsalliance/Cores-SweRV
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-19"
+literal "false"
+
+\end_inset
+
+SiFive, “U84 Core Complex,” SiFive Documentation, 2021.
+ [Online].
+ Available: https://www.sifive.com/cores/u84
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-6"
+
+\end_inset
+
+Micro Magic Inc., “RISC-V CPU runs at 5 GHz using 200 mW,” EE Times, 2020.
+ [Online].
+ Available: https://www.eetimes.com/micro-magic-unveils-5-ghz-risc-v-core/
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-5"
+
+\end_inset
+
+A.
+ Waterman, Y.
+ Lee, D.
+ A.
+ Patterson, K.
+ Asanovic, V.
+ I.
+ U.
+ level Isa, A.
+ Waterman, Y.
+ Lee, and D.
+ Patterson, “The risc-v instruction set manual,” 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-8"
+
+\end_inset
+
+K.
+ Asanovi and D.
+ A.
+ Patterson, “Instruction sets should be free: The case for risc-v,” EECS
+ Department, University of California, Berkeley, Tech.
+ Rep.
+ UCB/EECS-2014-146, Aug 2014.
+ [Online].
+ Available: http: //www2.eecs.berkeley.edu/Pubs/TechRpts/2014/EECS-2014-146.html
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-9"
+literal "false"
+
+\end_inset
+
+A.
+ Waterman, K.
+ Asanovic and SiFive Inc., “The RISC-V Instruction Set Manual Volume I: Unprivile
+ged ISA,” Document Version 20191213, EECS Dept, University of California,
+ Berkeley, CA, USA, December 13, 2019
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-10"
+literal "false"
+
+\end_inset
+
+B.
+ Zimmer et al., "A RISC-V Vector Processor With Simultaneous-Switching Switched-C
+apacitor DC–DC Converters in 28 nm FDSOI," in IEEE Journal of Solid-State
+ Circuits, vol.
+ 51, no.
+ 4, pp.
+ 930-942, April 2016, doi: 10.1109/JSSC.2016.2519386.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-11"
+literal "false"
+
+\end_inset
+
+Milanesi, L., 2023.
+ Study and Development of RISC-V Mitigation Approach Based on Redundancy
+ (Doctoral dissertation, Politecnico di Torino).
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-14"
+literal "false"
+
+\end_inset
+
+Berry, G., and Gonthier, G.
+ The Esterel synchronous programming language: Design, semantics, implementation.
+ Science of Computer Programming 10, 2 (1992).
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-15"
+literal "false"
+
+\end_inset
+
+Bluespec Inc.
+ Bluespec(tm) SystemVerilog Reference Guide: Description of the Bluespec
+ SystemVerilog Language and Libraries.
+ Waltham, MA, 2004
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-16"
+literal "false"
+
+\end_inset
+
+Goldstein, S., and Budiu, M.
+ Fast compilation for pipelined reconfigurable fabrics.
+ ACM/FPGA Symposium on Field Programmable Gate Arrays (1999).
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-17"
+literal "false"
+
+\end_inset
+
+Jonathan Bachrach, Huy Vo, Brian Richards, Yunsup Lee, Andrew Waterman,
+ Rimas Avižienis, John Wawrzynek, and Krste Asanović.
+ 2012.
+ Chisel: constructing hardware in a Scala embedded language.
+ In Proceedings of the 49th Annual Design Automation Conference (DAC '12).
+ Association for Computing Machinery, New York, NY, USA, 1216–1225.
+ https://doi.org/10.1145/2228360.2228584
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-18"
+literal "false"
+
+\end_inset
+
+Odersky, M.
+ e.
+ a.
+ Scala programming language.
+ http://www.scala-lang.org/.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "RISCV_UNPRIV"
+literal "false"
+
+\end_inset
+
+RISC-V Instruction Set Manual, Volume I: User-Level ISA, Document Version
+ 20191213 (December 13, 2019), https://github.com/riscv/riscv-isa-manual/releases
+/download/Ratified-IMAFDQC/riscv-spec-20191213.pdf
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "RISCV_PRIV"
+literal "false"
+
+\end_inset
+
+RISC-V Instruction Set Manual, Volume II: Privileged Architecture, Document
+ Version 20211203 (December 4, 2021), https://github.com/riscv/riscv-isa-manual/r
+eleases/download/Priv-v1.12/riscv-privileged-20211203.pdf
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "RISCV_DEBUG"
+literal "false"
+
+\end_inset
+
+RISC-V Debug Support, version 1.0-STABLE, ece9f185e7e348aafca75418d0f1540b2dfd0ff
+6, November 7 2023, https://github.com/riscv/riscv-debug-spec/blob/24d2ea065737fc
+184670a6d09fb314e1a66109f5/riscv-debug-stable.pdf
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,24 @@
+
+{signal: [
+  {name: 'clk', wave: 'p..............'},
+  {name: 'proc_addr', wave: '232............', data: ['0x0', 'PPN', '0x0']},
+  {name: 'lsu_op', wave: '232............', data: ['0x0', '0xa', '0x0']},
+  {name: 'Store_Data', wave: '232............', data: ['0x0', '0x12345678', '0x0']},
+  {name: 'Load_store_req', wave: '010............'},
+  {name: 'tag_hit', wave: '.010...........'},
+  {name: 'tag_out_tlb', wave: '.232...........', data: ['PPN', '0x0', '0x0']},
+  {name: 'hit', wave: '1.0..........1.'},
+  {name: 'miss', wave: '0.1..........0.'},
+  {name: 'freeze', wave: '0.1..........0.'},
+  {name: 'state', wave: '2.45........62.', data: ['start', 'WT_HIT', 'GET_MEM_DATA', 'REPLACE','start']},
+  {name: 'counter', wave: '2..333333332...', data: ['0', '1', '2', '3','4', '5', '6','7','8']}, 
+  {name: 'mem_rdy', wave: '0..........10..'},
+  {name: 'Instr_ID', wave: '245...........6', data: ['SW','add','sub','CSR']}, 
+  {name: 'PC_ID', wave: '456...........7', data: ['PC1','PC2','PC3','PC4']}, 
+  
+
+],
+  config:{hscale:3}}
+
+
+  

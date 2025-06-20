@@ -1,0 +1,66 @@
+
+\chapter{Engineering}
+
+This chapter includes all the engineering and fabrication details
+needed to develop the product. 
+
+\section{Product structure}
+
+This section provides the overall structure of the product in a top-down
+manner as viewed by a person when opening up the product completely
+to its component parts. The overall structure is given with the help
+of a block diagram schematic. On some modules, embedded software may
+reside and its structure diagram can be shown separately module-wise.
+The structure diagram for any standalone software should also be included.
+
+\section{Hardware modules}
+
+For every hardware module, the following engineering and fabrication
+details should be included,
+\begin{itemize}
+\item physical dimensions with mounting hole details
+\item connectors and connector pin details with pin-level labeling
+\item circuit diagram using connector pin-level labeling as inputs and outputs
+\item printed circuit board layout with circuit and connectors
+\item routing details
+\item drilling details
+\item assembly and mounting details
+\item bill of materials with cost
+\item vendor details
+\item development setup details: schematic editor, layout editor etc. ,
+assembly requirements, software for writing embedded software if any,
+debugging tools, JTAG tools, power supply requirements, monitoring
+requirements like CRO and multimeters etc.
+\item Testing procedure for validating the module
+\end{itemize}
+NOTE: include sections for every hardware molude and include the details
+as indicated above.
+
+\section{Software modules}
+
+For every software module, include the following,
+\begin{itemize}
+\item development setup details: debugger, tools, interconnection to PC,
+power supply etc.
+\item pseudocode of algorithm
+\item subroutine or function code listing (include line by line comments
+in code for easy comprehension of the code)
+\item compilation details: make file etc.
+\item software embedding details if any
+\item testing procedure for validating the module
+\end{itemize}
+
+\section{System integration}
+
+This section should include 
+\begin{itemize}
+\item inter module hardware interconnection details
+\item inter module software interconnections
+\item interconnections between the system and external environment like
+inputs and outputs (sources and sinks)
+\item system level testing procedure for validating the system experimentally
+\item figures obtained from CRO and/or other instruments
+\item demonstration setup and the procedures for validating the system with
+target specifications
+\end{itemize}
+

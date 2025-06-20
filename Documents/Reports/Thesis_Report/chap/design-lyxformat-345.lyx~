@@ -1,0 +1,238 @@
+#LyX 1.6.6.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass desethesis
+\begin_preamble
+
+\end_preamble
+\use_default_options false
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Design
+\end_layout
+
+\begin_layout Standard
+The chapter includes
+\end_layout
+
+\begin_layout Itemize
+design of modules and sub-modules
+\end_layout
+
+\begin_layout Itemize
+design equations (with electrical and thermal stresses)
+\end_layout
+
+\begin_layout Itemize
+component selection
+\end_layout
+
+\begin_layout Itemize
+design of algorithms
+\end_layout
+
+\begin_layout Itemize
+industrial design aspects
+\end_layout
+
+\begin_layout Itemize
+system integration issues
+\end_layout
+
+\begin_layout Section
+Module partitioning
+\end_layout
+
+\begin_layout Standard
+Based on the module and sub-module partitioning of the previous chapter,
+ finalise
+\end_layout
+
+\begin_layout Itemize
+the segregation of modules into hardware, embedded software and standalone
+ software parts
+\end_layout
+
+\begin_layout Itemize
+the exhaustive list of stimuli to the modules (hardware and software)
+\end_layout
+
+\begin_layout Itemize
+detailed quantification of the stimuli for both hardware and software modules
+\end_layout
+
+\begin_layout Section
+Hardware design
+\end_layout
+
+\begin_layout Standard
+Based on the stimuli classification of each module or sub-module, perform
+ the design which includes
+\end_layout
+
+\begin_layout Itemize
+the final circuit schematic
+\end_layout
+
+\begin_layout Itemize
+design equations relating to functional aspects like accuracy, resolution,
+ dynamics and harmonics with respect to the output
+\end_layout
+
+\begin_layout Itemize
+design equations relating to electrical stresses of components or devices
+\end_layout
+
+\begin_layout Itemize
+design equations relating to thermal stresses of components or devices
+\end_layout
+
+\begin_layout Itemize
+selection of devices based on the design equations
+\end_layout
+
+\begin_layout Itemize
+selection of associated non-electrical parameters and components like heat
+ sink, wires, connectors, switches etc.
+\end_layout
+
+\begin_layout Itemize
+reliability estimate in terms of mean time to failure (MTTF)
+\end_layout
+
+\begin_layout Standard
+NOTE: 
+\emph on
+include as many sections/sub-sections as there are hardware modules/sub-modules
+ and repeat the above for every hardware module and sub-module
+\emph default
+.
+\end_layout
+
+\begin_layout Section
+Software design
+\end_layout
+
+\begin_layout Standard
+Based on the input and output stimuli classification of each software module
+ or sub-module, perform the algorithm design which includes,
+\end_layout
+
+\begin_layout Itemize
+numeric format for the application in case of embedded software (floating
+ point or fixed point and positioning of the virtual binary point)
+\end_layout
+
+\begin_layout Itemize
+normalising and scaling constants
+\end_layout
+
+\begin_layout Itemize
+module inputs and type
+\end_layout
+
+\begin_layout Itemize
+module output and type
+\end_layout
+
+\begin_layout Itemize
+module constants
+\end_layout
+
+\begin_layout Itemize
+global constants
+\end_layout
+
+\begin_layout Itemize
+referred subroutines
+\end_layout
+
+\begin_layout Itemize
+algorithm in pseudocode
+\end_layout
+
+\begin_layout Standard
+NOTE: 
+\emph on
+include as many sections/sub-sections as there are software modules/sub-modules
+ and repeat the above for every software module and sub-module
+\emph default
+.
+\end_layout
+
+\begin_layout Section
+Industrial design
+\end_layout
+
+\begin_layout Standard
+The section should include the following
+\end_layout
+
+\begin_layout Itemize
+enclosure design (considering function, ergonomics and aesthetic)
+\end_layout
+
+\begin_layout Itemize
+front panel design
+\end_layout
+
+\begin_layout Itemize
+back panel design
+\end_layout
+
+\begin_layout Itemize
+inter-module wiring and interconnection routing
+\end_layout
+
+\begin_layout Itemize
+issues and considerations related to user interactions
+\end_layout
+
+\begin_layout Itemize
+issues related to maintainability
+\end_layout
+
+\begin_layout Itemize
+exploded view
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,61 @@
+%% LyX 2.3.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english,mtech,noded,noack,nosyn]{desethesis}
+\usepackage{mathptmx}
+\usepackage{helvet}
+\usepackage{courier}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[latin9]{inputenc}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+
+%Options for type of thesis
+% phd   - for PhD thesis at IISc
+% mtech - for MTech dissertation at IISc
+% me    - for ME dissertation at IISc
+
+%Options to disallow following preliminary pages if you intend to include it as a file in the mainmatter
+% noded  - dis-allows the Dedication page
+% noack  - dis-allows the Acknowledgements page
+% nosyn  - dis-allows the Synopsis page
+%------------------------------------------------------------------------------------------
+% Thesis details
+  \Year{year}
+  \Month{month}
+  \Author{Student name}
+  \Advisor{Guide01}
+  \CoAdvisorA{Guide02}
+  \CoAdvisorB{}
+  \Title{Title: Title should be in inverted pyramid format}
+  \Dedication{}
+  \Synopsis{}
+  \Keywords{}
+  \Acknowledgments{}
+ %------------------------------------------------------------------------------------- 
+ 
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\frontmatter \makepreliminarypages \singlespace
+
+\include{chap/synopsis}\include{chap/acknowledgement}\include{chap/notations}
+\tableofcontents{}\clearemptydoublepage \listoffigures
+\clearemptydoublepage \doublespace
+
+\mainmatter
+
+\include{chap/introduction}\include{chap/study}\include{chap/design}\include{chap/engineering}\include{chap/concluding_remarks}
+
+
+\appendix
+\include{chap/imp_data}\include{chap/programlist}\include{chap/contributions}
+
+\bibliographystyle{unsrt}
+\bibliography{report}
+
+\end{document}

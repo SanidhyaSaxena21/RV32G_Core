@@ -1,0 +1,987 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass desethesis
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+ASIC Design
+\end_layout
+
+\begin_layout Section
+ASIC Motivation
+\end_layout
+
+\begin_layout Standard
+Designing an ASIC on the 65nm TSMC node offers a compelling balance between
+ performance, power efficiency, and cost, making it an ideal choice for
+ academic and research-driven processor development.
+ Our motivation to implement a 32-bit RISC-V G-class core at this node stems
+ from the opportunity to realize a silicon-proven, standards-compliant processor
+ that demonstrates practical scalability and manufacturability.
+ This experience forms a critical step toward bridging the gap between high-leve
+l architectural design and real-world VLSI implementation.
+\end_layout
+
+\begin_layout Section
+RTL Design
+\end_layout
+
+\begin_layout Standard
+While the architecture largely adheres to the standard RISC-V specifications,
+ certain optional components—specifically the Floating Point Unit (FPU),
+ Memory Protection Unit (MPU), and Debug Unit—have been temporarily excluded
+ from synthesis.
+ These modules are in the early stages of RTL development and require further
+ stabilization before they can be reliably synthesized.
+ However, the rest of the core is complete and includes all major functional
+ blocks necessary for full operation.
+ These include the Instruction Fetch Unit, Decode Stage, Execute Stage,
+ Load-Store Unit (LSU), Branch Prediction Unit (BPU), Exception Handling
+ Unit, Control and Status Register (CSR) block, as well as fully integrated
+ instruction and data caches, each with its respective Translation Lookaside
+ Buffers (ITLB and DTLB).
+ This subset of the design enables us to focus on synthesizing and validating
+ the stable portions of the core while continuing development and integration
+ of the more complex auxiliary units.
+\end_layout
+
+\begin_layout Section
+RTL Verification
+\end_layout
+
+\begin_layout Standard
+Following the RTL development, we proceeded with functional simulation using
+ the Xcelium simulator from Cadence.
+ The RV32IM test suite was executed on the RTL through a self-checking testbench
+ that monitors and validates the processor’s behavior against expected outputs.
+ Each test was run individually, and detailed logs were captured to aid
+ in future debugging, especially in the case of test failures.
+ One of the key challenges encountered during this phase was adapting the
+ test infrastructure from an earlier Vivado-based environment to the Cadence
+ ecosystem.
+ While both simulators serve the same purpose, subtle differences in how
+ they handle memory initialization, test vector loading, and file I/O automation
+ required careful adjustments.
+ Ensuring consistent behavior across simulations and creating an efficient,
+ automated flow for loading instruction and data memory files were crucial
+ steps in establishing a robust and repeatable verification setup in Xcelium.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Testcase Name
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Number of testcase
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Status
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Integer instruction
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20/20 PASS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Load Instructions
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6/6 PASS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Store Instructions
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6/6 PASS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CSR Instructions
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PASS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Exceptions
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PASS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Interrupts
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PASS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Hello World printing
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PASS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cache Testing
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PASS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Branching
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6/6 PASS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Hazard testing
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2/2 PASS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Testcases Run
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+LINTING
+\end_layout
+
+\begin_layout Standard
+After verifying the RTL for functional correctness, the next crucial step
+ in ASIC design is to perform linting, which we carried out using the Cadence
+ Jasper SuperLint tool.
+ Linting plays a vital role in ensuring design quality by identifying inconsiste
+ncies between the RTL code and its intended behavior.
+ It helps uncover issues such as combinational loops, simulation-synthesis
+ mismatches, and poor design practices early in the flow, reducing the risk
+ of downstream integration or timing failures.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Documents/ASIC Design/Linting_Jasper.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Linting using Jasper Gold
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Based on the linting results, several modifications were made to improve
+ the robustness and synthesis-friendliness of our design.
+ Firstly, all 
+\series bold
+synchronous resets
+\series default
+ were converted to 
+\series bold
+asynchronous resets
+\series default
+ to ensure proper behavior during initialization and recovery.
+ We also eliminated any 
+\series bold
+direct connections between input and output ports
+\series default
+, as these can lead to simulation and synthesis mismatches.
+ All 
+\series bold
+registers were explicitly initialized
+\series default
+, and the design was thoroughly checked to ensure that 
+\series bold
+no combinational loops
+\series default
+ were present.
+ Additionally, any 
+\series bold
+inferred latches
+\series default
+ were reviewed to confirm whether they were intentional or resulted from
+ incomplete conditional statements.
+ For all finite state machines (FSMs), 
+\series bold
+default values were assigned to outputs
+\series default
+ to avoid unintended latch inference or undefined behavior.
+ Other structural improvements were implemented to prevent potential issues
+ such as synth-sim mismatches and race conditions, ensuring the design is
+ clean, consistent, and ready for synthesis.
+\end_layout
+
+\begin_layout Section
+Genus Synthesis
+\end_layout
+
+\begin_layout Standard
+Cadence Genus is a high-performance RTL synthesis tool used in ASIC design
+ flows for converting RTL code (typically in Verilog or VHDL) into a gate-level
+ netlist optimized for area, power, and timing.
+ It is part of the broader Cadence digital implementation suite and supports
+ advanced synthesis features like clock gating, datapath optimizations,
+ and constraint-driven synthesis.
+ Genus is commonly used in industry-standard ASIC flows due to its scalability
+ and efficient optimization capabilities.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Documents/ASIC Design/Genus_flow.pdf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Genus input and output files
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To perform synthesis with Genus, the following 
+\series bold
+input files
+\series default
+ are typically required:
+\end_layout
+
+\begin_layout Enumerate
+RTL Files: Verilog or VHDL source code describing the hardware design.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Constraint Files: Typically in SDC (Synopsys Design Constraints) format.
+ Includes clock definitions, input/output delays, timing exceptions, and
+ false paths.
+\end_layout
+
+\begin_layout Enumerate
+Library Files: Technology-specific standard cell libraries in Liberty (.lib)
+ format.
+ May also include physical abstracts (.lef) if floorplanning follows.
+\end_layout
+
+\begin_layout Enumerate
+Configuration/Tcl Scripts: Tcl scripts to automate flow control (read files,
+ elaborate, apply constraints, synthesize, write outputs).
+\end_layout
+
+\begin_layout Standard
+Following outputs are generated post synthesis:
+\end_layout
+
+\begin_layout Enumerate
+Gate-Level Netlist (.v): The synthesized Verilog netlist mapped to standard
+ cells.
+\end_layout
+
+\begin_layout Enumerate
+Constraint-annotated Reports (.sdf): Setup/Hold violations, path slack, cell
+ usage, etc.
+\end_layout
+
+\begin_layout Enumerate
+Area and Power Reports: Gives insight into design utilization and power
+ estimates (dynamic and leakage).
+\end_layout
+
+\begin_layout Enumerate
+Timing Reports (.rep): Post-synthesis STA report based on the applied constraints.
+\end_layout
+
+\begin_layout Enumerate
+Design Check Reports: Reports on combinational loops, unconnected ports,
+ inferred latches, and other warnings.
+\end_layout
+
+\begin_layout Standard
+The synthesis methodology using the Cadence Genus tool follows a structured
+ and constraint-driven approach to transform RTL into a gate-level netlist
+ optimized for area, power, and timing.
+\end_layout
+
+\begin_layout Standard
+The process begins with the 
+\series bold
+preparation stage
+\series default
+, where all RTL design files, technology libraries, and constraint files
+ (typically in SDC format) are gathered and organized.
+ This is followed by the 
+\series bold
+elaboration
+\series default
+ and analysis phase, during which Genus reads and elaborates the RTL to
+ create an internal design representation and checks for structural correctness,
+ connectivity, and design rule violations.
+ After elaboration, 
+\series bold
+user-defined constraints are applied
+\series default
+ to define clocking, input/output delays, and timing exceptions.
+ These constraints guide the timing engine to establish the setup and hold
+ relationships within the design.
+ Once constraints are in place, the synthesis engine 
+\series bold
+maps the RTL logic to standard cell gates
+\series default
+ using the provided technology library.
+ Genus performs a series of logic optimizations, such as retiming, resource
+ sharing, and constant propagation, to meet the design goals for area, power,
+ and performance.
+ In cases where aggressive optimization is needed, multi-pass synthesis
+ strategies may be employed to iteratively improve results.
+ After synthesis, the tool generates a 
+\series bold
+gate-level netlist
+\series default
+ along with detailed 
+\series bold
+timing, area, and power reports
+\series default
+.
+ These reports help identify critical timing paths, violations, and design
+ bottlenecks.
+ The final stage involves verifying the correctness of the synthesized netlist,
+ checking for issues such as latch inference, combinational loops, or unused
+ logic.
+ Once verified, the synthesized netlist and associated reports are handed
+ off to the physical design team for place and route using tools like Cadence
+ Innovus.
+ This methodology ensures a clean, optimized, and implementation-ready netlist
+ that aligns with the design specifications and physical constraints of
+ the target technology.
+\end_layout
+
+\begin_layout Standard
+Below image shows the syntheisized design schematic of a) Pipeline Design
+ b) Icache c) Dcache
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Documents/ASIC Design/Pipeline_Genus.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Documents/ASIC Design/Icache_genus.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Documents/ASIC Design/dcache_genus.png
+	lyxscale 20
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Post-synthesis schematic
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Gate Level Simulations
+\end_layout
+
+\begin_layout Standard
+Post-synthesis Gate-Level Simulation (GLS) is a crucial step in the ASIC
+ design flow that verifies the logical correctness of the synthesized netlist
+ under timing constraints.
+ Unlike functional simulation, which operates on RTL and assumes ideal condition
+s with zero delays, gate-level simulation uses the synthesized netlist and
+ includes real-world timing information derived from the synthesis process,
+ often via SDF (Standard Delay Format) annotation.
+ This allows the simulation to reflect actual propagation delays, setup/hold
+ timings, and logic optimizations performed during synthesis.
+ GLS helps catch issues like race conditions, hold/setup violations, and
+ uninitialized registers that are typically not visible in functional simulation.
+ However, gate-level simulations are significantly slower due to the inclusion
+ of detailed timing and structural netlist elements.
+ Common challenges faced during GLS include mismatches due to uninitialized
+ flip-flops (especially if they were not properly reset in RTL), glitches
+ caused by combinational paths, and difficulty debugging timing-related
+ issues due to the lack of high-level signal abstraction.
+ Despite these challenges, GLS is essential for ensuring that the design
+ will operate reliably when implemented in silicon.
+ We have three type of Gate level simulations:
+\end_layout
+
+\begin_layout Subsection
+Zero Delay Simulations
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/rclab/Documents/ASIC Design/Zero_delay_passing_log.png
+	lyxscale 20
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Zero Delay simulations
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Unit Delay simulations
+\end_layout
+
+\begin_layout Standard
+ojk2ji2jff
+\end_layout
+
+\begin_layout Subsection
+Standard Delay Format Simulations
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/rclab/Documents/ASIC Design/sdf_passing_logs.png
+	lyxscale 20
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+SDF Simulations
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/rclab/Documents/ASIC Design/Zero_delay_passing_log.png
+	lyxscale 20
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Linting using Jasper Gold
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,273 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass desethesis
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Verification
+\end_layout
+
+\begin_layout Section
+Unit Testing
+\end_layout
+
+\begin_layout Standard
+Initially, a directed testbench approach was employed during RTL development
+ to inject instructions into the processor and observe its internal behavior.
+ This allowed us to validate the pipeline stages, control flow, data forwarding,
+ and exception handling in isolation before moving to full system-level
+ testing.
+ Behavioral logs and waveform analysis were critical during this phase,
+ enabling detailed tracking of signal transitions, register file updates,
+ memory transactions, and pipeline stalls, which facilitated quick debugging
+ and refinement of the RTL.
+ Following features were tested:
+\end_layout
+
+\begin_layout Enumerate
+Verification of machine Mode privilege level and CSR instruction handling.
+\end_layout
+
+\begin_layout Enumerate
+Verification of Memory Management Unit (MMU) with Page table walker and
+ TLB filling.
+\end_layout
+
+\begin_layout Enumerate
+I-Cache and D-Cache memory transactions
+\end_layout
+
+\begin_layout Standard
+various internal exceptions such as load and store page faults, misaligned
+ memory accesses, and illegal instructions.
+ The core was observed for correct trap handling behavior, accurate CSR
+ updates (like mcause and mtval), and recovery via mret.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+CSR testing
+\end_layout
+
+\begin_layout Standard
+A wide range of directed test cases were developed to target specific features
+ and stress critical components of the processor.
+ First, we verified the Machine Mode privilege level and CSR instruction
+ handling, ensuring that privileged registers such as mstatus, mie, mepc,
+ and mtvec responded correctly to reads and writes and enforced proper access
+ controls.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Interrupt Testing
+\end_layout
+
+\begin_layout Standard
+The interrupt controller was tested using both asynchronous interrupt generation
+ and timer interrupts, verifying correct transition into and out of trap
+ handlers, proper CSR updates, and handling of nested or masked interrupts.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+MMU Testing
+\end_layout
+
+\begin_layout Standard
+We also implemented and verified a complete Memory Management Unit (MMU),
+ including two-level page table walking, address translation, and page access
+ permission checks.
+ These tests confirmed proper TLB filling, invalidation, and page fault
+ generation based on access rights.
+ In parallel, I-Cache and D-Cache behavior was evaluated through memory-intensiv
+e programs to monitor cache hits, misses, replacements, and data coherence,
+ ensuring correct integration with the memory system.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Exception Testing
+\end_layout
+
+\begin_layout Standard
+To test the processor’s exception handling, we generated various internal
+ exceptions such as load and store page faults, misaligned memory accesses,
+ and illegal instructions.
+ The core was observed for correct trap handling behavior, accurate CSR
+ updates (like mcause and mtval), and recovery via mret.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+PMP Testing
+\end_layout
+
+\begin_layout Standard
+Additionally, PMP (Physical Memory Protection) functionality was verified
+ by configuring regions using CSRs like pmpaddr and pmpcfg, and testing
+ enforcement of access permissions across privilege boundaries.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Debug Testing
+\end_layout
+
+\begin_layout Standard
+Finally, a dedicated testbench environment was developed to verify the debug
+ controller.
+ We validated core halt and resume sequences using debug triggers like haltreq,
+ tested single-step execution, and ensured the proper use of debug CSRs
+ (dcsr, dpc, dscratch).
+ Both abstract command execution and program buffer instruction handling
+ were exercised to confirm full compliance with the RISC-V Debug Specification.
+ Together, this verification strategy ensured a high level of confidence
+ in the functional correctness and specification adherence of the processor.
+\end_layout
+
+\begin_layout Section
+Formal Verification
+\end_layout
+
+\begin_layout Standard
+Once the individual functionalities of the processor were thoroughly verified
+ through directed test cases, the next phase of verification focused on
+ evaluating the processor’s behavior during full instruction execution.
+ This involved testing how the core handles dynamic scenarios that arise
+ during real program execution, such as data hazards, control hazards, and
+ pipeline stalls caused by instruction dependencies or memory latency.
+ These conditions cannot be fully captured through isolated unit-level tests,
+ and therefore required system-level validation.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/rclab/Documents/Testcase/Formal_Verification.pdf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Formal Verification environment
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To achieve this, we developed a comprehensive verification environment combining
+ a simulation testbench with the RISC-V GNU toolchain.
+ Using this setup, we compiled C programs into RISC-V binaries that reflect
+ realistic instruction mixes and execution patterns.
+ These binaries were loaded into the processor’s memory, and the core was
+ allowed to fetch, decode, and execute instructions autonomously.
+ 
+\end_layout
+
+\end_body
+\end_document

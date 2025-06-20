@@ -1,0 +1,23 @@
+
+{signal: [
+  {name: 'clk', wave: 'p.........|...'},
+  {name: 'tag_hit', wave: '010.......'},
+  {name: 'tag_out_tlb', wave: '232.........', data: ['0x0', 'PPN', '0x0']},
+  {name: 'hit', wave: '10..........1.'},
+  {name: 'miss', wave: '01..........0.'},
+  {name: 'state_we', wave: '2..........32.', data: ['state_we0', 'state_we1', 'state_we0']},
+  {name: 'state', wave: '2.4........562', data: ['start', 'service', 'WAIT4', 'READ','start']},
+  {name: 'counter', wave: '2.333333332...', data: ['0', '1', '2', '3','4', '5', '6','7','8']}, 
+  {name: 'mem_rdy', wave: '0.........1.0.'},
+  {name: 'we', wave: '0.........1.0.'},
+  {name: 're', wave: '010.........10'},
+  {name: 'Instr_ID', wave: '2...........45', data: ['0x0','I1','I2']}, 
+  {name: 'pc_cache', wave: '4...........56', data: ['PC1','PC2','PC3']}, 
+  {name: 'freeze', wave: '01..........0.'},
+  
+
+],
+  config:{hscale:2}}
+
+
+  

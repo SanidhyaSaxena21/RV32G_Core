@@ -1,0 +1,359 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass desethesis
+\begin_preamble
+
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Concluding remarks
+\end_layout
+
+\begin_layout Standard
+Guithub Repository of our project: https://github.com/SanidhyaSaxena21/RV32G_Core
+\end_layout
+
+\begin_layout Section
+User instructions
+\end_layout
+
+\begin_layout Standard
+This brief manual outlines the steps required to compile and simulate a
+ C program on the custom-designed RISC-V 32-bit soft-core processor.
+ To successfully compile and simulate programs on this processor, ensure
+ the following tools are installed and properly configured:
+\end_layout
+
+\begin_layout Itemize
+GNU RISC-V 32-bit Toolchain (target: riscv32-unknown-elf)
+\end_layout
+
+\begin_layout Itemize
+Xilinx Vivado Design Suite
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+The flow of running a C code on the processor involves two main stages:
+\end_layout
+
+\begin_layout Enumerate
+Compilation of C Code to Instruction and Data Memory Files: Before simulation,
+ your C source code needs to be compiled into RISC-V assembly and then converted
+ to .mem files required for initializing the FPGA memory.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Compile .c to .s (Assembly): Use the following command to compile your C code:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+riscv32-unknown-elf-gcc -S -march=rv32im -mabi=ilp32 -o program.s program.c
+ 
+\series default
+: This will generate an assembly file program.s from your C source program.c.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Generate instruction.mem and data.mem: Run the provided script:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+./generate_testcase.sh program.s rv32i_linker.ld entry.s
+\series default
+: This script will generate instruction.mem and data.mem (if your program
+ contains a data section).
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+Running Simulation on Vivado: Once you have the memory files, run the simulation
+ using Vivado in batch mode:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+vivado -mode batch -source run_test.tcl 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\series bold
+Important Notes
+\end_layout
+
+\begin_layout Itemize
+Ensure that your assembly code or compiled program ends with an ebreak instructi
+on.
+ This is essential for the processor to halt gracefully after program execution
+ and for the testbench to detect completion.
+\end_layout
+
+\begin_layout Itemize
+You can inspect simulation logs and waveform data (if enabled) to verify
+ register values, memory states, and instruction flow.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+To compile and run the design for ASIC synthesis, follow these instruction:
+\end_layout
+
+\begin_layout Enumerate
+RTL Compilation (
+\emph on
+Xcillium
+\emph default
+): xrun -f filelist.f -top riscv_platform -access+rwc 
+\end_layout
+
+\begin_layout Enumerate
+RTL Simulation (
+\emph on
+Xcillium
+\emph default
+): RTL simultion can be run in 2 ways, either a directed test case or a
+ regression.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Direct Test: ./run_sim.tcl +test=<test_name> -gui
+\end_layout
+
+\begin_layout Enumerate
+Regression: ./run_test_all.tcl
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+LINTINT (
+\emph on
+Jasper gold
+\emph default
+): jg -superlint -script run_lint.tcl
+\end_layout
+
+\begin_layout Enumerate
+Genus synthesis: For genus synthesis we should have following files
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+RTL Files: ./RTL_Sources/*
+\end_layout
+
+\begin_layout Enumerate
+Library Files: ./Synthesis/lib...
+\end_layout
+
+\begin_layout Enumerate
+SDC Constraints: ./Constraints/core.sdc
+\end_layout
+
+\begin_layout Enumerate
+genus run script: ./Scripts/core_run.tcl
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+To run the genus synthesis, follow these commands
+\end_layout
+
+\begin_layout Itemize
+genus -gui
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+source ./Scripts/core_run.tcl
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+This will generate the netlist.v files, along with the sdf annotation files
+ required for the Gate level simulations.
+ Report files like timing report, area report, power report, critical STA
+ paths will be dumped by the tool.
+ LEC do files will also be dumped 
+\end_layout
+
+\begin_layout Section
+Corrections
+\end_layout
+
+\begin_layout Standard
+We are currently making the Soc from our processor which will integrate
+ core with peripherals like UART, CLINT, SPI, PWM etc.
+ These will be used for the DEMO purposes for the FPGA board.
+ Also the debug is currently under testing, hence commands for invoking
+ debug is still not mentioned.
+ 
+\end_layout
+
+\begin_layout Section
+Suggestions for next gen
+\end_layout
+
+\begin_layout Standard
+Currently the RTL is matured enough to be used as a soft-core IP.
+ Also the RTL is synthesizable for ASIC flow.
+ For further batches, it is strictly recommended to go ahead with the ASIC
+ flow in following direction:
+\end_layout
+
+\begin_layout Enumerate
+Understand the RTL and design thoroughly, run vivado simulations and testcases
+ for better understanding 
+\end_layout
+
+\begin_layout Enumerate
+Understand the ASIC flow, go through the documentation of CDAC and sample
+ FIFO project to get a hands-on practice of the flow.
+ 
+\end_layout
+
+\begin_layout Enumerate
+We'll be moving to the lower technology nodes (45nm or 28nm), that will
+ introduce mutiple challenges like STA, hold violations, new memory models
+ etc.
+ So replace all the previous memory models with the newer ones, and update
+ the library files in the genus scripts.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Synthesize the RTL and check whether all the testcases are passing SDF simulatio
+n, there should be no 'X' propogation in design.
+\end_layout
+
+\begin_layout Enumerate
+Look for critical paths in the design and try to optimize the design for
+ performance.
+ Majorly the paths via Dcache needs to be optimised for increasing the clock
+ frequency.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Once the synthesized RTL is verified, go for placement of macros, power-net
+ connectivity, routing and layouting of the design.
+ Clear all the DRC and LVS errors (if any).
+\end_layout
+
+\begin_layout Enumerate
+Run the post-route timing simulations on different PVT corners.
+ 
+\end_layout
+
+\begin_layout Enumerate
+If everything works fine, we can go ahead with the GDS (Tape-out).
+ 
+\end_layout
+
+\begin_layout Section
+Future scope
+\end_layout
+
+\begin_layout Standard
+The core can be outsourced to different vendors for creating a Soc for low-power
+ application like power meters and watches.
+ Also the core can be used as a microcontroller, which can be used for various
+ embedded applications.
+ We can build a PCB around the processor, which can serve the need of in-house
+ computings and various applications then can be build upon it.
+ It will eliminate the need for relying on ARM based microcontrollers.
+ 
+\end_layout
+
+\end_body
+\end_document

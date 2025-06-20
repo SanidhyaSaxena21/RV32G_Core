@@ -1,0 +1,2486 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass desethesis
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Study
+\end_layout
+
+\begin_layout Section
+Processor Design
+\end_layout
+
+\begin_layout Standard
+The processors are all important components of computer architecture.
+ Computer architecture is a specification that describes how hardware and
+ software technologies are connected to create a computer platform.
+ It refers to a system that processes any fetched instruction.
+ There are many types of processor designs available and PPA tradeoffs are
+ measured for each one of them and is then used in various applications.
+ Instruction set architecture (ISA) defines program visible components and
+ specifications it includes all the functions, capabilities, data formats,
+ processor register etc.
+ that are used by a computer system.
+ 
+\end_layout
+
+\begin_layout Section
+Instruction Set Architecture 
+\end_layout
+
+\begin_layout Standard
+ISA provides command to the processors, to tell what it needs to do.
+ All processors can have same instruction set but still can have different
+ internal design.
+ In our project we will be using the RISC-V ISA.
+ RISC-V instruction set architecture (ISA) is now set to become a standard
+ free and open architecture for academic and industrial applications 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-5"
+literal "false"
+
+\end_inset
+
+.
+ We have both 32-bit and 64-bit RISC-V designs, and in this project we will
+ be going forward with 32-bit design.
+ 
+\end_layout
+
+\begin_layout Standard
+The great interest on RISC-V comes from the fact that it is a free and open
+ standard which allows anyone to easily develop their ideas.
+ Furthermore RISC-V is modular, so it is based on a strong and frozen set,
+ and all the extensions are optional without the need for continuous update
+ as happens in incremental ISAs like the 80x86.
+\end_layout
+
+\begin_layout Standard
+Comparision between various available ISA was made like MIPS, RISC, Intel,
+ ARM 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-8"
+literal "false"
+
+\end_inset
+
+.
+ RISC-V being an open source ISA, software development and ecosystem is
+ available and the core can be used as an IP for various application development.
+ 
+\end_layout
+
+\begin_layout Standard
+Despite the specific format used in the core we can identify four main subsets
+ of instructions: 
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Integer Computational Instructions
+\emph default
+: They are encoded in R-type format or I-type format respectively, if we
+ have a register-register operation or a register-immediate operation.
+ We have addition (ADD, ADDI), subtraction (SUB), shifts (SLL, SLLI, SRL,
+ SRLI, SRA, SRAI), bitwise logical operations (AND, ANDI, OR, ORI, XOR,
+ XORI) and comparison operations (SLT, SLTI, SLTU, SLTIU).
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Control Transfer Instructions:
+\emph default
+ These instructions are responsible for jumps to other instructions in the
+ range of ±4 KiB that break the normal flow of the program.
+ Jump And Link (JAL) and Jump And Link Integer (JALR) are dedicated to unconditi
+onal jumps and are encoded respectively with UJtype and I-type formats.
+ Branch if Equal (BEQ), Branch if Lower Than (BLT), Branch if Lower Than
+ Unsigned (BLTU), Branch if Not Equal (BNE), Branch if Greater or Equal
+ (BGE), Branch if Greater or Equal Unsigned (BGEU).
+ Note, BGT, BGTU, BLE, and BLEU can be synthesized by reversing the operands
+ to BLT, BLTU, BGE, and BGEU, respectively.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Load and Store Instructions: 
+\emph default
+These instructions are the only few simple instructions responsible for
+ memory access.
+ As RISC-V is a load-store architecture, the only memory related operations
+ are loading a value from memory to a register and storing a value from
+ a register to the memory.
+ Register to Memory instructions are those of the STORE family (SW, SH,
+ SB) that store respectively a Word (32b), Half a word (16b) and a Byte
+ (8b).
+ The instructions responsible for Memory to Register transfers are those
+ of LOAD family (LW, LH, LHU, LB, LBU), where the U stands for Unsigned
+ as the Half (16b) and Quarter (8b) words are zero-extended instead of sign-exte
+nded as in the non-U version.
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Control and Status Register Instructions: 
+\emph default
+These are all SYSTEM instructions, encoded using I-type format.
+ Control and Status Register atomic Read/Write (CSRRW) is used to atomically
+ swap values in the CSRs and integer registers; atomic Read and Set/Clear
+ bits (CSRRS, CSRRC) are used to read the value of a CSR and then set or
+ clear specific bits of the read word.
+ The corresponding immediate versions of the three previous instructions,
+ CSRRWI, CSRRCI, and CSRRSI, behave like their counterparts but they use
+ an immediate instead of an integer register.
+ 
+\end_layout
+
+\begin_layout Subsection
+Standard extensions
+\end_layout
+
+\begin_layout Standard
+In the previous paragraph we have briefly described the base integer ISA
+ of RISC-V but as known the most important feature of RISC-V is the possibility
+ to easily add other custom instructions to enlarge the ISA and adapt it
+ to specific objectives.
+ Despite these "non-standard" extensions, there are several other standard
+ ISA extensions that have been developed during years and can be added very
+ easily to our particular implementation making the final RISC-V a very
+ powerful core, and they are: 
+\end_layout
+
+\begin_layout Itemize
+"M" Standard Extension for Integer Multiplication and Division; 
+\end_layout
+
+\begin_layout Itemize
+"A" Standard Extension for Atomic Instructions; 
+\end_layout
+
+\begin_layout Itemize
+"F" Standard Extension for Single-Precision Floating-Point; 
+\end_layout
+
+\begin_layout Itemize
+"D" Standard Extension for Double-Precision Floating-Point; 
+\end_layout
+
+\begin_layout Itemize
+"Q" Standard Extension for Quad-Precision Floating-Point; 
+\end_layout
+
+\begin_layout Itemize
+"L" Standard Extension for Decimal Floating-Point; 
+\end_layout
+
+\begin_layout Itemize
+"C" Standard Extension for Compressed Instructions; 
+\end_layout
+
+\begin_layout Itemize
+"B" Standard Extension for Bit Manipulation; 
+\end_layout
+
+\begin_layout Itemize
+"J" Standard Extension for Dynamically Translated Languages;
+\end_layout
+
+\begin_layout Itemize
+"T" Standard Extension for Transactional Memory; 
+\end_layout
+
+\begin_layout Itemize
+"P" Standard Extension for Packed-SIMD Instructions; 
+\end_layout
+
+\begin_layout Itemize
+"V" Standard Extension for Vector Operations; 
+\end_layout
+
+\begin_layout Itemize
+"N" Standard Extension for User-Level Interrupts;
+\end_layout
+
+\begin_layout Section
+Microarchitecture 
+\end_layout
+
+\begin_layout Standard
+Majority of the processor designs have two components
+\end_layout
+
+\begin_layout Enumerate
+Datapath 
+\end_layout
+
+\begin_layout Enumerate
+Control Path 
+\end_layout
+
+\begin_layout Standard
+Single cycle processor is a processor in which the instructions are fetched
+ from the memory, and then executed, and the results are further stored
+ in a single cycle, whereas in pipelined implementation, each step in execution
+ takes one clock cycle.
+ Since all instructions in a single cycle non pipelined structure do not
+ necessarily take same amount of time rather the next instruction to be
+ executed after an instruction can not start until the next clock cycle.
+ Hence, the maximum clock frequency will be less and concourrent execution
+ is not possible.
+ 
+\end_layout
+
+\begin_layout Standard
+Pipelined processor saves time by overlapping instruction substages.
+ Since, all RISC-V instructions are the same length, this makes it much
+ easier to fetch instructions in the first pipeline stage and to decode
+ them in the second stage.
+ The more pipeline stages a processor has, the more instructions it can
+ process at once and the less of a delay there is between completed instructions.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Single Cycle 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Pipelined Processor 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Hardware Required
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Less 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+More (Due to Registers)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CPI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+>=1 (Due to Stalls and Hazards)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T_{clk}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Baseline
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Less (Due to pipelining)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Throughput
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+>1 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparision between Single cycle vs Pipelined 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We will design a five stage pipelined architecture to achieve the benefit
+ of maximum throughput and performance.
+ 
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+Instruction fetch
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+Intsrutcion Decode
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+Instruction Execute
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+Memory 
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+Write Back 
+\end_layout
+
+\begin_layout Section
+Other available designs 
+\end_layout
+
+\begin_layout Standard
+Many processors based on RISC-V ISA has been developed and many are under
+ progress.
+ RISC-V is an open - sourced instruction set infrastructure that allows
+ a new realm of processor creation by means of open collaborative domain,
+ culminating in a pool of innovation with a 32- or 64-bit address space
+ and a compressed ISA built for special application extensions 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-9"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Rocket 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-10"
+literal "false"
+
+\end_inset
+
+ is a six staged open-source pipeline architecture with base as the RV64G
+ ISA.
+ The Rocket SOC generator is capable of generating multiple SOC design configura
+tion prototypes from a single base instance.
+ The Rocket scalar core, is a 64-bit 5-stage single-issue in-order pipeline
+ that executes the RISC-V instruction set architecture (ISA).
+ 
+\end_layout
+
+\begin_layout Standard
+Shakti-F series of processors are developed by a group of researchers from
+ IIT Madras as an initiative to bring up computing units for space and nuclear
+ research and development.
+ Shakti-C, Shakti-T, Shakti-I, Shakti-E are variants of shakti computing
+ core which are developed.
+\end_layout
+
+\begin_layout Standard
+The RISC foundation serves as the foundation for ARM architecture, which
+ similarly emphasizes simplicity and power economy.
+ The load-store architecture, a combination of fixed-length 32-bit and variable-
+length Thumb instructions, and a significant amount of general-purpose registers
+ are among ARM’s core architectural features.
+ These processors support cutting-edge functions including hardware virtualizati
+on, superscalar pipelines, and out-of-order execution 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-11"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Rocket
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Shakti
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Current Design
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Bits
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+32/64-bit
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+32/64-bit
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+32-bits
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Stages
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Extension
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MAFD
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+IMAC
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MAFD
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Functional Units
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Frequency
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.3Ghz(28nm,FD-SOI)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+70Mhz (22nm,FinFet)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+52Mhz(65nm)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Application core comparitive study
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Previous RISC-V Architecture
+\end_layout
+
+\begin_layout Standard
+Previous RISC-V Architecture is shown below in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Proposed-Architecture"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with five stages of pipeline viz.
+ Fetch, Decode, Execute, Memory and write back.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/images/RISCV_Architecture.jpg
+	lyxscale 30
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Proposed Ar
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Proposed-Architecture"
+
+\end_inset
+
+chitecture 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The baseline architecture, inherited from the previous batch, is a classic
+ 5-stage pipelined RISC-V processor design consisting of the stages: 
+\emph on
+Instruction Fetch (IF)
+\emph default
+, 
+\emph on
+Instruction Decode (ID)
+\emph default
+, 
+\emph on
+Execute (EX)
+\emph default
+, 
+\emph on
+Memory (MEM)
+\emph default
+, and 
+\emph on
+Write Back (WB)
+\emph default
+.
+ Notably, the architecture integrates several performance-enhancing features.
+ In the IF stage, it incorporates a 
+\emph on
+Branch Prediction Unit
+\emph default
+ to reduce branch misprediction penalties and a dedicated 
+\emph on
+Instruction Cache (ICache)
+\emph default
+ to accelerate instruction fetch latency.
+ During decoding, control signals are generated by Opcode and Operand Logic,
+ which interface with the Forwarding Unit in the EX stage to handle data
+ hazards.
+ The Execute stage features both an 
+\emph on
+Integer ALU and a Floating Point Unit (FPU)
+\emph default
+ for supporting mixed-type operations, reflecting floating-point support
+ across the pipeline.
+ The MEM stage includes a 
+\emph on
+Data Cache (DCache)
+\emph default
+ to reduce data memory access times, and a DCache Stall Removing Unit, which
+ aims to improve memory pipeline throughput by mitigating stalling due to
+ cache misses.
+ Finally, the WB stage supports both integer and floating-point register
+ files, highlighting the design's ability to execute and store results from
+ a wide range of computational instructions.
+ This architecture served as a strong foundation for further optimizations
+ and extensions in the current work.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+Instruction fetch
+\emph default
+:
+\series default
+ At the start of each cycle, the address is used to fetch instructions from
+ instruction memory.
+ Following that, a calculation is run to compute the next PC in the cycle.
+ It is decided either to use that as as its next value or, instead, the
+ outcome of the control transfer instruction based on branch prediction
+ logic.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+Instruction Decode
+\series default
+\emph default
+: The 32-bit instruction is parsed into its fields, and two registers pertaining
+ to the operands are fetched from the register file.
+ Instruction mux, Instruction decoder, Immediate generator, Register file,
+ and the write enable generator are the several blocks that make up the
+ instruction decode stage.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+Instruction Execute
+\series default
+\emph default
+: In the Execute step, the real computing takes place.
+ An ALU and a bit shifter are frequently included in this phase.
+ The bit shifter is in charge of shifts and rotation logic to be performed
+ on the operands.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+Memory Access
+\series default
+\emph default
+: At this point, the load/store instructions read and write memory operands
+ from and to the memory.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+\emph on
+Write-Back
+\series default
+\emph default
+: At this step, the instructions store their results to the respective register
+ file.
+ There will be a onset of data hazard since one of the input registers read
+ in decode could be the same as the destination register written in writeback.
+ The data forwarding technique is used to avoid this.
+\end_layout
+
+\begin_layout Subsection
+Hazard Detection and Correction block
+\end_layout
+
+\begin_layout Standard
+Due to data and control dependencies, in pipeline designs we have 2 major
+ hazards: 
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Data Hazard
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Control Hazard
+\end_layout
+
+\begin_layout Standard
+When an instruction in the pipeline is dependent on the outcomes of a preceding
+ instruction that has not yet entered the write back stage, it leads to
+ data dependence.
+ Control dependency occurs when control instructions are executed.
+ The choice to branch or not branch for these instructions is made during
+ the execution stage, after two consecutive instructions have entered the
+ pipeline’s fetch and decode stages.
+ If no branch is chosen, the execution continues uninterrupted.
+ However, if the branch is taken, the prior two instructions must be drained
+ out before the current branch instruction can be executed, resulting in
+ a control hazard.
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Data Forwarding to eliminate data hazard: 
+\emph default
+Ahead of the source instruction reaching write back stage, data is made
+ available to the ALU for dependent instructions, which is known as forwarding.
+ This data forwarding technique identifies the dependant instruction in
+ pipeline and forwards the data to the dependant instruction thus eliminating
+ data hazards in the pipeline.
+ 
+\emph on
+We'll be using both IE-IE and Mem-IE data forwarding.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Adaptive dymanic Branch prediction to eliminate control hazard: 
+\emph default
+It enhances the accuracy of prediction by taking into account the recent
+ behaviour of previous branches as well.
+ If the instruction is a branch instruction it uses Branch Target Address,
+ which is fetched during the Instruction fetch stage.
+ It also makes use of a Local Prediction Table, which contains two bits
+ that decide whether or not a branch is taken.
+ In comparison to a one bit branch predictor, the branch predictor state
+ changes only after two consecutive mispredictions, resulting in enhanced
+ accuracy.
+ 
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Bypass-Datapath"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the Fully bypassed datapath, which is used to bypass the result either
+ from the IE/MEM stage or from MEM/WB stage based on the next intruction
+ after decode stage.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Documents/CORE_PIPELINE/RV32I_Previous_Arch_Hazards.pdf
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Bypass D
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Bypass-Datapath"
+
+\end_inset
+
+atapath
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If the current instruction is a ALU and ALUi type then we only need bypass
+ and not stall.
+ But if we have LD, JAL, JALR as our current instruction, then we need to
+ stall the next instruction for 2 clock cycles.
+ After 2 clock cycle, these instructions will be in the WB stage and hence
+ we can then use the result of current instruction as an operand for the
+ next waiting instruction.
+ For the 2 cycle the stall signal will be asserted which will hold the instructi
+ons.
+ 
+\end_layout
+
+\begin_layout Subsection
+Branch Prediction Unit 
+\end_layout
+
+\begin_layout Standard
+When a program runs certain flow of instruction is fetched and executed
+ in pipeline.
+ However, when a branch instruction is fetched, it may change the flow of
+ the instructions.
+ The execution result of branch instructions determines whether to change
+ the flow in the execution stage, which is in the middle of the pipeline
+ stage.
+ If it changes its flow, the next instructions that are already being executed
+ by other hardware resources prior to the execution stage become useless,
+ which leads to a pipeline flush and degrades the processing speed.
+ Since the branch instructions take more than 20 % of all instructions when
+ running a program, this pipeline flush becomes a huge performance degradation
+ factor in processors.
+ 
+\end_layout
+
+\begin_layout Standard
+Branch prediction unit contains three different blocks: 
+\series bold
+\emph on
+branch direction predictor
+\series default
+, 
+\series bold
+branch target buffer (BTB
+\series default
+\emph default
+) and 
+\series bold
+\emph on
+Return Address Stack
+\series default
+\emph default
+.
+ When instruction is fetched, branch prediction unit will identify whether
+ it is branch instruction.
+ If the instruction is branch, the direction predictor will give the prediction
+ result (Taken / Not Taken).
+ If the branch is taken then the PC is updated by the target address obtained
+ from BTB.
+ The branch prediction unit is usually placed in instruction fetch stage.
+ So, when prediction is correct the next instruction fetched after the branch
+ instruction is from the correct instruction flow and pipeline can execute
+ these instruction without any pipeline flush.
+ But when prediction is wrong, the instruction executed after the branch
+ needs to be flushed.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Documents/CORE_PIPELINE/BPU.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Branch Prediction Unit 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Branch Prediction Unit (BPU) in this architecture includes a Return
+ Address Stack (RAS), which is specifically used to predict the target of
+ function return instructions (ret).
+ The RAS stores the return addresses pushed during function calls (jal or
+ jalr to ra) and pops them during returns, thereby improving prediction
+ accuracy for nested and recursive function calls.
+ This mechanism helps in maintaining pipeline flow and reducing control
+ hazards caused by subroutine returns, especially in deep call hierarchies.
+\end_layout
+
+\begin_layout Subsection
+ICACHE
+\end_layout
+
+\begin_layout Standard
+The instruction cache (ICache) implemented in this architecture is a 2-way
+ set-associative cache, designed to enhance instruction fetch performance
+ by reducing cache misses compared to a direct-mapped design.
+ This configuration divides the cache into multiple sets, with each set
+ containing two lines (or "ways"), allowing the processor to store multiple
+ blocks that map to the same index, thereby minimizing conflicts.
+ The use of a 2-way associative structure strikes a balance between hardware
+ complexity and hit rate efficiency, ensuring faster access to instructions
+ while maintaining manageable control logic.
+ This setup is particularly beneficial in pipelined processors where continuous
+ and rapid instruction supply is critical to maintain throughput and minimize
+ stalls.
+\end_layout
+
+\begin_layout Subsection
+DCACHE
+\end_layout
+
+\begin_layout Standard
+The data cache (DCache) used in this design is an 8KB, 2-way set-associative,
+ write-back cache, optimized for efficient memory access and reduced latency
+ in load/store operations.
+ The 2-way set-associative architecture divides the cache into sets with
+ two lines per set, offering a good compromise between simplicity and performanc
+e by reducing conflict misses when multiple memory blocks map to the same
+ index.
+ The write-back policy employed ensures that write operations are first
+ made to the cache, and only written back to main memory when a cache line
+ is replaced.
+ This reduces memory traffic and improves overall performance, especially
+ in programs with frequent data modifications.
+ The DCache is tightly integrated into the pipeline to support fast and
+ efficient data access, contributing significantly to the overall execution
+ speed of the processor.
+\end_layout
+
+\begin_layout Section
+Proposed architecture
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Section
+Chisel Hardware Description Language 
+\end_layout
+
+\begin_layout Standard
+The dominant traditional hardware-description languages (HDLs), Verilog
+ and VHDL, were originally developed as hardware simulation languages, and
+ were only later adopted as a basis for hardware synthesis.
+ Because the semantics of these languages are based around simulation, synthesiz
+able designs must be inferred from a subset of the language, complicating
+ tool development and designer education.
+ Recent extensions such as SystemVerilog improve the type system and parameteriz
+ed generate facilities but still lack many powerful programming language
+ features.
+\end_layout
+
+\begin_layout Standard
+An alternative approach is to begin from a domain-specific application programmi
+ng language from which a hardware block is generated.
+ Esterel 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-14"
+literal "false"
+
+\end_inset
+
+ uses event-based statements to program hardware for reactive systems.
+ DIL 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-16"
+literal "false"
+
+\end_inset
+
+ is an intermediate language targeted at stream processing and hardware
+ virtualization.
+ Bluespec 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-15"
+literal "false"
+
+\end_inset
+
+ supports a general concurrent computation model, based on guarded atomic
+ actions.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\emph on
+Chisel 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-17"
+literal "false"
+
+\end_inset
+
+
+\series default
+ (Constructing Hardware In a Scala Embedded Language)
+\emph default
+, a new hardware design language we have developed based on the Scala programmin
+g language 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-18"
+literal "false"
+
+\end_inset
+
+.
+ Chisel is intended to be a simple platform that provides modern programming
+ language features for accurately specifying low-level hardware blocks,
+ but which can be readily extended to capture many useful high-level hardware
+ design patterns.
+ Chisel can generate fast cycle-accurate C++ simulators for a design, or
+ generate low-level Verilog suitable for either FPGA emulation or ASIC synthesis
+ with standard tools.
+ 
+\end_layout
+
+\begin_layout Standard
+A key motivation for embedding Chisel in Scala is to support highly parameterize
+d circuit generators, a weakness of traditional HDLs.
+ We will see some of the example chisel codes to get an idea how the use
+ of chisel over standard HDLs like verilog and system Verilog can help us
+ in quick development of our design.
+ 
+\end_layout
+
+\begin_layout Subsection
+Cache Generator
+\end_layout
+
+\begin_layout Standard
+In Chisel, the basic configuration options can first be defined:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+\align left
+
+object CacheParams {
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	val DIR-MAPPED =0
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	val SET_ASSOC  =1
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	val WRITE_THRU =0
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	val WRITE_BACL =1
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The main body of the cache generator component can then be declared with
+ desired generator parameters and optional default values.
+ The io bundle then references two IO interface bundles, one specifying
+ a connection to a CPU and the other defining the memory interface.
+ Computed parameters are then defined, followed by the main body of the
+ generator:
+\end_layout
+
+\begin_layout Standard
+\align left
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+\align left
+
+class Cache(cache_type: Int = DIR_MAPPED, 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	associativity: Int = 1, 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	line_size: Int = 128, 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	cache_depth: Int = 16, 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	write_policy: Int = WRITE_THRU 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	) extends Component { 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	val io = new Bundle() { 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+		val cpu = new IoCacheToCPU() 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+		val mem = new IoCacheToMem().flip() 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+		} 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	val addr_idx_width = ( log(cache_depth) / log(2) ).toInt 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	val addr_off_width = ( log(line_size/32) / log(2) ).toInt 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	val addr_tag_width = 32 - addr_idx_width - addr_off_width - 2 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	val log2_assoc = ( log(associativity) / log(2) ).toInt 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	...
+ 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	if (cache_type == DIR_MAPPED) 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+		...
+ 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+	}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The resulting Cache generator can then be used in a larger system:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+\align left
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+val data_cache = new Cache(cache_type = SET_ASSOC, line_size = 64) 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+connection_to_cpu <> data_cache.io.cpu 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+connection_to_mem <> data_cache.io.mem
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This cache can be connected to CPU and Main memory using bus interfaces.
+ 
+\end_layout
+
+\begin_layout Subsection
+Memory 
+\end_layout
+
+\begin_layout Standard
+Chisel defines a memory abstraction that can map to either simple Verilog
+ behavioral descriptions, or to instances of memory modules that are available
+ from external memory generators provided by foundry or IP vendors.
+\end_layout
+
+\begin_layout Standard
+Chisel allows memory to be defined with a single write port and multiple
+ read ports as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Mem(depth: Int, 
+\end_layout
+
+\begin_layout Plain Layout
+
+	target: Symbol = ’default, readLatency: Int = 0)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\series bold
+depth
+\series default
+ is the number of memory locations, 
+\series bold
+target
+\series default
+ is the type of memory used, readLatency is the latency of read ports to
+ be defined on the memory.
+ A memory object can then be read from using the 
+\series bold
+read(rdAddress)
+\series default
+ method.
+ For example, an audio recorder could be defined as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+def audioRecorder(n: Int) = { 
+\end_layout
+
+\begin_layout Plain Layout
+
+	val addr = counter(UFix(n)); 
+\end_layout
+
+\begin_layout Plain Layout
+
+	val ram = Mem(n).write(button(), addr) 
+\end_layout
+
+\begin_layout Plain Layout
+
+	ram.read(Mux(button(), UFix(0), addr)) 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where a counter is used as an address generator into a memory.
+ The device records while button is 
+\series bold
+true
+\series default
+, or plays back when 
+\series bold
+false
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+We can use simple memory to create register files.
+ For example we can make a one write port, two read port register file with
+ 32 registers as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+val regs = Mem(32) 
+\end_layout
+
+\begin_layout Plain Layout
+
+regs.write(wr_en, wr_addr, wr_data) 
+\end_layout
+
+\begin_layout Plain Layout
+
+val idat = regs.read(iaddr) 
+\end_layout
+
+\begin_layout Plain Layout
+
+val mdat = regs.read(maddr)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where a new read port is created for each call to read.
+\end_layout
+
+\begin_layout Standard
+We can also use 
+\series bold
+\emph on
+SyncReadMem 
+\series default
+\emph default
+to create synchronus memories.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+class ReadWriteSmem extends Module {   
+\end_layout
+
+\begin_layout Plain Layout
+
+	val width: Int = 32   
+\end_layout
+
+\begin_layout Plain Layout
+
+	val io = IO(new Bundle {     
+\end_layout
+
+\begin_layout Plain Layout
+
+		val enable = Input(Bool())     
+\end_layout
+
+\begin_layout Plain Layout
+
+		val write = Input(Bool())     
+\end_layout
+
+\begin_layout Plain Layout
+
+		val addr = Input(UInt(10.W))     
+\end_layout
+
+\begin_layout Plain Layout
+
+		val dataIn = Input(UInt(width.W))     
+\end_layout
+
+\begin_layout Plain Layout
+
+		val dataOut = Output(UInt(width.W))   
+\end_layout
+
+\begin_layout Plain Layout
+
+	})
+\end_layout
+
+\begin_layout Plain Layout
+
+	val mem = SyncReadMem(1024, UInt(width.W))
+\end_layout
+
+\begin_layout Plain Layout
+
+	mem.write(io.addr, io.dataIn)   
+\end_layout
+
+\begin_layout Plain Layout
+
+	io.dataOut := mem.read(io.addr, io.enable) 
+\end_layout
+
+\begin_layout Plain Layout
+
+} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This corresponding piece of code in chiel generates a verilog code as given
+ below:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+  always @(posedge clock) begin  
+\end_layout
+
+\begin_layout Plain Layout
+
+	if (mem_MPORT_en & mem_MPORT_mask) begin       
+\end_layout
+
+\begin_layout Plain Layout
+
+		mem[mem_MPORT_addr] <= mem_MPORT_data;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	end     
+\end_layout
+
+\begin_layout Plain Layout
+
+	mem_io_dataOut_MPORT_en_pipe_0 <= io_enable;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	if (io_enable) begin       
+\end_layout
+
+\begin_layout Plain Layout
+
+		mem_io_dataOut_MPORT_addr_pipe_0 <= io_addr;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	end   
+\end_layout
+
+\begin_layout Plain Layout
+
+  end 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The timing diagram for the following memory is shown below: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../images/Sync_mem_timing.png
+	lyxscale 50
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Synchronous Memory timing 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+ASIC Flow 
+\end_layout
+
+\begin_layout Standard
+ASIC (Application Specific Integrated Circuit) is a specialized type of
+ integrated circuit meticulously designed to perform a specific function
+ or set of functions within an electronic system.
+ ASICs are tailor-made for a particular application, offering unparalleled
+ efficiency and performance.
+ There are two primary methods of ASIC design:
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Gate Array (Semi Custom) design : 
+\emph default
+This type of ASIC uses predesigned logic cells called standard cells, such
+ as gates, multiplexers, and flip-flops.
+ Standard cells are made using full-custom design methodology and serve
+ as basic building blocks for ASIC design, ensuring the same performance
+ and flexibility but reducing time and risk.
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Full Custom design: 
+\emph default
+The full-custom method is more complex and costly, but it can do much more
+ than the gate array method.
+ The size of the ASIC decreases significantly as the design incorporates
+ only the necessary gates and electronics, and unused gates are deleted.
+ These ASICs are designed for a specific purpose and support a particular
+ function in the end product.
+\end_layout
+
+\begin_layout Subsection
+Chip Design flow 
+\end_layout
+
+\begin_layout Standard
+A typical design flow follows a structure shown below 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Chip-Design-Flow"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Some of these phases happens paralley and some sequentially.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/images/design_flow.png
+	lyxscale 50
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Chip D
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Chip-Design-Flow"
+
+\end_inset
+
+esign Flow 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Architecture: 
+\series default
+The Architects based on the reuirement specifications and market need, comes
+ up with a system level view of how the chip should operate.
+ They will decide what components to use, on which frequency should the
+ chip run, what should be the footprint, operating voltages and estimate
+ the power numbers.
+ They also decide how will be the dataflow inside the chip 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Digital Design: 
+\series default
+Since the designs are complex nowdays, we cannot write RTL from scratch
+ and hence various IP's are taken and integrated into the design.
+ A behavioral description of the blocks are written in HDL and the design
+ is analyzed in terms of functionality, performance and other high level
+ issues.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Verification: 
+\series default
+Once the RTL is ready, it needs to be verified for functional correctness.
+ Various EDA tools like simvision and xcellium (from Cadence), Verdi (from
+ Synopsys) are used for verifying the RTL.
+ Currently, Verification has become an important part of chip designing
+ and is the most time consuming process in the lifecycle.
+ Various methodologies like UVM, OVM have been adopted for better verification
+ of the design and to reduce time to market
+\end_layout
+
+\begin_layout Standard
+To save time and reach functional closure, both the design and verification
+ teams operate in parallel where the designers 
+\begin_inset Quotes eld
+\end_inset
+
+release
+\begin_inset Quotes erd
+\end_inset
+
+ the RTL version, and the verification team develops the testbench enviroment
+ and test cases to test the functionality of the RTL Version.
+ A UVM scoreboard is shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:UVM-Scoreboard"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ below.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/images/uvm_scoreboard.png
+	lyxscale 50
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+UV
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:UVM-Scoreboard"
+
+\end_inset
+
+M Scoreboard 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Logic synthesis and Equivalance check: 
+\series default
+Once the design is ready and verified, we convert it into hardware schematic
+ with real elements like combinational gates, muxed, FlipFLops.
+ Logic synthesis tool like Genus (from Cadence), enable us to convert RTL
+ description into a gate level netlist.
+ Tool ensures the netlist meets the timing, area and performance.
+ We have the library files for each element in the netlist which we get
+ from foundaries as PDKs.
+ 
+\end_layout
+
+\begin_layout Standard
+The gate level netlist is checked for logical equivalence with the RTL and
+ GLS (Gate level Simulations) are required to ensure the synthesized design
+ still holds the same functionality.
+ Genus GUI is shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Genus-Tool-for"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ below.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/images/Genus_cadence.png
+	lyxscale 50
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Genus Tool for
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Genus-Tool-for"
+
+\end_inset
+
+ Synthesis
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Placement and Routing: 
+\series default
+The netlist is sourced into the physical design flow, where automatic place
+ and route (APR or PnR) is done with the help of EDA tools, Eg.
+ Cadence Innovus, Encounter and Synopsys IC compiler.
+ This will select and place standard cells into rows, define ball maps for
+ input-output, create different metal layers, and buffers to meet timing.
+ Once this process is done, the layout is send for fabrication.
+ Cadence Encounter GUI is shown in below figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Cadence-Encounter"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/rclab/Downloads/Thesis_Report/images/RoutingResult.gif
+	lyxscale 50
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Cade
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Cadence-Encounter"
+
+\end_inset
+
+nce Encounter
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Target Specification 
+\end_layout
+
+\begin_layout Standard
+Target specifications formulated for the design are: 
+\end_layout
+
+\begin_layout Itemize
+32-bit, 5 stage Pipelined Processor 
+\end_layout
+
+\begin_layout Itemize
+Supports RV32G (RV32IMAFD) instructions 
+\end_layout
+
+\begin_layout Itemize
+Integrated Floating Point Unit 
+\end_layout
+
+\begin_layout Itemize
+Split I and D (Instruction and Data) caches 
+\end_layout
+
+\begin_layout Itemize
+Virtual Memory 
+\end_layout
+
+\begin_layout Itemize
+Data and Instruction Translation Lookaside Buffers (DTLB & ITLB) 
+\end_layout
+
+\begin_layout Itemize
+Branch Prediction Unit 
+\end_layout
+
+\begin_layout Itemize
+System Counters 
+\end_layout
+
+\begin_layout Itemize
+Interrupt controller with four levels of pre-emptive priority 
+\end_layout
+
+\begin_layout Itemize
+Main Memory with Error Control Coding 
+\end_layout
+
+\begin_layout Itemize
+AXI Protocol for Memory and peripheral integration
+\end_layout
+
+\begin_layout Section
+Conclusion
+\end_layout
+
+\begin_layout Standard
+In the above study report we have compared various industrial and academic
+ RISC-V designs.
+ RISC-V ISA has been studied in order to understand the software-hardware
+ interaction and hardware can be better designed so as to deal with some
+ anomalies at hardware level only (like hazards, stall ) and make the compiler
+ independent of the hardware, this can speed up the software development
+ process.
+ Then we proposed our RISCV architecture with various design blocks and
+ strategies that we developed after going through various literature.
+ For handling the hazards we will use data bypass/forwarding and 2-bit branch
+ prediction scheme which is commonly used in lot of other RISC-V designs
+ across academia.
+ We will be designing this processor in the chisel Hardware descriptive
+ language, and we have given some instances on how to design memory, cache
+ efficiently with chisel which otherwise would have taken a lot more time
+ and effort for doing the same job in Verilog HDL.
+ 
+\end_layout
+
+\end_body
+\end_document
