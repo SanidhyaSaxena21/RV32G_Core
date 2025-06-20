@@ -27,6 +27,7 @@ module Top_CPU_JTAG#(
     //Global Signals
     input cpu_clock,
     input RESET_BUTTON, //Active High
+    output Soc_reset,
 
     //JTAG Signals
     output wire TDO,
@@ -104,6 +105,8 @@ module Top_CPU_JTAG#(
     wire ID_out;                // ID Register output
     
     assign Instr_probe = Instr[WIDTH-3:0];
+
+    assign Soc_reset = ~to_core_hartreset | core_dbg_reset ; 
 
     assign debug_signals = {to_core_haltreq,to_core_resumereq,to_core_hartreset,to_core_resethaltreq_reg,to_core_ndmreset,core_halted_riscv,core_running_riscv,core_havereset_riscv};
     
@@ -229,7 +232,7 @@ module Top_CPU_JTAG#(
     cpu u_riscv_core (
         .clk(cpu_clock),      // Should be 100MHz
         `ifdef DEBUG_RESET
-          .RESET_BUTTON((RESET_BUTTON | ~to_core_hartreset) & ~DEBUG_OVERWRITE),  // Dm should be able to reset it as well
+          .RESET_BUTTON(RESET_BUTTON | (~to_core_hartreset & ~DEBUG_OVERWRITE)),  // Dm should be able to reset it as well
         `else
           .RESET_BUTTON(RESET_BUTTON),
         `endif
@@ -257,6 +260,8 @@ module Top_CPU_JTAG#(
         .DTLAST(DTLAST),
 
         .led(led),
+
+        .core_dbg_reset(core_dbg_reset), //Warm Reset given by debugger
    
         .cache_en(1'b0),
         .csr_pmp_sb(csr_pmp_sb),
