@@ -28,6 +28,9 @@ module riscv_platform (
   
   input DEBUG_OVERWRITE,
   
+  input RX,
+  output TX,
+  
   input next_addr,
   input prev_addr,
   
@@ -126,6 +129,8 @@ module riscv_platform (
   wire ext_irq;
   wire RTC_CLOCK;
   wire cache_en_int;
+
+  wire Soc_reset;
   
   reg next_addr_meta,next_addr_sync;
     reg switch_next_q, switch_prev_q;
@@ -133,12 +138,13 @@ module riscv_platform (
     reg [31:0] ext_addr;
     reg [7:0] ext_rdata;
     wire [7:0] debug_signals;
+    wire [7:0] lcd_reg_uart;
 
   //assign LED[7:0] = ext_mode ? ext_rdata : {state,lcd_reg[4:0]};
 
   always @(*) begin
     case({debug_display,ext_mode})
-      2'b00:  LED = lcd_reg[7:0];
+      2'b00:  LED = lcd_reg_uart[7:0];
       2'b01:  LED = ext_rdata;
       2'b10:  LED = debug_signals;
       2'b11:  LED = lcd_reg[7:0];
@@ -232,13 +238,14 @@ end
 
 
 //------------RESET Logic ----------------------------
-assign rst = rst_sync;
+assign rst = rst_sync | (Soc_reset & ~DEBUG_OVERWRITE);
   
        Top_CPU_JTAG u_core_top(
            .cpu_clock(clk_int),
-           .RESET_BUTTON(rst),
+           .RESET_BUTTON(rst_sync),
            .state(state),
            .debug_signals(debug_signals),
+           .Soc_reset(Soc_reset),
 
            .TDI(TDI),
            .TDO(TDO),
@@ -299,7 +306,7 @@ assign rst = rst_sync;
      
       assign dmem_read_allowed = (dmem_allow == 4'd1); 
       assign dmem_write_allowed = (dmem_allow == 4'd2); 
-      assign dmem_read_write_allowed = (dmem_allow == 4'd3);
+      assign dmem_read_write_allowed = (dmem_allow == 4'd3) | (dmem_allow == 4'd5);
 
       assign imem_read_execute_allowed = (imem_allow == 4'd5);
 
@@ -331,6 +338,19 @@ assign rst = rst_sync;
     wire         s1_ready;
     wire         s1_stall;
     wire         s1_tlast;
+
+
+    // Internal wires between Memory_Wrapper and UART
+    wire         s2_req;
+    wire         s2_write;
+    wire [31:0]  s2_addr;
+    wire [1:0]   s2_burst;
+    wire [3:0]   s2_bstrobe;
+    wire [31:0]  s2_write_data;
+    wire [31:0]  s2_rdata;
+    wire         s2_ready;
+    wire         s2_stall;
+    wire         s2_tlast;
 
 
       // Instantiate Memory_Wrapper (handles peripherals, routes to s0_)
@@ -371,8 +391,16 @@ assign rst = rst_sync;
         .s1_stall(s1_stall), 
         .s1_tlast(s1_tlast),
 
-        .s2_req(), .s2_addr(), .s2_burst(), .s2_write(), .s2_write_data(), .s2_bstrobe(),
-        .s2_rdata(32'b0), .s2_ready(1'b0), .s2_stall(1'b0), .s2_tlast(1'b0),
+        .s2_req(s2_req), 
+        .s2_addr(s2_addr), 
+        .s2_burst(s2_burst), 
+        .s2_write(s2_write), 
+        .s2_write_data(s2_write_data), 
+        .s2_bstrobe(s2_bstrobe),
+        .s2_rdata(s2_rdata), 
+        .s2_ready(s2_ready),
+        .s2_stall(s2_stall), 
+        .s2_tlast(s2_tlast),
 
         .s3_req(), .s3_addr(), .s3_burst(), .s3_write(), .s3_write_data(), .s3_bstrobe(),
         .s3_rdata(32'b0), .s3_ready(1'b0), .s3_stall(1'b0), .s3_tlast(1'b0)
@@ -435,8 +463,29 @@ assign rst = rst_sync;
         .timer_irq(timer_irq)
       );
 
-//====================SLAVE0=================================
+//====================SLAVE2 UART=================================
 
+  (* keep_hierarchy = "yes" *)
+  UART_TOP #(.CLOCK_RATE(40000000),
+             .BAUD_RATE(9600)) UART (
+    .clk(clk_int),
+    .rst(rst),
+
+    .RX(RX),
+    .TX(TX),
+    .lcd_reg_uart(lcd_reg_uart),
+    .addr_i   (s2_addr),
+    .req_i    (s2_req),
+    .burst_i  (s2_burst),
+    .write_i  (s2_write),
+    .wdata_i  (s2_write_data),
+    .bstrobe_i(s2_bstrobe),
+    .rdata_o  (s2_rdata),
+    .ready_o  (s2_ready),
+    .stall_o  (s2_stall),
+    .tlast_o  (s2_tlast)
+    
+  );
 
 
 //====================SLAVE0=================================

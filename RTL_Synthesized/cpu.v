@@ -45,6 +45,8 @@ output addr_exception,
 input [31:0] irq_i,
 output freeze_int_dcache,
 
+output core_dbg_reset,
+
 //Debug Interface
 //input [31:0] instruction_DM,
 //output [31:0] PC_DEBUG,
@@ -131,6 +133,8 @@ fet_dec_ex_mem fdem( .RESET_BUTTON(RESET_BUTTON),.clk(clk),
                       .abstract_cmd_wrong_hart_state_o(abstract_cmd_wrong_hart_state_o),
                       .abstract_cmd_exception_o(abstract_cmd_exception_o),
                       .abstract_cmd_bus_error_o(abstract_cmd_bus_error_o),
+
+                      .core_dbg_reset(core_dbg_reset),
 
                       .dm_halt_addr(dm_halt_addr),
                       .dm_exception_addr(dm_exception_addr),

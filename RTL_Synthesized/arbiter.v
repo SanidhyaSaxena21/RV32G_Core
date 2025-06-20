@@ -5,10 +5,16 @@
 module arbiter #(
     parameter BASE0_ADDR = 32'h2000_0000,
     parameter BASE0_MASK = 32'h0000_FFFF,  // 4KB range
+
+    parameter BASE_INST_ADDR = 32'h0000_0000,
+    parameter BASE_INST_MASK = 32'h0000_0fff,
+
     parameter BASE1_ADDR = 32'h5F00_0000,
     parameter BASE1_MASK = 32'h0000_0FFF,  // 4KB range
+
     parameter BASE2_ADDR = 32'h5C00_0000,
     parameter BASE2_MASK = 32'h0000_0FFF,  // 4KB range
+
     parameter BASE3_ADDR = 32'h5D00_0000,
     parameter BASE3_MASK = 32'h0000_0FFF   // 4KB range
 )(
@@ -28,6 +34,8 @@ module arbiter #(
 
         // Priority-based routing: use ~MASK to zero out lower bits
         if ((m_addr & ~BASE0_MASK) == BASE0_ADDR)
+            s0_grant = 1;
+        else if ((m_addr & ~BASE_INST_MASK) == BASE_INST_ADDR)
             s0_grant = 1;
         else if ((m_addr & ~BASE1_MASK) == BASE1_ADDR)
             s1_grant = 1;

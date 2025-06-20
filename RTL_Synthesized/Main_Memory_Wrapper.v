@@ -89,8 +89,8 @@ module Main_Memory_Wrapper (
     Main_Memory #(
         .ADDR_WIDTH(14),
         .DATA_WIDTH(32),
-        .INSTR_INPUT_FILE("instruction_csr_test.mem"),
-        .DATA_INPUT_FILE("data.mem")
+        .INSTR_INPUT_FILE("uart.mem"),
+        .DATA_INPUT_FILE("helloworld_data.mem")
     ) Instruction_Memory (
         .clk(clk),
         .rst(reset),

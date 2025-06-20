@@ -31,6 +31,8 @@ module csr #( parameter XLEN = 32,
     input [SB_LENGTH-1:0]  sb_csr,
     output [`CSR_SB_W-1:0] csr_pmp_sb,
 
+    output cache_dis,
+
     //input ctrl_clr_meip,
     output mtie,
     
@@ -83,6 +85,9 @@ reg [31:0] csr_fcsr;
 
 //Custo CSR
 reg [31:0] csr_cache_flush;
+
+reg [31:0] cache_dis_csr;
+
 
 wire [XLEN-1:0] csr_mepc_val;
 wire [XLEN-1:0] csr_mstatus_val;
@@ -451,7 +456,7 @@ assign csr_satp_mode = (csr_wrdata[30:0] == 31'd0) ? 1'b0 : 1'b1;
 
 /////////////////////////////////////////////////////////////////////
 // CUSTOM CSR////////////////////////////////////////////////////////
-
+// Cache Flush CSR - 0x400
 always @(posedge clk) begin
     if(rst) 
         csr_cache_flush <= 32'd0;
@@ -462,6 +467,19 @@ always @(posedge clk) begin
 end
 
 assign cache_flush_csr = csr_cache_flush[0];
+
+// Cache Disable CSR - 0x404
+
+always @(posedge clk) begin
+  if(rst) begin
+    cache_dis_csr <= 1'b0;
+  end
+  else if(csr_wr_en && (csr_adr_wr == `cache_disable)) begin
+    cache_dis_csr <= (csr_wrdata[31:0] && `cache_disable_mask);
+  end
+end
+
+assign cache_dis = cache_dis_csr[0];
 
 
 /////////////////////////////////////////////////////////////////////

@@ -90,7 +90,7 @@
 //   instead of this
 
 //sumit peripheral address
-`define PERIPH_BASE 8'h5f
+`define PERIPH_BASE 4'h5
 /*
 `define UART_REG_RB 32'h5f000000
 `define UART_REG_TR 32'h5f000000
@@ -377,6 +377,9 @@
 //Custom CSR
 `define cache_flush     12'h400
 `define cache_flush_mask 32'h00000001
+
+`define cache_disable   12'h404
+`define cache_disable_mask 32'h00000001
 
 `define medeleg_default 32'h0   // this will change as other modes will be implemented 
 `define mideleg_default 32'h0   // this will change as other modes will be implemented 

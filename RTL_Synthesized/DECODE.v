@@ -411,6 +411,12 @@ always @(*) begin
         
         RS1_Addr__rf = rs1;
         RS2_Addr__rf = rs2;
+
+        //decoding for alu-operation 
+        Opcode__id_ex = inst[6:0];
+        Funct7__id_ex = inst[31:25];                      //for SLLI,SRLI,SRAI instructions, the ALU should ignore the LSB of Funct7__id_ex and only use upper 6 bits. 
+        Funct3__id_ex = inst[14:12];                       //hence, modify ALU for that
+        
     
     
         //decoding for writeback operation
@@ -523,33 +529,19 @@ always @(*) begin
             // - wfi    : sys[5]
             
             `sys: begin
-                Alu_Src_2_sel__id_ex = 2'b11;                      
-                if ((Funct3__id_ex == 3'b001) ||(Funct3__id_ex == 3'b010) || (Funct3__id_ex ==3'b011))
-                    Alu_Src_1_sel__id_ex = 2'b00; 
-                else                     
+                Alu_Src_2_sel__id_ex = 2'b11;
+                if((Funct3__id_ex == 3'b101)) begin
                     Alu_Src_1_sel__id_ex = 2'b10;
+                    $display("Here ");
+                end                      
+                else if ((Funct3__id_ex == 3'b001) ||(Funct3__id_ex == 3'b010) || (Funct3__id_ex ==3'b011)) begin
+                    Alu_Src_1_sel__id_ex = 2'b00; 
+                end
+                else begin                     
+                    Alu_Src_1_sel__id_ex = 2'b10;
+                    
+                end
 
-                /*if(Funct3__id_ex == 3'b000) begin
-                    // sret
-                    if (inst[20+:12]==12'h102) begin
-                        sys_id_ex = 6'b010000;
-                    // mret
-                    end else if (inst[20+:12]==12'h302) begin
-                        sys_id_ex = 6'b001000;
-                    // ebreak
-                    end else if (inst[20+:12]==12'h001) begin
-                        sys_id_ex = 6'b000010;
-                    // ecall
-                    end else if (inst[20+:12]==12'h000) begin
-                        sys_id_ex = 6'b000001;
-                    // wfi
-                    end else begin
-                        sys_id_ex = 6'b100000;
-                    end
-                  
-                  end else begin
-                      sys_id_ex = 6'b0000100;
-                  end */
             end
             `op32_fp_loadop: begin
                 Alu_Src_1_sel__id_ex = 2'b00;                      //select rs1 as one of the inputs
@@ -566,10 +558,6 @@ always @(*) begin
         endcase
             
         
-        //decoding for alu-operation 
-        Opcode__id_ex = inst[6:0];
-        Funct7__id_ex = inst[31:25];                      //for SLLI,SRLI,SRAI instructions, the ALU should ignore the LSB of Funct7__id_ex and only use upper 6 bits. 
-        Funct3__id_ex = inst[14:12];                       //hence, modify ALU for that
             
             
         

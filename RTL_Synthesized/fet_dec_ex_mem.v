@@ -68,6 +68,8 @@ output abstract_cmd_bus_error_o,
 
 input [31:0] dm_halt_addr,dm_exception_addr,
 
+//ndmreset,
+output core_dbg_reset,
 
 input pbuffer_execution,
 output [63:0] led,
@@ -126,7 +128,6 @@ wire stall;
 wire debug_stall;
 wire debug_mode;
 wire [31:0] pc_cache;
-wire core_dbg_reset;
 wire RESET;
 //Mux to select instruction should come from the Debug Module or From Instruction memory
 
@@ -138,6 +139,7 @@ assign RESET = RESET_BUTTON | core_dbg_reset | hartreset_i;
 
 wire load_access_fault,store_access_fault;
 wire load_page_fault,store_page_fault;
+wire cache_dis;
 
 
 IF_ID_EX Pipeline( .CLK(clk),
@@ -156,6 +158,7 @@ IF_ID_EX Pipeline( .CLK(clk),
                    .store_access_fault(store_access_fault),
                    .load_page_fault(load_page_fault),
                    .store_page_fault(store_page_fault),
+                   .cache_dis(cache_dis),
 
                    //Debug Interface
                 
@@ -235,7 +238,7 @@ dcache_biu db1( //wishbone and controller interfacee I/Os
                 //.clk_x2(clk_x2),
                 .proc_rst(RESET),
                 .lsustall(lsustall_int),
-                .cache_dis(dbg_memory_req),
+                .cache_dis(dbg_memory_req | cache_dis),
                 .badaddr_data(badaddr_data),
                 .ADDR(DADDR),
                 .BURST(DBURST), //00-Normal(), 01-INCR(), 10-WRAP(), 11-Reserved

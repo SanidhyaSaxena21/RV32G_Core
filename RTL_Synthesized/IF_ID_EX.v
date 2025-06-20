@@ -16,6 +16,7 @@ module IF_ID_EX
     input  Data_Cache__Stall,
     input  [31:0] proc_data_port1_int,
     output dbg_memory_req,
+    output cache_dis,
 
     
     output [4:0] lsu_op_port2,
@@ -1253,6 +1254,7 @@ DECODE ID( .CLK(CLK),
            .PC_ID(PC_ID),           
            .pc_forw(pc_forw),
            .debug_mode(debug_mode),
+           .kill_id(Branch_Taken__ex_mem),
 
            .RS1_Addr__rf(RS1_Addr__rf),                                                     
            .RS2_Addr__rf(RS2_Addr__rf),
@@ -1620,6 +1622,7 @@ Sys_counter sc1( .rst(RST),
          .mret(eret_o),
          .badaddr(badaddr),
          .trap_en(trap_en),
+         .cache_dis(cache_dis),
          //.mepc_res(mepc_res),
          .addr_exception(addr_exception),
          .freeze(Mult_Div_unit__Stall || FPU__Stall || Data_Cache__Stall || Inst_Cache__Stall || Double_Load_Store__Stall || PC_HALT_BREAK),

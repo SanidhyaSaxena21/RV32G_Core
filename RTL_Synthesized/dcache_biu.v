@@ -174,8 +174,8 @@ always @(posedge proc_clk or posedge proc_rst) begin
     end
 end
 
-assign prp_acs0_int = cache_dis | (proc_addr_in_port1[31:24] == `PERIPH_BASE);    //Check if address is in peripheral address range or cache disabled
-assign prp_acs1_int = cache_dis | (proc_addr_in_port2[31:24] == `PERIPH_BASE);    //Check if address is in peripheral address range or cache disabled
+assign prp_acs0_int = cache_dis | (proc_addr_in_port1[31:28] == `PERIPH_BASE);    //Check if address is in peripheral address range or cache disabled
+assign prp_acs1_int = cache_dis | (proc_addr_in_port2[31:28] == `PERIPH_BASE);    //Check if address is in peripheral address range or cache disabled
 
 //////////////////////For LR/SC Instruction address violation check
 always @(posedge proc_clk or posedge proc_rst) begin
